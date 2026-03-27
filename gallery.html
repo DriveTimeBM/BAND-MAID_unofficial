@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAND-MAID Unofficial · Gallery</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#666;
+  --accent:#c8a96e;--accent2:#8b5cf6;
+  --danger:#ef4444;--success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+
+/* APP HEADER */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
+.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
+.back-btn:hover{border-color:var(--border2);color:var(--text)}
+.back-btn.visible{display:flex}
+.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+
+/* SEARCH BAR */
+.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+.search-input:focus{border-color:var(--accent)}
+
+/* GROUP HEADER */
+.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
+.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
+.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
+.group-collapsed .group-items{display:none}
+.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
+.group-collapsed .group-chevron{transform:rotate(-90deg)}
+
+/* DECK GRID */
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid.no-group{margin:0}
+
+/* DECK CARD */
+.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.deck-card:hover{background:var(--bg3)}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
+.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
+.deck-card-url{position:absolute;top:8px;right:8px}
+.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
+.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
+.ext-icon svg{width:11px;height:11px}
+
+/* SHOW MORE */
+.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
+.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
+.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* DETAIL VIEW */
+.detail-view{display:none;min-height:calc(100vh - 57px)}
+.detail-view.visible{display:block}
+.list-view{display:block}
+.list-view.hidden{display:none}
+.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
+.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
+.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
+.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
+.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
+.detail-fields{display:flex;flex-direction:column;gap:0}
+.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.detail-field:last-child{border-bottom:none}
+.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
+.detail-url-link:hover{text-decoration:underline}
+.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+
+/* UTIL */
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<div class="app-header">
+  <div class="app-logo">🖼️</div>
+  <div>
+    <div class="app-nav-title">BAND-MAID Unofficial</div>
+    <div class="view-label" id="viewLabel">Gallery</div>
+  </div>
+  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
+  <div class="record-count" id="recordCount"></div>
+</div>
+
+<!-- LIST VIEW -->
+<div id="listView" class="list-view">
+  <div class="search-bar">
+    <input class="search-input" type="search" placeholder="Search Gallery…" id="searchInput" oninput="onSearch()">
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detailView" class="detail-view"></div>
+
+<script>
+const RAW_DATA = [{"Title":"BAND-MAID TOUR 2025 FINAL (Dec. 7)","URL":"https://bandmaid.tokyo/group/37840","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 OSAKA (Oct. 24)","URL":"https://bandmaid.tokyo/group/37838","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 AICHI (Aug. 8,9)","URL":"https://bandmaid.tokyo/group/37837","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 TOKYO (July 12)","URL":"https://bandmaid.tokyo/group/37836","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 MIYAGI (June 28)","URL":"https://bandmaid.tokyo/group/35601","Date":"2025-09-12T00:00:00"},{"Title":"BAND-MAID TOUR 2025 OSAKA (June 20, 21)","URL":"https://bandmaid.tokyo/group/35588","Date":"2025-09-12T00:00:00"},{"Title":"MILLION ROCK FESTIVAL 2025 (June 7)","URL":"https://bandmaid.tokyo/group/35613","Date":"2025-09-12T00:00:00"},{"Title":"BAND-MAID TOUR 2025 SHIZUOKA (May 25)","URL":"https://bandmaid.tokyo/group/35608","Date":"2025-09-12T00:00:00"},{"Title":"BAND-MAID TOUR 2025 TOKYO (May 10)","URL":"https://bandmaid.tokyo/group/34083","Date":"2025-06-04T00:00:00"},{"Title":"BAND-MAID Billboard Live Acoustic Tour","URL":"https://bandmaid.tokyo/group/33663","Date":"2025-05-15T00:00:00"},{"Title":"BAND-MAID SPIN-OFF OKYUJI (Feb. 17, 2025)","URL":"https://bandmaid.tokyo/group/33014","Date":"2025-03-28T00:00:00"},{"Title":"BAND-MAID SPIN-OFF OKYUJI (Feb. 3, 2025)","URL":"https://bandmaid.tokyo/group/33013","Date":"2025-03-28T00:00:00"},{"Title":"BAND-MAID ZEPP TOUR 2024 TOKYO 2days","URL":"https://bandmaid.tokyo/group/31634","Date":"2024-12-04T00:00:00"},{"Title":"BAND-MAID ZEPP TOUR 2024 AICHI & OSAKA","URL":"https://bandmaid.tokyo/group/31633","Date":"2024-12-04T00:00:00"},{"Title":"BAND-MAID番外編お給仕 福岡・札幌","URL":"https://bandmaid.tokyo/group/31094","Date":"2024-10-25T00:00:00"},{"Title":"BAND-MAID番外編お給仕 Medium in Summer","URL":"https://bandmaid.tokyo/group/31092","Date":"2024-10-25T00:00:00"},{"Title":"BAND-MAID HALL TOUR 2024","URL":"https://bandmaid.tokyo/group/29681","Date":"2024-07-18T00:00:00"},{"Title":"THE DAY OF MAID 2024","URL":"https://bandmaid.tokyo/group/28637","Date":"2024-05-21T00:00:00"},{"Title":"INCUBUS JAPAN TOUR 2024","URL":"https://bandmaid.tokyo/group/28627","Date":"2024-05-20T00:00:00"},{"Title":"[OMEISYUSAMA PHOTO] BAND-MAID ACOUSTIC OKYUJI","URL":"https://bandmaid.tokyo/group/27761","Date":"2024-03-22T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR 番外編","URL":"https://bandmaid.tokyo/group/27302","Date":"2024-03-04T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA Vol.2","URL":"https://bandmaid.tokyo/group/26715","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA Vol.1","URL":"https://bandmaid.tokyo/group/26714","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID September-October 2023","URL":"https://bandmaid.tokyo/group/26713","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR in North America August","URL":"https://bandmaid.tokyo/group/26712","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID July 2023","URL":"https://bandmaid.tokyo/group/26709","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR in North America May","URL":"https://bandmaid.tokyo/group/22978","Date":"2023-06-12T00:00:00"},{"Title":"BAND-MAID March-April 2023","URL":"https://bandmaid.tokyo/group/22976","Date":"2023-06-12T00:00:00"},{"Title":"BAND-MAID US TOUR 2022","URL":"https://bandmaid.tokyo/group/22977","Date":"2023-06-12T00:00:00"},{"Title":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023)","URL":"https://bandmaid.tokyo/group/21126","Date":"2023-02-09T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Sept. 9, 2022)","URL":"https://bandmaid.tokyo/group/19141","Date":"2022-09-16T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Sept. 7, 2022)","URL":"https://bandmaid.tokyo/group/19139","Date":"2022-09-16T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Sept. 3, 2022)","URL":"https://bandmaid.tokyo/group/19140","Date":"2022-09-16T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Aug. 25, 2022)","URL":"https://bandmaid.tokyo/group/18750","Date":"2022-08-26T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Aug. 17, 2022)","URL":"https://bandmaid.tokyo/group/18751","Date":"2022-08-26T00:00:00"},{"Title":"DOWNLOAD JAPAN 2022 & SUMMER SONIC 2022 ","URL":"https://bandmaid.tokyo/group/18752","Date":"2022-08-26T00:00:00"},{"Title":"BAND-MAID \"THE DAY OF MAID\" (May. 10, 2021)","URL":"https://bandmaid.tokyo/group/13606","Date":"2021-06-22T00:00:00"},{"Title":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)","URL":"https://bandmaid.tokyo/group/13605","Date":"2021-06-22T00:00:00"},{"Title":"BAND-MAID ONLINE OKYU-JI (Dec. 13, 2020)","URL":"https://bandmaid.tokyo/group/11717","Date":"2021-02-08T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 【進化】 (Feb. 13-14, 2020)","URL":"https://bandmaid.tokyo/group/8530","Date":"2020-02-27T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2019-2020 【激動】 YOKOHAMA BAY HALL (Oct 14, 2019)","URL":"https://bandmaid.tokyo/group/7427","Date":"2019-10-28T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2019 【激動】 EXTRAお給仕 MYNAVI BLITZ AKASAKA (August 2, 2019)","URL":"https://bandmaid.tokyo/group/6760","Date":"2019-08-19T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2019 【激動】 HITOMI MEMORIAL HALL (July 30, 2019)","URL":"https://bandmaid.tokyo/group/6759","Date":"2019-08-19T00:00:00"},{"Title":"BAND-MAID presents 冥途乃日　(UP May 14th, 2019)","URL":"https://bandmaid.tokyo/group/6068","Date":"2019-05-14T00:00:00"},{"Title":"Ver.2 BAND-MAID WORLD DOMINATION TOUR 2018-2019【侵略】 ～Supported By LIVEDAM STADIUM～　(UP January 27th, 2019)","URL":"https://bandmaid.tokyo/group/5279","Date":"2019-01-27T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2018-2019【侵略】 ～Supported By LIVEDAM STADIUM～　(UP January 14th, 2019)","URL":"https://bandmaid.tokyo/group/5192","Date":"2019-01-14T00:00:00"},{"Title":"ROCK IN JAPAN FESTIVAL 2018 (UP August 24th, 2018)","URL":"https://bandmaid.tokyo/group/4200","Date":"2018-08-24T00:00:00"},{"Title":"WORLD DOMINATION TOUR 2018【宣告】(UP July 4th, 2018)","URL":"https://bandmaid.tokyo/group/3940","Date":"2018-07-04T00:00:00"}];
+const FIELDS = [{"name":"Title","type":"text"},{"name":"URL","type":"url"},{"name":"Date","type":"datetime"}];
+const DECK = {"image":null,"primary":"Title","secondary":"Date","summary":null,"url":"URL"};
+const SORT = {"field":"Date","dir":"desc"};
+const GROUP = {"field":"","dir":"asc"};
+const VIEW_NAME = "Gallery";
+const LOGO_CHAR = "🖼️";
+const PREVIEW_COUNT = 5;
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function fmtNumber(v){return parseInt(v,10).toLocaleString()}
+function isAllDigits(v){return /^\d+$/.test(String(v))}
+const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+function isDateTime(v){return ISO_DT_RE.test(String(v))}
+function fmtDateShort(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
+    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  }catch(e){return String(v)}
+}
+function fmtDateFull(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
+    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+  }catch(e){return String(v)}
+}
+function detectRuntime(fieldName,val){
+  const lc=fieldName.toLowerCase();
+  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
+  if(val!==null&&val!==undefined&&val!==''){
+    if(isDateTime(val))return 'datetime';
+    if(/^https?:\/\//i.test(String(val)))return 'url';
+    if(isAllDigits(val))return 'number';
+  }
+  return 'text';
+}
+function getType(f,val){
+  const meta=FIELDS.find(x=>x.name===f);
+  if(meta)return meta.type;
+  return detectRuntime(f,val);
+}
+function extIconSvg(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+}
+
+// ── SORT / GROUP ──────────────────────────────────────────────────────────────
+function processData(data){
+  let d=[...data];
+  if(SORT.field){
+    d.sort((a,b)=>{
+      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
+      const an=isAllDigits(av);const bn=isAllDigits(bv);
+      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
+      return SORT.dir==='desc'?-cmp:cmp;
+    });
+  }
+  if(!GROUP.field) return [{group:null,items:d}];
+  const map=new Map();
+  d.forEach(row=>{
+    const g=String(row[GROUP.field]??'');
+    if(!map.has(g))map.set(g,[]);
+    map.get(g).push(row);
+  });
+  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
+  groups.sort((a,b)=>{
+    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
+    return GROUP.dir==='desc'?-cmp:cmp;
+  });
+  return groups;
+}
+
+// ── SEARCH ───────────────────────────────────────────────────────────────────
+let expandedGroups={};
+let showAll=false;
+let currentData=RAW_DATA;
+
+function onSearch(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!q){currentData=RAW_DATA;}
+  else{
+    currentData=RAW_DATA.filter(row=>
+      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
+    );
+  }
+  showAll=false;
+  expandedGroups={};
+  renderList();
+}
+
+// ── RENDER LIST ───────────────────────────────────────────────────────────────
+function renderList(){
+  const groups=processData(currentData);
+  const total=currentData.length;
+  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
+  const container=document.getElementById('mainContent');
+  container.innerHTML='';
+
+  if(!currentData.length){
+    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    return;
+  }
+
+  if(!GROUP.field){
+    // No grouping — flat deck
+    const items=groups[0].items;
+    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    container.appendChild(renderDeckGrid(shown,null));
+    if(!showAll&&items.length>PREVIEW_COUNT){
+      const more=document.createElement('div');
+      more.className='show-more-row';
+      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      container.appendChild(more);
+    }
+  } else {
+    groups.forEach(({group,items})=>{
+      const key=group??'';
+      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      const collapsed=!expandedGroups[key];
+      const wrap=document.createElement('div');
+      wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      const hdr=document.createElement('div');
+      hdr.className='group-header';
+      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
+      hdr.style.cursor='pointer';
+      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+      const body=document.createElement('div');
+      body.className='group-items';
+      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+      body.appendChild(renderDeckGrid(shown,group));
+      if(!showAll&&items.length>PREVIEW_COUNT){
+        const more=document.createElement('div');
+        more.className='show-more-row';
+        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        body.appendChild(more);
+      }
+      wrap.appendChild(hdr);
+      wrap.appendChild(body);
+      container.appendChild(wrap);
+    });
+  }
+}
+
+function renderDeckGrid(items){
+  const grid=document.createElement('div');
+  grid.className='deck-grid';
+  items.forEach((row,i)=>{
+    grid.appendChild(renderDeckCard(row,i));
+  });
+  return grid;
+}
+
+function renderDeckCard(row,idx){
+  const card=document.createElement('div');
+  card.className='deck-card';
+  card.onclick=()=>showDetail(row);
+
+  // Image
+  if(DECK.image&&row[DECK.image]){
+    const img=document.createElement('img');
+    img.className='deck-card-img';
+    img.src=row[DECK.image];
+    img.alt='';
+    img.loading='lazy';
+    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
+    card.appendChild(img);
+  } else if(DECK.image){
+    card.appendChild(makePlaceholder());
+  }
+
+  const body=document.createElement('div');
+  body.className='deck-card-body';
+
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-primary';
+    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    body.appendChild(el);
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-secondary';
+    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    body.appendChild(el);
+  }
+  if(DECK.summary&&row[DECK.summary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-summary';
+    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
+    body.appendChild(el);
+  }
+  card.appendChild(body);
+
+  // URL icon overlay
+  if(DECK.url&&row[DECK.url]){
+    const a=document.createElement('a');
+    a.className='deck-card-url';
+    a.href=row[DECK.url];
+    a.target='_blank';
+    a.rel='noopener';
+    a.title='Open external link: '+row[DECK.url];
+    a.onclick=e=>{e.stopPropagation()};
+    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
+    card.appendChild(a);
+  }
+
+  return card;
+}
+
+function makePlaceholder(){
+  const el=document.createElement('div');
+  el.className='deck-card-img-placeholder';
+  el.textContent='🎵';
+  return el;
+}
+
+function fmtVal(field,val){
+  if(val===null||val===undefined)return '';
+  const t=getType(field,val);
+  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
+  if(t==='datetime')return fmtDateShort(val);
+  return String(val);
+}
+
+// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
+function showDetail(row){
+  document.getElementById('listView').classList.add('hidden');
+  const detail=document.getElementById('detailView');
+  detail.classList.add('visible');
+  document.getElementById('backBtn').classList.add('visible');
+  document.getElementById('viewLabel').textContent='Detail';
+  document.getElementById('recordCount').textContent='';
+
+  let html='';
+
+  // Hero image
+  if(DECK.image&&row[DECK.image]){
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+  } else {
+    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+  }
+
+  html+='<div class="detail-body">';
+
+  // Primary / secondary as title
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
+  }
+
+  // All fields table
+  html+='<div class="detail-fields">';
+  FIELDS.forEach(({name,type})=>{
+    const val=row[name];
+    if(val===null||val===undefined||val==='')return;
+    const rtype=getType(name,val);
+    let valueHtml='';
+    if(rtype==='image'){
+      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
+    } else if(rtype==='url'){
+      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
+    } else if(rtype==='number'){
+      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
+    } else if(rtype==='datetime'){
+      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
+    } else {
+      valueHtml=escHtml(String(val));
+    }
+    html+=`<div class="detail-field">
+      <div class="detail-field-label">${escHtml(name)}</div>
+      <div class="detail-field-value">${valueHtml}</div>
+    </div>`;
+  });
+  html+='</div></div>';
+
+  detail.innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+function showList(){
+  document.getElementById('listView').classList.remove('hidden');
+  document.getElementById('detailView').classList.remove('visible');
+  document.getElementById('detailView').innerHTML='';
+  document.getElementById('backBtn').classList.remove('visible');
+  document.getElementById('viewLabel').textContent=VIEW_NAME;
+  renderList();
+}
+
+// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderList();
+</script>
+</body>
+</html>

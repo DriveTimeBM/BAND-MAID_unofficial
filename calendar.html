@@ -1,0 +1,411 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAND-MAID Unofficial · Calendar</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#666;
+  --accent:#c8a96e;--accent2:#8b5cf6;
+  --danger:#ef4444;--success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+
+/* APP HEADER */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
+.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
+.back-btn:hover{border-color:var(--border2);color:var(--text)}
+.back-btn.visible{display:flex}
+.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+
+/* SEARCH BAR */
+.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+.search-input:focus{border-color:var(--accent)}
+
+/* GROUP HEADER */
+.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
+.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
+.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
+.group-collapsed .group-items{display:none}
+.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
+.group-collapsed .group-chevron{transform:rotate(-90deg)}
+
+/* DECK GRID */
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid.no-group{margin:0}
+
+/* DECK CARD */
+.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.deck-card:hover{background:var(--bg3)}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
+.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
+.deck-card-url{position:absolute;top:8px;right:8px}
+.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
+.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
+.ext-icon svg{width:11px;height:11px}
+
+/* SHOW MORE */
+.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
+.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
+.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* DETAIL VIEW */
+.detail-view{display:none;min-height:calc(100vh - 57px)}
+.detail-view.visible{display:block}
+.list-view{display:block}
+.list-view.hidden{display:none}
+.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
+.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
+.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
+.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
+.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
+.detail-fields{display:flex;flex-direction:column;gap:0}
+.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.detail-field:last-child{border-bottom:none}
+.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
+.detail-url-link:hover{text-decoration:underline}
+.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+
+/* UTIL */
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<div class="app-header">
+  <div class="app-logo">🗓️</div>
+  <div>
+    <div class="app-nav-title">BAND-MAID Unofficial</div>
+    <div class="view-label" id="viewLabel">Calendar</div>
+  </div>
+  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
+  <div class="record-count" id="recordCount"></div>
+</div>
+
+<!-- LIST VIEW -->
+<div id="listView" class="list-view">
+  <div class="search-bar">
+    <input class="search-input" type="search" placeholder="Search Calendar…" id="searchInput" oninput="onSearch()">
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detailView" class="detail-view"></div>
+
+<script>
+const RAW_DATA = [{"Summary":"Yokohama - CME Festival","Start_Local":"2026-04-04T09:10:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1043338\">https://bandmaid.tokyo/contents/1043338</a>","Location":"KT Zepp Yokohama, 4-chōme-3-6 Minatomirai, Nishi Ward, Yokohama, Kanagawa 220-0012, Japan","Start_Japan":"2026-04-04T18:10:00","URL":"https://bandmaid.tokyo/contents/1043338"},{"Summary":"Kanagawa - KT Zepp Yokohama","Start_Local":"2026-04-11T08:30:00","Description":"Open 16:30","Location":"KT Zepp Yokohama, 4-chōme-3-6 Minatomirai, Nishi Ward, Yokohama, Kanagawa 220-0012, Japan","Start_Japan":"2026-04-11T17:30:00","URL":null},{"Summary":"Sendai - Gigs","Start_Local":"2026-05-02T08:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"SENDAI GIGS, 1-chōme-4-1 Araihigashi, Wakabayashi Ward, Sendai, Miyagi 984-0030, Japan","Start_Japan":"2026-05-02T17:00:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"Tokyo - Zepp Haneda","Start_Local":"2026-05-10T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Zepp Haneda, 1-chōme-1-4 Hanedakūkō, Ota City, Tokyo 144-0041, Japan","Start_Japan":"2026-05-10T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"Berlin - Columbia Theater","Start_Local":"2026-06-03T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Columbia-Theater, Columbiadamm 9-11, 10965 Berlin, Germany","Start_Japan":"2026-06-04T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Frankfurt - BATSCHKAPP","Start_Local":"2026-06-05T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Batschkapp, Gwinnerstraße 5, 60388 Frankfurt am Main, Germany","Start_Japan":"2026-06-06T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Munich - TECHNIKUM","Start_Local":"2026-06-06T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Technikum, Speicherstraße 26, 81671 München, Germany","Start_Japan":"2026-06-07T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Paris - BATACLAN","Start_Local":"2026-06-09T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Bataclan, 50 Bd Voltaire, 75011 Paris, France","Start_Japan":"2026-06-10T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"London -  Electric Brixton","Start_Local":"2026-06-11T18:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Electric Brixton, Town Hall Parade, Brixton Hill, London SW2 1RJ, UK","Start_Japan":"2026-06-12T03:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Download UK - Festival","Start_Local":"2026-06-12T15:00:00","Description":"<a href=\"https://downloadfestival.co.uk/\">https://downloadfestival.co.uk/</a>","Location":"Donington Park Circuit, Donington Park, Castle Donington, Derby DE74 2RP, UK","Start_Japan":"2026-06-13T00:00:00","URL":"https://downloadfestival.co.uk/"},{"Summary":"HIROSHIMA - BLUE LIVE ","Start_Local":"2026-06-27T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"BLUE LIVE 広島 仮設トイレ, Japan, 〒734-0011 Hiroshima, Minami Ward, Ujinakaigan, 3-chōme−12−７２ ケイビ","Start_Japan":"2026-06-27T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"KOBE - HARBOR STUDIO","Start_Local":"2026-06-28T08:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"神戸Harbor Studio, 6-3 波止場 Chuo Ward, Kobe, Hyogo 650-0042, Japan","Start_Japan":"2026-06-28T17:00:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"HOKKAIDO - SAPPORO FACTORY HALL","Start_Local":"2026-07-12T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Sapporo Factory Hall, 3 Chome Kita 2 Johigashi, Chuo Ward, Sapporo, Hokkaido 060-0032, Japan","Start_Japan":"2026-07-12T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"KUMAMOTO - B.9 V1","Start_Local":"2026-07-17T09:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"KUMAMoTo B.9, 5-13 Jōtōmachi, Chuo Ward, Kumamoto, 860-0846, Japan","Start_Japan":"2026-07-17T18:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"FUKUOKA - Zepp","Start_Local":"2026-07-18T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Zepp Fukuoka, 2-chōme-2-1 Jigyōhama, Chuo Ward, Fukuoka, 810-0065, Japan","Start_Japan":"2026-07-18T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"FUKUOKA - NUMBER SHOT","Start_Local":"2026-08-01T06:00:00","Description":"<a href=\"https://numbershot.jp/2026\">https://numbershot.jp/2026</a>","Location":"Momochi Seaside Park, 2-chōme-902-1 Momochihama, Sawara Ward, Fukuoka, 814-0001, Japan","Start_Japan":"2026-08-01T15:00:00","URL":"https://numbershot.jp/2026"},{"Summary":"OSAKA - GIGANTIC FES","Start_Local":"2026-08-02T06:00:00","Description":"<a href=\"https://giga-osaka.com/\">https://giga-osaka.com/</a>","Location":"Maishima Sports Island, 2-chōme-1-128 Hokkōryokuchi, Konohana Ward, Osaka, 554-0042, Japan","Start_Japan":"2026-08-02T15:00:00","URL":"https://giga-osaka.com/"},{"Summary":"AICHI - COMTEC PORTBASE","Start_Local":"2026-11-01T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Comtec Portbase, 3-3-5 Kanekawachō, Minato Ward, Nagoya, Aichi 455-0017, Japan","Start_Japan":"2026-11-01T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"Osaka - NAMBA HATCH ","Start_Local":"2026-11-03T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Namba Hatch, 1-chōme-3-1 Minatomachi, Naniwa Ward, Osaka, 556-0017, Japan","Start_Japan":"2026-11-03T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"BUDOKAN","Start_Local":"2026-11-13T09:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Nippon Budokan, 2-3 Kitanomarukōen, Chiyoda City, Tokyo 102-8321, Japan","Start_Japan":"2026-11-13T18:00:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"BUDOKAN","Start_Local":"2026-11-14T08:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Nippon Budokan, 2-3 Kitanomarukōen, Chiyoda City, Tokyo 102-8321, Japan","Start_Japan":"2026-11-14T17:00:00","URL":"https://bandmaid.tokyo/contents/1041130"}];
+const FIELDS = [{"name":"Summary","type":"text"},{"name":"Start_Local","type":"datetime"},{"name":"Description","type":"text"},{"name":"Location","type":"text"},{"name":"Start_Japan","type":"datetime"},{"name":"URL","type":"url"}];
+const DECK = {"image":null,"primary":"Summary","secondary":"Location","summary":null,"url":"URL"};
+const SORT = {"field":"Start_Local","dir":"asc"};
+const GROUP = {"field":"","dir":"asc"};
+const VIEW_NAME = "Calendar";
+const LOGO_CHAR = "🗓️";
+const PREVIEW_COUNT = 5;
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function fmtNumber(v){return parseInt(v,10).toLocaleString()}
+function isAllDigits(v){return /^\d+$/.test(String(v))}
+const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+function isDateTime(v){return ISO_DT_RE.test(String(v))}
+function fmtDateShort(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
+    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  }catch(e){return String(v)}
+}
+function fmtDateFull(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
+    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+  }catch(e){return String(v)}
+}
+function detectRuntime(fieldName,val){
+  const lc=fieldName.toLowerCase();
+  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
+  if(val!==null&&val!==undefined&&val!==''){
+    if(isDateTime(val))return 'datetime';
+    if(/^https?:\/\//i.test(String(val)))return 'url';
+    if(isAllDigits(val))return 'number';
+  }
+  return 'text';
+}
+function getType(f,val){
+  const meta=FIELDS.find(x=>x.name===f);
+  if(meta)return meta.type;
+  return detectRuntime(f,val);
+}
+function extIconSvg(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+}
+
+// ── SORT / GROUP ──────────────────────────────────────────────────────────────
+function processData(data){
+  let d=[...data];
+  if(SORT.field){
+    d.sort((a,b)=>{
+      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
+      const an=isAllDigits(av);const bn=isAllDigits(bv);
+      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
+      return SORT.dir==='desc'?-cmp:cmp;
+    });
+  }
+  if(!GROUP.field) return [{group:null,items:d}];
+  const map=new Map();
+  d.forEach(row=>{
+    const g=String(row[GROUP.field]??'');
+    if(!map.has(g))map.set(g,[]);
+    map.get(g).push(row);
+  });
+  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
+  groups.sort((a,b)=>{
+    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
+    return GROUP.dir==='desc'?-cmp:cmp;
+  });
+  return groups;
+}
+
+// ── SEARCH ───────────────────────────────────────────────────────────────────
+let expandedGroups={};
+let showAll=false;
+let currentData=RAW_DATA;
+
+function onSearch(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!q){currentData=RAW_DATA;}
+  else{
+    currentData=RAW_DATA.filter(row=>
+      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
+    );
+  }
+  showAll=false;
+  expandedGroups={};
+  renderList();
+}
+
+// ── RENDER LIST ───────────────────────────────────────────────────────────────
+function renderList(){
+  const groups=processData(currentData);
+  const total=currentData.length;
+  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
+  const container=document.getElementById('mainContent');
+  container.innerHTML='';
+
+  if(!currentData.length){
+    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    return;
+  }
+
+  if(!GROUP.field){
+    // No grouping — flat deck
+    const items=groups[0].items;
+    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    container.appendChild(renderDeckGrid(shown,null));
+    if(!showAll&&items.length>PREVIEW_COUNT){
+      const more=document.createElement('div');
+      more.className='show-more-row';
+      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      container.appendChild(more);
+    }
+  } else {
+    groups.forEach(({group,items})=>{
+      const key=group??'';
+      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      const collapsed=!expandedGroups[key];
+      const wrap=document.createElement('div');
+      wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      const hdr=document.createElement('div');
+      hdr.className='group-header';
+      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
+      hdr.style.cursor='pointer';
+      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+      const body=document.createElement('div');
+      body.className='group-items';
+      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+      body.appendChild(renderDeckGrid(shown,group));
+      if(!showAll&&items.length>PREVIEW_COUNT){
+        const more=document.createElement('div');
+        more.className='show-more-row';
+        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        body.appendChild(more);
+      }
+      wrap.appendChild(hdr);
+      wrap.appendChild(body);
+      container.appendChild(wrap);
+    });
+  }
+}
+
+function renderDeckGrid(items){
+  const grid=document.createElement('div');
+  grid.className='deck-grid';
+  items.forEach((row,i)=>{
+    grid.appendChild(renderDeckCard(row,i));
+  });
+  return grid;
+}
+
+function renderDeckCard(row,idx){
+  const card=document.createElement('div');
+  card.className='deck-card';
+  card.onclick=()=>showDetail(row);
+
+  // Image
+  if(DECK.image&&row[DECK.image]){
+    const img=document.createElement('img');
+    img.className='deck-card-img';
+    img.src=row[DECK.image];
+    img.alt='';
+    img.loading='lazy';
+    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
+    card.appendChild(img);
+  } else if(DECK.image){
+    card.appendChild(makePlaceholder());
+  }
+
+  const body=document.createElement('div');
+  body.className='deck-card-body';
+
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-primary';
+    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    body.appendChild(el);
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-secondary';
+    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    body.appendChild(el);
+  }
+  if(DECK.summary&&row[DECK.summary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-summary';
+    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
+    body.appendChild(el);
+  }
+  card.appendChild(body);
+
+  // URL icon overlay
+  if(DECK.url&&row[DECK.url]){
+    const a=document.createElement('a');
+    a.className='deck-card-url';
+    a.href=row[DECK.url];
+    a.target='_blank';
+    a.rel='noopener';
+    a.title='Open external link: '+row[DECK.url];
+    a.onclick=e=>{e.stopPropagation()};
+    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
+    card.appendChild(a);
+  }
+
+  return card;
+}
+
+function makePlaceholder(){
+  const el=document.createElement('div');
+  el.className='deck-card-img-placeholder';
+  el.textContent='🎵';
+  return el;
+}
+
+function fmtVal(field,val){
+  if(val===null||val===undefined)return '';
+  const t=getType(field,val);
+  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
+  if(t==='datetime')return fmtDateShort(val);
+  return String(val);
+}
+
+// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
+function showDetail(row){
+  document.getElementById('listView').classList.add('hidden');
+  const detail=document.getElementById('detailView');
+  detail.classList.add('visible');
+  document.getElementById('backBtn').classList.add('visible');
+  document.getElementById('viewLabel').textContent='Detail';
+  document.getElementById('recordCount').textContent='';
+
+  let html='';
+
+  // Hero image
+  if(DECK.image&&row[DECK.image]){
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+  } else {
+    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+  }
+
+  html+='<div class="detail-body">';
+
+  // Primary / secondary as title
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
+  }
+
+  // All fields table
+  html+='<div class="detail-fields">';
+  FIELDS.forEach(({name,type})=>{
+    const val=row[name];
+    if(val===null||val===undefined||val==='')return;
+    const rtype=getType(name,val);
+    let valueHtml='';
+    if(rtype==='image'){
+      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
+    } else if(rtype==='url'){
+      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
+    } else if(rtype==='number'){
+      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
+    } else if(rtype==='datetime'){
+      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
+    } else {
+      valueHtml=escHtml(String(val));
+    }
+    html+=`<div class="detail-field">
+      <div class="detail-field-label">${escHtml(name)}</div>
+      <div class="detail-field-value">${valueHtml}</div>
+    </div>`;
+  });
+  html+='</div></div>';
+
+  detail.innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+function showList(){
+  document.getElementById('listView').classList.remove('hidden');
+  document.getElementById('detailView').classList.remove('visible');
+  document.getElementById('detailView').innerHTML='';
+  document.getElementById('backBtn').classList.remove('visible');
+  document.getElementById('viewLabel').textContent=VIEW_NAME;
+  renderList();
+}
+
+// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderList();
+</script>
+</body>
+</html>
