@@ -1,5 +1,19 @@
 [
   {
+    "id": "calendar",
+    "name": "Calendar",
+    "file": "views/calendar.html",
+    "nav": "main",
+    "icon": "🗓️"
+  },
+  {
+    "id": "songs",
+    "name": "CharSongsts",
+    "file": "views/songs.html",
+    "nav": "main",
+    "icon": "📝"
+  },
+  {
     "id": "releases",
     "name": "Releases",
     "file": "views/releases.html",
@@ -7,39 +21,53 @@
     "icon": "💿"
   },
   {
-    "id": "merch",
-    "name": "Merch",
-    "file": "views/merch.html",
+    "id": "videos",
+    "name": "Videos",
+    "file": "views/videos.html",
     "nav": "main",
-    "icon": "🛍️"
+    "icon": "▶️"
+  },
+  {
+    "id": "okyuji",
+    "name": "Okyuji",
+    "file": "views/okyuji.html",
+    "nav": "main",
+    "icon": "🎤"
+  },
+  {
+    "id": "links",
+    "name": "links",
+    "file": "views/links.html",
+    "nav": "menu",
+    "icon": "🎸"
+  },
+  {
+    "id": "million",
+    "name": "Next Million",
+    "file": "views/million.html",
+    "nav": "menu",
+    "icon": "🎸"
+  },
+  {
+    "id": "tickets",
+    "name": "Tickets",
+    "file": "views/tickets.html",
+    "nav": "menu",
+    "icon": "🎸"
+  },
+  {
+    "id": "upcoming",
+    "name": "Upcoming",
+    "file": "views/upcoming.html",
+    "nav": "menu",
+    "icon": "🎸"
   },
   {
     "id": "charts",
     "name": "Charts",
     "file": "views/charts.html",
-    "nav": "main",
-    "icon": "https://cdn.jsdelivr.net/npm/lucide-static@0.441.0/icons/bar-chart-2.svg"
-  },
-  {
-    "id": "shows",
-    "name": "Shows",
-    "file": "views/shows.html",
-    "nav": "main",
-    "icon": "🎤"
-  },
-  {
-    "id": "members",
-    "name": "Members",
-    "file": "views/members.html",
     "nav": "menu",
     "icon": "🎸"
-  },
-  {
-    "id": "videos",
-    "name": "Videos",
-    "file": "views/videos.html",
-    "nav": "menu",
-    "icon": "🎬"
   },
   {
     "id": "about",

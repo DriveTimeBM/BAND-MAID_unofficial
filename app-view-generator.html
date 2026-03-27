@@ -38,14 +38,13 @@
   .config-section:last-child { border-bottom: none; }
   .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
 
-  /* UPLOAD ZONE */
-  .upload-zone { border: 1.5px dashed var(--border2); border-radius: var(--radius); padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
-  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: rgba(200,169,110,0.05); }
-  .upload-zone.has-file { border-color: var(--success); border-style: solid; background: rgba(34,197,94,0.04); }
-  .upload-icon { font-size: 24px; margin-bottom: 8px; }
-  .upload-text { color: var(--text2); font-size: 13px; }
-  .upload-name { color: var(--success); font-size: 13px; font-weight: 500; margin-top: 4px; }
-  #fileInput { display: none; }
+  /* FETCH STATUS */
+  .fetch-status { font-size: 12px; margin-top: 10px; padding: 8px 10px; border-radius: var(--radius); display: none; }
+  .fetch-status.loading { display: flex; align-items: center; gap: 8px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); }
+  .fetch-status.error   { display: block; color: #f87171; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); }
+  .fetch-status.success { display: block; color: #4ade80; background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.2); }
+  .fetch-spinner { width: 14px; height: 14px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: fspin 0.7s linear infinite; flex-shrink: 0; }
+  @keyframes fspin { to { transform: rotate(360deg); } }
 
   /* FORM ELEMENTS */
   .field-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
@@ -151,12 +150,16 @@
 
     <div class="config-section">
       <div class="section-label">1 · Data Source</div>
-      <div class="upload-zone" id="uploadZone">
-        <div class="upload-icon">📂</div>
-        <div class="upload-text">Drop JSON file or click to browse</div>
-        <div class="upload-name" id="uploadName" style="display:none"></div>
+      <div class="field-row">
+        <label>GitHub JSON URL (raw)</label>
+        <div style="display:flex;gap:6px">
+          <input type="text" id="jsonUrl" placeholder="https://raw.githubusercontent.com/..." style="flex:1">
+          <button class="btn btn-secondary" id="loadFieldsBtn" onclick="fetchAndAnalyze()" style="white-space:nowrap;padding:7px 12px">Load Fields</button>
+        </div>
       </div>
-      <input type="file" id="fileInput" accept=".json">
+      <div class="fetch-status" id="fetchStatus">
+        <div class="fetch-spinner"></div><span id="fetchStatusMsg">Fetching…</span>
+      </div>
       <div id="fieldTagsWrap" style="display:none; margin-top:12px;">
         <div style="font-size:11px; color:var(--text2); margin-bottom:6px;">Detected fields:</div>
         <div class="field-tags" id="fieldTags"></div>
@@ -168,10 +171,6 @@
       <div class="field-row">
         <label>View Name</label>
         <input type="text" id="viewName" class="view-name-input" placeholder="e.g. Releases, Merch, Charts">
-      </div>
-      <div class="field-row">
-        <label>GitHub JSON URL (raw)</label>
-        <input type="text" id="jsonUrl" placeholder="https://raw.githubusercontent.com/...">
       </div>
       <div class="field-row" style="margin-top:4px">
         <label>Data Refresh</label>
@@ -274,13 +273,13 @@
     <div class="output-content" id="outputContent">
       <div class="empty-state">
         <div class="empty-state-icon">⚙️</div>
-        <div class="empty-state-text">Upload a JSON file and configure the view, then click Generate.</div>
+        <div class="empty-state-text">Enter a JSON URL, click Load Fields, configure the view, then click Generate.</div>
       </div>
     </div>
 
     <div class="status-bar">
       <div class="status-dot" id="statusDot"></div>
-      <span id="statusText">Waiting for JSON file…</span>
+      <span id="statusText">Enter a JSON URL and click Load Fields…</span>
     </div>
   </div>
 
@@ -294,36 +293,51 @@ let detectedTypes = {};
 let generatedCode = '';
 let currentTab = 'preview';
 
-// ── UPLOAD ───────────────────────────────────────────────────────────────────
-const uploadZone = document.getElementById('uploadZone');
-const fileInput = document.getElementById('fileInput');
+// Allow Enter key in URL field to trigger load
+document.getElementById('jsonUrl').addEventListener('keydown', e => {
+  if (e.key === 'Enter') fetchAndAnalyze();
+});
 
-uploadZone.addEventListener('click', () => fileInput.click());
-uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
-uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
-uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('drag-over'); handleFile(e.dataTransfer.files[0]); });
-fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+// ── FETCH & ANALYZE ───────────────────────────────────────────────────────────
+async function fetchAndAnalyze() {
+  const url = document.getElementById('jsonUrl').value.trim();
+  if (!url) return setStatus('error', 'Enter a JSON URL first');
 
-function handleFile(file) {
-  if (!file || !file.name.endsWith('.json')) return setStatus('error', 'Please upload a .json file');
-  const reader = new FileReader();
-  reader.onload = e => {
-    try {
-      const parsed = JSON.parse(e.target.result);
-      jsonData = Array.isArray(parsed) ? parsed : (parsed.data || parsed.items || Object.values(parsed)[0] || []);
-      if (!jsonData.length) return setStatus('error', 'JSON array is empty');
-      analyzeFields();
-      uploadZone.classList.add('has-file');
-      document.getElementById('uploadName').style.display = 'block';
-      document.getElementById('uploadName').textContent = `✓ ${file.name} — ${jsonData.length.toLocaleString()} records`;
-      setStatus('ready', `Loaded ${jsonData.length.toLocaleString()} records · ${fields.length} fields detected`);
-      document.getElementById('generateBtn').disabled = false;
-      if (!document.getElementById('viewName').value) {
-        document.getElementById('viewName').value = file.name.replace('.json','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
-      }
-    } catch(err) { setStatus('error', 'Invalid JSON: ' + err.message); }
-  };
-  reader.readAsText(file);
+  setFetchStatus('loading', 'Fetching…');
+  document.getElementById('generateBtn').disabled = true;
+  document.getElementById('fieldTagsWrap').style.display = 'none';
+
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
+    const parsed = await res.json();
+    jsonData = Array.isArray(parsed) ? parsed : (parsed.data || parsed.items || Object.values(parsed)[0] || []);
+    if (!jsonData.length) throw new Error('JSON array is empty');
+
+    analyzeFields();
+    setFetchStatus('success', `✓ ${jsonData.length.toLocaleString()} records · ${fields.length} fields detected`);
+    setStatus('ready', `Loaded ${jsonData.length.toLocaleString()} records · ${fields.length} fields`);
+    document.getElementById('generateBtn').disabled = false;
+
+    // Auto-fill view name from URL filename if blank
+    if (!document.getElementById('viewName').value) {
+      const filename = url.split('/').pop().replace(/\.json.*$/, '');
+      document.getElementById('viewName').value = filename.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
+    }
+  } catch(err) {
+    setFetchStatus('error', `Error: ${err.message}`);
+    setStatus('error', err.message);
+  }
+}
+
+function setFetchStatus(state, msg) {
+  const el = document.getElementById('fetchStatus');
+  el.className = 'fetch-status ' + state;
+  if (state === 'loading') {
+    el.innerHTML = `<div class="fetch-spinner"></div><span>${msg}</span>`;
+  } else {
+    el.textContent = msg;
+  }
 }
 
 // ── FIELD ANALYSIS ────────────────────────────────────────────────────────────
