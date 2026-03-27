@@ -68,6 +68,7 @@
   .field-tag.type-number { border-color: #22c55e; color: #4ade80; }
   .field-tag.type-image { border-color: #f59e0b; color: #fbbf24; }
   .field-tag.type-url { border-color: #a855f7; color: #c084fc; }
+  .field-tag.type-datetime { border-color: #06b6d4; color: #22d3ee; }
 
   /* BUTTONS */
   .btn { padding: 9px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s; letter-spacing: 0.02em; }
@@ -296,11 +297,14 @@ function handleFile(file) {
 }
 
 // ── FIELD ANALYSIS ────────────────────────────────────────────────────────────
+const ISO_DT_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+
 function detectType(fieldName, samples) {
   const lc = fieldName.toLowerCase();
   if (lc.includes('image') || lc.includes('img') || lc.includes('photo') || lc.includes('picture') || lc.includes('thumbnail') || lc.includes('cover') || lc.includes('artwork')) return 'image';
   const nonNull = samples.filter(v => v !== null && v !== undefined && v !== '');
   if (!nonNull.length) return 'text';
+  if (nonNull.every(v => ISO_DT_RE.test(String(v)))) return 'datetime';
   if (nonNull.every(v => /^\d+$/.test(String(v)))) return 'number';
   if (nonNull.every(v => /^https?:\/\//i.test(String(v)))) return 'url';
   return 'text';
@@ -577,11 +581,28 @@ const PREVIEW_COUNT = 5;
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
 function isAllDigits(v){return /^\\d+$/.test(String(v))}
+const ISO_DT_RE=/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}/;
+function isDateTime(v){return ISO_DT_RE.test(String(v))}
+function fmtDateShort(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\\d{2}:\\d{2}$/)?v:v+'Z');
+    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  }catch(e){return String(v)}
+}
+function fmtDateFull(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\\d{2}:\\d{2}$/)?v:v+'Z');
+    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+  }catch(e){return String(v)}
+}
 function detectRuntime(fieldName,val){
   const lc=fieldName.toLowerCase();
   if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
-  if(val!==null&&val!==undefined&&val!==''&&/^https?:\\/\\//i.test(String(val)))return 'url';
-  if(isAllDigits(val))return 'number';
+  if(val!==null&&val!==undefined&&val!==''){
+    if(isDateTime(val))return 'datetime';
+    if(/^https?:\\/\\//i.test(String(val)))return 'url';
+    if(isAllDigits(val))return 'number';
+  }
   return 'text';
 }
 function getType(f,val){
@@ -767,6 +788,7 @@ function fmtVal(field,val){
   if(val===null||val===undefined)return '';
   const t=getType(field,val);
   if(t==='number'&&isAllDigits(val))return fmtNumber(val);
+  if(t==='datetime')return fmtDateShort(val);
   return String(val);
 }
 
@@ -811,6 +833,8 @@ function showDetail(row){
       valueHtml=\`<a class="detail-url-link" href="\${escAttr(String(val))}" target="_blank" rel="noopener">\${extIconSvg()}<span>\${escHtml(String(val))}</span></a>\`;
     } else if(rtype==='number'){
       valueHtml=\`<span class="number">\${fmtNumber(val)}</span>\`;
+    } else if(rtype==='datetime'){
+      valueHtml=\`<span style="color:var(--text)" title="\${escAttr(String(val))}">\${escHtml(fmtDateFull(val))}</span>\`;
     } else {
       valueHtml=escHtml(String(val));
     }
