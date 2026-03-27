@@ -1,0 +1,51 @@
+[
+  {
+    "id": "releases",
+    "name": "Releases",
+    "file": "views/releases.html",
+    "nav": "main",
+    "icon": "💿"
+  },
+  {
+    "id": "merch",
+    "name": "Merch",
+    "file": "views/merch.html",
+    "nav": "main",
+    "icon": "🛍️"
+  },
+  {
+    "id": "charts",
+    "name": "Charts",
+    "file": "views/charts.html",
+    "nav": "main",
+    "icon": "https://cdn.jsdelivr.net/npm/lucide-static@0.441.0/icons/bar-chart-2.svg"
+  },
+  {
+    "id": "shows",
+    "name": "Shows",
+    "file": "views/shows.html",
+    "nav": "main",
+    "icon": "🎤"
+  },
+  {
+    "id": "members",
+    "name": "Members",
+    "file": "views/members.html",
+    "nav": "menu",
+    "icon": "🎸"
+  },
+  {
+    "id": "videos",
+    "name": "Videos",
+    "file": "views/videos.html",
+    "nav": "menu",
+    "icon": "🎬"
+  },
+  {
+    "id": "about",
+    "name": "About",
+    "file": "views/about.html",
+    "nav": "menu",
+    "icon": "ℹ️"
+  }
+]
