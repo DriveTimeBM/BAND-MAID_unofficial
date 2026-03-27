@@ -1,0 +1,833 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAND-MAID App — View Generator</title>
+<style>
+  :root {
+    --bg: #0a0a0a;
+    --bg2: #141414;
+    --bg3: #1c1c1c;
+    --border: #2a2a2a;
+    --border2: #3a3a3a;
+    --text: #f0f0f0;
+    --text2: #999;
+    --accent: #c8a96e;
+    --accent2: #8b5cf6;
+    --danger: #ef4444;
+    --success: #22c55e;
+    --radius: 6px;
+    --font: 'Segoe UI', system-ui, sans-serif;
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; min-height: 100vh; }
+
+  /* HEADER */
+  .app-header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 14px; }
+  .app-logo { width: 36px; height: 36px; background: #1a1a1a; border: 1px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
+  .app-title { font-size: 16px; font-weight: 600; letter-spacing: 0.04em; color: var(--text); }
+  .app-subtitle { font-size: 11px; color: var(--text2); margin-top: 1px; letter-spacing: 0.06em; text-transform: uppercase; }
+
+  /* MAIN LAYOUT */
+  .main { display: grid; grid-template-columns: 360px 1fr; height: calc(100vh - 57px); }
+
+  /* CONFIG PANEL */
+  .config-panel { background: var(--bg2); border-right: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; }
+  .config-section { border-bottom: 1px solid var(--border); padding: 16px; }
+  .config-section:last-child { border-bottom: none; }
+  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
+
+  /* UPLOAD ZONE */
+  .upload-zone { border: 1.5px dashed var(--border2); border-radius: var(--radius); padding: 20px; text-align: center; cursor: pointer; transition: border-color 0.2s, background 0.2s; }
+  .upload-zone:hover, .upload-zone.drag-over { border-color: var(--accent); background: rgba(200,169,110,0.05); }
+  .upload-zone.has-file { border-color: var(--success); border-style: solid; background: rgba(34,197,94,0.04); }
+  .upload-icon { font-size: 24px; margin-bottom: 8px; }
+  .upload-text { color: var(--text2); font-size: 13px; }
+  .upload-name { color: var(--success); font-size: 13px; font-weight: 500; margin-top: 4px; }
+  #fileInput { display: none; }
+
+  /* FORM ELEMENTS */
+  .field-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
+  .field-row:last-child { margin-bottom: 0; }
+  label { font-size: 12px; color: var(--text2); }
+  select, input[type="text"] {
+    background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
+    color: var(--text); padding: 7px 10px; font-size: 13px; font-family: var(--font); width: 100%;
+    outline: none; transition: border-color 0.15s;
+  }
+  select:focus, input:focus { border-color: var(--accent); }
+  select option { background: #1c1c1c; }
+  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
+  .row-field { display: flex; flex-direction: column; gap: 4px; }
+
+  /* FIELD TAGS */
+  .field-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+  .field-tag { background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--text2); cursor: default; }
+  .field-tag.type-text { border-color: #3b82f6; color: #60a5fa; }
+  .field-tag.type-number { border-color: #22c55e; color: #4ade80; }
+  .field-tag.type-image { border-color: #f59e0b; color: #fbbf24; }
+  .field-tag.type-url { border-color: #a855f7; color: #c084fc; }
+
+  /* BUTTONS */
+  .btn { padding: 9px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s; letter-spacing: 0.02em; }
+  .btn:active { transform: scale(0.97); }
+  .btn-primary { background: var(--accent); color: #0a0a0a; width: 100%; }
+  .btn-primary:hover { opacity: 0.88; }
+  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
+  .btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
+  .btn-secondary:hover { border-color: var(--border2); }
+
+  /* OUTPUT PANEL */
+  .output-panel { background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
+  .output-toolbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
+  .output-toolbar-title { font-size: 12px; color: var(--text2); flex: 1; letter-spacing: 0.04em; }
+  .output-tabs { display: flex; gap: 2px; }
+  .tab { padding: 5px 12px; border-radius: var(--radius); font-size: 12px; cursor: pointer; color: var(--text2); border: 1px solid transparent; transition: all 0.15s; }
+  .tab.active { background: var(--bg3); color: var(--text); border-color: var(--border); }
+  .tab:hover:not(.active) { color: var(--text); }
+  .output-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
+
+  /* PREVIEW FRAME */
+  #previewFrame { flex: 1; border: none; background: #0a0a0a; display: block; }
+
+  /* CODE VIEW */
+  .code-wrapper { flex: 1; overflow: auto; position: relative; }
+  pre { background: var(--bg2); padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; line-height: 1.6; color: #d4d4d4; white-space: pre-wrap; word-break: break-all; min-height: 100%; }
+  .copy-btn { position: absolute; top: 12px; right: 12px; }
+  .copy-btn.copied { background: var(--success); color: #000; border-color: var(--success); }
+
+  /* STATUS */
+  .status-bar { padding: 8px 16px; font-size: 11px; color: var(--text2); border-top: 1px solid var(--border); background: var(--bg2); display: flex; align-items: center; gap: 8px; }
+  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); flex-shrink: 0; }
+  .status-dot.ready { background: var(--success); }
+  .status-dot.error { background: var(--danger); }
+
+  /* EMPTY STATE */
+  .empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text2); }
+  .empty-state-icon { font-size: 40px; opacity: 0.3; }
+  .empty-state-text { font-size: 13px; text-align: center; max-width: 240px; line-height: 1.6; }
+
+  /* VIEW NAME */
+  .view-name-input { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); padding: 7px 10px; font-size: 13px; width: 100%; font-family: var(--font); outline: none; }
+  .view-name-input:focus { border-color: var(--accent); }
+
+  /* RECORD COUNT BADGE */
+  .record-badge { display: inline-flex; align-items: center; background: rgba(200,169,110,0.12); border: 1px solid rgba(200,169,110,0.3); border-radius: 20px; padding: 2px 8px; font-size: 11px; color: var(--accent); margin-left: 8px; }
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo">🎸</div>
+  <div>
+    <div class="app-title">BAND-MAID Unofficial</div>
+    <div class="app-subtitle">View Code Generator</div>
+  </div>
+</div>
+
+<div class="main">
+
+  <!-- CONFIG PANEL -->
+  <div class="config-panel">
+
+    <div class="config-section">
+      <div class="section-label">1 · Data Source</div>
+      <div class="upload-zone" id="uploadZone">
+        <div class="upload-icon">📂</div>
+        <div class="upload-text">Drop JSON file or click to browse</div>
+        <div class="upload-name" id="uploadName" style="display:none"></div>
+      </div>
+      <input type="file" id="fileInput" accept=".json">
+      <div id="fieldTagsWrap" style="display:none; margin-top:12px;">
+        <div style="font-size:11px; color:var(--text2); margin-bottom:6px;">Detected fields:</div>
+        <div class="field-tags" id="fieldTags"></div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <div class="section-label">2 · View Identity</div>
+      <div class="field-row">
+        <label>View Name</label>
+        <input type="text" id="viewName" class="view-name-input" placeholder="e.g. Releases, Merch, Charts">
+      </div>
+      <div class="field-row">
+        <label>GitHub JSON URL (raw)</label>
+        <input type="text" id="jsonUrl" placeholder="https://raw.githubusercontent.com/...">
+      </div>
+    </div>
+
+    <div class="config-section">
+      <div class="section-label">3 · Deck Card Fields</div>
+      <div class="field-row">
+        <label>Main Image</label>
+        <select id="fImage"><option value="">— none —</option></select>
+      </div>
+      <div class="field-row">
+        <label>Primary Header</label>
+        <select id="fPrimary"><option value="">— none —</option></select>
+      </div>
+      <div class="field-row">
+        <label>Secondary Header</label>
+        <select id="fSecondary"><option value="">— none —</option></select>
+      </div>
+      <div class="field-row">
+        <label>Summary Column</label>
+        <select id="fSummary"><option value="">— none —</option></select>
+      </div>
+      <div class="field-row">
+        <label>URL Field</label>
+        <select id="fUrl"><option value="">— none —</option></select>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <div class="section-label">4 · Sort</div>
+      <div class="row-2">
+        <div class="row-field">
+          <label>Sort By</label>
+          <select id="sortField"><option value="">— none —</option></select>
+        </div>
+        <div class="row-field">
+          <label>Direction</label>
+          <select id="sortDir">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <div class="section-label">5 · Group</div>
+      <div class="row-2">
+        <div class="row-field">
+          <label>Group By</label>
+          <select id="groupField"><option value="">— none —</option></select>
+        </div>
+        <div class="row-field">
+          <label>Direction</label>
+          <select id="groupDir">
+            <option value="asc">Ascending</option>
+            <option value="desc">Descending</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <div class="config-section">
+      <button class="btn btn-primary" id="generateBtn" disabled>Generate View Code</button>
+    </div>
+
+  </div><!-- /config-panel -->
+
+  <!-- OUTPUT PANEL -->
+  <div class="output-panel">
+    <div class="output-toolbar">
+      <span class="output-toolbar-title" id="outputTitle">No view generated yet</span>
+      <div class="output-tabs">
+        <div class="tab active" id="tabPreview" onclick="switchTab('preview')">Preview</div>
+        <div class="tab" id="tabCode" onclick="switchTab('code')">HTML</div>
+      </div>
+      <button class="btn btn-secondary copy-btn" id="copyBtn" onclick="copyCode()" style="display:none">Copy</button>
+    </div>
+
+    <div class="output-content" id="outputContent">
+      <div class="empty-state">
+        <div class="empty-state-icon">⚙️</div>
+        <div class="empty-state-text">Upload a JSON file and configure the view, then click Generate.</div>
+      </div>
+    </div>
+
+    <div class="status-bar">
+      <div class="status-dot" id="statusDot"></div>
+      <span id="statusText">Waiting for JSON file…</span>
+    </div>
+  </div>
+
+</div><!-- /main -->
+
+<script>
+// ── STATE ────────────────────────────────────────────────────────────────────
+let jsonData = [];
+let fields = [];
+let detectedTypes = {};
+let generatedCode = '';
+let currentTab = 'preview';
+
+// ── UPLOAD ───────────────────────────────────────────────────────────────────
+const uploadZone = document.getElementById('uploadZone');
+const fileInput = document.getElementById('fileInput');
+
+uploadZone.addEventListener('click', () => fileInput.click());
+uploadZone.addEventListener('dragover', e => { e.preventDefault(); uploadZone.classList.add('drag-over'); });
+uploadZone.addEventListener('dragleave', () => uploadZone.classList.remove('drag-over'));
+uploadZone.addEventListener('drop', e => { e.preventDefault(); uploadZone.classList.remove('drag-over'); handleFile(e.dataTransfer.files[0]); });
+fileInput.addEventListener('change', e => handleFile(e.target.files[0]));
+
+function handleFile(file) {
+  if (!file || !file.name.endsWith('.json')) return setStatus('error', 'Please upload a .json file');
+  const reader = new FileReader();
+  reader.onload = e => {
+    try {
+      const parsed = JSON.parse(e.target.result);
+      jsonData = Array.isArray(parsed) ? parsed : (parsed.data || parsed.items || Object.values(parsed)[0] || []);
+      if (!jsonData.length) return setStatus('error', 'JSON array is empty');
+      analyzeFields();
+      uploadZone.classList.add('has-file');
+      document.getElementById('uploadName').style.display = 'block';
+      document.getElementById('uploadName').textContent = `✓ ${file.name} — ${jsonData.length.toLocaleString()} records`;
+      setStatus('ready', `Loaded ${jsonData.length.toLocaleString()} records · ${fields.length} fields detected`);
+      document.getElementById('generateBtn').disabled = false;
+      if (!document.getElementById('viewName').value) {
+        document.getElementById('viewName').value = file.name.replace('.json','').replace(/[-_]/g,' ').replace(/\b\w/g,c=>c.toUpperCase());
+      }
+    } catch(err) { setStatus('error', 'Invalid JSON: ' + err.message); }
+  };
+  reader.readAsText(file);
+}
+
+// ── FIELD ANALYSIS ────────────────────────────────────────────────────────────
+function detectType(fieldName, samples) {
+  const lc = fieldName.toLowerCase();
+  if (lc.includes('image') || lc.includes('img') || lc.includes('photo') || lc.includes('picture') || lc.includes('thumbnail') || lc.includes('cover') || lc.includes('artwork')) return 'image';
+  const nonNull = samples.filter(v => v !== null && v !== undefined && v !== '');
+  if (!nonNull.length) return 'text';
+  if (nonNull.every(v => /^\d+$/.test(String(v)))) return 'number';
+  if (nonNull.every(v => /^https?:\/\//i.test(String(v)))) return 'url';
+  return 'text';
+}
+
+function analyzeFields() {
+  const sample = jsonData.slice(0, 20);
+  fields = Object.keys(jsonData[0]);
+  detectedTypes = {};
+  fields.forEach(f => {
+    const vals = sample.map(r => r[f]);
+    detectedTypes[f] = detectType(f, vals);
+  });
+  renderFieldTags();
+  populateSelects();
+  autoAssignFields();
+}
+
+function renderFieldTags() {
+  const wrap = document.getElementById('fieldTagsWrap');
+  const container = document.getElementById('fieldTags');
+  wrap.style.display = 'block';
+  container.innerHTML = fields.map(f =>
+    `<span class="field-tag type-${detectedTypes[f]}" title="${detectedTypes[f]}">${f}</span>`
+  ).join('');
+}
+
+function populateSelects() {
+  const selectIds = ['fImage','fPrimary','fSecondary','fSummary','fUrl','sortField','groupField'];
+  selectIds.forEach(id => {
+    const sel = document.getElementById(id);
+    const cur = sel.value;
+    sel.innerHTML = '<option value="">— none —</option>';
+    const typeFilter = id === 'fImage' ? ['image','url'] :
+                       id === 'fUrl' ? ['url'] : null;
+    fields.forEach(f => {
+      if (typeFilter && !typeFilter.includes(detectedTypes[f])) return;
+      if (id === 'fUrl' && detectedTypes[f] !== 'url') return;
+      const opt = document.createElement('option');
+      opt.value = f;
+      opt.textContent = `${f} (${detectedTypes[f]})`;
+      sel.appendChild(opt);
+    });
+    if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
+  });
+}
+
+function autoAssignFields() {
+  // Auto-detect image
+  const imgField = fields.find(f => detectedTypes[f] === 'image');
+  if (imgField) document.getElementById('fImage').value = imgField;
+  // Auto-detect URL
+  const urlField = fields.find(f => detectedTypes[f] === 'url' && detectedTypes[f] !== 'image');
+  if (urlField) document.getElementById('fUrl').value = urlField;
+  // Primary header: first text field
+  const textFields = fields.filter(f => detectedTypes[f] === 'text');
+  if (textFields[0]) document.getElementById('fPrimary').value = textFields[0];
+  if (textFields[1]) document.getElementById('fSecondary').value = textFields[1];
+}
+
+// ── GENERATE ─────────────────────────────────────────────────────────────────
+document.getElementById('generateBtn').addEventListener('click', () => {
+  const cfg = {
+    viewName:   document.getElementById('viewName').value || 'Data View',
+    jsonUrl:    document.getElementById('jsonUrl').value.trim(),
+    fImage:     document.getElementById('fImage').value,
+    fPrimary:   document.getElementById('fPrimary').value,
+    fSecondary: document.getElementById('fSecondary').value,
+    fSummary:   document.getElementById('fSummary').value,
+    fUrl:       document.getElementById('fUrl').value,
+    sortField:  document.getElementById('sortField').value,
+    sortDir:    document.getElementById('sortDir').value,
+    groupField: document.getElementById('groupField').value,
+    groupDir:   document.getElementById('groupDir').value,
+    fields,
+    types: detectedTypes,
+  };
+  generatedCode = buildViewCode(cfg, jsonData);
+  renderOutput();
+  document.getElementById('outputTitle').textContent = cfg.viewName;
+  document.getElementById('copyBtn').style.display = '';
+  setStatus('ready', `View "${cfg.viewName}" generated · ${jsonData.length.toLocaleString()} records`);
+});
+
+// ── RENDER OUTPUT ─────────────────────────────────────────────────────────────
+function renderOutput() {
+  const content = document.getElementById('outputContent');
+  if (currentTab === 'preview') {
+    content.innerHTML = '<iframe id="previewFrame"></iframe>';
+    const iframe = document.getElementById('previewFrame');
+    iframe.style.cssText = 'flex:1;border:none;width:100%;height:100%;display:block;';
+    const doc = iframe.contentDocument || iframe.contentWindow.document;
+    doc.open(); doc.write(generatedCode); doc.close();
+  } else {
+    content.innerHTML = `<div class="code-wrapper"><pre id="codeBlock">${escHtml(generatedCode)}</pre></div>`;
+  }
+}
+
+function switchTab(tab) {
+  currentTab = tab;
+  document.getElementById('tabPreview').classList.toggle('active', tab === 'preview');
+  document.getElementById('tabCode').classList.toggle('active', tab === 'code');
+  if (generatedCode) renderOutput();
+}
+
+function copyCode() {
+  navigator.clipboard.writeText(generatedCode).then(() => {
+    const btn = document.getElementById('copyBtn');
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function setStatus(state, msg) {
+  const dot = document.getElementById('statusDot');
+  dot.className = 'status-dot' + (state === 'ready' ? ' ready' : state === 'error' ? ' error' : '');
+  document.getElementById('statusText').textContent = msg;
+}
+
+// ── CODE BUILDER ──────────────────────────────────────────────────────────────
+function buildViewCode(cfg, data) {
+  // Inline JSON data — in production this becomes a fetch() from cfg.jsonUrl
+  const dataJson = JSON.stringify(data).replace(/<\/script>/gi,'<\\/script>');
+
+  const allFields = cfg.fields;
+  const types = cfg.types;
+
+  // Build field metadata for the generated view
+  const fieldsMeta = allFields.map(f => ({ name: f, type: types[f] }));
+
+  // Determine which fields show in deck card (ordered)
+  const deckConfig = {
+    image:     cfg.fImage     || null,
+    primary:   cfg.fPrimary   || null,
+    secondary: cfg.fSecondary || null,
+    summary:   cfg.fSummary   || null,
+    url:       cfg.fUrl       || null,
+  };
+
+  const sortCfg   = { field: cfg.sortField,  dir: cfg.sortDir };
+  const groupCfg  = { field: cfg.groupField, dir: cfg.groupDir };
+  const viewName  = cfg.viewName;
+
+  return `<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>BAND-MAID Unofficial · ${viewName}</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#666;
+  --accent:#c8a96e;--accent2:#8b5cf6;
+  --danger:#ef4444;--success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+
+/* APP HEADER */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
+.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
+.back-btn:hover{border-color:var(--border2);color:var(--text)}
+.back-btn.visible{display:flex}
+.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+
+/* SEARCH BAR */
+.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+.search-input:focus{border-color:var(--accent)}
+
+/* GROUP HEADER */
+.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
+.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
+.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
+.group-collapsed .group-items{display:none}
+.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
+.group-collapsed .group-chevron{transform:rotate(-90deg)}
+
+/* DECK GRID */
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid.no-group{margin:0}
+
+/* DECK CARD */
+.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.deck-card:hover{background:var(--bg3)}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
+.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
+.deck-card-url{position:absolute;top:8px;right:8px}
+.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
+.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
+.ext-icon svg{width:11px;height:11px}
+
+/* SHOW MORE */
+.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
+.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
+.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* DETAIL VIEW */
+.detail-view{display:none;min-height:calc(100vh - 57px)}
+.detail-view.visible{display:block}
+.list-view{display:block}
+.list-view.hidden{display:none}
+.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
+.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
+.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
+.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
+.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
+.detail-fields{display:flex;flex-direction:column;gap:0}
+.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.detail-field:last-child{border-bottom:none}
+.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
+.detail-url-link:hover{text-decoration:underline}
+.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+
+/* UTIL */
+.hidden{display:none}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<div class="app-header">
+  <div class="app-logo">🎸</div>
+  <div>
+    <div class="app-nav-title">BAND-MAID Unofficial</div>
+    <div class="view-label" id="viewLabel">${viewName}</div>
+  </div>
+  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
+  <div class="record-count" id="recordCount"></div>
+</div>
+
+<!-- LIST VIEW -->
+<div id="listView" class="list-view">
+  <div class="search-bar">
+    <input class="search-input" type="search" placeholder="Search ${viewName}…" id="searchInput" oninput="onSearch()">
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detailView" class="detail-view"></div>
+
+<script>
+const RAW_DATA = ${dataJson};
+const FIELDS = ${JSON.stringify(fieldsMeta)};
+const DECK = ${JSON.stringify(deckConfig)};
+const SORT = ${JSON.stringify(sortCfg)};
+const GROUP = ${JSON.stringify(groupCfg)};
+const VIEW_NAME = ${JSON.stringify(viewName)};
+const PREVIEW_COUNT = 5;
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function fmtNumber(v){return parseInt(v,10).toLocaleString()}
+function isAllDigits(v){return /^\\d+$/.test(String(v))}
+function detectRuntime(fieldName,val){
+  const lc=fieldName.toLowerCase();
+  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
+  if(val!==null&&val!==undefined&&val!==''&&/^https?:\\/\\//i.test(String(val)))return 'url';
+  if(isAllDigits(val))return 'number';
+  return 'text';
+}
+function getType(f,val){
+  const meta=FIELDS.find(x=>x.name===f);
+  if(meta)return meta.type;
+  return detectRuntime(f,val);
+}
+function extIconSvg(){
+  return \`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>\`;
+}
+
+// ── SORT / GROUP ──────────────────────────────────────────────────────────────
+function processData(data){
+  let d=[...data];
+  if(SORT.field){
+    d.sort((a,b)=>{
+      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
+      const an=isAllDigits(av);const bn=isAllDigits(bv);
+      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
+      return SORT.dir==='desc'?-cmp:cmp;
+    });
+  }
+  if(!GROUP.field) return [{group:null,items:d}];
+  const map=new Map();
+  d.forEach(row=>{
+    const g=String(row[GROUP.field]??'');
+    if(!map.has(g))map.set(g,[]);
+    map.get(g).push(row);
+  });
+  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
+  groups.sort((a,b)=>{
+    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
+    return GROUP.dir==='desc'?-cmp:cmp;
+  });
+  return groups;
+}
+
+// ── SEARCH ───────────────────────────────────────────────────────────────────
+let expandedGroups={};
+let showAll=false;
+let currentData=RAW_DATA;
+
+function onSearch(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!q){currentData=RAW_DATA;}
+  else{
+    currentData=RAW_DATA.filter(row=>
+      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
+    );
+  }
+  showAll=false;
+  expandedGroups={};
+  renderList();
+}
+
+// ── RENDER LIST ───────────────────────────────────────────────────────────────
+function renderList(){
+  const groups=processData(currentData);
+  const total=currentData.length;
+  document.getElementById('recordCount').textContent=\`\${total.toLocaleString()} record\${total!==1?'s':''}\`;
+  const container=document.getElementById('mainContent');
+  container.innerHTML='';
+
+  if(!currentData.length){
+    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    return;
+  }
+
+  if(!GROUP.field){
+    // No grouping — flat deck
+    const items=groups[0].items;
+    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    container.appendChild(renderDeckGrid(shown,null));
+    if(!showAll&&items.length>PREVIEW_COUNT){
+      const more=document.createElement('div');
+      more.className='show-more-row';
+      more.innerHTML=\`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all \${items.length.toLocaleString()} records ↓</button>\`;
+      container.appendChild(more);
+    }
+  } else {
+    groups.forEach(({group,items})=>{
+      const key=group??'';
+      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      const collapsed=!expandedGroups[key];
+      const wrap=document.createElement('div');
+      wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      const hdr=document.createElement('div');
+      hdr.className='group-header';
+      hdr.innerHTML=\`<span class="group-name">\${escHtml(group??'(blank)')}</span><span class="group-count">\${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>\`;
+      hdr.style.cursor='pointer';
+      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+      const body=document.createElement('div');
+      body.className='group-items';
+      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+      body.appendChild(renderDeckGrid(shown,group));
+      if(!showAll&&items.length>PREVIEW_COUNT){
+        const more=document.createElement('div');
+        more.className='show-more-row';
+        more.innerHTML=\`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all \${items.length.toLocaleString()} ↓</button>\`;
+        body.appendChild(more);
+      }
+      wrap.appendChild(hdr);
+      wrap.appendChild(body);
+      container.appendChild(wrap);
+    });
+  }
+}
+
+function renderDeckGrid(items){
+  const grid=document.createElement('div');
+  grid.className='deck-grid';
+  items.forEach((row,i)=>{
+    grid.appendChild(renderDeckCard(row,i));
+  });
+  return grid;
+}
+
+function renderDeckCard(row,idx){
+  const card=document.createElement('div');
+  card.className='deck-card';
+  card.onclick=()=>showDetail(row);
+
+  // Image
+  if(DECK.image&&row[DECK.image]){
+    const img=document.createElement('img');
+    img.className='deck-card-img';
+    img.src=row[DECK.image];
+    img.alt='';
+    img.loading='lazy';
+    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
+    card.appendChild(img);
+  } else if(DECK.image){
+    card.appendChild(makePlaceholder());
+  }
+
+  const body=document.createElement('div');
+  body.className='deck-card-body';
+
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-primary';
+    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    body.appendChild(el);
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-secondary';
+    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    body.appendChild(el);
+  }
+  if(DECK.summary&&row[DECK.summary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-summary';
+    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
+    body.appendChild(el);
+  }
+  card.appendChild(body);
+
+  // URL icon overlay
+  if(DECK.url&&row[DECK.url]){
+    const a=document.createElement('a');
+    a.className='deck-card-url';
+    a.href=row[DECK.url];
+    a.target='_blank';
+    a.rel='noopener';
+    a.title='Open external link: '+row[DECK.url];
+    a.onclick=e=>{e.stopPropagation()};
+    a.innerHTML=\`<span class="ext-icon">\${extIconSvg()}</span>\`;
+    card.appendChild(a);
+  }
+
+  return card;
+}
+
+function makePlaceholder(){
+  const el=document.createElement('div');
+  el.className='deck-card-img-placeholder';
+  el.textContent='🎵';
+  return el;
+}
+
+function fmtVal(field,val){
+  if(val===null||val===undefined)return '';
+  const t=getType(field,val);
+  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
+  return String(val);
+}
+
+// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
+function showDetail(row){
+  document.getElementById('listView').classList.add('hidden');
+  const detail=document.getElementById('detailView');
+  detail.classList.add('visible');
+  document.getElementById('backBtn').classList.add('visible');
+  document.getElementById('viewLabel').textContent='Detail';
+  document.getElementById('recordCount').textContent='';
+
+  let html='';
+
+  // Hero image
+  if(DECK.image&&row[DECK.image]){
+    html+=\`<img class="detail-hero" src="\${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">\`;
+  } else {
+    html+=\`<div class="detail-hero-placeholder">🎵</div>\`;
+  }
+
+  html+='<div class="detail-body">';
+
+  // Primary / secondary as title
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    html+=\`<div class="detail-primary">\${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>\`;
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    html+=\`<div class="detail-secondary">\${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>\`;
+  }
+
+  // All fields table
+  html+='<div class="detail-fields">';
+  FIELDS.forEach(({name,type})=>{
+    const val=row[name];
+    if(val===null||val===undefined||val==='')return;
+    const rtype=getType(name,val);
+    let valueHtml='';
+    if(rtype==='image'){
+      valueHtml=\`<img src="\${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">\`;
+    } else if(rtype==='url'){
+      valueHtml=\`<a class="detail-url-link" href="\${escAttr(String(val))}" target="_blank" rel="noopener">\${extIconSvg()}<span>\${escHtml(String(val))}</span></a>\`;
+    } else if(rtype==='number'){
+      valueHtml=\`<span class="number">\${fmtNumber(val)}</span>\`;
+    } else {
+      valueHtml=escHtml(String(val));
+    }
+    html+=\`<div class="detail-field">
+      <div class="detail-field-label">\${escHtml(name)}</div>
+      <div class="detail-field-value">\${valueHtml}</div>
+    </div>\`;
+  });
+  html+='</div></div>';
+
+  detail.innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+function showList(){
+  document.getElementById('listView').classList.remove('hidden');
+  document.getElementById('detailView').classList.remove('visible');
+  document.getElementById('detailView').innerHTML='';
+  document.getElementById('backBtn').classList.remove('visible');
+  document.getElementById('viewLabel').textContent=VIEW_NAME;
+  renderList();
+}
+
+// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+renderList();
+<\/script>
+</body>
+</html>`;
+}
+</script>
+</body>
+</html>
