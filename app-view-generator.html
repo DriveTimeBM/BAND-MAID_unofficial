@@ -2,532 +2,8 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>BAND-MAID App — View Generator</title>
-<style>
-  :root {
-    --bg: #0a0a0a;
-    --bg2: #141414;
-    --bg3: #1c1c1c;
-    --border: #2a2a2a;
-    --border2: #3a3a3a;
-    --text: #f0f0f0;
-    --text2: #999;
-    --accent: #c8a96e;
-    --accent2: #8b5cf6;
-    --danger: #ef4444;
-    --success: #22c55e;
-    --radius: 6px;
-    --font: 'Segoe UI', system-ui, sans-serif;
-  }
-  * { box-sizing: border-box; margin: 0; padding: 0; }
-  body { background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; min-height: 100vh; }
-
-  /* HEADER */
-  .app-header { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 12px 20px; display: flex; align-items: center; gap: 14px; }
-  .app-logo { width: 36px; height: 36px; background: #1a1a1a; border: 1px solid var(--accent); border-radius: 6px; display: flex; align-items: center; justify-content: center; font-size: 18px; flex-shrink: 0; }
-  .app-title { font-size: 16px; font-weight: 600; letter-spacing: 0.04em; color: var(--text); }
-  .app-subtitle { font-size: 11px; color: var(--text2); margin-top: 1px; letter-spacing: 0.06em; text-transform: uppercase; }
-
-  /* MAIN LAYOUT */
-  .main { display: grid; grid-template-columns: 360px 1fr; height: calc(100vh - 57px); }
-
-  /* CONFIG PANEL */
-  .config-panel { background: var(--bg2); border-right: 1px solid var(--border); overflow-y: auto; display: flex; flex-direction: column; }
-  .config-section { border-bottom: 1px solid var(--border); padding: 16px; }
-  .config-section:last-child { border-bottom: none; }
-  .section-label { font-size: 10px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; color: var(--accent); margin-bottom: 12px; }
-
-  /* FETCH STATUS */
-  .fetch-status { font-size: 12px; margin-top: 10px; padding: 8px 10px; border-radius: var(--radius); display: none; }
-  .fetch-status.loading { display: flex; align-items: center; gap: 8px; color: var(--text2); background: var(--bg3); border: 1px solid var(--border); }
-  .fetch-status.error   { display: block; color: #f87171; background: rgba(239,68,68,0.08); border: 1px solid rgba(239,68,68,0.25); }
-  .fetch-status.success { display: block; color: #4ade80; background: rgba(34,197,94,0.07); border: 1px solid rgba(34,197,94,0.2); }
-  .fetch-spinner { width: 14px; height: 14px; border: 2px solid var(--border2); border-top-color: var(--accent); border-radius: 50%; animation: fspin 0.7s linear infinite; flex-shrink: 0; }
-  @keyframes fspin { to { transform: rotate(360deg); } }
-
-  /* FORM ELEMENTS */
-  .field-row { display: flex; flex-direction: column; gap: 4px; margin-bottom: 12px; }
-  .field-row:last-child { margin-bottom: 0; }
-  label { font-size: 12px; color: var(--text2); }
-  select, input[type="text"] {
-    background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius);
-    color: var(--text); padding: 7px 10px; font-size: 13px; font-family: var(--font); width: 100%;
-    outline: none; transition: border-color 0.15s;
-  }
-  select:focus, input:focus { border-color: var(--accent); }
-  select option { background: #1c1c1c; }
-  .row-2 { display: grid; grid-template-columns: 1fr 1fr; gap: 8px; }
-  .row-field { display: flex; flex-direction: column; gap: 4px; }
-
-  /* FIELD TAGS */
-  .field-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
-  .field-tag { background: var(--bg3); border: 1px solid var(--border); border-radius: 20px; padding: 3px 10px; font-size: 11px; color: var(--text2); cursor: default; }
-  .field-tag.type-text { border-color: #3b82f6; color: #60a5fa; }
-  .field-tag.type-number { border-color: #22c55e; color: #4ade80; }
-  .field-tag.type-image { border-color: #f59e0b; color: #fbbf24; }
-  .field-tag.type-url { border-color: #a855f7; color: #c084fc; }
-  .field-tag.type-datetime { border-color: #06b6d4; color: #22d3ee; }
-
-  /* BUTTONS */
-  .btn { padding: 9px 16px; border-radius: var(--radius); font-size: 13px; font-weight: 600; cursor: pointer; border: none; transition: opacity 0.15s, transform 0.1s; letter-spacing: 0.02em; }
-  .btn:active { transform: scale(0.97); }
-  .btn-primary { background: var(--accent); color: #0a0a0a; width: 100%; }
-  .btn-primary:hover { opacity: 0.88; }
-  .btn-primary:disabled { opacity: 0.35; cursor: not-allowed; transform: none; }
-  .btn-secondary { background: var(--bg3); color: var(--text); border: 1px solid var(--border); }
-  .btn-secondary:hover { border-color: var(--border2); }
-
-  /* OUTPUT PANEL */
-  .output-panel { background: var(--bg); display: flex; flex-direction: column; overflow: hidden; }
-  .output-toolbar { background: var(--bg2); border-bottom: 1px solid var(--border); padding: 10px 16px; display: flex; align-items: center; gap: 10px; }
-  .output-toolbar-title { font-size: 12px; color: var(--text2); flex: 1; letter-spacing: 0.04em; }
-  .output-tabs { display: flex; gap: 2px; }
-  .tab { padding: 5px 12px; border-radius: var(--radius); font-size: 12px; cursor: pointer; color: var(--text2); border: 1px solid transparent; transition: all 0.15s; }
-  .tab.active { background: var(--bg3); color: var(--text); border-color: var(--border); }
-  .tab:hover:not(.active) { color: var(--text); }
-  .output-content { flex: 1; overflow: hidden; display: flex; flex-direction: column; }
-
-  /* PREVIEW FRAME */
-  #previewFrame { flex: 1; border: none; background: #0a0a0a; display: block; }
-
-  /* CODE VIEW */
-  .code-wrapper { flex: 1; overflow: auto; position: relative; }
-  pre { background: var(--bg2); padding: 16px; font-family: 'Consolas', 'Monaco', monospace; font-size: 12px; line-height: 1.6; color: #d4d4d4; white-space: pre-wrap; word-break: break-all; min-height: 100%; }
-  .copy-btn { position: absolute; top: 12px; right: 12px; }
-  .copy-btn.copied { background: var(--success); color: #000; border-color: var(--success); }
-
-  /* STATUS */
-  .status-bar { padding: 8px 16px; font-size: 11px; color: var(--text2); border-top: 1px solid var(--border); background: var(--bg2); display: flex; align-items: center; gap: 8px; }
-  .status-dot { width: 6px; height: 6px; border-radius: 50%; background: var(--border2); flex-shrink: 0; }
-  .status-dot.ready { background: var(--success); }
-  .status-dot.error { background: var(--danger); }
-
-  /* EMPTY STATE */
-  .empty-state { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 12px; color: var(--text2); }
-  .empty-state-icon { font-size: 40px; opacity: 0.3; }
-  .empty-state-text { font-size: 13px; text-align: center; max-width: 240px; line-height: 1.6; }
-
-  .view-name-input { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); padding: 7px 10px; font-size: 13px; width: 100%; font-family: var(--font); outline: none; }
-  .view-name-input:focus { border-color: var(--accent); }
-
-  /* TOGGLE SWITCH */
-  .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
-  .toggle-label { font-size: 12px; color: var(--text2); flex: 1; line-height: 1.4; }
-  .toggle-label small { display: block; font-size: 11px; color: var(--text3); margin-top: 2px; }
-  .toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
-  .toggle input { opacity: 0; width: 0; height: 0; }
-  .toggle-track {
-    position: absolute; inset: 0; border-radius: 20px;
-    background: var(--border2); cursor: pointer; transition: background 0.2s;
-  }
-  .toggle-track::after {
-    content: ''; position: absolute; top: 3px; left: 3px;
-    width: 14px; height: 14px; border-radius: 50%;
-    background: var(--text2); transition: transform 0.2s, background 0.2s;
-  }
-  .toggle input:checked + .toggle-track { background: var(--accent); }
-  .toggle input:checked + .toggle-track::after { transform: translateX(16px); background: #0a0a0a; }
-
-  /* RECORD COUNT BADGE */
-  .record-badge { display: inline-flex; align-items: center; background: rgba(200,169,110,0.12); border: 1px solid rgba(200,169,110,0.3); border-radius: 20px; padding: 2px 8px; font-size: 11px; color: var(--accent); margin-left: 8px; }
-</style>
-</head>
-<body>
-
-<div class="app-header">
-  <div class="app-logo">🎸</div>
-  <div>
-    <div class="app-title">BAND-MAID Unofficial</div>
-    <div class="app-subtitle">View Code Generator</div>
-  </div>
-</div>
-
-<div class="main">
-
-  <!-- CONFIG PANEL -->
-  <div class="config-panel">
-
-    <div class="config-section">
-      <div class="section-label">1 · Data Source</div>
-      <div class="field-row">
-        <label>GitHub JSON URL (raw)</label>
-        <div style="display:flex;gap:6px">
-          <input type="text" id="jsonUrl" placeholder="https://raw.githubusercontent.com/..." style="flex:1">
-          <button class="btn btn-secondary" id="loadFieldsBtn" onclick="fetchAndAnalyze()" style="white-space:nowrap;padding:7px 12px">Load Fields</button>
-        </div>
-      </div>
-      <div class="fetch-status" id="fetchStatus">
-        <div class="fetch-spinner"></div><span id="fetchStatusMsg">Fetching…</span>
-      </div>
-      <div id="fieldTagsWrap" style="display:none; margin-top:12px;">
-        <div style="font-size:11px; color:var(--text2); margin-bottom:6px;">Detected fields:</div>
-        <div class="field-tags" id="fieldTags"></div>
-      </div>
-    </div>
-
-    <div class="config-section">
-      <div class="section-label">2 · View Identity</div>
-      <div class="field-row">
-        <label>View Name</label>
-        <input type="text" id="viewName" class="view-name-input" placeholder="e.g. Releases, Merch, Charts">
-      </div>
-      <div class="field-row" style="margin-top:4px">
-        <label>Data Refresh</label>
-        <div class="toggle-row">
-          <label class="toggle" title="Always fresh: fetch JSON every time the view is opened">
-            <input type="checkbox" id="alwaysFresh">
-            <div class="toggle-track"></div>
-          </label>
-          <div class="toggle-label">
-            Always fresh
-            <small id="refreshHint">Off — cached for 24 hours per session</small>
-          </div>
-        </div>
-      </div>
-      <div class="field-row">
-        <label>Logo Character (unicode / emoji)</label>
-        <div style="display:flex;gap:8px;align-items:center">
-          <input type="text" id="logoChar" placeholder="🎸" maxlength="4" style="width:72px;text-align:center;font-size:20px;padding:4px 8px" oninput="updateLogoPreview()">
-          <div id="logoPreview" style="width:36px;height:36px;background:#1a1a1a;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎸</div>
-          <span style="font-size:11px;color:var(--text2);line-height:1.4">Paste any emoji<br>or unicode char</span>
-        </div>
-      </div>
-    </div>
-
-    <div class="config-section">
-      <div class="section-label">3 · Deck Card Fields</div>
-      <div class="field-row">
-        <label>Main Image</label>
-        <select id="fImage"><option value="">— none —</option></select>
-      </div>
-      <div class="field-row">
-        <label>Primary Header</label>
-        <select id="fPrimary"><option value="">— none —</option></select>
-      </div>
-      <div class="field-row">
-        <label>Secondary Header</label>
-        <select id="fSecondary"><option value="">— none —</option></select>
-      </div>
-      <div class="field-row">
-        <label>Summary Column</label>
-        <select id="fSummary"><option value="">— none —</option></select>
-      </div>
-      <div class="field-row">
-        <label>URL Field</label>
-        <select id="fUrl"><option value="">— none —</option></select>
-      </div>
-    </div>
-
-    <div class="config-section">
-      <div class="section-label">4 · Sort</div>
-      <div class="row-2">
-        <div class="row-field">
-          <label>Sort By</label>
-          <select id="sortField"><option value="">— none —</option></select>
-        </div>
-        <div class="row-field">
-          <label>Direction</label>
-          <select id="sortDir">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="config-section">
-      <div class="section-label">5 · Group</div>
-      <div class="row-2">
-        <div class="row-field">
-          <label>Group By</label>
-          <select id="groupField"><option value="">— none —</option></select>
-        </div>
-        <div class="row-field">
-          <label>Direction</label>
-          <select id="groupDir">
-            <option value="asc">Ascending</option>
-            <option value="desc">Descending</option>
-          </select>
-        </div>
-      </div>
-    </div>
-
-    <div class="config-section">
-      <button class="btn btn-primary" id="generateBtn" disabled>Generate View Code</button>
-    </div>
-
-  </div><!-- /config-panel -->
-
-  <!-- OUTPUT PANEL -->
-  <div class="output-panel">
-    <div class="output-toolbar">
-      <span class="output-toolbar-title" id="outputTitle">No view generated yet</span>
-      <div class="output-tabs">
-        <div class="tab active" id="tabPreview" onclick="switchTab('preview')">Preview</div>
-        <div class="tab" id="tabCode" onclick="switchTab('code')">HTML</div>
-      </div>
-      <button class="btn btn-secondary copy-btn" id="copyBtn" onclick="copyCode()" style="display:none">Copy</button>
-    </div>
-
-    <div class="output-content" id="outputContent">
-      <div class="empty-state">
-        <div class="empty-state-icon">⚙️</div>
-        <div class="empty-state-text">Enter a JSON URL, click Load Fields, configure the view, then click Generate.</div>
-      </div>
-    </div>
-
-    <div class="status-bar">
-      <div class="status-dot" id="statusDot"></div>
-      <span id="statusText">Enter a JSON URL and click Load Fields…</span>
-    </div>
-  </div>
-
-</div><!-- /main -->
-
-<script>
-// ── STATE ────────────────────────────────────────────────────────────────────
-let jsonData = [];
-let fields = [];
-let detectedTypes = {};
-let generatedCode = '';
-let lastCfg = null;
-let currentTab = 'preview';
-
-// Allow Enter key in URL field to trigger load
-document.getElementById('jsonUrl').addEventListener('keydown', e => {
-  if (e.key === 'Enter') fetchAndAnalyze();
-});
-
-// ── FETCH & ANALYZE ───────────────────────────────────────────────────────────
-async function fetchAndAnalyze() {
-  let url = document.getElementById('jsonUrl').value.trim();
-  if (!url) return setStatus('error', 'Enter a JSON URL first');
-
-  // Auto-fix missing protocol
-  if (!/^https?:\/\//i.test(url)) {
-    url = 'https://' + url;
-    document.getElementById('jsonUrl').value = url;
-  }
-
-  setFetchStatus('loading', 'Fetching…');
-  document.getElementById('generateBtn').disabled = true;
-  document.getElementById('fieldTagsWrap').style.display = 'none';
-
-  try {
-    const res = await fetch(url);
-    if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
-    const parsed = await res.json();
-    jsonData = Array.isArray(parsed) ? parsed : (parsed.data || parsed.items || Object.values(parsed)[0] || []);
-    if (!jsonData.length) throw new Error('JSON array is empty');
-
-    analyzeFields();
-    setFetchStatus('success', `✓ ${jsonData.length.toLocaleString()} records · ${fields.length} fields detected`);
-    setStatus('ready', `Loaded ${jsonData.length.toLocaleString()} records · ${fields.length} fields`);
-    document.getElementById('generateBtn').disabled = false;
-
-    // Auto-fill view name from URL filename if blank
-    if (!document.getElementById('viewName').value) {
-      const filename = url.split('/').pop().replace(/\.json.*$/, '');
-      document.getElementById('viewName').value = filename.replace(/[-_]/g, ' ').replace(/\b\w/g, c => c.toUpperCase());
-    }
-  } catch(err) {
-    setFetchStatus('error', `Error: ${err.message}`);
-    setStatus('error', err.message);
-  }
-}
-
-function setFetchStatus(state, msg) {
-  const el = document.getElementById('fetchStatus');
-  el.className = 'fetch-status ' + state;
-  if (state === 'loading') {
-    el.innerHTML = `<div class="fetch-spinner"></div><span>${msg}</span>`;
-  } else {
-    el.textContent = msg;
-  }
-}
-
-// ── FIELD ANALYSIS ────────────────────────────────────────────────────────────
-const ISO_DT_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-
-function detectType(fieldName, samples) {
-  const lc = fieldName.toLowerCase();
-  if (lc.includes('image') || lc.includes('img') || lc.includes('photo') || lc.includes('picture') || lc.includes('thumbnail') || lc.includes('cover') || lc.includes('artwork')) return 'image';
-  const nonNull = samples.filter(v => v !== null && v !== undefined && v !== '');
-  if (!nonNull.length) return 'text';
-  if (nonNull.every(v => ISO_DT_RE.test(String(v)))) return 'datetime';
-  if (nonNull.every(v => /^\d+$/.test(String(v)))) return 'number';
-  if (nonNull.every(v => /^https?:\/\//i.test(String(v)))) return 'url';
-  return 'text';
-}
-
-function analyzeFields() {
-  const sample = jsonData.slice(0, 20);
-  fields = Object.keys(jsonData[0]);
-  detectedTypes = {};
-  fields.forEach(f => {
-    const vals = sample.map(r => r[f]);
-    detectedTypes[f] = detectType(f, vals);
-  });
-  renderFieldTags();
-  populateSelects();
-  autoAssignFields();
-}
-
-function renderFieldTags() {
-  const wrap = document.getElementById('fieldTagsWrap');
-  const container = document.getElementById('fieldTags');
-  wrap.style.display = 'block';
-  container.innerHTML = fields.map(f =>
-    `<span class="field-tag type-${detectedTypes[f]}" title="${detectedTypes[f]}">${f}</span>`
-  ).join('');
-}
-
-function populateSelects() {
-  const selectIds = ['fImage','fPrimary','fSecondary','fSummary','fUrl','sortField','groupField'];
-  selectIds.forEach(id => {
-    const sel = document.getElementById(id);
-    const cur = sel.value;
-    sel.innerHTML = '<option value="">— none —</option>';
-    const typeFilter = id === 'fImage' ? ['image','url'] :
-                       id === 'fUrl' ? ['url'] : null;
-    fields.forEach(f => {
-      if (typeFilter && !typeFilter.includes(detectedTypes[f])) return;
-      if (id === 'fUrl' && detectedTypes[f] !== 'url') return;
-      const opt = document.createElement('option');
-      opt.value = f;
-      opt.textContent = `${f} (${detectedTypes[f]})`;
-      sel.appendChild(opt);
-    });
-    if ([...sel.options].some(o => o.value === cur)) sel.value = cur;
-  });
-}
-
-function autoAssignFields() {
-  // Auto-detect image
-  const imgField = fields.find(f => detectedTypes[f] === 'image');
-  if (imgField) document.getElementById('fImage').value = imgField;
-  // Auto-detect URL
-  const urlField = fields.find(f => detectedTypes[f] === 'url' && detectedTypes[f] !== 'image');
-  if (urlField) document.getElementById('fUrl').value = urlField;
-  // Primary header: first text field
-  const textFields = fields.filter(f => detectedTypes[f] === 'text');
-  if (textFields[0]) document.getElementById('fPrimary').value = textFields[0];
-  if (textFields[1]) document.getElementById('fSecondary').value = textFields[1];
-}
-
-// ── GENERATE ─────────────────────────────────────────────────────────────────
-function updateLogoPreview() {
-  const val = document.getElementById('logoChar').value.trim();
-  document.getElementById('logoPreview').textContent = val || '🎸';
-}
-
-document.getElementById('alwaysFresh').addEventListener('change', function() {
-  document.getElementById('refreshHint').textContent = this.checked
-    ? 'On — fetches live JSON every time this view is opened'
-    : 'Off — cached for 24 hours per session';
-});
-
-document.getElementById('generateBtn').addEventListener('click', () => {
-  if (!jsonData.length) {
-    setStatus('error', 'No data loaded — click Load Fields first');
-    return;
-  }
-  const cfg = {
-    viewName:    document.getElementById('viewName').value || 'Data View',
-    jsonUrl:     document.getElementById('jsonUrl').value.trim(),
-    alwaysFresh: document.getElementById('alwaysFresh').checked,
-    logoChar:    document.getElementById('logoChar').value.trim() || '🎸',
-    fImage:     document.getElementById('fImage').value,
-    fPrimary:   document.getElementById('fPrimary').value,
-    fSecondary: document.getElementById('fSecondary').value,
-    fSummary:   document.getElementById('fSummary').value,
-    fUrl:       document.getElementById('fUrl').value,
-    sortField:  document.getElementById('sortField').value,
-    sortDir:    document.getElementById('sortDir').value,
-    groupField: document.getElementById('groupField').value,
-    groupDir:   document.getElementById('groupDir').value,
-    fields,
-    types: detectedTypes,
-  };
-  lastCfg = cfg;
-  generatedCode = buildViewCode(cfg, null);  // output file: no embedded data, fetches live
-  renderOutput();
-  document.getElementById('outputTitle').textContent = cfg.viewName;
-  document.getElementById('copyBtn').style.display = '';
-  setStatus('ready', `View "${cfg.viewName}" generated · ${jsonData.length.toLocaleString()} records`);
-});
-
-// ── RENDER OUTPUT ─────────────────────────────────────────────────────────────
-function renderOutput() {
-  const content = document.getElementById('outputContent');
-  if (currentTab === 'preview') {
-    content.innerHTML = '<iframe id="previewFrame"></iframe>';
-    const iframe = document.getElementById('previewFrame');
-    iframe.style.cssText = 'flex:1;border:none;width:100%;height:100%;display:block;';
-    // Build a preview-only version with data embedded so the iframe never needs to fetch
-    const previewCode = buildViewCode(lastCfg, jsonData);
-    const doc = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open(); doc.write(previewCode); doc.close();
-  } else {
-    content.innerHTML = `<div class="code-wrapper"><pre id="codeBlock">${escHtml(generatedCode)}</pre></div>`;
-  }
-}
-
-function switchTab(tab) {
-  currentTab = tab;
-  document.getElementById('tabPreview').classList.toggle('active', tab === 'preview');
-  document.getElementById('tabCode').classList.toggle('active', tab === 'code');
-  if (generatedCode) renderOutput();
-}
-
-function copyCode() {
-  navigator.clipboard.writeText(generatedCode).then(() => {
-    const btn = document.getElementById('copyBtn');
-    btn.textContent = 'Copied!'; btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
-  });
-}
-
-function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
-function setStatus(state, msg) {
-  const dot = document.getElementById('statusDot');
-  dot.className = 'status-dot' + (state === 'ready' ? ' ready' : state === 'error' ? ' error' : '');
-  document.getElementById('statusText').textContent = msg;
-}
-
-// ── CODE BUILDER ──────────────────────────────────────────────────────────────
-// previewData: array to embed for the generator preview (null for the real output file)
-function buildViewCode(cfg, previewData) {
-  const logoChar = cfg.logoChar || '🎸';
-  const alwaysFresh = cfg.alwaysFresh || false;
-  const previewJson = previewData ? JSON.stringify(previewData).replace(/<\/script>/gi,'<\\/script>') : 'null';
-
-  const allFields = cfg.fields;
-  const types = cfg.types;
-
-  // Build field metadata for the generated view
-  const fieldsMeta = allFields.map(f => ({ name: f, type: types[f] }));
-
-  // Determine which fields show in deck card (ordered)
-  const deckConfig = {
-    image:     cfg.fImage     || null,
-    primary:   cfg.fPrimary   || null,
-    secondary: cfg.fSecondary || null,
-    summary:   cfg.fSummary   || null,
-    url:       cfg.fUrl       || null,
-  };
-
-  const sortCfg   = { field: cfg.sortField,  dir: cfg.sortDir };
-  const groupCfg  = { field: cfg.groupField, dir: cfg.groupDir };
-  const viewName  = cfg.viewName;
-
-  return `<!DOCTYPE html>
-<html lang="en">
-<head>
-<meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BAND-MAID Unofficial · ${viewName}</title>
+<title>BAND-MAID Unofficial · Songs</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -615,10 +91,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">${logoChar}</div>
+  <div class="app-logo">📝</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">${viewName}</div>
+    <div class="view-label" id="viewLabel">Songs</div>
   </div>
   <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
   <div class="record-count" id="recordCount"></div>
@@ -627,7 +103,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- FETCH STATES -->
 <div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
   <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-  <span>Loading ${viewName}…</span>
+  <span>Loading Songs…</span>
 </div>
 <div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
   <div style="font-size:32px">⚠️</div>
@@ -639,7 +115,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- LIST VIEW -->
 <div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search ${viewName}…" id="searchInput" oninput="onSearch()">
+    <input class="search-input" type="search" placeholder="Search Songs…" id="searchInput" oninput="onSearch()">
   </div>
   <div id="mainContent"></div>
 </div>
@@ -648,18 +124,18 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const JSON_URL = ${JSON.stringify(cfg.jsonUrl || '')};
-const ALWAYS_FRESH = ${alwaysFresh};
-const CACHE_KEY = 'bmdata_' + ${JSON.stringify(cfg.viewName || 'view')}.replace(/\\s+/g,'_');
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_songs/songs.json";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "Songs".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = ${JSON.stringify(fieldsMeta)};
-const DECK = ${JSON.stringify(deckConfig)};
-const SORT = ${JSON.stringify(sortCfg)};
-const GROUP = ${JSON.stringify(groupCfg)};
-const VIEW_NAME = ${JSON.stringify(viewName)};
-const LOGO_CHAR = ${JSON.stringify(logoChar)};
+const FIELDS = [{"name":"Name","type":"text"},{"name":"AlternativeName","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"Album","type":"text"},{"name":"Duration","type":"text"},{"name":"HasMusicVideo","type":"text"},{"name":"HasLiveVideo","type":"text"},{"name":"InstrumentalTrack","type":"text"},{"name":"KobatoLead","type":"text"},{"name":"PlayedLiveCount","type":"number"},{"name":"FirstLiveDate","type":"datetime"},{"name":"FirstLivePerf","type":"text"},{"name":"SpotifyStreams","type":"number"},{"name":"SpotifyStreamRank","type":"number"},{"name":"YouTubeTotalStreams","type":"number"},{"name":"YouTubeStreamRank","type":"number"},{"name":"DeezerRank","type":"number"},{"name":"ShazamRank","type":"number"},{"name":"LyricsBy","type":"text"},{"name":"MusicBy","type":"text"},{"name":"ArrangementBy","type":"text"},{"name":"MediaTieIn","type":"text"},{"name":"MaikoVersion","type":"text"},{"name":"CoverOf","type":"image"},{"name":"Collaboration","type":"text"},{"name":"LyricsURL","type":"url"},{"name":"EnglishLyricsURL","type":"url"},{"name":"Notes","type":"text"},{"name":"Quotes","type":"text"},{"name":"AlbumCoverUrl","type":"image"}];
+const DECK = {"image":"AlbumCoverUrl","primary":"Name","secondary":"AlternativeName","summary":null,"url":"EnglishLyricsURL"};
+const SORT = {"field":"SpotifyStreams","dir":"desc"};
+const GROUP = {"field":"Album","dir":"desc"};
+const VIEW_NAME = "Songs";
+const LOGO_CHAR = "📝";
 const PREVIEW_COUNT = 5;
-const PREVIEW_DATA = ${previewJson};
+const PREVIEW_DATA = null;
 
 let RAW_DATA = [];
 
@@ -727,18 +203,18 @@ function hideFetchState(){
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
-function isAllDigits(v){return /^\\d+$/.test(String(v))}
-const ISO_DT_RE=/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}/;
+function isAllDigits(v){return /^\d+$/.test(String(v))}
+const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
 function isDateTime(v){return ISO_DT_RE.test(String(v))}
 function fmtDateShort(v){
   try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\\d{2}:\\d{2}$/)?v:v+'Z');
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
     return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
   }catch(e){return String(v)}
 }
 function fmtDateFull(v){
   try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\\d{2}:\\d{2}$/)?v:v+'Z');
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
     return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
   }catch(e){return String(v)}
 }
@@ -747,7 +223,7 @@ function detectRuntime(fieldName,val){
   if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
   if(val!==null&&val!==undefined&&val!==''){
     if(isDateTime(val))return 'datetime';
-    if(/^https?:\\/\\//i.test(String(val)))return 'url';
+    if(/^https?:\/\//i.test(String(val)))return 'url';
     if(isAllDigits(val))return 'number';
   }
   return 'text';
@@ -758,7 +234,7 @@ function getType(f,val){
   return detectRuntime(f,val);
 }
 function extIconSvg(){
-  return \`<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>\`;
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
 }
 
 // ── SORT / GROUP ──────────────────────────────────────────────────────────────
@@ -811,7 +287,7 @@ function onSearch(){
 function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
-  document.getElementById('recordCount').textContent=\`\${total.toLocaleString()} record\${total!==1?'s':''}\`;
+  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
   const container=document.getElementById('mainContent');
   container.innerHTML='';
 
@@ -827,7 +303,7 @@ function renderList(scrollToGroup){
     if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=\`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all \${items.length.toLocaleString()} records ↓</button>\`;
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
       container.appendChild(more);
     }
   } else {
@@ -843,7 +319,7 @@ function renderList(scrollToGroup){
 
       const hdr=document.createElement('div');
       hdr.className='group-header';
-      hdr.innerHTML=\`<span class="group-name">\${escHtml(group??'(blank)')}</span><span class="group-count">\${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>\`;
+      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
 
@@ -856,7 +332,7 @@ function renderList(scrollToGroup){
         const more=document.createElement('div');
         more.className='show-more-row';
         // Capture key in closure, scroll back to this group after re-render
-        more.innerHTML=\`<button class="show-more-btn">Show all \${items.length.toLocaleString()} ↓</button>\`;
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
         more.querySelector('button').onclick=()=>{
           showAllGroups[key]=true;
           renderList(key);
@@ -871,7 +347,7 @@ function renderList(scrollToGroup){
 
     // Scroll the expanded group back into view
     if(scrollToGroup!==undefined){
-      const target=container.querySelector(\`[data-group-key="\${CSS.escape(String(scrollToGroup))}"] .group-header\`);
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
       if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
     }
   }
@@ -936,7 +412,7 @@ function renderDeckCard(row,idx){
     a.rel='noopener';
     a.title='Open external link: '+row[DECK.url];
     a.onclick=e=>{e.stopPropagation()};
-    a.innerHTML=\`<span class="ext-icon">\${extIconSvg()}</span>\`;
+    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
     card.appendChild(a);
   }
 
@@ -971,19 +447,19 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=\`<img class="detail-hero" src="\${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">\`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
   } else {
-    html+=\`<div class="detail-hero-placeholder">🎵</div>\`;
+    html+=`<div class="detail-hero-placeholder">🎵</div>`;
   }
 
   html+='<div class="detail-body">';
 
   // Primary / secondary as title
   if(DECK.primary&&row[DECK.primary]!==undefined){
-    html+=\`<div class="detail-primary">\${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>\`;
+    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
   }
   if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    html+=\`<div class="detail-secondary">\${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>\`;
+    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
   }
 
   // All fields table
@@ -994,20 +470,20 @@ function showDetail(row){
     const rtype=getType(name,val);
     let valueHtml='';
     if(rtype==='image'){
-      valueHtml=\`<img src="\${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">\`;
+      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
     } else if(rtype==='url'){
-      valueHtml=\`<a class="detail-url-link" href="\${escAttr(String(val))}" target="_blank" rel="noopener">\${extIconSvg()}<span>\${escHtml(String(val))}</span></a>\`;
+      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
     } else if(rtype==='number'){
-      valueHtml=\`<span class="number">\${fmtNumber(val)}</span>\`;
+      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
     } else if(rtype==='datetime'){
-      valueHtml=\`<span style="color:var(--text)" title="\${escAttr(String(val))}">\${escHtml(fmtDateFull(val))}</span>\`;
+      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
     } else {
       valueHtml=escHtml(String(val));
     }
-    html+=\`<div class="detail-field">
-      <div class="detail-field-label">\${escHtml(name)}</div>
-      <div class="detail-field-value">\${valueHtml}</div>
-    </div>\`;
+    html+=`<div class="detail-field">
+      <div class="detail-field-label">${escHtml(name)}</div>
+      <div class="detail-field-value">${valueHtml}</div>
+    </div>`;
   });
   html+='</div></div>';
 
@@ -1030,10 +506,6 @@ function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
 loadData();
-<\/script>
-</body>
-</html>`;
-}
 </script>
 </body>
 </html>
