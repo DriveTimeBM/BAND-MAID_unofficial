@@ -155,6 +155,14 @@
         <label>GitHub JSON URL (raw)</label>
         <input type="text" id="jsonUrl" placeholder="https://raw.githubusercontent.com/...">
       </div>
+      <div class="field-row">
+        <label>Logo Character (unicode / emoji)</label>
+        <div style="display:flex;gap:8px;align-items:center">
+          <input type="text" id="logoChar" placeholder="🎸" maxlength="4" style="width:72px;text-align:center;font-size:20px;padding:4px 8px" oninput="updateLogoPreview()">
+          <div id="logoPreview" style="width:36px;height:36px;background:#1a1a1a;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:18px;flex-shrink:0">🎸</div>
+          <span style="font-size:11px;color:var(--text2);line-height:1.4">Paste any emoji<br>or unicode char</span>
+        </div>
+      </div>
     </div>
 
     <div class="config-section">
@@ -354,10 +362,16 @@ function autoAssignFields() {
 }
 
 // ── GENERATE ─────────────────────────────────────────────────────────────────
+function updateLogoPreview() {
+  const val = document.getElementById('logoChar').value.trim();
+  document.getElementById('logoPreview').textContent = val || '🎸';
+}
+
 document.getElementById('generateBtn').addEventListener('click', () => {
   const cfg = {
     viewName:   document.getElementById('viewName').value || 'Data View',
     jsonUrl:    document.getElementById('jsonUrl').value.trim(),
+    logoChar:   document.getElementById('logoChar').value.trim() || '🎸',
     fImage:     document.getElementById('fImage').value,
     fPrimary:   document.getElementById('fPrimary').value,
     fSecondary: document.getElementById('fSecondary').value,
@@ -417,6 +431,7 @@ function setStatus(state, msg) {
 function buildViewCode(cfg, data) {
   // Inline JSON data — in production this becomes a fetch() from cfg.jsonUrl
   const dataJson = JSON.stringify(data).replace(/<\/script>/gi,'<\\/script>');
+  const logoChar = cfg.logoChar || '🎸';
 
   const allFields = cfg.fields;
   const types = cfg.types;
@@ -529,7 +544,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">🎸</div>
+  <div class="app-logo">${logoChar}</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
     <div class="view-label" id="viewLabel">${viewName}</div>
@@ -556,6 +571,7 @@ const DECK = ${JSON.stringify(deckConfig)};
 const SORT = ${JSON.stringify(sortCfg)};
 const GROUP = ${JSON.stringify(groupCfg)};
 const VIEW_NAME = ${JSON.stringify(viewName)};
+const LOGO_CHAR = ${JSON.stringify(logoChar)};
 const PREVIEW_COUNT = 5;
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
