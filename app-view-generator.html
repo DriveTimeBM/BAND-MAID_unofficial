@@ -453,18 +453,10 @@ function renderOutput() {
     content.innerHTML = '<iframe id="previewFrame"></iframe>';
     const iframe = document.getElementById('previewFrame');
     iframe.style.cssText = 'flex:1;border:none;width:100%;height:100%;display:block;';
-    // Inject a preview-mode override: seed the iframe with local data immediately
-    // so the preview works without a live URL. The generated HTML checks for this.
+    // Swap the null placeholder with actual data for the preview iframe
     const previewCode = generatedCode.replace(
-      'const JSON_URL =',
-      `const PREVIEW_DATA = ${JSON.stringify(jsonData)};
-const JSON_URL =`
-    ).replace(
-      'async function loadData(){',
-      `async function loadData(){
-  if(typeof PREVIEW_DATA!=='undefined'&&PREVIEW_DATA.length){
-    RAW_DATA=PREVIEW_DATA;hideFetchState();renderList();return;
-  }`
+      'const PREVIEW_DATA = null; /* PREVIEW_INJECTION_POINT */',
+      `const PREVIEW_DATA = ${JSON.stringify(jsonData)};`
     );
     const doc = iframe.contentDocument || iframe.contentWindow.document;
     doc.open(); doc.write(previewCode); doc.close();
@@ -658,13 +650,25 @@ const GROUP = ${JSON.stringify(groupCfg)};
 const VIEW_NAME = ${JSON.stringify(viewName)};
 const LOGO_CHAR = ${JSON.stringify(logoChar)};
 const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null; /* PREVIEW_INJECTION_POINT */
 
 let RAW_DATA = [];
 
 // ── DATA LOADING ──────────────────────────────────────────────────────────────
 async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
   // No URL configured — nothing to fetch
   if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
     showFetchError('No JSON URL configured for this view.');
     return;
   }
