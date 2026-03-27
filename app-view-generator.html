@@ -109,9 +109,26 @@
   .empty-state-icon { font-size: 40px; opacity: 0.3; }
   .empty-state-text { font-size: 13px; text-align: center; max-width: 240px; line-height: 1.6; }
 
-  /* VIEW NAME */
   .view-name-input { background: var(--bg3); border: 1px solid var(--border); border-radius: var(--radius); color: var(--text); padding: 7px 10px; font-size: 13px; width: 100%; font-family: var(--font); outline: none; }
   .view-name-input:focus { border-color: var(--accent); }
+
+  /* TOGGLE SWITCH */
+  .toggle-row { display: flex; align-items: center; gap: 10px; margin-top: 2px; }
+  .toggle-label { font-size: 12px; color: var(--text2); flex: 1; line-height: 1.4; }
+  .toggle-label small { display: block; font-size: 11px; color: var(--text3); margin-top: 2px; }
+  .toggle { position: relative; width: 36px; height: 20px; flex-shrink: 0; }
+  .toggle input { opacity: 0; width: 0; height: 0; }
+  .toggle-track {
+    position: absolute; inset: 0; border-radius: 20px;
+    background: var(--border2); cursor: pointer; transition: background 0.2s;
+  }
+  .toggle-track::after {
+    content: ''; position: absolute; top: 3px; left: 3px;
+    width: 14px; height: 14px; border-radius: 50%;
+    background: var(--text2); transition: transform 0.2s, background 0.2s;
+  }
+  .toggle input:checked + .toggle-track { background: var(--accent); }
+  .toggle input:checked + .toggle-track::after { transform: translateX(16px); background: #0a0a0a; }
 
   /* RECORD COUNT BADGE */
   .record-badge { display: inline-flex; align-items: center; background: rgba(200,169,110,0.12); border: 1px solid rgba(200,169,110,0.3); border-radius: 20px; padding: 2px 8px; font-size: 11px; color: var(--accent); margin-left: 8px; }
@@ -155,6 +172,19 @@
       <div class="field-row">
         <label>GitHub JSON URL (raw)</label>
         <input type="text" id="jsonUrl" placeholder="https://raw.githubusercontent.com/...">
+      </div>
+      <div class="field-row" style="margin-top:4px">
+        <label>Data Refresh</label>
+        <div class="toggle-row">
+          <label class="toggle" title="Always fresh: fetch JSON every time the view is opened">
+            <input type="checkbox" id="alwaysFresh">
+            <div class="toggle-track"></div>
+          </label>
+          <div class="toggle-label">
+            Always fresh
+            <small id="refreshHint">Off — cached for 24 hours per session</small>
+          </div>
+        </div>
       </div>
       <div class="field-row">
         <label>Logo Character (unicode / emoji)</label>
@@ -371,11 +401,18 @@ function updateLogoPreview() {
   document.getElementById('logoPreview').textContent = val || '🎸';
 }
 
+document.getElementById('alwaysFresh').addEventListener('change', function() {
+  document.getElementById('refreshHint').textContent = this.checked
+    ? 'On — fetches live JSON every time this view is opened'
+    : 'Off — cached for 24 hours per session';
+});
+
 document.getElementById('generateBtn').addEventListener('click', () => {
   const cfg = {
-    viewName:   document.getElementById('viewName').value || 'Data View',
-    jsonUrl:    document.getElementById('jsonUrl').value.trim(),
-    logoChar:   document.getElementById('logoChar').value.trim() || '🎸',
+    viewName:    document.getElementById('viewName').value || 'Data View',
+    jsonUrl:     document.getElementById('jsonUrl').value.trim(),
+    alwaysFresh: document.getElementById('alwaysFresh').checked,
+    logoChar:    document.getElementById('logoChar').value.trim() || '🎸',
     fImage:     document.getElementById('fImage').value,
     fPrimary:   document.getElementById('fPrimary').value,
     fSecondary: document.getElementById('fSecondary').value,
@@ -402,8 +439,21 @@ function renderOutput() {
     content.innerHTML = '<iframe id="previewFrame"></iframe>';
     const iframe = document.getElementById('previewFrame');
     iframe.style.cssText = 'flex:1;border:none;width:100%;height:100%;display:block;';
+    // Inject a preview-mode override: seed the iframe with local data immediately
+    // so the preview works without a live URL. The generated HTML checks for this.
+    const previewCode = generatedCode.replace(
+      'const JSON_URL =',
+      `const PREVIEW_DATA = ${JSON.stringify(jsonData)};
+const JSON_URL =`
+    ).replace(
+      'async function loadData(){',
+      `async function loadData(){
+  if(typeof PREVIEW_DATA!=='undefined'&&PREVIEW_DATA.length){
+    RAW_DATA=PREVIEW_DATA;hideFetchState();renderList();return;
+  }`
+    );
     const doc = iframe.contentDocument || iframe.contentWindow.document;
-    doc.open(); doc.write(generatedCode); doc.close();
+    doc.open(); doc.write(previewCode); doc.close();
   } else {
     content.innerHTML = `<div class="code-wrapper"><pre id="codeBlock">${escHtml(generatedCode)}</pre></div>`;
   }
@@ -434,8 +484,9 @@ function setStatus(state, msg) {
 // ── CODE BUILDER ──────────────────────────────────────────────────────────────
 function buildViewCode(cfg, data) {
   // Inline JSON data — in production this becomes a fetch() from cfg.jsonUrl
-  const dataJson = JSON.stringify(data).replace(/<\/script>/gi,'<\\/script>');
+  const dataJson = '[]'; // unused — data loaded at runtime via fetch
   const logoChar = cfg.logoChar || '🎸';
+  const alwaysFresh = cfg.alwaysFresh || false;
 
   const allFields = cfg.fields;
   const types = cfg.types;
@@ -498,14 +549,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -542,6 +593,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 /* UTIL */
 .hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -557,8 +609,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="record-count" id="recordCount"></div>
 </div>
 
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading ${viewName}…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
 <!-- LIST VIEW -->
-<div id="listView" class="list-view">
+<div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
     <input class="search-input" type="search" placeholder="Search ${viewName}…" id="searchInput" oninput="onSearch()">
   </div>
@@ -569,7 +633,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const RAW_DATA = ${dataJson};
+const JSON_URL = ${JSON.stringify(cfg.jsonUrl || '')};
+const ALWAYS_FRESH = ${alwaysFresh};
+const CACHE_KEY = 'bmdata_' + ${JSON.stringify(cfg.viewName || 'view')}.replace(/\\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = ${JSON.stringify(fieldsMeta)};
 const DECK = ${JSON.stringify(deckConfig)};
 const SORT = ${JSON.stringify(sortCfg)};
@@ -577,6 +644,62 @@ const GROUP = ${JSON.stringify(groupCfg)};
 const VIEW_NAME = ${JSON.stringify(viewName)};
 const LOGO_CHAR = ${JSON.stringify(logoChar)};
 const PREVIEW_COUNT = 5;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
@@ -642,7 +765,8 @@ function processData(data){
 
 // ── SEARCH ───────────────────────────────────────────────────────────────────
 let expandedGroups={};
-let showAll=false;
+let showAllGroups={};   // key → true means show all items for that group
+let showAllFlat=false;  // for ungrouped views
 let currentData=RAW_DATA;
 
 function onSearch(){
@@ -653,13 +777,14 @@ function onSearch(){
       Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
     );
   }
-  showAll=false;
+  showAllFlat=false;
+  showAllGroups={};
   expandedGroups={};
   renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(){
+function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
   document.getElementById('recordCount').textContent=\`\${total.toLocaleString()} record\${total!==1?'s':''}\`;
@@ -672,42 +797,59 @@ function renderList(){
   }
 
   if(!GROUP.field){
-    // No grouping — flat deck
     const items=groups[0].items;
-    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
     container.appendChild(renderDeckGrid(shown,null));
-    if(!showAll&&items.length>PREVIEW_COUNT){
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=\`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all \${items.length.toLocaleString()} records ↓</button>\`;
+      more.innerHTML=\`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all \${items.length.toLocaleString()} records ↓</button>\`;
       container.appendChild(more);
     }
   } else {
     groups.forEach(({group,items})=>{
       const key=group??'';
-      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
       const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
       const wrap=document.createElement('div');
       wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
       const hdr=document.createElement('div');
       hdr.className='group-header';
       hdr.innerHTML=\`<span class="group-name">\${escHtml(group??'(blank)')}</span><span class="group-count">\${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>\`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
       const body=document.createElement('div');
       body.className='group-items';
       const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
       body.appendChild(renderDeckGrid(shown,group));
+
       if(!showAll&&items.length>PREVIEW_COUNT){
         const more=document.createElement('div');
         more.className='show-more-row';
-        more.innerHTML=\`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all \${items.length.toLocaleString()} ↓</button>\`;
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=\`<button class="show-more-btn">Show all \${items.length.toLocaleString()} ↓</button>\`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
         body.appendChild(more);
       }
+
       wrap.appendChild(hdr);
       wrap.appendChild(body);
       container.appendChild(wrap);
     });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(\`[data-group-key="\${CSS.escape(String(scrollToGroup))}"] .group-header\`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
   }
 }
 
@@ -863,7 +1005,7 @@ function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-renderList();
+loadData();
 <\/script>
 </body>
 </html>`;
