@@ -1,0 +1,597 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="theme-color" content="#0a0a0a">
+<title>BAND-MAID Unofficial</title>
+<style>
+/* ── RESET & ROOT ──────────────────────────────────────────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+:root {
+  --bg:       #0a0a0a;
+  --bg2:      #141414;
+  --bg3:      #1c1c1c;
+  --bg4:      #242424;
+  --border:   #2a2a2a;
+  --border2:  #3a3a3a;
+  --text:     #f0f0f0;
+  --text2:    #999;
+  --text3:    #555;
+  --accent:   #c8a96e;
+  --accent-d: #a8843d;
+  --danger:   #ef4444;
+  --radius:   8px;
+  --font:     'Segoe UI', system-ui, -apple-system, sans-serif;
+
+  /* Safe area insets for notched phones */
+  --sat: env(safe-area-inset-top,    0px);
+  --sar: env(safe-area-inset-right,  0px);
+  --sab: env(safe-area-inset-bottom, 0px);
+  --sal: env(safe-area-inset-left,   0px);
+
+  --header-h: 52px;
+  --nav-h:    58px;   /* bottom nav height (mobile) */
+  --sidebar-w: 220px; /* desktop side nav width */
+}
+
+html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(--text); font-family: var(--font); font-size: 14px; }
+
+/* ── APP HEADER ────────────────────────────────────────────────────────────── */
+.app-header {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 200;
+  height: calc(var(--header-h) + var(--sat));
+  padding-top: var(--sat);
+  background: var(--bg2);
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+  padding-left: calc(14px + var(--sal));
+  padding-right: calc(14px + var(--sar));
+}
+.app-logo {
+  width: 32px; height: 32px; flex-shrink: 0;
+  background: #111; border: 1px solid var(--accent);
+  border-radius: 6px; display: flex; align-items: center;
+  justify-content: center; font-size: 16px;
+}
+.app-logo img { width: 20px; height: 20px; object-fit: contain; filter: invert(1) brightness(0.8) sepia(1) hue-rotate(5deg) saturate(3); }
+.app-name { font-size: 15px; font-weight: 700; letter-spacing: 0.04em; flex: 1; }
+.app-name span { color: var(--accent); }
+.view-title-header {
+  font-size: 12px; color: var(--text2); letter-spacing: 0.06em;
+  text-transform: uppercase; flex: 1; text-align: center;
+  display: none; /* shown on mobile when a view is active */
+}
+
+/* Hamburger (menu views) */
+.menu-btn {
+  width: 34px; height: 34px; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 5px;
+  cursor: pointer; border-radius: var(--radius);
+  border: 1px solid transparent; transition: border-color 0.15s;
+  flex-shrink: 0;
+}
+.menu-btn:hover { border-color: var(--border2); }
+.menu-btn span {
+  display: block; width: 18px; height: 1.5px;
+  background: var(--text2); border-radius: 2px;
+  transition: background 0.15s;
+}
+.menu-btn.active span, .menu-btn:hover span { background: var(--accent); }
+/* Animate to X when drawer open */
+.menu-btn.open span:nth-child(1) { transform: translateY(6.5px) rotate(45deg); }
+.menu-btn.open span:nth-child(2) { opacity: 0; }
+.menu-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
+.menu-btn span { transition: transform 0.2s, opacity 0.2s, background 0.15s; }
+
+/* ── LAYOUT CONTAINER ──────────────────────────────────────────────────────── */
+.app-body {
+  position: fixed;
+  top: calc(var(--header-h) + var(--sat));
+  left: 0; right: 0;
+  bottom: calc(var(--nav-h) + var(--sab));
+  display: flex;
+}
+
+/* ── DESKTOP SIDE NAV ──────────────────────────────────────────────────────── */
+.side-nav {
+  width: var(--sidebar-w);
+  background: var(--bg2);
+  border-right: 1px solid var(--border);
+  display: none; /* hidden on mobile */
+  flex-direction: column;
+  overflow-y: auto;
+  flex-shrink: 0;
+}
+.side-nav-section { padding: 12px 0; border-bottom: 1px solid var(--border); }
+.side-nav-section:last-child { border-bottom: none; }
+.side-nav-label {
+  font-size: 9px; font-weight: 700; letter-spacing: 0.14em;
+  text-transform: uppercase; color: var(--text3);
+  padding: 0 14px 6px;
+}
+.side-nav-item {
+  display: flex; align-items: center; gap: 10px;
+  padding: 9px 14px; cursor: pointer;
+  border-left: 2px solid transparent;
+  transition: background 0.12s, border-color 0.12s;
+  text-decoration: none; color: var(--text2);
+  font-size: 13px;
+}
+.side-nav-item:hover { background: var(--bg3); color: var(--text); }
+.side-nav-item.active {
+  border-left-color: var(--accent);
+  background: var(--bg3); color: var(--accent);
+}
+.side-nav-icon {
+  width: 22px; height: 22px; display: flex; align-items: center;
+  justify-content: center; font-size: 16px; flex-shrink: 0;
+}
+.side-nav-icon img { width: 16px; height: 16px; object-fit: contain; opacity: 0.6; filter: invert(1); }
+.side-nav-item.active .side-nav-icon img { opacity: 1; filter: invert(79%) sepia(34%) saturate(600%) hue-rotate(5deg) brightness(100%); }
+
+/* ── IFRAME VIEWPORT ───────────────────────────────────────────────────────── */
+.view-stage { flex: 1; position: relative; overflow: hidden; background: var(--bg); }
+.view-frame {
+  position: absolute; inset: 0;
+  width: 100%; height: 100%;
+  border: none;
+  display: none;
+  background: var(--bg);
+}
+.view-frame.active { display: block; }
+
+/* Loading skeleton */
+.view-loading {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 12px; color: var(--text3); font-size: 13px;
+  pointer-events: none;
+}
+.view-loading .spinner {
+  width: 28px; height: 28px;
+  border: 2px solid var(--border2);
+  border-top-color: var(--accent);
+  border-radius: 50%;
+  animation: spin 0.7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ── BOTTOM NAV (MOBILE) ────────────────────────────────────────────────────── */
+.bottom-nav {
+  position: fixed; bottom: 0; left: 0; right: 0; z-index: 200;
+  height: calc(var(--nav-h) + var(--sab));
+  padding-bottom: var(--sab);
+  background: var(--bg2);
+  border-top: 1px solid var(--border);
+  display: flex; align-items: stretch;
+}
+.bottom-nav-item {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 4px; cursor: pointer; padding: 6px 4px;
+  border: none; background: none;
+  color: var(--text3); font-family: var(--font);
+  transition: color 0.15s; position: relative;
+  -webkit-tap-highlight-color: transparent;
+}
+.bottom-nav-item:hover { color: var(--text2); }
+.bottom-nav-item.active { color: var(--accent); }
+.bottom-nav-item.active::before {
+  content: ''; position: absolute; top: 0; left: 20%; right: 20%;
+  height: 2px; background: var(--accent); border-radius: 0 0 2px 2px;
+}
+.bottom-nav-icon {
+  width: 24px; height: 24px; display: flex; align-items: center;
+  justify-content: center; font-size: 20px; line-height: 1;
+}
+.bottom-nav-icon img {
+  width: 20px; height: 20px; object-fit: contain;
+  filter: invert(1); opacity: 0.4;
+  transition: opacity 0.15s, filter 0.15s;
+}
+.bottom-nav-item.active .bottom-nav-icon img {
+  opacity: 1;
+  filter: invert(79%) sepia(34%) saturate(600%) hue-rotate(5deg) brightness(100%);
+}
+.bottom-nav-label { font-size: 10px; letter-spacing: 0.02em; line-height: 1; }
+
+/* ── SLIDE-OUT DRAWER (MENU VIEWS) ─────────────────────────────────────────── */
+.drawer-overlay {
+  position: fixed; inset: 0; z-index: 300;
+  background: rgba(0,0,0,0.6);
+  opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.drawer-overlay.open { opacity: 1; pointer-events: all; }
+
+.drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 301;
+  width: min(280px, 85vw);
+  background: var(--bg2);
+  border-left: 1px solid var(--border);
+  transform: translateX(100%);
+  transition: transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  display: flex; flex-direction: column;
+  padding-top: var(--sat);
+}
+.drawer.open { transform: translateX(0); }
+
+.drawer-header {
+  padding: 14px 16px 10px;
+  border-bottom: 1px solid var(--border);
+  display: flex; align-items: center; gap: 10px;
+}
+.drawer-title { font-size: 12px; font-weight: 700; letter-spacing: 0.1em; text-transform: uppercase; color: var(--text3); flex: 1; }
+.drawer-close {
+  width: 28px; height: 28px; display: flex; align-items: center;
+  justify-content: center; cursor: pointer; border-radius: 6px;
+  color: var(--text2); font-size: 18px; line-height: 1;
+  border: 1px solid transparent; transition: border-color 0.15s, color 0.15s;
+}
+.drawer-close:hover { border-color: var(--border2); color: var(--text); }
+
+.drawer-items { flex: 1; overflow-y: auto; padding: 8px 0; }
+.drawer-item {
+  display: flex; align-items: center; gap: 12px;
+  padding: 12px 16px; cursor: pointer;
+  color: var(--text2); font-size: 14px;
+  border-left: 3px solid transparent;
+  transition: background 0.12s, color 0.12s, border-color 0.12s;
+}
+.drawer-item:hover { background: var(--bg3); color: var(--text); }
+.drawer-item.active { color: var(--accent); border-left-color: var(--accent); background: var(--bg3); }
+.drawer-icon {
+  width: 26px; height: 26px; display: flex; align-items: center;
+  justify-content: center; font-size: 18px; flex-shrink: 0;
+}
+.drawer-icon img { width: 18px; height: 18px; object-fit: contain; filter: invert(1); opacity: 0.6; }
+.drawer-item.active .drawer-icon img { opacity: 1; filter: invert(79%) sepia(34%) saturate(600%) hue-rotate(5deg) brightness(100%); }
+
+/* ── ERROR STATE ───────────────────────────────────────────────────────────── */
+.load-error {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 10px; padding: 24px; text-align: center;
+  color: var(--text3); font-size: 13px; display: none;
+}
+.load-error .err-icon { font-size: 32px; }
+.load-error .err-title { font-size: 15px; color: var(--text2); }
+
+/* ── EMPTY / WELCOME STATE ─────────────────────────────────────────────────── */
+.welcome {
+  position: absolute; inset: 0;
+  display: flex; flex-direction: column;
+  align-items: center; justify-content: center;
+  gap: 8px; color: var(--text3); text-align: center; padding: 24px;
+}
+.welcome-logo { font-size: 48px; margin-bottom: 8px; }
+.welcome-title { font-size: 18px; font-weight: 700; color: var(--text2); letter-spacing: 0.04em; }
+.welcome-sub { font-size: 13px; line-height: 1.6; max-width: 260px; }
+
+/* ── DESKTOP OVERRIDES (≥ 640px) ───────────────────────────────────────────── */
+@media (min-width: 640px) {
+  :root { --nav-h: 0px; } /* no bottom nav on desktop */
+
+  .app-body { bottom: 0; }
+  .bottom-nav { display: none; }
+  .side-nav { display: flex; }
+
+  /* On desktop the drawer is always the right-slide-in for menu items,
+     but we also expose them in the side nav under a "More" section */
+  .app-header .menu-btn { display: none; } /* hamburger hidden; menu shown in sidebar */
+  .view-title-header { display: none !important; }
+  .app-name { display: block !important; }
+}
+
+/* Keep app-name visible on desktop, hide on narrow mobile to show view title */
+@media (max-width: 639px) {
+  .app-name-wrap { flex: 1; overflow: hidden; }
+}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<header class="app-header" id="appHeader">
+  <div class="app-logo" id="appLogo"><img src="logo.png" alt="logo" style="width:22px;height:22px;object-fit:contain"></div>
+  <div class="app-name-wrap">
+    <div class="app-name" id="appName">BAND-MAID <span>Unofficial</span></div>
+    <div class="view-title-header" id="viewTitleHeader"></div>
+  </div>
+  <button class="menu-btn" id="menuBtn" aria-label="More views" onclick="toggleDrawer()">
+    <span></span><span></span><span></span>
+  </button>
+</header>
+
+<!-- APP BODY -->
+<div class="app-body">
+
+  <!-- DESKTOP SIDE NAV -->
+  <nav class="side-nav" id="sideNav"></nav>
+
+  <!-- VIEW STAGE -->
+  <div class="view-stage" id="viewStage">
+    <div class="welcome" id="welcomeState">
+      <div class="welcome-logo" id="welcomeLogo"><img src="logo.png" alt="logo" style="width:48px;height:48px;object-fit:contain"></div>
+      <div class="welcome-title">BAND-MAID Unofficial</div>
+      <div class="welcome-sub">Select a view from the navigation to get started.</div>
+    </div>
+    <div class="view-loading" id="loadingState" style="display:none">
+      <div class="spinner"></div>
+      <span>Loading…</span>
+    </div>
+    <div class="load-error" id="errorState">
+      <div class="err-icon">⚠️</div>
+      <div class="err-title">Could not load view</div>
+      <div id="errorMsg"></div>
+    </div>
+    <!-- iframes injected here -->
+  </div>
+
+</div>
+
+<!-- BOTTOM NAV (MOBILE) -->
+<nav class="bottom-nav" id="bottomNav"></nav>
+
+<!-- DRAWER OVERLAY -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+
+<!-- DRAWER -->
+<div class="drawer" id="drawer">
+  <div class="drawer-header">
+    <span class="drawer-title">More</span>
+    <div class="drawer-close" onclick="closeDrawer()">✕</div>
+  </div>
+  <div class="drawer-items" id="drawerItems"></div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const VIEWS_JSON = 'views.json';   // path relative to index.html
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let views = [];
+let activeId = null;
+let drawerOpen = false;
+const frameCache = {};  // id → <iframe> element
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(VIEWS_JSON);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    views = await res.json();
+    applyAppConfig();
+    buildNav();
+    // Auto-activate first view
+    if (views.length) activateView(views[0].id);
+  } catch(e) {
+    showError('Failed to load views.json: ' + e.message);
+  }
+}
+
+// ── APP-LEVEL CONFIG (optional top-level keys in views.json) ──────────────────
+function applyAppConfig() {
+  // views.json can optionally be an object: { "appName": "...", "appLogo": "...", "views": [...] }
+  // or just a plain array. Normalise here.
+  if (!Array.isArray(views) && views.views) {
+    const cfg = views;
+    views = cfg.views || [];
+    if (cfg.appName) {
+      document.getElementById('appName').innerHTML =
+        cfg.appName.replace(/\s+(\S+)$/, ' <span>$1</span>');
+    }
+    if (cfg.appLogo) setLogo(document.getElementById('appLogo'), cfg.appLogo, 16);
+    if (cfg.appLogo) setLogo(document.getElementById('welcomeLogo'), cfg.appLogo, 40);
+  }
+}
+
+// ── BUILD NAVIGATION ──────────────────────────────────────────────────────────
+function buildNav() {
+  const navViews  = views.filter(v => v.nav === 'main' || !v.nav);
+  const menuViews = views.filter(v => v.nav === 'menu');
+
+  // ── BOTTOM NAV (mobile) ── nav items only
+  const bottomNav = document.getElementById('bottomNav');
+  bottomNav.innerHTML = '';
+  navViews.forEach(v => {
+    const btn = document.createElement('button');
+    btn.className = 'bottom-nav-item';
+    btn.dataset.id = v.id;
+    btn.setAttribute('aria-label', v.name);
+    btn.innerHTML = `
+      <div class="bottom-nav-icon">${iconHtml(v.icon, 20)}</div>
+      <span class="bottom-nav-label">${esc(v.name)}</span>`;
+    btn.onclick = () => { activateView(v.id); };
+    bottomNav.appendChild(btn);
+  });
+
+  // Show hamburger only when there are menu views
+  document.getElementById('menuBtn').style.display = menuViews.length ? '' : 'none';
+
+  // ── SIDE NAV (desktop) ── nav items + menu items in separate sections
+  const sideNav = document.getElementById('sideNav');
+  sideNav.innerHTML = '';
+
+  if (navViews.length) {
+    sideNav.appendChild(sideSection('Views', navViews));
+  }
+  if (menuViews.length) {
+    sideNav.appendChild(sideSection('More', menuViews));
+  }
+
+  // ── DRAWER ── menu items only
+  const drawerItems = document.getElementById('drawerItems');
+  drawerItems.innerHTML = '';
+  menuViews.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'drawer-item';
+    item.dataset.id = v.id;
+    item.innerHTML = `
+      <div class="drawer-icon">${iconHtml(v.icon, 18)}</div>
+      <span>${esc(v.name)}</span>`;
+    item.onclick = () => { closeDrawer(); activateView(v.id); };
+    drawerItems.appendChild(item);
+  });
+}
+
+function sideSection(label, items) {
+  const sec = document.createElement('div');
+  sec.className = 'side-nav-section';
+  const lbl = document.createElement('div');
+  lbl.className = 'side-nav-label';
+  lbl.textContent = label;
+  sec.appendChild(lbl);
+  items.forEach(v => {
+    const item = document.createElement('div');
+    item.className = 'side-nav-item';
+    item.dataset.id = v.id;
+    item.innerHTML = `
+      <div class="side-nav-icon">${iconHtml(v.icon, 16)}</div>
+      <span>${esc(v.name)}</span>`;
+    item.onclick = () => activateView(v.id);
+    sec.appendChild(item);
+  });
+  return sec;
+}
+
+// ── ICON RENDERING ────────────────────────────────────────────────────────────
+// icon can be: a unicode/emoji string, or a URL (http/https or relative path)
+function isUrl(s) { return /^https?:\/\//i.test(s) || /^\/|\.svg$|\.png$|\.webp$/i.test(s); }
+
+function iconHtml(icon, size) {
+  if (!icon) return '';
+  if (isUrl(icon)) {
+    return `<img src="${esc(icon)}" width="${size}" height="${size}" alt="" loading="lazy">`;
+  }
+  return `<span style="font-size:${Math.round(size * 1.15)}px;line-height:1">${esc(icon)}</span>`;
+}
+
+function setLogo(el, icon, size) {
+  if (!el) return;
+  el.innerHTML = iconHtml(icon, size);
+}
+
+// ── ACTIVATE VIEW ─────────────────────────────────────────────────────────────
+function activateView(id) {
+  const view = views.find(v => v.id === id);
+  if (!view) return;
+
+  // Deactivate previous
+  if (activeId && activeId !== id) {
+    const prev = frameCache[activeId];
+    if (prev) prev.classList.remove('active');
+  }
+
+  activeId = id;
+  updateNavHighlight(id);
+
+  // Update mobile header title
+  const titleEl = document.getElementById('viewTitleHeader');
+  const nameEl  = document.getElementById('appName');
+  if (window.innerWidth < 640) {
+    titleEl.textContent = view.name;
+    titleEl.style.display = 'block';
+    nameEl.style.display = 'none';
+  }
+
+  // If iframe already exists, just show it
+  if (frameCache[id]) {
+    frameCache[id].classList.add('active');
+    hideLoading();
+    return;
+  }
+
+  // Create iframe
+  showLoading();
+  const iframe = document.createElement('iframe');
+  iframe.className = 'view-frame';
+  iframe.title = view.name;
+  iframe.setAttribute('loading', 'lazy');
+  // Sandbox: allow scripts and same-origin so views work; allow-popups for external links
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms');
+  iframe.src = view.file;
+  iframe.onload  = () => { hideLoading(); iframe.classList.add('active'); };
+  iframe.onerror = () => { hideLoading(); showError(`Could not load: ${view.file}`); };
+
+  frameCache[id] = iframe;
+  document.getElementById('viewStage').appendChild(iframe);
+
+  document.getElementById('welcomeState').style.display = 'none';
+}
+
+// ── NAV HIGHLIGHT ─────────────────────────────────────────────────────────────
+function updateNavHighlight(id) {
+  document.querySelectorAll('[data-id]').forEach(el => {
+    el.classList.toggle('active', el.dataset.id === id);
+  });
+}
+
+// ── DRAWER ────────────────────────────────────────────────────────────────────
+function toggleDrawer() {
+  drawerOpen ? closeDrawer() : openDrawer();
+}
+function openDrawer() {
+  drawerOpen = true;
+  document.getElementById('drawer').classList.add('open');
+  document.getElementById('drawerOverlay').classList.add('open');
+  document.getElementById('menuBtn').classList.add('open');
+}
+function closeDrawer() {
+  drawerOpen = false;
+  document.getElementById('drawer').classList.remove('open');
+  document.getElementById('drawerOverlay').classList.remove('open');
+  document.getElementById('menuBtn').classList.remove('open');
+}
+// Close drawer on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape' && drawerOpen) closeDrawer(); });
+
+// ── LOADING / ERROR ───────────────────────────────────────────────────────────
+function showLoading() {
+  document.getElementById('loadingState').style.display = 'flex';
+  document.getElementById('errorState').style.display = 'none';
+}
+function hideLoading() {
+  document.getElementById('loadingState').style.display = 'none';
+}
+function showError(msg) {
+  const el = document.getElementById('errorState');
+  el.style.display = 'flex';
+  document.getElementById('errorMsg').textContent = msg;
+}
+
+// ── RESPONSIVE: rebuild on resize ────────────────────────────────────────────
+let lastBreakpoint = window.innerWidth >= 640 ? 'desktop' : 'mobile';
+window.addEventListener('resize', () => {
+  const bp = window.innerWidth >= 640 ? 'desktop' : 'mobile';
+  if (bp !== lastBreakpoint) {
+    lastBreakpoint = bp;
+    const nameEl  = document.getElementById('appName');
+    const titleEl = document.getElementById('viewTitleHeader');
+    if (bp === 'desktop') {
+      nameEl.style.display = '';
+      titleEl.style.display = 'none';
+    } else if (activeId) {
+      const v = views.find(x => x.id === activeId);
+      if (v) { titleEl.textContent = v.name; titleEl.style.display = 'block'; }
+      nameEl.style.display = 'none';
+    }
+  }
+});
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+// ── GO ────────────────────────────────────────────────────────────────────────
+boot();
+</script>
+</body>
+</html>

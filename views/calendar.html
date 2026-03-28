@@ -40,14 +40,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -84,6 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 /* UTIL */
 .hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -99,8 +100,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="record-count" id="recordCount"></div>
 </div>
 
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading Calendar…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
 <!-- LIST VIEW -->
-<div id="listView" class="list-view">
+<div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
     <input class="search-input" type="search" placeholder="Search Calendar…" id="searchInput" oninput="onSearch()">
   </div>
@@ -111,14 +124,85 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const RAW_DATA = [{"Summary":"Yokohama - CME Festival","Start_Local":"2026-04-04T09:10:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1043338\">https://bandmaid.tokyo/contents/1043338</a>","Location":"KT Zepp Yokohama, 4-chōme-3-6 Minatomirai, Nishi Ward, Yokohama, Kanagawa 220-0012, Japan","Start_Japan":"2026-04-04T18:10:00","URL":"https://bandmaid.tokyo/contents/1043338"},{"Summary":"Kanagawa - KT Zepp Yokohama","Start_Local":"2026-04-11T08:30:00","Description":"Open 16:30","Location":"KT Zepp Yokohama, 4-chōme-3-6 Minatomirai, Nishi Ward, Yokohama, Kanagawa 220-0012, Japan","Start_Japan":"2026-04-11T17:30:00","URL":null},{"Summary":"Sendai - Gigs","Start_Local":"2026-05-02T08:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"SENDAI GIGS, 1-chōme-4-1 Araihigashi, Wakabayashi Ward, Sendai, Miyagi 984-0030, Japan","Start_Japan":"2026-05-02T17:00:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"Tokyo - Zepp Haneda","Start_Local":"2026-05-10T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Zepp Haneda, 1-chōme-1-4 Hanedakūkō, Ota City, Tokyo 144-0041, Japan","Start_Japan":"2026-05-10T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"Berlin - Columbia Theater","Start_Local":"2026-06-03T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Columbia-Theater, Columbiadamm 9-11, 10965 Berlin, Germany","Start_Japan":"2026-06-04T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Frankfurt - BATSCHKAPP","Start_Local":"2026-06-05T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Batschkapp, Gwinnerstraße 5, 60388 Frankfurt am Main, Germany","Start_Japan":"2026-06-06T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Munich - TECHNIKUM","Start_Local":"2026-06-06T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Technikum, Speicherstraße 26, 81671 München, Germany","Start_Japan":"2026-06-07T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Paris - BATACLAN","Start_Local":"2026-06-09T17:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Bataclan, 50 Bd Voltaire, 75011 Paris, France","Start_Japan":"2026-06-10T02:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"London -  Electric Brixton","Start_Local":"2026-06-11T18:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1045553\">https://bandmaid.tokyo/contents/1045553</a>","Location":"Electric Brixton, Town Hall Parade, Brixton Hill, London SW2 1RJ, UK","Start_Japan":"2026-06-12T03:00:00","URL":"https://bandmaid.tokyo/contents/1045553"},{"Summary":"Download UK - Festival","Start_Local":"2026-06-12T15:00:00","Description":"<a href=\"https://downloadfestival.co.uk/\">https://downloadfestival.co.uk/</a>","Location":"Donington Park Circuit, Donington Park, Castle Donington, Derby DE74 2RP, UK","Start_Japan":"2026-06-13T00:00:00","URL":"https://downloadfestival.co.uk/"},{"Summary":"HIROSHIMA - BLUE LIVE ","Start_Local":"2026-06-27T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"BLUE LIVE 広島 仮設トイレ, Japan, 〒734-0011 Hiroshima, Minami Ward, Ujinakaigan, 3-chōme−12−７２ ケイビ","Start_Japan":"2026-06-27T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"KOBE - HARBOR STUDIO","Start_Local":"2026-06-28T08:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"神戸Harbor Studio, 6-3 波止場 Chuo Ward, Kobe, Hyogo 650-0042, Japan","Start_Japan":"2026-06-28T17:00:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"HOKKAIDO - SAPPORO FACTORY HALL","Start_Local":"2026-07-12T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Sapporo Factory Hall, 3 Chome Kita 2 Johigashi, Chuo Ward, Sapporo, Hokkaido 060-0032, Japan","Start_Japan":"2026-07-12T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"KUMAMOTO - B.9 V1","Start_Local":"2026-07-17T09:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"KUMAMoTo B.9, 5-13 Jōtōmachi, Chuo Ward, Kumamoto, 860-0846, Japan","Start_Japan":"2026-07-17T18:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"FUKUOKA - Zepp","Start_Local":"2026-07-18T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Zepp Fukuoka, 2-chōme-2-1 Jigyōhama, Chuo Ward, Fukuoka, 810-0065, Japan","Start_Japan":"2026-07-18T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"FUKUOKA - NUMBER SHOT","Start_Local":"2026-08-01T06:00:00","Description":"<a href=\"https://numbershot.jp/2026\">https://numbershot.jp/2026</a>","Location":"Momochi Seaside Park, 2-chōme-902-1 Momochihama, Sawara Ward, Fukuoka, 814-0001, Japan","Start_Japan":"2026-08-01T15:00:00","URL":"https://numbershot.jp/2026"},{"Summary":"OSAKA - GIGANTIC FES","Start_Local":"2026-08-02T06:00:00","Description":"<a href=\"https://giga-osaka.com/\">https://giga-osaka.com/</a>","Location":"Maishima Sports Island, 2-chōme-1-128 Hokkōryokuchi, Konohana Ward, Osaka, 554-0042, Japan","Start_Japan":"2026-08-02T15:00:00","URL":"https://giga-osaka.com/"},{"Summary":"AICHI - COMTEC PORTBASE","Start_Local":"2026-11-01T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Comtec Portbase, 3-3-5 Kanekawachō, Minato Ward, Nagoya, Aichi 455-0017, Japan","Start_Japan":"2026-11-01T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"Osaka - NAMBA HATCH ","Start_Local":"2026-11-03T08:30:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Namba Hatch, 1-chōme-3-1 Minatomachi, Naniwa Ward, Osaka, 556-0017, Japan","Start_Japan":"2026-11-03T17:30:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"BUDOKAN","Start_Local":"2026-11-13T09:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Nippon Budokan, 2-3 Kitanomarukōen, Chiyoda City, Tokyo 102-8321, Japan","Start_Japan":"2026-11-13T18:00:00","URL":"https://bandmaid.tokyo/contents/1041130"},{"Summary":"BUDOKAN","Start_Local":"2026-11-14T08:00:00","Description":"<a href=\"https://bandmaid.tokyo/contents/1041130\">https://bandmaid.tokyo/contents/1041130</a>","Location":"Nippon Budokan, 2-3 Kitanomarukōen, Chiyoda City, Tokyo 102-8321, Japan","Start_Japan":"2026-11-14T17:00:00","URL":"https://bandmaid.tokyo/contents/1041130"}];
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/calendar/calendar.json";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "Calendar".replace(/\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Summary","type":"text"},{"name":"Start_Local","type":"datetime"},{"name":"Description","type":"text"},{"name":"Location","type":"text"},{"name":"Start_Japan","type":"datetime"},{"name":"URL","type":"url"}];
-const DECK = {"image":null,"primary":"Summary","secondary":"Location","summary":null,"url":"URL"};
+const DECK = {"image":null,"primary":"Summary","secondary":"Start_Local","summary":null,"url":"URL"};
 const SORT = {"field":"Start_Local","dir":"asc"};
 const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Calendar";
 const LOGO_CHAR = "🗓️";
 const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    currentData=RAW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          currentData=RAW_DATA;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    currentData=RAW_DATA;
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
@@ -184,8 +268,9 @@ function processData(data){
 
 // ── SEARCH ───────────────────────────────────────────────────────────────────
 let expandedGroups={};
-let showAll=false;
-let currentData=RAW_DATA;
+let showAllGroups={};
+let showAllFlat=false;
+let currentData=[];
 
 function onSearch(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
@@ -195,13 +280,14 @@ function onSearch(){
       Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
     );
   }
-  showAll=false;
+  showAllFlat=false;
+  showAllGroups={};
   expandedGroups={};
   renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(){
+function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
   document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
@@ -214,42 +300,59 @@ function renderList(){
   }
 
   if(!GROUP.field){
-    // No grouping — flat deck
     const items=groups[0].items;
-    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
     container.appendChild(renderDeckGrid(shown,null));
-    if(!showAll&&items.length>PREVIEW_COUNT){
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
       container.appendChild(more);
     }
   } else {
     groups.forEach(({group,items})=>{
       const key=group??'';
-      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
       const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
       const wrap=document.createElement('div');
       wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
       const hdr=document.createElement('div');
       hdr.className='group-header';
       hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
       const body=document.createElement('div');
       body.className='group-items';
       const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
       body.appendChild(renderDeckGrid(shown,group));
+
       if(!showAll&&items.length>PREVIEW_COUNT){
         const more=document.createElement('div');
         more.className='show-more-row';
-        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
         body.appendChild(more);
       }
+
       wrap.appendChild(hdr);
       wrap.appendChild(body);
       container.appendChild(wrap);
     });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
   }
 }
 
@@ -405,7 +508,7 @@ function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-renderList();
+loadData();
 </script>
 </body>
 </html>

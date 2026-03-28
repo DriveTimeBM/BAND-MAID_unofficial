@@ -8,7 +8,7 @@
   },
   {
     "id": "songs",
-    "name": "CharSongsts",
+    "name": "Songs",
     "file": "views/songs.html",
     "nav": "main",
     "icon": "📝"
@@ -33,6 +33,12 @@
     "file": "views/okyuji.html",
     "nav": "main",
     "icon": "🎤"
+  },{
+    "id": "gallery",
+    "name": "Gallery",
+    "file": "views/gallery.html",
+    "nav": "main",
+    "icon": "🖼️"
   },
   {
     "id": "links",
