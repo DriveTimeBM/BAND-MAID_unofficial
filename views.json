@@ -67,7 +67,7 @@
     "name": "links",
     "file": "views/links.html",
     "nav": "menu",
-    "icon": "🎸"
+    "icon": "🔗"
   },
   {
     "id": "million",

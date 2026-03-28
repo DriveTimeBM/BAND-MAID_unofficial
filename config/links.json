@@ -1,0 +1,16 @@
+{
+    "viewName": "Links",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/links.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "🔗",
+    "fImage": "",
+    "fPrimary": "Item",
+    "fSecondary": "Item",
+    "fSummary": "",
+    "fUrl": "URL",
+    "sortField": "Order",
+    "sortDir": "asc",
+    "groupField": "Group",
+    "groupDir": "asc"
+  }
