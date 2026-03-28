@@ -28,12 +28,34 @@
     "icon": "▶️"
   },
   {
+    "id": "stream",
+    "name": "Streaming",
+    "file": "views/stream.html",
+    "nav": "main",
+    "icon": "🎶"
+  },
+  {
     "id": "okyuji",
     "name": "Okyuji",
     "file": "views/okyuji.html",
     "nav": "main",
     "icon": "🎤"
-  },{
+  },
+  {
+    "id": "prime",
+    "name": "Prime",
+    "file": "views/prime.html",
+    "nav": "main",
+    "icon": "🎬"
+  },
+  {
+    "id": "fanclub",
+    "name": "Fan Club",
+    "file": "views/fanclub.html",
+    "nav": "main",
+    "icon": "🏮"
+  },
+  {
     "id": "gallery",
     "name": "Gallery",
     "file": "views/gallery.html",
