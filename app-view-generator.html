@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/png" href="logo.png">
 <title>BAND-MAID App — View Generator</title>
 <style>
   :root {
@@ -274,6 +275,7 @@
 
     <div class="config-section">
       <button class="btn btn-primary" id="generateBtn" disabled>Generate View Code</button>
+      <button class="btn btn-secondary" id="copyConfigBtn" onclick="copyConfig()" style="display:none;margin-top:8px;width:100%">Copy Config JSON</button>
     </div>
 
   </div><!-- /config-panel -->
@@ -286,7 +288,6 @@
         <div class="tab active" id="tabPreview" onclick="switchTab('preview')">Preview</div>
         <div class="tab" id="tabCode" onclick="switchTab('code')">HTML</div>
       </div>
-      <button class="btn btn-secondary copy-btn" id="copyConfigBtn" onclick="copyConfig()" style="display:none">Copy Config</button>
       <button class="btn btn-secondary copy-btn" id="copyBtn" onclick="copyCode()" style="display:none">Copy HTML</button>
     </div>
 
@@ -672,6 +673,7 @@ function buildViewCode(cfg, previewData) {
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
 <title>BAND-MAID Unofficial · ${viewName}</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
