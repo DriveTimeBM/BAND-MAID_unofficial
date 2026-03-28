@@ -1,0 +1,15 @@
+{
+    "viewName": "Gallery",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/gallery.json",
+    "alwaysFresh": false,
+    "logoChar": "🖼️",
+    "fImage": "",
+    "fPrimary": "Title",
+    "fSecondary": "Date",
+    "fSummary": "",
+    "fUrl": "URL",
+    "sortField": "Date",
+    "sortDir": "desc",
+    "groupField": "",
+    "groupDir": "asc"
+  }

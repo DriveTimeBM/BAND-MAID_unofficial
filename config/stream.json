@@ -1,0 +1,15 @@
+{
+    "viewName": "Stream",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
+    "alwaysFresh": false,
+    "logoChar": "🎶",
+    "fImage": "",
+    "fPrimary": "Service",
+    "fSecondary": "Title",
+    "fSummary": "Streams",
+    "fUrl": "URL",
+    "sortField": "Streams",
+    "sortDir": "desc",
+    "groupField": "Song",
+    "groupDir": "asc"
+  }

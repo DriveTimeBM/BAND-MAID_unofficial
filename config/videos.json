@@ -1,0 +1,15 @@
+{
+    "viewName": "Videos",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
+    "alwaysFresh": false,
+    "logoChar": "▶️",
+    "fImage": "Image",
+    "fPrimary": "Title",
+    "fSecondary": "Song",
+    "fSummary": "Views",
+    "fUrl": "URL",
+    "sortField": "Views",
+    "sortDir": "desc",
+    "groupField": "Type",
+    "groupDir": "asc"
+  }

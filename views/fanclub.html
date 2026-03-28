@@ -3,7 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BAND-MAID Unofficial · Fan Club</title>
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Fanclub</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -94,7 +95,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="app-logo">🏮</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">Fan Club</div>
+    <div class="view-label" id="viewLabel">Fanclub</div>
   </div>
   <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
   <div class="record-count" id="recordCount"></div>
@@ -103,7 +104,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- FETCH STATES -->
 <div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
   <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-  <span>Loading Fan Club…</span>
+  <span>Loading Fanclub…</span>
 </div>
 <div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
   <div style="font-size:32px">⚠️</div>
@@ -115,7 +116,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- LIST VIEW -->
 <div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search Fan Club…" id="searchInput" oninput="onSearch()">
+    <input class="search-input" type="search" placeholder="Search Fanclub…" id="searchInput" oninput="onSearch()">
   </div>
   <div id="mainContent"></div>
 </div>
@@ -126,13 +127,13 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <script>
 const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/fanclub.json";
 const ALWAYS_FRESH = false;
-const CACHE_KEY = 'bmdata_' + "Fan Club".replace(/\s+/g,'_');
+const CACHE_KEY = 'bmdata_' + "Fanclub".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"}];
 const DECK = {"image":null,"primary":"Title","secondary":"Category","summary":null,"url":"URL"};
 const SORT = {"field":"Title","dir":"asc"};
 const GROUP = {"field":"Category","dir":"asc"};
-const VIEW_NAME = "Fan Club";
+const VIEW_NAME = "Fanclub";
 const LOGO_CHAR = "🏮";
 const PREVIEW_COUNT = 5;
 const PREVIEW_DATA = null;
@@ -390,12 +391,14 @@ function renderDeckCard(row,idx){
     const el=document.createElement('div');
     el.className='deck-card-primary';
     el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    el.title=fmtVal(DECK.primary,row[DECK.primary]);
     body.appendChild(el);
   }
   if(DECK.secondary&&row[DECK.secondary]!==undefined){
     const el=document.createElement('div');
     el.className='deck-card-secondary';
     el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
     body.appendChild(el);
   }
   if(DECK.summary&&row[DECK.summary]!==undefined){

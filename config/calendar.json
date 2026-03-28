@@ -1,0 +1,15 @@
+{
+    "viewName": "Calendar",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/calendar/calendar.json",
+    "alwaysFresh": false,
+    "logoChar": "🗓️",
+    "fImage": "",
+    "fPrimary": "Summary",
+    "fSecondary": "Start_Local",
+    "fSummary": "",
+    "fUrl": "URL",
+    "sortField": "Start_Local",
+    "sortDir": "asc",
+    "groupField": "",
+    "groupDir": "asc"
+  }

@@ -1,0 +1,15 @@
+{
+    "viewName": "Prime",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json",
+    "alwaysFresh": false,
+    "logoChar": "🎬",
+    "fImage": "",
+    "fPrimary": "Title",
+    "fSecondary": "Category",
+    "fSummary": "",
+    "fUrl": "URL",
+    "sortField": "Title",
+    "sortDir": "asc",
+    "groupField": "Category",
+    "groupDir": "asc"
+  }

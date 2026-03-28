@@ -1,0 +1,15 @@
+{
+    "viewName": "Releases",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json",
+    "alwaysFresh": false,
+    "logoChar": "💿",
+    "fImage": "AlbumCoverURL",
+    "fPrimary": "Name",
+    "fSecondary": "Type",
+    "fSummary": "ReleaseDate",
+    "fUrl": "URL",
+    "sortField": "ReleaseDate",
+    "sortDir": "asc",
+    "groupField": "Media",
+    "groupDir": "asc"
+  }

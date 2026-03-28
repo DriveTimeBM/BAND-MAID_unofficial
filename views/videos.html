@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
 <title>BAND-MAID Unofficial · Videos</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -129,7 +130,7 @@ const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Videos".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Title","type":"text"},{"name":"Date","type":"datetime"},{"name":"URL","type":"url"},{"name":"VideoId","type":"text"},{"name":"Song","type":"text"},{"name":"Views","type":"number"},{"name":"ViewsDelta","type":"number"},{"name":"Type","type":"text"},{"name":"Duration","type":"text"},{"name":"Image","type":"image"}];
-const DECK = {"image":"Image","primary":"Song","secondary":"Title","summary":"Views","url":"URL"};
+const DECK = {"image":"Image","primary":"Title","secondary":"Song","summary":"Views","url":"URL"};
 const SORT = {"field":"Views","dir":"desc"};
 const GROUP = {"field":"Type","dir":"asc"};
 const VIEW_NAME = "Videos";
@@ -390,12 +391,14 @@ function renderDeckCard(row,idx){
     const el=document.createElement('div');
     el.className='deck-card-primary';
     el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    el.title=fmtVal(DECK.primary,row[DECK.primary]);
     body.appendChild(el);
   }
   if(DECK.secondary&&row[DECK.secondary]!==undefined){
     const el=document.createElement('div');
     el.className='deck-card-secondary';
     el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
     body.appendChild(el);
   }
   if(DECK.summary&&row[DECK.summary]!==undefined){

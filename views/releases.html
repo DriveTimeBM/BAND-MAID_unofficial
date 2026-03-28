@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
 <title>BAND-MAID Unofficial · Releases</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -129,9 +130,9 @@ const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Releases".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Name","type":"text"},{"name":"Work","type":"text"},{"name":"Type","type":"text"},{"name":"URL","type":"url"},{"name":"Description","type":"text"},{"name":"Media","type":"text"},{"name":"BonusMedia","type":"text"},{"name":"BonusDesc","type":"text"},{"name":"Publisher","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"AlbumCoverURL","type":"image"}];
-const DECK = {"image":"AlbumCoverURL","primary":"Name","secondary":"Type","summary":"Media","url":"URL"};
-const SORT = {"field":"Name","dir":"asc"};
-const GROUP = {"field":"Type","dir":"asc"};
+const DECK = {"image":"AlbumCoverURL","primary":"Name","secondary":"Type","summary":"ReleaseDate","url":"URL"};
+const SORT = {"field":"ReleaseDate","dir":"asc"};
+const GROUP = {"field":"Media","dir":"asc"};
 const VIEW_NAME = "Releases";
 const LOGO_CHAR = "💿";
 const PREVIEW_COUNT = 5;
@@ -390,12 +391,14 @@ function renderDeckCard(row,idx){
     const el=document.createElement('div');
     el.className='deck-card-primary';
     el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    el.title=fmtVal(DECK.primary,row[DECK.primary]);
     body.appendChild(el);
   }
   if(DECK.secondary&&row[DECK.secondary]!==undefined){
     const el=document.createElement('div');
     el.className='deck-card-secondary';
     el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
     body.appendChild(el);
   }
   if(DECK.summary&&row[DECK.summary]!==undefined){
