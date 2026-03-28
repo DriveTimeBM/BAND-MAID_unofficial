@@ -95,7 +95,7 @@
     "name": "Charts",
     "file": "views/charts.html",
     "nav": "menu",
-    "icon": "🎸"
+    "icon": "📈"
   },
   {
     "id": "about",
