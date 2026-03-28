@@ -57,7 +57,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   border-radius: 6px; display: flex; align-items: center;
   justify-content: center; font-size: 16px;
 }
-.app-logo img { width: 20px; height: 20px; object-fit: contain; filter: invert(1) brightness(0.8) sepia(1) hue-rotate(5deg) saturate(3); }
+.app-logo img { width: 22px; height: 22px; object-fit: contain; }
 .app-name { font-size: 15px; font-weight: 700; letter-spacing: 0.04em; flex: 1; }
 .app-name span { color: var(--accent); }
 .view-title-header {
@@ -130,8 +130,8 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   width: 22px; height: 22px; display: flex; align-items: center;
   justify-content: center; font-size: 16px; flex-shrink: 0;
 }
-.side-nav-icon img { width: 16px; height: 16px; object-fit: contain; opacity: 0.6; filter: invert(1); }
-.side-nav-item.active .side-nav-icon img { opacity: 1; filter: invert(79%) sepia(34%) saturate(600%) hue-rotate(5deg) brightness(100%); }
+.side-nav-icon img { width: 16px; height: 16px; object-fit: contain; opacity: 0.5; transition: opacity 0.15s; }
+.side-nav-item.active .side-nav-icon img { opacity: 1; }
 
 /* ── IFRAME VIEWPORT ───────────────────────────────────────────────────────── */
 .view-stage { flex: 1; position: relative; overflow: hidden; background: var(--bg); }
@@ -191,12 +191,11 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 }
 .bottom-nav-icon img {
   width: 20px; height: 20px; object-fit: contain;
-  filter: invert(1); opacity: 0.4;
-  transition: opacity 0.15s, filter 0.15s;
+  opacity: 0.4;
+  transition: opacity 0.15s;
 }
 .bottom-nav-item.active .bottom-nav-icon img {
   opacity: 1;
-  filter: invert(79%) sepia(34%) saturate(600%) hue-rotate(5deg) brightness(100%);
 }
 .bottom-nav-label { font-size: 10px; letter-spacing: 0.02em; line-height: 1; }
 
@@ -249,8 +248,8 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   width: 26px; height: 26px; display: flex; align-items: center;
   justify-content: center; font-size: 18px; flex-shrink: 0;
 }
-.drawer-icon img { width: 18px; height: 18px; object-fit: contain; filter: invert(1); opacity: 0.6; }
-.drawer-item.active .drawer-icon img { opacity: 1; filter: invert(79%) sepia(34%) saturate(600%) hue-rotate(5deg) brightness(100%); }
+.drawer-icon img { width: 18px; height: 18px; object-fit: contain; opacity: 0.5; transition: opacity 0.15s; }
+.drawer-item.active .drawer-icon img { opacity: 1; }
 
 /* ── ERROR STATE ───────────────────────────────────────────────────────────── */
 .load-error {
