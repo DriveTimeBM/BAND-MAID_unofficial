@@ -127,7 +127,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <script>
 const JSON_URL = "https://api.jsonbin.io/v3/b/69c7e8f95fdde574550a99d9/latest";
 const API_READ_KEY = "$2a$10$Scfw6rWtJhX3UTu0pqkA1OV9QZUrPPmvePpfGACI0AEVH8KbZnmvK";
-const ALWAYS_FRESH = false;
+const ALWAYS_FRESH = true;
 const CACHE_KEY = 'bmdata_' + "Upcoming".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Event","type":"text"}];
