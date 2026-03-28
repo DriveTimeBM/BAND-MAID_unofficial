@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
-<title>BAND-MAID Unofficial · Fanclub</title>
+<title>BAND-MAID Unofficial · Fan Club</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -40,14 +40,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -84,6 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 /* UTIL */
 .hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -93,16 +94,28 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="app-logo">🏮</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">Fanclub</div>
+    <div class="view-label" id="viewLabel">Fan Club</div>
   </div>
   <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
   <div class="record-count" id="recordCount"></div>
 </div>
 
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading Fan Club…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
 <!-- LIST VIEW -->
-<div id="listView" class="list-view">
+<div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search Fanclub…" id="searchInput" oninput="onSearch()">
+    <input class="search-input" type="search" placeholder="Search Fan Club…" id="searchInput" oninput="onSearch()">
   </div>
   <div id="mainContent"></div>
 </div>
@@ -111,14 +124,85 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const RAW_DATA = [{"Title":"\"BAND-MAID TOUR 2025 FINAL\" Behind The Scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/122286"},{"Title":"\"Bestie\" Behind the Scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/99315"},{"Title":"\"Forbidden tale\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/106199"},{"Title":"\"Present Perfect\" Behind the Scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/121423"},{"Title":"\"Protect You\" Behind the Scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/102518"},{"Title":"\"Ready to Rock\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/112005"},{"Title":"\"Shambles\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/90704"},{"Title":"\"What is justice?\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/117913"},{"Title":"\"Zen\"Music Video Behind the scenes","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/110474"},{"Title":"2019.01.16 「Bubble Making ver.」","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/26036"},{"Title":"2019.04.03 BAND-MAIKO MAKING VIDEO (other ver.) day1","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/28606"},{"Title":"2019.04.11 BAND-MAIKO MAKING VIDEO (other ver.) day2 ","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/28751"},{"Title":"2019.08.16 endless Story Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/32068"},{"Title":"2019.11.12 輪廻 Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/34561"},{"Title":"2020.03.23 「The Dragon Cries」 Making Video","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/38729"},{"Title":"2021.01.22 \"Different\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/51459"},{"Title":"2021.01.22 \"Manners\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/51468"},{"Title":"2021.02.06 \"Warning!\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/52180"},{"Title":"2021.03.01 \"After Life\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/53035"},{"Title":"2021.06.16 BAND-MAID \"THE DAY OF MAID (May 10, 2021)\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/57913"},{"Title":"2021.11.18 \"Sense\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/64690"},{"Title":"2022.02.28 \"BAND-MAID ONLINE ACOUSTIC\" BEHIND THE SCENES","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/69001"},{"Title":"2022.10.04 \"influencer\" Making Movie","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/78252"},{"Title":"2024.03.20 part2","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/97503"},{"Title":"BAND-MAID ACOUSTIC OKYUJI Behind The Scenes MIKU KOBATO & KANAMI","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/97875"},{"Title":"BAND-MAID ACOUSTIC OKYUJI Behind The Scenes MISA & KANAMI ","Category":"[BTS]","URL":"https://bandmaid.tokyo/movies/97868"},{"Title":"\"BAND-MAID NIPPON\" Acoustic Session","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/70076"},{"Title":"2019.03.11 Smile (Unplugged) March 9, 2019","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/27475"},{"Title":"2020.01.18 12/22/2019 BAND-MAID KYOTO","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/36523"},{"Title":"2021.07.06 Super DARADARA Time (Super Lazy Time) from \"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)\"","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/58868"},{"Title":"Stationhead Live Stream Archive (April 10, 2025)","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/111710"},{"Title":"Stationhead Live Stream Archive (Aug. 1, 2025)","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/120833"},{"Title":"Stationhead Live Stream Archive (Aug. 15, 2025)","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/120834"},{"Title":"Stationhead Live Stream Archive (Aug. 29, 2025)","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/120835"},{"Title":"Stationhead Live Stream Archive (Sep. 12, 2025)","Category":"[LIVE]","URL":"https://bandmaid.tokyo/movies/120836"},{"Title":"2020.05.08 【メイドの部屋】AKANE①【MAID'S ROOM】","Category":"[MAIDs ROOM AKANE]","URL":"https://bandmaid.tokyo/movies/40811"},{"Title":"2020.08.21 【メイドの部屋】AKANE②【MAID'S ROOM】","Category":"[MAIDs ROOM AKANE]","URL":"https://bandmaid.tokyo/movies/40812"},{"Title":"2020.09.02 【メイドの部屋】AKANE③【MAID'S ROOM】","Category":"[MAIDs ROOM AKANE]","URL":"https://bandmaid.tokyo/movies/42146"},{"Title":"2020.11.01 【メイドの部屋】AKANE④【MAID'S ROOM】","Category":"[MAIDs ROOM AKANE]","URL":"https://bandmaid.tokyo/movies/44641"},{"Title":"2021.03.19 【メイドの部屋】AKANE⑤【MAID'S ROOM】","Category":"[MAIDs ROOM AKANE]","URL":"https://bandmaid.tokyo/movies/53842"},{"Title":"2020.04.30 【メイドの部屋】KANAMI①【MAID'S ROOM】","Category":"[MAIDs ROOM KANAMI]","URL":"https://bandmaid.tokyo/movies/39977"},{"Title":"2020.06.21 【メイドの部屋】KANAMI②【MAID'S ROOM】","Category":"[MAIDs ROOM KANAMI]","URL":"https://bandmaid.tokyo/movies/40813"},{"Title":"2020.08.09 【メイドの部屋】KANAMI③【MAID'S ROOM】","Category":"[MAIDs ROOM KANAMI]","URL":"https://bandmaid.tokyo/movies/42143"},{"Title":"2020.09.30 【メイドの部屋】KANAMI④【MAID'S ROOM】","Category":"[MAIDs ROOM KANAMI]","URL":"https://bandmaid.tokyo/movies/44575"},{"Title":"2021.03.23 【メイドの部屋】KANAMI⑤【MAID'S ROOM】","Category":"[MAIDs ROOM KANAMI]","URL":"https://bandmaid.tokyo/movies/53951"},{"Title":"2020.05.16 【メイドの部屋】MIKU KOBATO①【MAID'S ROOM】","Category":"[MAIDs ROOM KOBATO]","URL":"https://bandmaid.tokyo/movies/39976"},{"Title":"2020.06.09 【メイドの部屋】MIKU KOBATO②【MAID'S ROOM】","Category":"[MAIDs ROOM KOBATO]","URL":"https://bandmaid.tokyo/movies/40815"},{"Title":"2020.07.25 【メイドの部屋】小鳩ミク③【MAID'S ROOM】","Category":"[MAIDs ROOM KOBATO]","URL":"https://bandmaid.tokyo/movies/42145"},{"Title":"2020.09.11 【メイドの部屋】小鳩ミク④【MAID'S ROOM】","Category":"[MAIDs ROOM KOBATO]","URL":"https://bandmaid.tokyo/movies/42144"},{"Title":"2020.10.21 【メイドの部屋】MIKU KOBATO⑤【MAID'S ROOM】","Category":"[MAIDs ROOM KOBATO]","URL":"https://bandmaid.tokyo/movies/44568"},{"Title":"2021.03.15 【メイドの部屋】MIKU KOBATO⑥【MAID'S ROOM】","Category":"[MAIDs ROOM KOBATO]","URL":"https://bandmaid.tokyo/movies/50978"},{"Title":"2020.04.19 【メイドの部屋】MISA①【MAID'S ROOM】","Category":"[MAIDs ROOM MISA]","URL":"https://bandmaid.tokyo/movies/39875"},{"Title":"2020.06.21 【メイドの部屋】MISA②【MAID'S ROOM】","Category":"[MAIDs ROOM MISA]","URL":"https://bandmaid.tokyo/movies/42348"},{"Title":"2020.06.30 【メイドの部屋】MISA③【MAID'S ROOM】","Category":"[MAIDs ROOM MISA]","URL":"https://bandmaid.tokyo/movies/42349"},{"Title":"2020.09.03 【メイドの部屋】MISA④【MAID'S ROOM】","Category":"[MAIDs ROOM MISA]","URL":"https://bandmaid.tokyo/movies/44562"},{"Title":"2020.11.10 【メイドの部屋】MISA⑤【MAID'S ROOM】","Category":"[MAIDs ROOM MISA]","URL":"https://bandmaid.tokyo/movies/45977"},{"Title":"2021.03.18 【メイドの部屋】MISA⑥【MAID'S ROOM】","Category":"[MAIDs ROOM MISA]","URL":"https://bandmaid.tokyo/movies/53845"},{"Title":"2020.04.25 【メイドの部屋】SAIKI①【MAID'S ROOM】","Category":"[MAIDs ROOM SAIKI]","URL":"https://bandmaid.tokyo/movies/39978"},{"Title":"2020.05.31 【メイドの部屋】SAIKI②【MAID'S ROOM】","Category":"[MAIDs ROOM SAIKI]","URL":"https://bandmaid.tokyo/movies/40814"},{"Title":"2020.07.25 【メイドの部屋】SAIKI③【MAID'S ROOM】","Category":"[MAIDs ROOM SAIKI]","URL":"https://bandmaid.tokyo/movies/42350"},{"Title":"2020.09.22 【メイドの部屋】SAIKI④【MAID'S ROOM】","Category":"[MAIDs ROOM SAIKI]","URL":"https://bandmaid.tokyo/movies/42351"},{"Title":"2020.11.19 【メイドの部屋】SAIKI⑤【MAID'S ROOM】","Category":"[MAIDs ROOM SAIKI]","URL":"https://bandmaid.tokyo/movies/45978"},{"Title":"2021.03.24 【メイドの部屋】SAIKI⑥【MAID'S ROOM】","Category":"[MAIDs ROOM SAIKI]","URL":"https://bandmaid.tokyo/movies/50977"},{"Title":"2020.04.06 【お盟主様への声】MESSAGE FROM AKANE ①","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/39444"},{"Title":"2020.04.13 【お盟主様への声】MESSAGE FROM AKANE ②","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/39739"},{"Title":"2020.05.31 【お盟主様への声】MESSAGE FROM AKANE ③","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/40523"},{"Title":"2020.08.09 【お盟主様への声】MESSAGE FROM AKANE ④","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/42601"},{"Title":"2020.09.30 【お盟主様への声】MESSAGE FROM AKANE ⑤","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/42757"},{"Title":"2020.10.15 【お盟主様への声】MESSAGE FROM AKANE ⑥","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/42755"},{"Title":"2021.02.17 【お盟主様への声】MESSAGE FROM AKANE ⑦","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/51609"},{"Title":"2021.02.21 【お盟主様への声】MESSAGE FROM AKANE ⑧","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/51608"},{"Title":"2021.02.24 【お盟主様への声】MESSAGE FROM AKANE ⑨","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/51610"},{"Title":"2021.05.20 【お盟主様への声】MESSAGE FROM AKANE ⑩","Category":"[MESSAGE FROM AKANE]","URL":"https://bandmaid.tokyo/movies/56390"},{"Title":"2020.04.06 【お盟主様への声】MESSAGE FROM KANAMI ①","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/39443"},{"Title":"2020.04.25 【お盟主様への声】MESSAGE FROM KANAMI ②","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/40253"},{"Title":"2020.05.16 【お盟主様への声】ENGLISH MESSAGE FROM KANAMI","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/40524"},{"Title":"2020.06.21 【お盟主様への声】MESSAGE FROM KANAMI ③","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/42604"},{"Title":"2020.09.14 【お盟主様への声】MESSAGE FROM KANAMI ④","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/42600"},{"Title":"2020.09.22 【お盟主様への声】MESSAGE FROM KANAMI ⑤","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/42606"},{"Title":"2020.10.15 【お盟主様への声】MESSAGE FROM KANAMI ⑥","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/42605"},{"Title":"2021.02.16 【お盟主様への声】MESSAGE FROM KANAMI ⑦","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/51612"},{"Title":"2021.02.19 【お盟主様への声】MESSAGE FROM KANAMI ⑧","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/51611"},{"Title":"2021.02.23 【お盟主様への声】MESSAGE FROM KANAMI ⑨","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/51613"},{"Title":"2021.05.24 【お盟主様への声】MESSAGE FROM KANAMI ⑩","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/56481"},{"Title":"2024.03.20 part1","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/97506"},{"Title":"Message in English from KANAMI","Category":"[MESSAGE FROM KANAMI]","URL":"https://bandmaid.tokyo/movies/97504"},{"Title":"2020.04.06 【お盟主様への声】MESSAGE FROM MIKU ①","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/39442"},{"Title":"2020.05.16 【お盟主様への声】MESSAGE FROM MIKU ②","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/40254"},{"Title":"2020.05.22 【お盟主様への声】MESSAGE FROM KOBATO ③","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/40525"},{"Title":"2020.09.02 【お盟主様への声】MESSAGE FROM MIKU ④","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/40526"},{"Title":"2020.09.30 【お盟主様への声】MESSAGE FROM MIKU ⑤","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/42603"},{"Title":"2020.10.15 【お盟主様への声】MESSAGE FROM MIKU ⑥","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/42602"},{"Title":"2021.01.19 【お盟主様への声】MESSAGE FROM MIKU ⑦","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/51318"},{"Title":"2021.02.20 【お盟主様への声】MESSAGE FROM MIKU ⑧","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/51317"},{"Title":"2021.02.27 【お盟主様への声】MESSAGE FROM MIKU ⑨","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/51316"},{"Title":"2021.05.24 【お盟主様への声】MESSAGE FROM MIKU ⑩","Category":"[MESSAGE FROM KOBATO]","URL":"https://bandmaid.tokyo/movies/56482"},{"Title":"2020.04.06 【お盟主様への声】MESSAGE FROM MISA ①","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/39441"},{"Title":"2020.05.08 【お盟主様への声】MESSAGE FROM MISA ②","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/40255"},{"Title":"2020.06.12 【お盟主様への声】MESSAGE FROM MISA ④","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/42346"},{"Title":"2020.06.30 【お盟主様への声】MESSAGE FROM MISA ③","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/42972"},{"Title":"2020.09.22 【お盟主様への声】MESSAGE FROM MISA ⑤","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/42714"},{"Title":"2020.10.15 【お盟主様への声】MESSAGE FROM MISA ⑥","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/42713"},{"Title":"2021.02.03 【お盟主様への声】MESSAGE FROM MISA ⑦","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/51315"},{"Title":"2021.02.22 【お盟主様への声】MESSAGE FROM MISA ⑧","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/51314"},{"Title":"2021.02.25 【お盟主様への声】MESSAGE FROM MISA ⑨","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/51313"},{"Title":"2021.05.21 【お盟主様への声】MESSAGE FROM MISA ⑩","Category":"[MESSAGE FROM MISA]","URL":"https://bandmaid.tokyo/movies/56391"},{"Title":"2020.04.06 【お盟主様への声】MESSAGE FROM SAIKI ①","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/39440"},{"Title":"2020.04.30 【お盟主様への声】MESSAGE FROM SAIKI ②","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/40256"},{"Title":"2020.09.03 【お盟主様への声】MESSAGE FROM SAIKI③ ","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/45662"},{"Title":"2020.09.14 【お盟主様への声】MESSAGE FROM SAIKI ④","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/45992"},{"Title":"2020.09.14 【お盟主様への声】MESSAGE FROM SAIKI ⑤","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/45993"},{"Title":"2020.10.15 【お盟主様への声】MESSAGE FROM SAIKI ⑥","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/42754"},{"Title":"2021.02.15 【お盟主様への声】MESSAGE FROM SAIKI ⑦","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/51615"},{"Title":"2021.02.18 【お盟主様への声】MESSAGE FROM SAIKI ⑧","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/51614"},{"Title":"2021.02.26 【お盟主様への声】MESSAGE FROM SAIKI ⑨","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/51616"},{"Title":"2021.05.17 【お盟主様への声】MESSAGE FROM SAIKI ⑩","Category":"[MESSAGE FROM SAIKI]","URL":"https://bandmaid.tokyo/movies/56273"},{"Title":"2019.01.13 BAND-MAID Vocal Percussion","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/25553"},{"Title":"2019.01.13 KUMAMOTO SURPRISE","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/25711"},{"Title":"2019.01.27 BAND-MAID \"Musical chairs\"","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/26179"},{"Title":"2019.05.28 Dancing by AKANE & SAIKI","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/29867"},{"Title":"2019.10.28 Body Percussion","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/34130"},{"Title":"2019.10.28 MISA and BEER in USA","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/34131"},{"Title":"2019.12.15 \"CONQUEROR\" RELEASE PROMOTION","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/35463"},{"Title":"2019.12.15 MISA's NEW BASS!!","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/35464"},{"Title":"2020.01.18 Photographer AKANE","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/36524"},{"Title":"2020.03.24 Trailer of \"ZEPP TOUR\" \"Blu-ray/DVD\" \"NIPPON BUDOKAN\"","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/39017"},{"Title":"2020.12.25 Customary to exchange Christmas gifts　クリスマスプレゼント交換会　とって出し","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/50361"},{"Title":"2022.08.30 Stuffing a bag by SAIKI","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/76805"},{"Title":"2026.01.09 \"SCOOOOOP\" Self-Liner Notes part 3","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/123345"},{"Title":"2026.01.22 \"SCOOOOOP\" Self-Liner Notes part 4","Category":"[MISC]","URL":"https://bandmaid.tokyo/movies/123775"},{"Title":"2019.01.27 OMAJINAI TIME　\"MAGIC SPELL TIME\" at STUDIO COAST","Category":"[OMAJINAI TIME]","URL":"https://bandmaid.tokyo/movies/26180"},{"Title":"2019.10.28 OMAJINAI TIME (MAGIC SPELL TIME) Oct 14, 2019","Category":"[OMAJINAI TIME]","URL":"https://bandmaid.tokyo/movies/34132"},{"Title":"2019.10.28 OMAJINAI TIME (MAGIC SPELL TIME) Oct 20, 2019","Category":"[OMAJINAI TIME]","URL":"https://bandmaid.tokyo/movies/34133"},{"Title":"\"Bestie\" Teaser Video from BAND-MAID Billboard Acoustic Tour TOKYO (April 13, 2025)","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/121453"},{"Title":"\"SCOOOOOP\" Self-Liner Notes part 1","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/122534"},{"Title":"\"SCOOOOOP\" Self-Liner Notes part 2","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/122535"},{"Title":"BAND-MAID NEW YEAR PARTY 2025 part1","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/108514"},{"Title":"BAND-MAID NEW YEAR PARTY 2025 part2","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/108515"},{"Title":"BAND-MAID ORIGINAL MERCH","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/99008"},{"Title":"BAND-MAID YEAR END PARTY 2024 part1","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/107844"},{"Title":"BAND-MAID YEAR END PARTY 2024 part2","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/107848"},{"Title":"Behind the New Look (TikTok Recap)","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/113179"},{"Title":"Happy New Year!","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/95194"},{"Title":"Holidays in Seattle ","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/78764"},{"Title":"KANAMI & LEGENDARY FUSE","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/104129"},{"Title":"MISA's Shout","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/100085"},{"Title":"Talk about Blu-ray/DVD \"BAND-MAID 10TH ANNIV TOUR FINAL\" in English KANAMI, SAIKI","Category":"[OMEISYUSAMA MOVIE]","URL":"https://bandmaid.tokyo/movies/97869"},{"Title":"Stationhead Arcive (Dec.5, 2025)","Category":"[OMEISYUSMA MOVIE]","URL":"https://bandmaid.tokyo/movies/122030"},{"Title":"2020.03.24 BAND-MAID LIVE BROADCAST (Edit ver.)","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/39016"},{"Title":"2020.04.18 【お盟主様への声SPECIAL お盟主様へのラジオ①】RADIO FOR O-MEI-SYU-SAMA with ZOOM①","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/39945"},{"Title":"2020.04.30 BAND-MAID REMOTE LIVE TALK SHOW (on April 30, 2020) ","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/40518"},{"Title":"2020.06.12 【お盟主様への声SPECIAL お盟主様へのラジオ②】RADIO FOR O-MEI-SYU-SAMA with ZOOM②","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/42347"},{"Title":"2020.12.25 【お盟主様への声SPECIAL お盟主様へのラジオ③】RADIO FOR OMEISYUSAMA③","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/50243"},{"Title":"2020.12.30 【お盟主様への声SPECIAL お盟主様へのラジオ④】RADIO FOR OMEISYUSAMA④","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/50244"},{"Title":"2021.06.15 【お盟主様への声SPECIAL お盟主様へのラジオ⑤】RADIO FOR OMEISYUSAMA⑤","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/57853"},{"Title":"2021.08.01 【お盟主様への声SPECIAL お盟主様へのラジオ③】RADIO FOR OMEISYUSAMA③ with English Subs","Category":"[RADIO FOR OMEISYUSAMA]","URL":"https://bandmaid.tokyo/movies/59898"},{"Title":"2021.05.30 【お盟主様への声】今月の一曲　Song of the Month AKANE","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/56853"},{"Title":"2021.06.14 【お盟主様への声】今月の一曲　Song of the Month AKANE (June, 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/57737"},{"Title":"2021.07.16 【お盟主様への声】今月の一曲　Song of the Month AKANE (July, 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/59260"},{"Title":"2021.08.21 【お盟主様への声】今月の一曲　Song of the Month AKANE (Aug. 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/60687"},{"Title":"2021.09.28 【お盟主様への声】今月の一曲　Song of the Month AKANE (Sept., 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/62388"},{"Title":"2021.10.20 【お盟主様への声】今月の一曲　Song of the Month AKANE (Oct., 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/63436"},{"Title":"2021.11.29 【お盟主様への声】今月の一曲　Song of the Month AKANE (Nov., 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/65099"},{"Title":"2021.12.22 【お盟主様への声】今月の一曲　Song of the Month AKANE (Dec., 2021)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/66027"},{"Title":"2022.01.28 【お盟主様への声】今月の一曲　Song of the Month AKANE (Jan., 2022)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/67813"},{"Title":"2022.02.27 【お盟主様への声】今月の一曲　Song of the Month AKANE (Feb., 2022)","Category":"[Song of the Month AKANE]","URL":"https://bandmaid.tokyo/movies/69002"},{"Title":"2021.05.30 【お盟主様への声】今月の一曲　Song of the Month KANAMI","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/56854"},{"Title":"2021.06.16 【お盟主様への声】今月の一曲　Song of the Month KANAMI (June, 2021)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/57738"},{"Title":"2021.06.28 【お盟主様への声】今月の一曲　Song of the Month KANAMI (June, 2021) English ver.","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/58166"},{"Title":"2021.07.21 【お盟主様への声】今月の一曲　Song of the Month KANAMI (July, 2021) ","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/59261"},{"Title":"2021.08.24 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Aug. 2021)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/60688"},{"Title":"2021.09.29 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Sept., 2021)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/62390"},{"Title":"2021.10.23 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Oct., 2021)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/63437"},{"Title":"2021.11.30 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Nov., 2021)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/65102"},{"Title":"2021.12.21 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Dec., 2021)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/66025"},{"Title":"2022.01.31 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Jan., 2022)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/67906"},{"Title":"2022.02.26 【お盟主様への声】今月の一曲　Song of the Month KANAMI (Feb., 2022)","Category":"[Song of the Month KANAMI]","URL":"https://bandmaid.tokyo/movies/69003"},{"Title":"2021.05.29 【お盟主様への声】今月の一曲　Song of the Month MIKU","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/56855"},{"Title":"2021.06.09 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (June, 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/57253"},{"Title":"2021.07.13 【お盟主様への声】今月の一曲　Song of the Month MIKU (July, 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/59137"},{"Title":"2021.08.27 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Aug. 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/60978"},{"Title":"2021.09.30 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Sept. 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/62389"},{"Title":"2021.10.22 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Oct., 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/63439"},{"Title":"2021.11.29 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Nov., 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/65100"},{"Title":"2021.12.28 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Dec., 2021)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/66386"},{"Title":"2022.01.31 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Jan., 2022)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/67905"},{"Title":"2022.02.28 【お盟主様への声】今月の一曲　Song of the Month MIKU KOBATO (Feb., 2022)","Category":"[Song of the Month KOBATO]","URL":"https://bandmaid.tokyo/movies/69004"},{"Title":"2021.05.30 【お盟主様への声】今月の一曲　Song of the Month MISA","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/56856"},{"Title":"2021.06.23 【お盟主様への声】今月の一曲　Song of the Month MISA (June, 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/58164"},{"Title":"2021.07.19 【お盟主様への声】今月の一曲　Song of the Month MISA (July, 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/59262"},{"Title":"2021.08.27 【お盟主様への声】今月の一曲　Song of the Month MISA (Aug. 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/60979"},{"Title":"2021.09.25 【お盟主様への声】今月の一曲　Song of the Month MISA (Sept., 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/62283"},{"Title":"2021.10.27 【お盟主様への声】今月の一曲　Song of the Month MISA (Oct., 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/63438"},{"Title":"2021.11.30 【お盟主様への声】今月の一曲　Song of the Month MISA (Nov., 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/65103"},{"Title":"2021.12.27 【お盟主様への声】今月の一曲　Song of the Month MISA (Dec., 2021)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/66385"},{"Title":"2022.01.28 【お盟主様への声】今月の一曲　Song of the Month MISA (Jan., 2022)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/67814"},{"Title":"2022.02.27 【お盟主様への声】今月の一曲　Song of the Month MISA (Feb., 2022)","Category":"[Song of the Month MISA]","URL":"https://bandmaid.tokyo/movies/69005"},{"Title":"2021.05.30 【お盟主様への声】今月の一曲　Song of the Month SAIKI","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/56857"},{"Title":"2021.06.24 【お盟主様への声】今月の一曲　Song of the Month SAIKI (June, 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/58165"},{"Title":"2021.07.23 【お盟主様への声】今月の一曲　Song of the Month SAIKI (July, 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/59263"},{"Title":"2021.08.20 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Aug., 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/60595"},{"Title":"2021.09.27 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Sept., 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/62284"},{"Title":"2021.10.13 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Oct., 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/63171"},{"Title":"2021.11.30 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Nov., 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/65101"},{"Title":"2021.12.23 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Dec., 2021)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/66026"},{"Title":"2022.01.29 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Jan., 2022)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/67815"},{"Title":"2022.02.28 【お盟主様への声】今月の一曲　Song of the Month SAIKI (Feb., 2022)","Category":"[Song of the Month SAIKI]","URL":"https://bandmaid.tokyo/movies/69037"},{"Title":"BAND-MAID NEW YEAR PARTY 2026 part 1","Category":"[SPECIAL MOVIE]","URL":"https://bandmaid.tokyo/movies/123773"},{"Title":"BAND-MAID NEW YEAR PARTY 2026 part 2","Category":"[SPECIAL MOVIE]","URL":"https://bandmaid.tokyo/movies/123774"},{"Title":"BAND-MAID YEAR END PARTY 2025 part 1","Category":"[SPECIAL MOVIE]","URL":"https://bandmaid.tokyo/movies/123120"},{"Title":"BAND-MAID YEAR END PARTY 2025 part 2","Category":"[SPECIAL MOVIE]","URL":"https://bandmaid.tokyo/movies/123121"},{"Title":"One-on-one talk vol.1 \"KOBATO×SAIKI\"","Category":"[TALKS]","URL":"https://bandmaid.tokyo/movies/61370"},{"Title":"One-on-one talk vol.2 \"KANAMI×MISA\" ","Category":"[TALKS]","URL":"https://bandmaid.tokyo/movies/62285"},{"Title":"One-on-one talk vol.3 \"AKANE×SAIKI\"","Category":"[TALKS]","URL":"https://bandmaid.tokyo/movies/64272"},{"Title":"One-on-one talk vol.4 \"KANAMI×SAIKI\"","Category":"[TALKS]","URL":"https://bandmaid.tokyo/movies/68568"},{"Title":"One-on-one talk vol.5 \"AKANE×KOBATO\"","Category":"[TALKS]","URL":"https://bandmaid.tokyo/movies/71957"},{"Title":"\"Epic Narratives\" Artwork Description アートワーク解説　SAIKI","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/104328"},{"Title":"\"Epic Narratives\" 開封の儀 Opening(Unboxing) Ceremony","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/104289"},{"Title":"\"SCOOOOOP\" 開封の儀 Opening(Unboxing) Ceremony","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/119278"},{"Title":"2018.07.25 【お盟主様専用動画③】「start over」開封の儀","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/22609"},{"Title":"2021.01.20 Unboxing ceremony of \"Unseen World\"","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/51343"},{"Title":"2021.11.10 Unboxing ceremony of \"Sense\"","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/64342"},{"Title":"Blu-ray/DVD \"BAND-MAID 10TH ANNIV TOUR FINAL\" SAIKI解説","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/97874"},{"Title":"Blu-ray/DVD \"BAND-MAID 10TH ANNIV TOUR FINAL\" 開封の儀 Opening Ceremony","Category":"[UNBOXING]","URL":"https://bandmaid.tokyo/movies/97871"},{"Title":"2018.07.04 【お盟主様専用動画】Welcome to お盟主様の会","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/22353"},{"Title":"2018.07.11 【お盟主様専用動画②】KANAMIからお盟主様へ","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/22452"},{"Title":"2018.10.03 【お盟主様専用動画④】ARABAKI裏の歓喜","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/23713"},{"Title":"2018.10.03 【お盟主様専用動画⑤】ROCK IN JAPAN FES. 2018　出演サプライズ発表！","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/23714"},{"Title":"2018.10.03 【お盟主様専用動画⑥】スペシャルおまじないタイム","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/23715"},{"Title":"2018.10.09 【お盟主様専用動画⑦】大阪名物","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/23784"},{"Title":"2018.10.11 【お盟主様専用動画⑧】無我夢中","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/23823"},{"Title":"2018.10.18 【お盟主様専用動画⑨】MISAバースデーカラオケ（声でお楽しみください。）","Category":"[Videos for allies only]","URL":"https://bandmaid.tokyo/movies/24078"},{"Title":"2020.07.16 【お盟主様への声】#voice_bandmaid AKANE","Category":"[VOICE MESSAGE AKANE]","URL":"https://bandmaid.tokyo/movies/43816"},{"Title":"2020.08.21 【お盟主様への声】#voice_bandmaid AKANE②","Category":"[VOICE MESSAGE AKANE]","URL":"https://bandmaid.tokyo/movies/44563"},{"Title":"2020.11.10 【お盟主様への声】#voice_bandmaid AKANE③","Category":"[VOICE MESSAGE AKANE]","URL":"https://bandmaid.tokyo/movies/48479"},{"Title":"2020.11.17 【お盟主様への声】#voice_bandmaid AKANE④","Category":"[VOICE MESSAGE AKANE]","URL":"https://bandmaid.tokyo/movies/48480"},{"Title":"2020.07.16 【お盟主様への声】#voice_bandmaid KANAMI","Category":"[VOICE MESSAGE KANAMI]","URL":"https://bandmaid.tokyo/movies/43815"},{"Title":"2020.08.21 【お盟主様への声】#voice_bandmaid KANAMI②","Category":"[VOICE MESSAGE KANAMI]","URL":"https://bandmaid.tokyo/movies/44564"},{"Title":"2020.11.10 【お盟主様への声】#voice_bandmaid KANAMI③","Category":"[VOICE MESSAGE KANAMI]","URL":"https://bandmaid.tokyo/movies/44570"},{"Title":"2020.11.17 【お盟主様への声】#voice_bandmaid KANAMI④","Category":"[VOICE MESSAGE KANAMI]","URL":"https://bandmaid.tokyo/movies/48481"},{"Title":"2020.07.16 【お盟主様への声】#voice_bandmaid MIKU KOBATO","Category":"[VOICE MESSAGE KOBATO]","URL":"https://bandmaid.tokyo/movies/43814"},{"Title":"2020.08.21 【お盟主様への声】#voice_bandmaid MIKU KOBATO②","Category":"[VOICE MESSAGE KOBATO]","URL":"https://bandmaid.tokyo/movies/44565"},{"Title":"2020.11.10 【お盟主様への声】#voice_bandmaid MIKU KOBATO③","Category":"[VOICE MESSAGE KOBATO]","URL":"https://bandmaid.tokyo/movies/44571"},{"Title":"2020.11.17 【お盟主様への声】#voice_bandmaid MIKU KOBATO④","Category":"[VOICE MESSAGE KOBATO]","URL":"https://bandmaid.tokyo/movies/48483"},{"Title":"2020.07.16 【お盟主様への声】#voice_bandmaid MISA","Category":"[VOICE MESSAGE MISA]","URL":"https://bandmaid.tokyo/movies/43813"},{"Title":"2020.08.21 【お盟主様への声】#voice_bandmaid MISA②","Category":"[VOICE MESSAGE MISA]","URL":"https://bandmaid.tokyo/movies/44566"},{"Title":"2020.11.10 【お盟主様への声】#voice_bandmaid MISA③","Category":"[VOICE MESSAGE MISA]","URL":"https://bandmaid.tokyo/movies/44572"},{"Title":"2020.11.17 【お盟主様への声】#voice_bandmaid MISA④","Category":"[VOICE MESSAGE MISA]","URL":"https://bandmaid.tokyo/movies/48482"},{"Title":"2020.07.16 【お盟主様への声】#voice_bandmaid SAIKI","Category":"[VOICE MESSAGE SAIKI]","URL":"https://bandmaid.tokyo/movies/43734"},{"Title":"2020.08.21 【お盟主様への声】#voice_bandmaid SAIKI②","Category":"[VOICE MESSAGE SAIKI]","URL":"https://bandmaid.tokyo/movies/44567"},{"Title":"2020.11.10 【お盟主様への声】#voice_bandmaid SAIKI③","Category":"[VOICE MESSAGE SAIKI]","URL":"https://bandmaid.tokyo/movies/44574"},{"Title":"2020.11.17 【お盟主様への声】#voice_bandmaid SAIKI④","Category":"[VOICE MESSAGE SAIKI]","URL":"https://bandmaid.tokyo/movies/48478"}];
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/fanclub.json";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "Fan Club".replace(/\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"}];
 const DECK = {"image":null,"primary":"Title","secondary":"Category","summary":null,"url":"URL"};
-const SORT = {"field":"","dir":"asc"};
+const SORT = {"field":"Title","dir":"asc"};
 const GROUP = {"field":"Category","dir":"asc"};
-const VIEW_NAME = "Fanclub";
+const VIEW_NAME = "Fan Club";
 const LOGO_CHAR = "🏮";
 const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    currentData=RAW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          currentData=RAW_DATA;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    currentData=RAW_DATA;
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
@@ -184,8 +268,9 @@ function processData(data){
 
 // ── SEARCH ───────────────────────────────────────────────────────────────────
 let expandedGroups={};
-let showAll=false;
-let currentData=RAW_DATA;
+let showAllGroups={};
+let showAllFlat=false;
+let currentData=[];
 
 function onSearch(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
@@ -195,13 +280,14 @@ function onSearch(){
       Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
     );
   }
-  showAll=false;
+  showAllFlat=false;
+  showAllGroups={};
   expandedGroups={};
   renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(){
+function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
   document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
@@ -214,42 +300,59 @@ function renderList(){
   }
 
   if(!GROUP.field){
-    // No grouping — flat deck
     const items=groups[0].items;
-    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
     container.appendChild(renderDeckGrid(shown,null));
-    if(!showAll&&items.length>PREVIEW_COUNT){
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
       container.appendChild(more);
     }
   } else {
     groups.forEach(({group,items})=>{
       const key=group??'';
-      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
       const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
       const wrap=document.createElement('div');
       wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
       const hdr=document.createElement('div');
       hdr.className='group-header';
       hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
       const body=document.createElement('div');
       body.className='group-items';
       const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
       body.appendChild(renderDeckGrid(shown,group));
+
       if(!showAll&&items.length>PREVIEW_COUNT){
         const more=document.createElement('div');
         more.className='show-more-row';
-        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
         body.appendChild(more);
       }
+
       wrap.appendChild(hdr);
       wrap.appendChild(body);
       container.appendChild(wrap);
     });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
   }
 }
 
@@ -322,7 +425,7 @@ function renderDeckCard(row,idx){
 function makePlaceholder(){
   const el=document.createElement('div');
   el.className='deck-card-img-placeholder';
-  el.textContent='🎵';
+  el.textContent=LOGO_CHAR;
   return el;
 }
 
@@ -347,9 +450,9 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
   } else {
-    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
   }
 
   html+='<div class="detail-body">';
@@ -405,7 +508,7 @@ function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-renderList();
+loadData();
 </script>
 </body>
 </html>

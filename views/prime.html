@@ -40,14 +40,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -84,6 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 /* UTIL */
 .hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -99,8 +100,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="record-count" id="recordCount"></div>
 </div>
 
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading Prime…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
 <!-- LIST VIEW -->
-<div id="listView" class="list-view">
+<div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
     <input class="search-input" type="search" placeholder="Search Prime…" id="searchInput" oninput="onSearch()">
   </div>
@@ -111,14 +124,85 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const RAW_DATA = [{"Title":"MIKU KOBATO and SAIKI ","Category":"[\"Spirited First Take\" Announcement Video]","URL":"https://bandmaidprime.tokyo/movies/75584"},{"Title":" \"BAND-MAID ONLINE ACOUSTIC\" BEHIND THE SCENES","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/69075"},{"Title":" \"BAND-MAID U.S. TOUR 2022 BEHIND-THE SCENES”  part 1 from  \"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023)\" first press limited edition","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/111974"},{"Title":" \"BAND-MAID U.S. TOUR 2022 BEHIND-THE SCENES” part 2 from \"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023)\" first press limited edition","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/111976"},{"Title":" \"BAND-MAID U.S. TOUR 2022 BEHIND-THE SCENES” part 3 from \"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023)\" first press limited edition","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/111977"},{"Title":" \"BAND-MAID U.S. TOUR 2022 BEHIND-THE SCENES” part 4 from \"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023)\" first press limited edition","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/111979"},{"Title":" \"Bestie\" Behind the Scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/99587"},{"Title":" \"Forbidden tale\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/106202"},{"Title":" \"influencer\" Making Movie","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/78288"},{"Title":" \"Present Perfect\" Behind the Scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/121412"},{"Title":" \"Protect You\" Behind the Scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/102994"},{"Title":" \"Ready to Rock\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/111992"},{"Title":" \"Sense\" Making Movie","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/64750"},{"Title":" \"Shambles\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/90749"},{"Title":" \"What is justice?\" Behind the scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/117891"},{"Title":" \"Zen\" Music Video Behind the scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/110497"},{"Title":" BAND-MAID \"THE DAY OF MAID (May 10, 2021)\" Making Movie","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/57915"},{"Title":"\"BAND-MAID TOUR 2025 FINAL\" Behind The Scenes","Category":"[BTS]","URL":"https://bandmaidprime.tokyo/movies/122304"},{"Title":"Silent BAND-MAID","Category":"[Comedy]","URL":"https://bandmaidprime.tokyo/movies/55813"},{"Title":" \"BAND-MAID NIPPON\" Acoustic Session","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/70078"},{"Title":" \"Bestie\" Teaser Video from BAND-MAID Billboard Acoustic Tour TOKYO (April 13, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/121443"},{"Title":" \"SCOOOOOP\" Self-Liner Notes part 1","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/122523"},{"Title":" \"SCOOOOOP\" Self-Liner Notes part 2","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/122525"},{"Title":" \"SCOOOOOP\" Self-Liner Notes part 3","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/123334"},{"Title":" \"SCOOOOOP\" Self-Liner Notes part 4","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/123702"},{"Title":" \"SCOOOOOP\" 開封の儀 Opening(Unboxing) Ceremony","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/120109"},{"Title":" AKANE's \"OMAJINAI TIME\"","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/90808"},{"Title":" Behind the New Look (TikTok Recap)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/113182"},{"Title":" Sense (Instrumental Music Video) from  \"Unleash\" first press limited edition","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/111567"},{"Title":" Stationhead Arcive (Dec.5, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/122028"},{"Title":" Stationhead Live Stream Archive (April 10, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/111700"},{"Title":" Stationhead Live Stream Archive (Aug. 1, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/120823"},{"Title":" Stationhead Live Stream Archive (Aug. 15, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/120824"},{"Title":" Stationhead Live Stream Archive (Aug. 29, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/120825"},{"Title":" Stationhead Live Stream Archive (Sep. 12, 2025)","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/120826"},{"Title":" Super DARADARA Time (Super Lazy Time) from \"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)\"","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/58887"},{"Title":" Unboxing ceremony of \"Sense\"","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/64456"},{"Title":" Unleash!!!!! (Instrumental Music Video) from  \"Unleash\" first press limited edition","Category":"[MISC]","URL":"https://bandmaidprime.tokyo/movies/111568"},{"Title":"Happy New Year!","Category":"[MOVIE]","URL":"https://bandmaidprime.tokyo/movies/95201"},{"Title":"Holidays in Seattle ","Category":"[Off shot Movie]","URL":"https://bandmaidprime.tokyo/movies/79749"},{"Title":"\"At the drop of a hat\" from BAND-MAID ONLINE ACOUSTIC (Focused on AKANE)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/72930"},{"Title":"\"At the drop of a hat\" from BAND-MAID ONLINE ACOUSTIC (Focused on KANAMI)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/74682"},{"Title":"\"At the drop of a hat\" from BAND-MAID ONLINE ACOUSTIC (Focused on MISA)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/75027"},{"Title":"\"Awkward\" from BAND-MAID ONLINE ACOUSTIC (Focused on MISA)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/73496"},{"Title":"\"Awkward\" from BAND-MAID ONLINE ACOUSTIC (Focused on SAIKI)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/74235"},{"Title":"\"BAND-MAID ONLINE OKYU-JI (Dec. 13, 2020) part 1","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/70262"},{"Title":"\"BAND-MAID ONLINE OKYU-JI (Dec. 13, 2020) part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/70563"},{"Title":"\"BAND-MAID ONLINE OKYU-JI (Dec. 13, 2020) part 3","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/70751"},{"Title":"\"BAND-MAID ONLINE OKYU-JI (Dec. 13, 2020) part 4","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/71022"},{"Title":"\"BAND-MAID WORLD DOMINATION TOUR 2018【宣告】\" Part 1 　 ","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/59476"},{"Title":"\"BAND-MAID WORLD DOMINATION TOUR 2018【宣告】\" Part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/59927"},{"Title":"\"BAND-MAID WORLD DOMINATION TOUR 2018【宣告】\" Part 3","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/61126"},{"Title":"\"BAND-MAID お給仕TOUR Autum-Winter 2017「燃えるの?萌えないの?どっちなの! ?」』Tour Final\" Part 1","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/58426"},{"Title":"\"BAND-MAID お給仕TOUR Autum-Winter 2017「燃えるの?萌えないの?どっちなの! ?」』Tour Final\" Part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/58839"},{"Title":"\"Corallium\" from BAND-MAID PRE US OKYUJI in JAPAN SHIBUYA EGGMAN (Sept 9, 2022) ","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/84245"},{"Title":"\"Smile\" from BAND-MAID ONLINE ACOUSTIC (Focused on KANAMI)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/72490"},{"Title":"\"Smile\" from BAND-MAID ONLINE ACOUSTIC (Focused on MIKU KOBATO)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/72813"},{"Title":"BAND-MAID \"THE DAY OF MAID\" (May 10, 2021)  from  \"Sense\" first press limited edition","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/111566"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR 番外編 [SPIN-OFF] (Feb. 22, 2024) part 1","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/124364"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR 番外編 [SPIN-OFF] (Feb. 22, 2024) part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/124521"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR 番外編 [SPIN-OFF] (Feb. 22, 2024) part 3","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/125233"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR 番外編 [SPIN-OFF] (Feb. 22, 2024) part 4","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/125454"},{"Title":"BAND-MAID 1st Full Album『Just Bring It』Pre-Release One-man 〜新年 初お給仕はじめます〜","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/58102"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) Audio commentary version part 1","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/86511"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) Audio commentary version part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/87001"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) Audio commentary version part 3","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/87087"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) Audio commentary version part 4","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/87358"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) part 1","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/81253"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/81722"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) part 3","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/82009"},{"Title":"BAND-MAID ONLINE ACOUSTIC (Dec 25, 2021) part 4","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/83228"},{"Title":"BAND-MAID ONLINE OKYU-JI (Aug. 16, 2020)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/55891"},{"Title":"BAND-MAID ONLINE OKYU-JI (July. 23, 2020)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/55814"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN SHIBUYA EGGMAN (Sept 9, 2022) part 1","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/122607"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN SHIBUYA EGGMAN (Sept 9, 2022) part 2","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/122608"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN SHIBUYA EGGMAN (Sept 9, 2022) part 3","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/122806"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN SHIBUYA EGGMAN (Sept 9, 2022) part 4","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/122807"},{"Title":"Moratorium (Lodge Room, Los Angeles)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/55971"},{"Title":"Play (Lodge Room, Los Angeles)","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/55972"},{"Title":"SPECIAL TALK Vol.1 from BAND-MAID TOKYO GARDEN THEATER OKYUJI","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/92892"},{"Title":"SPECIAL TALK Vol.2 from BAND-MAID TOKYO GARDEN THEATER OKYUJI","Category":"[OKYUJI]","URL":"https://bandmaidprime.tokyo/movies/93044"},{"Title":"Choose me (Front Angle) 2024.10.20 SAPPORO","Category":"[Rehearsal]","URL":"https://bandmaidprime.tokyo/movies/106025"},{"Title":"Forbidden tale (Front Angle) 2024.10.20 SAPPORO","Category":"[Rehearsal]","URL":"https://bandmaidprime.tokyo/movies/111071"},{"Title":"HATE? (Side Angle) 2024.10.20 SAPPORO","Category":"[Rehearsal]","URL":"https://bandmaidprime.tokyo/movies/107417"},{"Title":"H-G-K (Front Angle) 2024.10.20 SAPPORO","Category":"[Rehearsal]","URL":"https://bandmaidprime.tokyo/movies/105486"},{"Title":"AKANE \"alone\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/71242"},{"Title":"AKANE \"alone\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/68805"},{"Title":"AKANE \"Blooming\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/63513"},{"Title":"AKANE \"Blooming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60896"},{"Title":"AKANE \"Bubble\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57726"},{"Title":"AKANE \"Bubble\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56170"},{"Title":"AKANE \"Choose me\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56820"},{"Title":"AKANE \"Choose me\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/58219"},{"Title":"AKANE \"DICE\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/66601"},{"Title":"AKANE \"DICE\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/62776"},{"Title":"AKANE \"Different\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/55816"},{"Title":"AKANE \"Different\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/58978"},{"Title":"AKANE \"DOMINATION\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/76656"},{"Title":"AKANE \"DOMINATION\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67067"},{"Title":"AKANE \"Don't you tell ME\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/99307"},{"Title":"AKANE \"Forbidden tale\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/111469"},{"Title":"AKANE \"from now on\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/88469"},{"Title":"AKANE \"glory\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/79997"},{"Title":"AKANE \"glory\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/91134"},{"Title":"AKANE \"Liberal\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/92101"},{"Title":"AKANE \"Liberal\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/78156"},{"Title":"AKANE \"Moratorium モラトリアム\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67811"},{"Title":"AKANE \"Moratorium\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/69755"},{"Title":"AKANE \"Play\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/61758"},{"Title":"AKANE \"Play\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/63901"},{"Title":"AKANE \"Protect You\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/107236"},{"Title":"AKANE \"Ready to Rock\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/121773"},{"Title":"AKANE \"Sense\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/87560"},{"Title":"AKANE \"Sense\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/83787"},{"Title":"AKANE \"Toi et moi\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/109494"},{"Title":"AKANE \"Unleash!!!!!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/84896"},{"Title":"AKANE \"Unleash!!!!!\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/90097"},{"Title":"AKANE \"Warning!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57128"},{"Title":"AKANE \"Warning!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59384"},{"Title":"AKANE \"Wonderland\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60413"},{"Title":"AKANE \"Wonderland\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60036"},{"Title":"AKANE \"Zen\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/115345"},{"Title":"AKANE \"本懐\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/64880"},{"Title":"AKANE \"本懐\" (Pull Angle ver)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/65619"},{"Title":"AKANE \"輪廻\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/85710"},{"Title":"KANAMI \"Blooming\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/65343"},{"Title":"KANAMI \"Blooming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59089"},{"Title":"KANAMI \"Brightest Star\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/108868"},{"Title":"KANAMI \"Bubble\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/63200"},{"Title":"KANAMI \"Carry on living\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/66893"},{"Title":"KANAMI \"Choose me\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59520"},{"Title":"KANAMI \"Choose me\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/55817"},{"Title":"KANAMI \"Corallium\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/91024"},{"Title":"KANAMI \"Corallium\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/79247"},{"Title":"KANAMI \"DICE\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56933"},{"Title":"KANAMI \"DICE\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60995"},{"Title":"KANAMI \"Different\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60524"},{"Title":"KANAMI \"Different\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56643"},{"Title":"KANAMI \"DOMINATION\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/58334"},{"Title":"KANAMI \"DOMINATION\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/64003"},{"Title":"KANAMI \"Don't you tell ME\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/100671"},{"Title":"KANAMI \"glory\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/68952"},{"Title":"KANAMI \"HATE?\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/101721"},{"Title":"KANAMI \"HATE?\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/101068"},{"Title":"KANAMI \"I still seek revenge.\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/80976"},{"Title":"KANAMI \"I still seek revenge.\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/87517"},{"Title":"KANAMI \"influencer\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/92074"},{"Title":"KANAMI \"influencer\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/95817"},{"Title":"KANAMI \"NO GOD\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/90413"},{"Title":"KANAMI \"NO GOD\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/77800"},{"Title":"KANAMI \"Play\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/65985"},{"Title":"KANAMI \"Play\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/68095"},{"Title":"KANAMI \"Present Perfect\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/120616"},{"Title":"KANAMI \"Protect You\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/110585"},{"Title":"KANAMI \"Screaming\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/93951"},{"Title":"KANAMI \"Screaming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/95975"},{"Title":"KANAMI \"TAMAYA!\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/112706"},{"Title":"KANAMI \"Toi et moi\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/116405"},{"Title":"KANAMI \"Unleash!!!!!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/89053"},{"Title":"KANAMI \"Unleash!!!!!\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/85182"},{"Title":"KANAMI \"Warning!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/62452"},{"Title":"KANAMI \"Warning!\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57912"},{"Title":"KANAMI \"Wonderland\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56257"},{"Title":"KANAMI \"Wonderland\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/61876"},{"Title":"KANAMI \"本懐\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67307"},{"Title":"KANAMI \"本懐\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60112"},{"Title":"KANAMI & MISA \"Don't you tell ME\" (KANAMI's Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/97867"},{"Title":"KANAMI & MISA \"Don't you tell ME\" (MISA's Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/99940"},{"Title":"KANAMI & MISA \"Don't you tell ME\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/96864"},{"Title":"KANAMI & MISA \"HATE?\" (KANAMI's Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/100116"},{"Title":"KANAMI & MISA \"HATE?\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/97575"},{"Title":"MIKU KOBATO \"alone\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/76921"},{"Title":"MIKU KOBATO \"alone\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/80798"},{"Title":"MIKU KOBATO \"anemone\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/109810"},{"Title":"MIKU KOBATO \"Bestie\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/107173"},{"Title":"MIKU KOBATO \"Blooming\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59822"},{"Title":"MIKU KOBATO \"Blooming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67902"},{"Title":"MIKU KOBATO \"Bubble\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67012"},{"Title":"MIKU KOBATO \"Bubble\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/61337"},{"Title":"MIKU KOBATO \"Choose me\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/58739"},{"Title":"MIKU KOBATO \"Choose me\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60312"},{"Title":"MIKU KOBATO \"Daydreaming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/75056"},{"Title":"MIKU KOBATO \"DICE\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/55815"},{"Title":"MIKU KOBATO \"DICE\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57352"},{"Title":"MIKU KOBATO \"Different\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/58006"},{"Title":"MIKU KOBATO \"Different\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/63742"},{"Title":"MIKU KOBATO \"Different\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59245"},{"Title":"MIKU KOBATO \"DOMINATION\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/65788"},{"Title":"MIKU KOBATO \"DOMINATION\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56083"},{"Title":"MIKU KOBATO \"Don’t you tell ME\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/72148"},{"Title":"MIKU KOBATO \"Don't you tell ME\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/79750"},{"Title":"MIKU KOBATO \"endless Story\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/84498"},{"Title":"MIKU KOBATO \"endless Story\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/88668"},{"Title":"MIKU KOBATO \"onset\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/99094"},{"Title":"MIKU KOBATO \"Play\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/62255"},{"Title":"MIKU KOBATO \"Play\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/66527"},{"Title":"MIKU KOBATO \"Protect You\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/119067"},{"Title":"MIKU KOBATO \"Sense\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/113181"},{"Title":"MIKU KOBATO \"Unleash!!!!!\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/100219"},{"Title":"MIKU KOBATO \"Warning!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/68394"},{"Title":"MIKU KOBATO \"Warning!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56434"},{"Title":"MIKU KOBATO \"Wonderland\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57027"},{"Title":"MIKU KOBATO \"Wonderland\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/64536"},{"Title":"MIKU KOBATO \"Zen\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/124226"},{"Title":"MIKU KOBATO \"モラトリアム(Moratorium)\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/102913"},{"Title":"MIKU KOBATO \"本懐\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60682"},{"Title":"MIKU KOBATO \"本懐\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/63075"},{"Title":"MIKU KOBATO \"輪廻\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/104009"},{"Title":"MISA \"Blooming\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/66063"},{"Title":"MISA \"Blooming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60592"},{"Title":"MISA \"Bubble\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56519"},{"Title":"MISA \"Bubble\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/58556"},{"Title":"MISA \"Choose me\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67624"},{"Title":"MISA \"Choose me\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/61245"},{"Title":"MISA \"Corallium\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/92225"},{"Title":"MISA \"Corallium\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/83556"},{"Title":"MISA \"DICE\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/65234"},{"Title":"MISA \"DICE\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59663"},{"Title":"MISA \"Different\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/62102"},{"Title":"MISA \"Different\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57212"},{"Title":"MISA \"Dilly-Dally\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/121521"},{"Title":"MISA \"DOMINATION\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60234"},{"Title":"MISA \"DOMINATION\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/62673"},{"Title":"MISA \"Don't you tell ME\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/101380"},{"Title":"MISA \"Don't you tell ME\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/102257"},{"Title":"MISA \"Forbidden tale\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/116404"},{"Title":"MISA \"glory\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/77628"},{"Title":"MISA \"glory\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/85406"},{"Title":"MISA \"HATE?\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/100344"},{"Title":"MISA \"hide-and-seek\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/68249"},{"Title":"MISA \"influencer\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/96445"},{"Title":"MISA \"influencer\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/94058"},{"Title":"MISA \"Liberal\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/69363"},{"Title":"MISA \"NO GOD\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/110794"},{"Title":"MISA \"Play\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59160"},{"Title":"MISA \"Play\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/56353"},{"Title":"MISA \"Screaming\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/95606"},{"Title":"MISA \"Screaming\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/103108"},{"Title":"MISA \"Sense\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/87633"},{"Title":"MISA \"start over\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/69951"},{"Title":"MISA \"TAMAYA!\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/108282"},{"Title":"MISA \"Warning!\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/63386"},{"Title":"MISA \"Warning!\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/55818"},{"Title":"MISA \"Wonderland\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/57833"},{"Title":"MISA \"Wonderland\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/75218"},{"Title":"MISA \"カタルシス Catharsis\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/89680"},{"Title":"MISA \"本懐\" (Pull Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/64339"},{"Title":"MISA \"火花 (Hibana)\" (Head Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/80494"},{"Title":"MISA \"輪廻\" (Hand Angle ver.)","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/69245"},{"Title":"SAIKI \"Blooming\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/60742"},{"Title":"SAIKI \"Bubble\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/79481"},{"Title":"SAIKI \"Choose me\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/82241"},{"Title":"SAIKI \"Different\"","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/62840"},{"Title":"SAIKI \"Different\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/59576"},{"Title":"SAIKI \"DOMINATION\"","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/67449"},{"Title":"SAIKI \"Manners\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/75952"},{"Title":"SAIKI \"Play\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/78241"},{"Title":"SAIKI \"Warning!\"","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/64638"},{"Title":"SAIKI \"Wonderland\"","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/69461"},{"Title":"SAIKI \"本懐\" ","Category":"[Self-cover]","URL":"https://bandmaidprime.tokyo/movies/77144"},{"Title":"\"Epic Narratives\" Artwork Description SAIKI","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/104408"},{"Title":"\"Epic Narratives\" Opening(Unboxing) Ceremony","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/104324"},{"Title":"BAND-MAID NEW YEAR PARTY 2025 part1","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/108532"},{"Title":"BAND-MAID NEW YEAR PARTY 2025 part2","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/108533"},{"Title":"BAND-MAID NEW YEAR PARTY 2026 part 1","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/123801"},{"Title":"BAND-MAID NEW YEAR PARTY 2026 part 2","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/123802"},{"Title":"BAND-MAID YEAR END PARTY 2024 part1","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/107868"},{"Title":"BAND-MAID YEAR END PARTY 2024 part2","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/107867"},{"Title":"BAND-MAID YEAR END PARTY 2025 part 1","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/123156"},{"Title":"BAND-MAID YEAR END PARTY 2025 part 2","Category":"[SPECIAL MOVIE]","URL":"https://bandmaidprime.tokyo/movies/123157"},{"Title":"BAND-MAID \"THE DAY OF MAID 2022\"","Category":"[SPECIAL TALK]","URL":"https://bandmaidprime.tokyo/movies/86512"},{"Title":"\"Daydreaming\"","Category":"[Spirited First Take]","URL":"https://bandmaidprime.tokyo/movies/76052"},{"Title":"\"FORWARD\"","Category":"[Spirited First Take]","URL":"https://bandmaidprime.tokyo/movies/75585"},{"Title":"One-on-one talk vol.1 \"KOBATO×SAIKI\"","Category":"[TALKS]","URL":"https://bandmaidprime.tokyo/movies/61444"},{"Title":"One-on-one talk vol.2 \"KANAMI×MISA\"","Category":"[TALKS]","URL":"https://bandmaidprime.tokyo/movies/62397"},{"Title":"One-on-one talk vol.3 \"AKANE×SAIKI\"","Category":"[TALKS]","URL":"https://bandmaidprime.tokyo/movies/64273"},{"Title":"One-on-one talk vol.4 \"KANAMI×SAIKI\"","Category":"[TALKS]","URL":"https://bandmaidprime.tokyo/movies/68656"},{"Title":"One-on-one talk vol.5 \"AKANE×KOBATO\"","Category":"[TALKS]","URL":"https://bandmaidprime.tokyo/movies/71978"}];
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "Prime".replace(/\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"}];
 const DECK = {"image":null,"primary":"Title","secondary":"Category","summary":null,"url":"URL"};
-const SORT = {"field":"","dir":"asc"};
+const SORT = {"field":"Title","dir":"asc"};
 const GROUP = {"field":"Category","dir":"asc"};
 const VIEW_NAME = "Prime";
 const LOGO_CHAR = "🎬";
 const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    currentData=RAW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          currentData=RAW_DATA;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    currentData=RAW_DATA;
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
@@ -184,8 +268,9 @@ function processData(data){
 
 // ── SEARCH ───────────────────────────────────────────────────────────────────
 let expandedGroups={};
-let showAll=false;
-let currentData=RAW_DATA;
+let showAllGroups={};
+let showAllFlat=false;
+let currentData=[];
 
 function onSearch(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
@@ -195,13 +280,14 @@ function onSearch(){
       Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
     );
   }
-  showAll=false;
+  showAllFlat=false;
+  showAllGroups={};
   expandedGroups={};
   renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(){
+function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
   document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
@@ -214,42 +300,59 @@ function renderList(){
   }
 
   if(!GROUP.field){
-    // No grouping — flat deck
     const items=groups[0].items;
-    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
     container.appendChild(renderDeckGrid(shown,null));
-    if(!showAll&&items.length>PREVIEW_COUNT){
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
       container.appendChild(more);
     }
   } else {
     groups.forEach(({group,items})=>{
       const key=group??'';
-      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
       const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
       const wrap=document.createElement('div');
       wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
       const hdr=document.createElement('div');
       hdr.className='group-header';
       hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
       const body=document.createElement('div');
       body.className='group-items';
       const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
       body.appendChild(renderDeckGrid(shown,group));
+
       if(!showAll&&items.length>PREVIEW_COUNT){
         const more=document.createElement('div');
         more.className='show-more-row';
-        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
         body.appendChild(more);
       }
+
       wrap.appendChild(hdr);
       wrap.appendChild(body);
       container.appendChild(wrap);
     });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
   }
 }
 
@@ -322,7 +425,7 @@ function renderDeckCard(row,idx){
 function makePlaceholder(){
   const el=document.createElement('div');
   el.className='deck-card-img-placeholder';
-  el.textContent='🎵';
+  el.textContent=LOGO_CHAR;
   return el;
 }
 
@@ -347,9 +450,9 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
   } else {
-    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
   }
 
   html+='<div class="detail-body">';
@@ -405,7 +508,7 @@ function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-renderList();
+loadData();
 </script>
 </body>
 </html>

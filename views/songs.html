@@ -129,7 +129,7 @@ const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Songs".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Name","type":"text"},{"name":"AlternativeName","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"Album","type":"text"},{"name":"Duration","type":"text"},{"name":"HasMusicVideo","type":"text"},{"name":"HasLiveVideo","type":"text"},{"name":"InstrumentalTrack","type":"text"},{"name":"KobatoLead","type":"text"},{"name":"PlayedLiveCount","type":"number"},{"name":"FirstLiveDate","type":"datetime"},{"name":"FirstLivePerf","type":"text"},{"name":"SpotifyStreams","type":"number"},{"name":"SpotifyStreamRank","type":"number"},{"name":"YouTubeTotalStreams","type":"number"},{"name":"YouTubeStreamRank","type":"number"},{"name":"DeezerRank","type":"number"},{"name":"ShazamRank","type":"number"},{"name":"LyricsBy","type":"text"},{"name":"MusicBy","type":"text"},{"name":"ArrangementBy","type":"text"},{"name":"MediaTieIn","type":"text"},{"name":"MaikoVersion","type":"text"},{"name":"CoverOf","type":"image"},{"name":"Collaboration","type":"text"},{"name":"LyricsURL","type":"url"},{"name":"EnglishLyricsURL","type":"url"},{"name":"Notes","type":"text"},{"name":"Quotes","type":"text"},{"name":"AlbumCoverUrl","type":"image"}];
-const DECK = {"image":"AlbumCoverUrl","primary":"Name","secondary":"AlternativeName","summary":null,"url":"EnglishLyricsURL"};
+const DECK = {"image":"AlbumCoverUrl","primary":"Name","secondary":"AlternativeName","summary":"SpotifyStreams","url":"EnglishLyricsURL"};
 const SORT = {"field":"SpotifyStreams","dir":"desc"};
 const GROUP = {"field":"Album","dir":"desc"};
 const VIEW_NAME = "Songs";
@@ -425,7 +425,7 @@ function renderDeckCard(row,idx){
 function makePlaceholder(){
   const el=document.createElement('div');
   el.className='deck-card-img-placeholder';
-  el.textContent='🎵';
+  el.textContent=LOGO_CHAR;
   return el;
 }
 
@@ -450,9 +450,9 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
   } else {
-    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
   }
 
   html+='<div class="detail-body">';

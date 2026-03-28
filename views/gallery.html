@@ -40,14 +40,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -84,6 +84,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 /* UTIL */
 .hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
@@ -99,8 +100,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="record-count" id="recordCount"></div>
 </div>
 
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading Gallery…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
 <!-- LIST VIEW -->
-<div id="listView" class="list-view">
+<div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
     <input class="search-input" type="search" placeholder="Search Gallery…" id="searchInput" oninput="onSearch()">
   </div>
@@ -111,7 +124,10 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const RAW_DATA = [{"Title":"BAND-MAID TOUR 2025 FINAL (Dec. 7)","URL":"https://bandmaid.tokyo/group/37840","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 OSAKA (Oct. 24)","URL":"https://bandmaid.tokyo/group/37838","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 AICHI (Aug. 8,9)","URL":"https://bandmaid.tokyo/group/37837","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 TOKYO (July 12)","URL":"https://bandmaid.tokyo/group/37836","Date":"2025-12-27T00:00:00"},{"Title":"BAND-MAID TOUR 2025 MIYAGI (June 28)","URL":"https://bandmaid.tokyo/group/35601","Date":"2025-09-12T00:00:00"},{"Title":"BAND-MAID TOUR 2025 OSAKA (June 20, 21)","URL":"https://bandmaid.tokyo/group/35588","Date":"2025-09-12T00:00:00"},{"Title":"MILLION ROCK FESTIVAL 2025 (June 7)","URL":"https://bandmaid.tokyo/group/35613","Date":"2025-09-12T00:00:00"},{"Title":"BAND-MAID TOUR 2025 SHIZUOKA (May 25)","URL":"https://bandmaid.tokyo/group/35608","Date":"2025-09-12T00:00:00"},{"Title":"BAND-MAID TOUR 2025 TOKYO (May 10)","URL":"https://bandmaid.tokyo/group/34083","Date":"2025-06-04T00:00:00"},{"Title":"BAND-MAID Billboard Live Acoustic Tour","URL":"https://bandmaid.tokyo/group/33663","Date":"2025-05-15T00:00:00"},{"Title":"BAND-MAID SPIN-OFF OKYUJI (Feb. 17, 2025)","URL":"https://bandmaid.tokyo/group/33014","Date":"2025-03-28T00:00:00"},{"Title":"BAND-MAID SPIN-OFF OKYUJI (Feb. 3, 2025)","URL":"https://bandmaid.tokyo/group/33013","Date":"2025-03-28T00:00:00"},{"Title":"BAND-MAID ZEPP TOUR 2024 TOKYO 2days","URL":"https://bandmaid.tokyo/group/31634","Date":"2024-12-04T00:00:00"},{"Title":"BAND-MAID ZEPP TOUR 2024 AICHI & OSAKA","URL":"https://bandmaid.tokyo/group/31633","Date":"2024-12-04T00:00:00"},{"Title":"BAND-MAID番外編お給仕 福岡・札幌","URL":"https://bandmaid.tokyo/group/31094","Date":"2024-10-25T00:00:00"},{"Title":"BAND-MAID番外編お給仕 Medium in Summer","URL":"https://bandmaid.tokyo/group/31092","Date":"2024-10-25T00:00:00"},{"Title":"BAND-MAID HALL TOUR 2024","URL":"https://bandmaid.tokyo/group/29681","Date":"2024-07-18T00:00:00"},{"Title":"THE DAY OF MAID 2024","URL":"https://bandmaid.tokyo/group/28637","Date":"2024-05-21T00:00:00"},{"Title":"INCUBUS JAPAN TOUR 2024","URL":"https://bandmaid.tokyo/group/28627","Date":"2024-05-20T00:00:00"},{"Title":"[OMEISYUSAMA PHOTO] BAND-MAID ACOUSTIC OKYUJI","URL":"https://bandmaid.tokyo/group/27761","Date":"2024-03-22T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR 番外編","URL":"https://bandmaid.tokyo/group/27302","Date":"2024-03-04T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA Vol.2","URL":"https://bandmaid.tokyo/group/26715","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA Vol.1","URL":"https://bandmaid.tokyo/group/26714","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID September-October 2023","URL":"https://bandmaid.tokyo/group/26713","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR in North America August","URL":"https://bandmaid.tokyo/group/26712","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID July 2023","URL":"https://bandmaid.tokyo/group/26709","Date":"2024-01-19T00:00:00"},{"Title":"BAND-MAID 10TH ANNIVERSARY TOUR in North America May","URL":"https://bandmaid.tokyo/group/22978","Date":"2023-06-12T00:00:00"},{"Title":"BAND-MAID March-April 2023","URL":"https://bandmaid.tokyo/group/22976","Date":"2023-06-12T00:00:00"},{"Title":"BAND-MAID US TOUR 2022","URL":"https://bandmaid.tokyo/group/22977","Date":"2023-06-12T00:00:00"},{"Title":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023)","URL":"https://bandmaid.tokyo/group/21126","Date":"2023-02-09T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Sept. 9, 2022)","URL":"https://bandmaid.tokyo/group/19141","Date":"2022-09-16T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Sept. 7, 2022)","URL":"https://bandmaid.tokyo/group/19139","Date":"2022-09-16T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Sept. 3, 2022)","URL":"https://bandmaid.tokyo/group/19140","Date":"2022-09-16T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Aug. 25, 2022)","URL":"https://bandmaid.tokyo/group/18750","Date":"2022-08-26T00:00:00"},{"Title":"BAND-MAID PRE US OKYUJI in JAPAN (Aug. 17, 2022)","URL":"https://bandmaid.tokyo/group/18751","Date":"2022-08-26T00:00:00"},{"Title":"DOWNLOAD JAPAN 2022 & SUMMER SONIC 2022 ","URL":"https://bandmaid.tokyo/group/18752","Date":"2022-08-26T00:00:00"},{"Title":"BAND-MAID \"THE DAY OF MAID\" (May. 10, 2021)","URL":"https://bandmaid.tokyo/group/13606","Date":"2021-06-22T00:00:00"},{"Title":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)","URL":"https://bandmaid.tokyo/group/13605","Date":"2021-06-22T00:00:00"},{"Title":"BAND-MAID ONLINE OKYU-JI (Dec. 13, 2020)","URL":"https://bandmaid.tokyo/group/11717","Date":"2021-02-08T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 【進化】 (Feb. 13-14, 2020)","URL":"https://bandmaid.tokyo/group/8530","Date":"2020-02-27T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2019-2020 【激動】 YOKOHAMA BAY HALL (Oct 14, 2019)","URL":"https://bandmaid.tokyo/group/7427","Date":"2019-10-28T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2019 【激動】 EXTRAお給仕 MYNAVI BLITZ AKASAKA (August 2, 2019)","URL":"https://bandmaid.tokyo/group/6760","Date":"2019-08-19T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2019 【激動】 HITOMI MEMORIAL HALL (July 30, 2019)","URL":"https://bandmaid.tokyo/group/6759","Date":"2019-08-19T00:00:00"},{"Title":"BAND-MAID presents 冥途乃日　(UP May 14th, 2019)","URL":"https://bandmaid.tokyo/group/6068","Date":"2019-05-14T00:00:00"},{"Title":"Ver.2 BAND-MAID WORLD DOMINATION TOUR 2018-2019【侵略】 ～Supported By LIVEDAM STADIUM～　(UP January 27th, 2019)","URL":"https://bandmaid.tokyo/group/5279","Date":"2019-01-27T00:00:00"},{"Title":"BAND-MAID WORLD DOMINATION TOUR 2018-2019【侵略】 ～Supported By LIVEDAM STADIUM～　(UP January 14th, 2019)","URL":"https://bandmaid.tokyo/group/5192","Date":"2019-01-14T00:00:00"},{"Title":"ROCK IN JAPAN FESTIVAL 2018 (UP August 24th, 2018)","URL":"https://bandmaid.tokyo/group/4200","Date":"2018-08-24T00:00:00"},{"Title":"WORLD DOMINATION TOUR 2018【宣告】(UP July 4th, 2018)","URL":"https://bandmaid.tokyo/group/3940","Date":"2018-07-04T00:00:00"}];
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/gallery.json";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "Gallery".replace(/\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Title","type":"text"},{"name":"URL","type":"url"},{"name":"Date","type":"datetime"}];
 const DECK = {"image":null,"primary":"Title","secondary":"Date","summary":null,"url":"URL"};
 const SORT = {"field":"Date","dir":"desc"};
@@ -119,6 +135,74 @@ const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Gallery";
 const LOGO_CHAR = "🖼️";
 const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    currentData=RAW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          currentData=RAW_DATA;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    currentData=RAW_DATA;
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
@@ -184,8 +268,9 @@ function processData(data){
 
 // ── SEARCH ───────────────────────────────────────────────────────────────────
 let expandedGroups={};
-let showAll=false;
-let currentData=RAW_DATA;
+let showAllGroups={};
+let showAllFlat=false;
+let currentData=[];
 
 function onSearch(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
@@ -195,13 +280,14 @@ function onSearch(){
       Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
     );
   }
-  showAll=false;
+  showAllFlat=false;
+  showAllGroups={};
   expandedGroups={};
   renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(){
+function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
   document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
@@ -214,42 +300,59 @@ function renderList(){
   }
 
   if(!GROUP.field){
-    // No grouping — flat deck
     const items=groups[0].items;
-    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
     container.appendChild(renderDeckGrid(shown,null));
-    if(!showAll&&items.length>PREVIEW_COUNT){
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
       container.appendChild(more);
     }
   } else {
     groups.forEach(({group,items})=>{
       const key=group??'';
-      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
       const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
       const wrap=document.createElement('div');
       wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
       const hdr=document.createElement('div');
       hdr.className='group-header';
       hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
       const body=document.createElement('div');
       body.className='group-items';
       const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
       body.appendChild(renderDeckGrid(shown,group));
+
       if(!showAll&&items.length>PREVIEW_COUNT){
         const more=document.createElement('div');
         more.className='show-more-row';
-        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
         body.appendChild(more);
       }
+
       wrap.appendChild(hdr);
       wrap.appendChild(body);
       container.appendChild(wrap);
     });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
   }
 }
 
@@ -322,7 +425,7 @@ function renderDeckCard(row,idx){
 function makePlaceholder(){
   const el=document.createElement('div');
   el.className='deck-card-img-placeholder';
-  el.textContent='🎵';
+  el.textContent=LOGO_CHAR;
   return el;
 }
 
@@ -347,9 +450,9 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
   } else {
-    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
   }
 
   html+='<div class="detail-body">';
@@ -405,7 +508,7 @@ function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-renderList();
+loadData();
 </script>
 </body>
 </html>

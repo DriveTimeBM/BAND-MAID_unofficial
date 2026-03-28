@@ -425,7 +425,7 @@ function renderDeckCard(row,idx){
 function makePlaceholder(){
   const el=document.createElement('div');
   el.className='deck-card-img-placeholder';
-  el.textContent='🎵';
+  el.textContent=LOGO_CHAR;
   return el;
 }
 
@@ -450,9 +450,9 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
   } else {
-    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
   }
 
   html+='<div class="detail-body">';

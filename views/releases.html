@@ -40,14 +40,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -84,13 +84,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 /* UTIL */
 .hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
 </style>
 </head>
 <body>
 
 <!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">🎸</div>
+  <div class="app-logo">💿</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
     <div class="view-label" id="viewLabel">Releases</div>
@@ -99,8 +100,20 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="record-count" id="recordCount"></div>
 </div>
 
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading Releases…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
 <!-- LIST VIEW -->
-<div id="listView" class="list-view">
+<div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
     <input class="search-input" type="search" placeholder="Search Releases…" id="searchInput" oninput="onSearch()">
   </div>
@@ -111,14 +124,85 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const RAW_DATA = [{"Name":"MAID IN JAPAN","Work":"MAID IN JAPAN","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-maid-in-japan-cd","Description":"MAID IN JAPAN original release","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Gump Records","ReleaseDate":"2014-01-08T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/01%20maid_in_japan.png"},{"Name":"Love, Passion, Matador","Work":"Love, Passion, Matador (愛と情熱のマタドール)","Type":"Single","URL":"https://www.cdjapan.co.jp/product/DAKPPRC-10","Description":"Love, Passion, Matador single","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Gump Records","ReleaseDate":"2014-08-13T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/LPM.jpg"},{"Name":"New Beginning","Work":"New Beginning","Type":"Album","URL":"https://www.cdjapan.co.jp/product/NEODAI-117318","Description":"New Beginning CD+DVD","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"01. Real Existence MV 02. Don’t Let Me Down MV","Publisher":"Gump Records","ReleaseDate":"2015-11-18T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/02%20new_beginning.png"},{"Name":"Brand New MAID (type B)","Work":"Brand New MAID","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-brand-new-maid-cd-1","Description":"Brand New MAID CD w/ bonus track","Media":"CD","BonusMedia":"","BonusDesc":"REAL EXISTENCE (live ver.)","Publisher":"Crown Stones","ReleaseDate":"2016-05-18T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/03%20brand_new_maid.png"},{"Name":"Brand New MAID (type A)","Work":"Brand New MAID","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-brand-new-maid-cd","Description":"Brand New MAID CD+DVD","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"01. the non-fiction days MV 02. Order MV 03. alone MV","Publisher":"Crown Stones","ReleaseDate":"2016-05-18T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/03%20brand_new_maid.png"},{"Name":"YOLO","Work":"YOLO","Type":"Single","URL":"https://bandmaidshop.com/products/band-maid-yolo-cd","Description":"YOLO CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2016-11-16T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/04%20yolo.png"},{"Name":"Just Bring It","Work":"Just Bring It","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-just-bring-it-regular-edition-cd-album","Description":"Just Bring It CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2017-01-11T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/05%20just_bring_lt.png"},{"Name":"2017.1.9 Live at Akasaka BLITZ (DVD)","Work":"2017.1.9 Live at Akasaka BLITZ","Type":"Live Video","URL":"https://bandmaidprime.tokyo/movies/58102","Description":"2017.1.9 Live at Akasaka BLITZ DVD","Media":"DVD","BonusMedia":"","BonusDesc":"","Publisher":"","ReleaseDate":"2017-07-19T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/05%20just_bring_lt.png"},{"Name":"Daydreaming / Choose me","Work":"Daydreaming / Choose me","Type":"Single","URL":"https://bandmaidshop.com/products/bandmaid-daydreaming-choose-me","Description":"Daydreaming / Choose me CD","Media":"CD","BonusMedia":"DVD","BonusDesc":"2017.1.9 Live at Akasaka BLITZ","Publisher":"Crown Stones","ReleaseDate":"2017-07-19T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/06%20daydreaming_choose_me.png"},{"Name":"Live at Shinkiba STUDIO COAST (DVD)","Work":"Live at Shinkiba STUDIO COAST","Type":"Live Video","URL":"https://bandmaidprime.tokyo/movies/58426","Description":"Live at Shinkiba STUDIO COAST - WORLD DOMINATION 1st press limited edition A (DVD)","Media":"DVD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2018-02-14T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/05%20just_bring_lt.png"},{"Name":"MAID IN JAPAN (reissue)","Work":"MAID IN JAPAN","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-maid-in-japan-cd","Description":"MAID IN JAPAN Reissue of MAID IN JAPAN All tracks are remastered","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2018-02-14T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/01%20maid_in_japan.png"},{"Name":"WORLD DOMINATION (type B)","Work":"WORLD DOMINATION","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-world-domination-cd","Description":"WORLD DOMINATION (type B) CD+DCD","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"Live at Shinkiba Studio Coast on 2017.11.23 1. CHOOSE ME 2. DON’T YOU TELL ME 3. モラトリアム [Moratorium] 4. PUZZLE 5. CROSS 6. MATCHLESS GUM 7. AWKWARD 8. DAYDREAMING 9. YOLO 10. ALONE 11. REAL EXISTENCE 12. TAKE ME HIGHER!! 13. PLAY 14. SECRET MY LIPS 15. TH","Publisher":"Crown Stones","ReleaseDate":"2018-02-14T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07%20world_domination.png"},{"Name":"Live at Shinkiba STUDIO COAST (Blu-ray)","Work":"Live at Shinkiba STUDIO COAST","Type":"Live Video","URL":"https://bandmaidprime.tokyo/movies/58426","Description":"Live at Shinkiba STUDIO COAST - WORLD DOMINATION 1st press limited edition A (Blu-ray)","Media":"Blu-ray","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2018-02-14T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/05%20just_bring_lt.png"},{"Name":"WORLD DOMINATION (regular edition)","Work":"WORLD DOMINATION","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-world-domination-cd","Description":"WORLD DOMINATION regular edition","Media":"CD","BonusMedia":"","BonusDesc":"Honey (Bonus Track) MUCC cover","Publisher":"Crown Stones","ReleaseDate":"2018-02-14T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07%20world_domination.png"},{"Name":"WORLD DOMINATION (type A)","Work":"WORLD DOMINATION","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-world-domination-cd","Description":"WORLD DOMINATION (type A) CD+Blu-ray","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"Live at Shinkiba Studio Coast on 2017.11.23 1. CHOOSE ME 2. DON’T YOU TELL ME 3. モラトリアム [Moratorium] 4. PUZZLE 5. CROSS 6. MATCHLESS GUM 7. AWKWARD 8. DAYDREAMING 9. YOLO 10. ALONE 11. REAL EXISTENCE 12. TAKE ME HIGHER!! 13. PLAY 14. SECRET MY LIPS 15. TH","Publisher":"Crown Stones","ReleaseDate":"2018-02-14T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07%20world_domination.png"},{"Name":"2018.4.13 Live at ZEPP TOKYO (Blu-ray)","Work":"2018.4.13 Live at ZEPP TOKYO","Type":"Live Video","URL":"https://bandmaidprime.tokyo/movies/59476","Description":"2018.4.13 Live at ZEPP TOKYO - start over 1st press limited edition A (Blu-ray","Media":"Blu-ray","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2018-07-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07%20world_domination.pnghttps://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07 world_domination.png"},{"Name":"2018.4.13 Live at ZEPP TOKYO (DVD)","Work":"2018.4.13 Live at ZEPP TOKYO","Type":"Live Video","URL":"https://bandmaidprime.tokyo/movies/59476","Description":"2018.4.13 Live at ZEPP TOKYO - start over 1st press limited edition B (DVD)","Media":"DVD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2018-07-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07%20world_domination.png"},{"Name":"start over (type A)","Work":"start over","Type":"Single","URL":"https://bandmaidshop.com/products/start-over-blu-ray-postcard-cd-limited-edition-type-a-2","Description":"start over CD+Blu-ray","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"Live at ZEPP Tokyo on 2018.4.13 (26 songs) 1. DOMINATION 2. Play 3. Spirit!! 4. the non-fiction days 5. Moratorium 6. Alive‐or‐Dead 7. CROSS 8. Turn me on 9. Don't you tell ME 10. Daydreaming 11. One and only 12. Puzzle (acoustic ver.) 13. anemone (acoust","Publisher":"Crown Stones","ReleaseDate":"2018-07-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/08%20start%20over.png"},{"Name":"start over (type B)","Work":"start over","Type":"Single","URL":"https://bandmaidshop.com/products/start-over-blu-ray-postcard-cd-limited-edition-type-a-2","Description":"start over CD+DVD","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"Live at ZEPP Tokyo on 2018.4.13 (26 songs) 1. DOMINATION 2. Play 3. Spirit!! 4. the non-fiction days 5. Moratorium 6. Alive‐or‐Dead 7. CROSS 8. Turn me on 9. Don't you tell ME 10. Daydreaming 11. One and only 12. Puzzle (acoustic ver.) 13. anemone (acoust","Publisher":"Crown Stones","ReleaseDate":"2018-07-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/08%20start%20over.png"},{"Name":"start over","Work":"start over","Type":"Single","URL":"https://bandmaidshop.com/products/start-over-blu-ray-postcard-cd-limited-edition-type-a-2","Description":"start over CD","Media":"CD","BonusMedia":"","BonusDesc":"secret MAIKO lips (secret track)","Publisher":"Crown Stones","ReleaseDate":"2018-07-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/08%20start%20over.png"},{"Name":"glory","Work":"glory","Type":"Single","URL":"https://bandmaidshop.com/products/band-maid-glory-cd-single","Description":"glory CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2019-01-16T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/09%20glory.png"},{"Name":"Bubble","Work":"Bubble","Type":"Single","URL":"https://bandmaidshop.com/products/band-maid-bubble-cd-single","Description":"Bubble CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2019-01-16T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/10%20bubble.png"},{"Name":"BAND-MAIKO (1st press limited)","Work":"BAND-MAIKO","Type":"EP","URL":"https://bandmaidshop.com/products/band-maiko-cd-regular-edition","Description":"BAND-MAIKO CD+DVD","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"01. 祇園町 (Gion-cho) MV 02. 祇園町 (Gion-cho) making video","Publisher":"Revolver records","ReleaseDate":"2019-04-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/11%20BAND-MAIKO.png"},{"Name":"BAND-MAIKO","Work":"BAND-MAIKO","Type":"EP","URL":"https://bandmaidshop.com/products/band-maiko-cd-regular-edition","Description":"BAND-MAIKO","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Revolver records","ReleaseDate":"2019-04-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/11%20BAND-MAIKO.png"},{"Name":"CONQUEROR (1st press limited B)","Work":"CONQUEROR","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-conqueror-cd-dvd-first-limited-edition-b","Description":"CONQUEROR CD+DVD","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"01. DOMINATION (Instrumental Video) 02. DICE (Instrumental Video) 03. onset (Instrumental Video)","Publisher":"Revolver records","ReleaseDate":"2019-12-11T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/Conqueror_Saiki.png"},{"Name":"CONQUEROR (1st press limited A)","Work":"CONQUEROR","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-conqueror","Description":"CONQUEROR CD+Blu-ray","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"1. DOMINATION (Instrumental Video) 02. DICE (Instrumental Video) 03. onset (Instrumental Video)","Publisher":"Revolver records","ReleaseDate":"2019-12-11T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/Conqueror_Miku_Tongue.png"},{"Name":"CONQUEROR","Work":"CONQUEROR","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-conqueror-cd-dvd-normal-edition","Description":"CONQUEROR CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Revolver records","ReleaseDate":"2019-12-11T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/12%20CONQUEROR.png"},{"Name":"WORLD DOMINATION TOUR 【進化】at LINE CUBE SHIBUYA（渋谷公会堂）DVD","Work":"WORLD DOMINATION TOUR at LINE CUBE SHIBUYA","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-live-world-domination-tour-shinka-at-line-cube-shibuya-shibuya-public-hall-dvd","Description":"BAND-MAID LIVE - WORLD DOMINATION TOUR [SHINKA] at LINE CUBE SHIBUYA (Shibuya Public Hall) - DVD","Media":"DVD","BonusMedia":"DVD","BonusDesc":"BTS movie","Publisher":"Pony Canyon","ReleaseDate":"2020-04-29T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/13%20lcs%20dvd.jpg"},{"Name":"WORLD DOMINATION TOUR 【進化】at LINE CUBE SHIBUYA（渋谷公会堂）Blu-ray","Work":"WORLD DOMINATION TOUR at LINE CUBE SHIBUYA","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-live-world-domination-tour-shinka-at-line-cube-shibuya-shibuya-public-hall-blu-ray","Description":"BAND-MAID LIVE - WORLD DOMINATION TOUR [SHINKA] at LINE CUBE SHIBUYA (Shibuya Public Hall) - Blu-ray","Media":"Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"BTS movie","Publisher":"Pony Canyon","ReleaseDate":"2020-04-29T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/13%20lcs%20dvd.jpg"},{"Name":"Different","Work":"Different","Type":"Single","URL":"https://bandmaidshop.com/products/band-maid-different-cd-single","Description":"Different CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Revolver records","ReleaseDate":"2020-12-02T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/14%20different.png"},{"Name":"Unseen World","Work":"Unseen World","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-unseen-world-cd-normal-edition","Description":"Unseen World CD","Media":"CD+Blu-ray","BonusMedia":"CD","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2021-01-20T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/15%20unseen_world.png"},{"Name":"Unseen World (complete limited edition)","Work":"Unseen World","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-unseen-world-cd-blu-ray-deluxe-limited-edition","Description":"Unseen World (2 CDs + Blu-ray + Studio Photo Book) [ONE-TIME-ONLY PRESSING]","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"01. AFTER LIFE (Instrumental Video) 02. NO GOD (Instrumental Video) 03. GIOVANNI (Instrumental Video) 04. WITHOUT HOLDING BACK (Instrumental Video)","Publisher":"Pony Canyon","ReleaseDate":"2021-01-20T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/15%20unseen_world.png"},{"Name":"Unseen World (1st press limited)","Work":"Unseen World","Type":"Album","URL":"https://www.cdjapan.co.jp/product/PCCA-4992","Description":"Unseen World [w/ DVD, Limited Edition]","Media":"CD+Blu-ray","BonusMedia":"DVD","BonusDesc":"01. AFTER LIFE (Instrumental Video) 02. NO GOD (Instrumental Video) 03. GIOVANNI (Instrumental Video) 04. WITHOUT HOLDING BACK (Instrumental Video)","Publisher":"Pony Canyon","ReleaseDate":"2021-01-20T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/15%20unseen_world.png"},{"Name":"about Us","Work":"about Us","Type":"Single","URL":"https://bandmaid.tokyo/contents/415971","Description":"about Us Vinyl (12\", 45 RPM, Single Sided)","Media":"Vinyl","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2021-03-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/16%20about%20us.png"},{"Name":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021) (One-time-only pressing) Blu-ray(x2) + CD","Work":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-online-okyu-ji-feb-11-2021-blu-ray-regular-edition","Description":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021) (One-time-only pressing) Blu-ray(x2) + CD","Media":"Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"OKYU-JI（LIVE）Footage Recorded Exclusively for Blu-ray/DVD] 29. Moratorium 30. the non-fiction days 31. glory 32. Play 33. Smile (Acoustic Ver.)  5 Multi Cam Recorded Footages (Fixed cam on each members) 1. Warning! 2. NO GOD 3. Manners 4. After Life 5. Gi","Publisher":"Pony Canyon","ReleaseDate":"2021-05-26T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/17%20ONLINEOKYU-JI%20dvd.jpg"},{"Name":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021) Blu-ray","Work":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-online-okyu-ji-feb-11-2021-blu-ray-regular-edition","Description":"BAND-MAID LIVE - ONLINE OKYU-JI (Feb. 11, 2021) [Blu-ray] REGULAR EDITION","Media":"Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"OKYU-JI（LIVE）Footage Recorded Exclusively for Blu-ray/DVD] 29. Moratorium 30. the non-fiction days 31. glory 32. Play 33. Smile (Acoustic Ver.)","Publisher":"Pony Canyon","ReleaseDate":"2021-05-26T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/17%20ONLINEOKYU-JI%20dvd.jpg"},{"Name":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021) DVD","Work":"BAND-MAID ONLINE OKYU-JI (Feb. 11, 2021)","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-live-online-okyu-ji-feb-11-2021-dvd-regular-edition","Description":"BAND-MAID LIVE - ONLINE OKYU-JI (Feb. 11, 2021) [DVD] REGULAR EDITION","Media":"DVD","BonusMedia":"DVD","BonusDesc":"OKYU-JI（LIVE）Footage Recorded Exclusively for Blu-ray/DVD] 29. Moratorium 30. the non-fiction days 31. glory 32. Play 33. Smile (Acoustic Ver.)","Publisher":"Pony Canyon","ReleaseDate":"2021-05-26T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/17%20ONLINEOKYU-JI%20dvd.jpg"},{"Name":"Sense (CD+Blu-ray)","Work":"Sense","Type":"Single","URL":"https://www.cdjapan.co.jp/product/PCCA-6076","Description":"Sense [w/ Blu-ray, Limited Edition]","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"THE DAY OF MAID Okyu-ji (2021.5.10) (6 songs) Chemical Reaction H-G-K Honkai I Still Seek Revenge Why Why Why Youth","Publisher":"Pony Canyon","ReleaseDate":"2021-10-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/18%20sense.png"},{"Name":"BAND-MAID ONLINE OKYU-JI 5 \"THE DAY OF MAID\" (Blu-ray/DVD}","Work":"BAND-MAID ONLINE OKYU-JI 5 \"THE DAY OF MAID\"","Type":"Live Video","URL":"","Description":"BAND-MAID ONLINE OKYU-JI 5 \"THE DAY OF MAID\" Blu-ray/DVD","Media":"DVD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2021-10-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/15%20unseen_world.png"},{"Name":"Sense (CD+DVD)","Work":"Sense","Type":"Single","URL":"https://www.cdjapan.co.jp/product/PCCA-6077","Description":"Sense [w/ DVD, Limited Edition]","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"THE DAY OF MAID Okyu-ji (2021.5.10) (6 songs) Chemical Reaction H-G-K Honkai I Still Seek Revenge Why Why Why Youth","Publisher":"Pony Canyon","ReleaseDate":"2021-10-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/18%20sense.png"},{"Name":"Sense","Work":"Sense","Type":"Single","URL":"https://bandmaidshop.com/products/band-maid-sense-normal-edition-cd-only","Description":"BAND-MAID - Sense - Normal Edition [CD ONLY]","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2021-10-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/18%20sense.png"},{"Name":"New Beginning vinyl","Work":"New Beginning","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-new-beginning-vinyl-lp-limited-edition","Description":"BAND-MAID New Beginning (VINYL LP) [Limited Edition]","Media":"Vinyl","BonusMedia":"","BonusDesc":"","Publisher":"Nippon Crown","ReleaseDate":"2021-11-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/02%20new_beginning.png"},{"Name":"WORLD DOMINATION vinyl","Work":"WORLD DOMINATION","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-world-domination-vinyl-2lp-limited-edition","Description":"BAND-MAID WORLD DOMINATION (VINYL 2LP) [Limited Edition]","Media":"Vinyl x 2","BonusMedia":"","BonusDesc":"","Publisher":"Nippon Crown","ReleaseDate":"2021-11-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/07%20world_domination.png"},{"Name":"Brand New MAID vinyl","Work":"New Beginning","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-brand-new-maid-vinyl-lp-limited-edition","Description":"BAND-MAID Brand New MAID (VINYL LP) [Limited Edition]","Media":"Vinyl","BonusMedia":"","BonusDesc":"","Publisher":"Nippon Crown","ReleaseDate":"2021-11-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/02%20new_beginning.png"},{"Name":"CONQUEROR vinyl","Work":"CONQUEROR","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-conqueror-vinyl-2lp-limited-edition","Description":"BAND-MAID CONQUEROR (VINYL 2LP) [Limited Edition]","Media":"Vinyl x 2","BonusMedia":"","BonusDesc":"","Publisher":"Nippon Crown","ReleaseDate":"2021-11-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/12%20CONQUEROR.png"},{"Name":"Just Bring It vinyl","Work":"Just Bring It","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-just-bring-it-vinyl-2lp-limited-edition","Description":"BAND-MAID Just Bring It (VINYL 2LP) [Limited Edition]","Media":"Vinyl x 2","BonusMedia":"","BonusDesc":"","Publisher":"Nippon Crown","ReleaseDate":"2021-11-03T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/05%20just_bring_lt.png"},{"Name":"BAND-MAID Official Score for Unseen World","Work":"Unseen World instrumental","Type":"Instrumental Album","URL":"https://www.cdjapan.co.jp/product/NEODAI-119637","Description":"BAND-MAID Official Scorebook for Unseen World [Pony Canyon Shopping Club Exclusive]","Media":"CD","BonusMedia":"Book","BonusDesc":"Official Scorebook for Unseen World","Publisher":"Pony Canyon","ReleaseDate":"2022-03-09T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/UW%20Inst.jpg"},{"Name":"BAND-MAID ONLINE ACOUSTIC OKYU-JI CD","Work":"BAND-MAID ONLINE ACOUSTIC OKYU-JI","Type":"Live Album","URL":"https://bandmaid.tokyo/products","Description":"BAND-MAID ONLINE ACOUSTIC OKYU-JI CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2022-04-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/19%20BM_ACOUSTIC.png"},{"Name":"Unleash  (CD+DVD)","Work":"Unleash","Type":"EP","URL":"https://www.cdjapan.co.jp/product/PCCA-6154","Description":"BAND-MAID \"Unleash\" Limited Edition (CD+DVD)","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"Unleash!!!!! (music video) from now on (music video) Unleash!!!!! (instrumental music video) Sense (instrumental music video)","Publisher":"Pony Canyon","ReleaseDate":"2022-09-21T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/20%20unleash.png"},{"Name":"Unleash (CD+Blu-ray)","Work":"Unleash","Type":"EP","URL":"https://bandmaidshop.com/products/band-maid-unleash-limited-edition-cd-blu-ray","Description":"BAND-MAID \"Unleash\" Limited Edition (CD+Blu-ray)","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"Unleash!!!!! (music video) from now on (music video) Unleash!!!!! (instrumental music video) Sense (instrumental music video)","Publisher":"Pony Canyon","ReleaseDate":"2022-09-21T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/20%20unleash.png"},{"Name":"Unleash","Work":"Unleash","Type":"EP","URL":"https://bandmaidshop.com/products/band-maid-unleash-normal-edition-cd-only","Description":"BAND-MAID \"Unleash\" Normal Edition (CD Only)","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2022-09-21T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/20%20unleash.png"},{"Name":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023) [Regular Edition Blu-ray]","Work":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023)","Type":"Live Video","URL":"https://www.cdjapan.co.jp/product/PCXP-50980","Description":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023) [Blu-ray] REGULAR EDITION","Media":"Blu-ray","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2023-04-26T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/TGT%20cover.jpg"},{"Name":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023) [Regular Edition DVD]","Work":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023)","Type":"Live Video","URL":"https://www.cdjapan.co.jp/product/PCBP-55597","Description":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023) [DVD] REGULAR EDITION","Media":"DVD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2023-04-26T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/TGT%20cover.jpg"},{"Name":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023) [Limited Edition]","Work":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan. 9, 2023)","Type":"Live Video","URL":"https://www.cdjapan.co.jp/product/PCXP-50979?s_ssid=e3635864305bd1ebf9","Description":"BAND-MAID TOKYO GARDEN THEATER OKYUJI (Jan.09,2023) [2 Blu-ray + PHOTOBOOK] ONE-TIME-ONLY PRESSING","Media":"Blu-ray x 2","BonusMedia":"Blu-ray","BonusDesc":"[Blu-ray Disc-2] \"BAND-MAID U.S. Tour 2022 BEHIND-THE SCENES\" DOCUMENTARY VIDEO 90 MINUTES, PHOTOBOOK 100 Pages","Publisher":"Pony Canyon","ReleaseDate":"2023-04-26T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/TGT%20cover.jpg"},{"Name":"BAND-MAID - 10th Anniversary Best Vol.1 CD","Work":"BAND-MAID - 10th Anniversary Best Vol.1 CD","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-10th-anniversary-best-vol-1","Description":"BAND-MAID - 10th Anniversary Best Vol.1 CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2023-08-02T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/10th_Anniversary_Best__Vol1.jpg"},{"Name":"BAND-MAID - 10th Anniversary Best Vol.2 CD","Work":"BAND-MAID - 10th Anniversary Best Vol.2 CD","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-10th-anniversary-best-vol-2-cd","Description":"BAND-MAID - 10th Anniversary Best Vol.2 CD","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Crown Stones","ReleaseDate":"2023-08-02T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/10th_Anniversary_Best__Vol2.jpg"},{"Name":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA (Nov.26, 2023) [DVD] Regular Edition","Work":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-10th-anniversary-tour-final-in-yokohama-arena-nov-26-2023-dvd-regular-edition","Description":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA (Nov.26, 2023) [DVD] Regular Edition","Media":"DVD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2024-03-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/Yokohama%20cover.jpg"},{"Name":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA (Nov.26, 2023) [Blu-ray] Regular Edition","Work":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-10th-anniversary-tour-final-in-yokohama-arena-nov-26-2023-blu-ray-regular-edition","Description":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA (Nov.26, 2023) [Blu-ray] Regular Edition","Media":"Blu-ray","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2024-03-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/Yokohama%20cover.jpg"},{"Name":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA (Nov.26, 2023) [2 Blu-ray + PHOTOBOOK]","Work":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA","Type":"Live Video","URL":"https://bandmaidshop.com/products/band-maid-10th-anniversary-tour-final-in-yokohama-arena-nov-26-2023-2-blu-ray-photobook-one-time-only-pressing","Description":"BAND-MAID 10TH ANNIVERSARY TOUR FINAL in YOKOHAMA ARENA (Nov.26, 2023) [2 Blu-ray + PHOTOBOOK] ONE-TIME-ONLY PRESSING","Media":"Blu-ray x 2","BonusMedia":"Blu-ray","BonusDesc":"BTS documentary","Publisher":"Pony Canyon","ReleaseDate":"2024-03-27T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/Yokohama%20cover.jpg"},{"Name":"Epic Narratives","Work":"Epic Narratives","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-epic-narratives-regular-edition-cd","Description":"BAND-MAID \"Epic Narratives\" Regular Edition (CD)","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"Pony Canyon","ReleaseDate":"2024-09-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/21%20Epic%20Narratives.png"},{"Name":"Epic Narratives (CD + DVD)","Work":"Epic Narratives","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-epic-narratives-limited-edition-first-pressing-only-cd-dvd","Description":"BAND-MAID \"Epic Narratives\" Limited Edition (First Pressing Only) (CD + DVD)","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"Day of Maid Live 2024","Publisher":"Pony Canyon","ReleaseDate":"2024-09-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/21%20Epic%20Narratives.png"},{"Name":"Epic Narratives (CD + Blu-ray + PHOTO BOOK)","Work":"Epic Narratives","Type":"Album","URL":"https://bandmaidshop.com/products/band-maid-epic-narratives-limited-edition-cd-blu-ray-photo-book","Description":"BAND-MAID \"Epic Narratives\" Limited Edition (CD + Blu-ray + PHOTO BOOK)","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"Day of Maid Live 2024","Publisher":"Pony Canyon","ReleaseDate":"2024-09-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/21%20Epic%20Narratives.png"},{"Name":"BAND-MAID ACOUSTIC OKYUJI (2024)","Work":"BAND-MAID ACOUSTIC OKYUJI (2024)","Type":"Live Album","URL":"https://bandmaid.tokyo/contents/news/news","Description":"BAND-MAID ACOUSTIC OKYUJI live from March 20, 2024","Media":"CD","BonusMedia":"","BonusDesc":"","Publisher":"","ReleaseDate":"2024-12-25T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/22%20Acoustic%202024.jpg"},{"Name":"SCOOOOOP (CD + Blu-ray + Poster Style Booklet)","Work":"SCOOOOOP","Type":"EP","URL":"https://ampedjapan.com/products/band-maid-scooooop-limited-edition-cd-blu-ray-poster-style-booklet-special-packaging","Description":"BAND-MAID \"SCOOOOOP\" Limited Edition (CD + Blu-ray + Poster Style Booklet) (Special Packaging)","Media":"CD+Blu-ray","BonusMedia":"Blu-ray","BonusDesc":"Zen (Instrumental Video), Ready to Rock (Instrumental Video), What is justice? (Instrumental Video)","Publisher":"Pony Canyon","ReleaseDate":"2025-10-22T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/SCOOOOOP.png"},{"Name":"SCOOOOOP (CD + DVD)","Work":"SCOOOOOP","Type":"EP","URL":"https://ampedjapan.com/products/band-maid-scooooop-limited-edition-cd-dvd","Description":"BAND-MAID \"SCOOOOOP\" Limited Edition (CD + DVD)","Media":"CD+DVD","BonusMedia":"DVD","BonusDesc":"Zen (Instrumental Video), Ready to Rock (Instrumental Video), What is justice? (Instrumental Video)","Publisher":"Pony Canyon","ReleaseDate":"2025-10-22T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/SCOOOOOP.png"},{"Name":"SCOOOOOP","Work":"SCOOOOOP","Type":"EP","URL":"https://ampedjapan.com/products/band-maid-scooooop-regular-edition-cd","Description":"BAND-MAID \"SCOOOOOP\" Regular Edition (CD)","Media":"CD","BonusMedia":"","BonusDesc":null,"Publisher":"Pony Canyon","ReleaseDate":"2025-10-22T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/SCOOOOOP.png"},{"Name":"BILLBOARD ACOUSTIC OKYUJI (2025)","Work":"BILLBOARD ACOUSTIC OKYUJI (2025)","Type":"Live Video","URL":"","Description":"BAND-MAID BILLBOARD ACOUSTIC OKYU-JI","Media":"Stream","BonusMedia":"","BonusDesc":null,"Publisher":"","ReleaseDate":"2025-11-22T00:00:00","AlbumCoverURL":"https://raw.githubusercontent.com/DriveTimeBM/BAND-MAID_creations/main/album_covers/21%20Epic%20Narratives.png"}];
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "Releases".replace(/\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"Name","type":"text"},{"name":"Work","type":"text"},{"name":"Type","type":"text"},{"name":"URL","type":"url"},{"name":"Description","type":"text"},{"name":"Media","type":"text"},{"name":"BonusMedia","type":"text"},{"name":"BonusDesc","type":"text"},{"name":"Publisher","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"AlbumCoverURL","type":"image"}];
-const DECK = {"image":"AlbumCoverURL","primary":"Name","secondary":"Media","summary":"Type","url":"URL"};
-const SORT = {"field":"ReleaseDate","dir":"asc"};
+const DECK = {"image":"AlbumCoverURL","primary":"Name","secondary":"Type","summary":"Media","url":"URL"};
+const SORT = {"field":"Name","dir":"asc"};
 const GROUP = {"field":"Type","dir":"asc"};
 const VIEW_NAME = "Releases";
-const LOGO_CHAR = "🎸";
+const LOGO_CHAR = "💿";
 const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    currentData=RAW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          currentData=RAW_DATA;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const res=await fetch(url);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    currentData=RAW_DATA;
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
@@ -184,8 +268,9 @@ function processData(data){
 
 // ── SEARCH ───────────────────────────────────────────────────────────────────
 let expandedGroups={};
-let showAll=false;
-let currentData=RAW_DATA;
+let showAllGroups={};
+let showAllFlat=false;
+let currentData=[];
 
 function onSearch(){
   const q=document.getElementById('searchInput').value.toLowerCase().trim();
@@ -195,13 +280,14 @@ function onSearch(){
       Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
     );
   }
-  showAll=false;
+  showAllFlat=false;
+  showAllGroups={};
   expandedGroups={};
   renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(){
+function renderList(scrollToGroup){
   const groups=processData(currentData);
   const total=currentData.length;
   document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
@@ -214,42 +300,59 @@ function renderList(){
   }
 
   if(!GROUP.field){
-    // No grouping — flat deck
     const items=groups[0].items;
-    const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
     container.appendChild(renderDeckGrid(shown,null));
-    if(!showAll&&items.length>PREVIEW_COUNT){
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
       const more=document.createElement('div');
       more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
       container.appendChild(more);
     }
   } else {
     groups.forEach(({group,items})=>{
       const key=group??'';
-      if(expandedGroups[key]===undefined)expandedGroups[key]=true;
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
       const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
       const wrap=document.createElement('div');
       wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
       const hdr=document.createElement('div');
       hdr.className='group-header';
       hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
       hdr.style.cursor='pointer';
       hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
       const body=document.createElement('div');
       body.className='group-items';
       const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
       body.appendChild(renderDeckGrid(shown,group));
+
       if(!showAll&&items.length>PREVIEW_COUNT){
         const more=document.createElement('div');
         more.className='show-more-row';
-        more.innerHTML=`<button class="show-more-btn" onclick="showAll=true;renderList()">Show all ${items.length.toLocaleString()} ↓</button>`;
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
         body.appendChild(more);
       }
+
       wrap.appendChild(hdr);
       wrap.appendChild(body);
       container.appendChild(wrap);
     });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
   }
 }
 
@@ -322,7 +425,7 @@ function renderDeckCard(row,idx){
 function makePlaceholder(){
   const el=document.createElement('div');
   el.className='deck-card-img-placeholder';
-  el.textContent='🎵';
+  el.textContent=LOGO_CHAR;
   return el;
 }
 
@@ -347,9 +450,9 @@ function showDetail(row){
 
   // Hero image
   if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.style.display='none'">`;
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
   } else {
-    html+=`<div class="detail-hero-placeholder">🎵</div>`;
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
   }
 
   html+='<div class="detail-body">';
@@ -405,7 +508,7 @@ function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').
 function escAttr(s){return String(s).replace(/"/g,'&quot;')}
 
 // ── INIT ──────────────────────────────────────────────────────────────────────
-renderList();
+loadData();
 </script>
 </body>
 </html>
