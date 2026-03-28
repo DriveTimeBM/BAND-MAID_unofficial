@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
 <title>BAND-MAID Unofficial · Okyuji</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
@@ -129,7 +130,7 @@ const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Okyuji".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
 const FIELDS = [{"name":"SetDate","type":"text"},{"name":"Country","type":"text"},{"name":"City","type":"text"},{"name":"Venue","type":"text"},{"name":"Tour","type":"text"},{"name":"URL","type":"url"},{"name":"NumberOfSongs","type":"number"},{"name":"SetlistDelimited","type":"text"},{"name":"Opener","type":"text"},{"name":"Closer","type":"text"},{"name":"LatLon","type":"text"}];
-const DECK = {"image":null,"primary":"SetDate","secondary":"Venue","summary":"City","url":"URL"};
+const DECK = {"image":null,"primary":"SetDate","secondary":"City","summary":"Venue","url":"URL"};
 const SORT = {"field":"SetDate","dir":"desc"};
 const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Okyuji";
@@ -390,12 +391,14 @@ function renderDeckCard(row,idx){
     const el=document.createElement('div');
     el.className='deck-card-primary';
     el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    el.title=fmtVal(DECK.primary,row[DECK.primary]);
     body.appendChild(el);
   }
   if(DECK.secondary&&row[DECK.secondary]!==undefined){
     const el=document.createElement('div');
     el.className='deck-card-secondary';
     el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
     body.appendChild(el);
   }
   if(DECK.summary&&row[DECK.summary]!==undefined){

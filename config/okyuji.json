@@ -1,0 +1,15 @@
+{
+    "viewName": "Okyuji",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
+    "alwaysFresh": false,
+    "logoChar": "🎤",
+    "fImage": "",
+    "fPrimary": "SetDate",
+    "fSecondary": "City",
+    "fSummary": "Venue",
+    "fUrl": "URL",
+    "sortField": "SetDate",
+    "sortDir": "desc",
+    "groupField": "",
+    "groupDir": "asc"
+  }
