@@ -1,0 +1,16 @@
+{
+    "viewName": "Upcoming",
+    "jsonUrl": "https://api.jsonbin.io/v3/b/69c7e8f95fdde574550a99d9/latest",
+    "apiReadKey": "$2a$10$Scfw6rWtJhX3UTu0pqkA1OV9QZUrPPmvePpfGACI0AEVH8KbZnmvK",
+    "alwaysFresh": false,
+    "logoChar": "⏳",
+    "fImage": "",
+    "fPrimary": "Event",
+    "fSecondary": "",
+    "fSummary": "",
+    "fUrl": "",
+    "sortField": "",
+    "sortDir": "asc",
+    "groupField": "",
+    "groupDir": "asc"
+  }

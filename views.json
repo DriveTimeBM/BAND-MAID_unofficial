@@ -88,7 +88,7 @@
     "name": "Upcoming",
     "file": "views/upcoming.html",
     "nav": "menu",
-    "icon": "🎸"
+    "icon": "⏳"
   },
   {
     "id": "charts",
