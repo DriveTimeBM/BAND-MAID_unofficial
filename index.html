@@ -507,12 +507,11 @@ function activateView(id) {
     return;
   }
 
-  // Create iframe
+  // Create iframe — no lazy loading since iframes are created on-demand only
   showLoading();
   const iframe = document.createElement('iframe');
   iframe.className = 'view-frame';
   iframe.title = view.name;
-  iframe.setAttribute('loading', 'lazy');
   // Sandbox: allow scripts and same-origin so views work; allow-popups for external links
   iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms');
   iframe.src = view.file;
