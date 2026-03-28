@@ -81,7 +81,7 @@
     "name": "Tickets",
     "file": "views/tickets.html",
     "nav": "menu",
-    "icon": "🎸"
+    "icon": "🎟️"
   },
   {
     "id": "charts",
