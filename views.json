@@ -63,11 +63,11 @@
     "icon": "🖼️"
   },
   {
-    "id": "links",
-    "name": "links",
-    "file": "views/links.html",
+    "id": "upcoming",
+    "name": "Upcoming",
+    "file": "views/upcoming.html",
     "nav": "menu",
-    "icon": "🔗"
+    "icon": "⏳"
   },
   {
     "id": "million",
@@ -84,18 +84,18 @@
     "icon": "🎸"
   },
   {
-    "id": "upcoming",
-    "name": "Upcoming",
-    "file": "views/upcoming.html",
-    "nav": "menu",
-    "icon": "⏳"
-  },
-  {
     "id": "charts",
     "name": "Charts",
     "file": "views/charts.html",
     "nav": "menu",
     "icon": "📈"
+  },
+  {
+    "id": "links",
+    "name": "links",
+    "file": "views/links.html",
+    "nav": "menu",
+    "icon": "🔗"
   },
   {
     "id": "about",
