@@ -150,6 +150,25 @@
 
     <div class="config-section">
       <div class="section-label">1 · Data Source</div>
+
+      <!-- Config file loader -->
+      <div class="field-row" style="margin-bottom:14px">
+        <label style="margin-bottom:5px;display:block">Load Config File</label>
+        <div style="display:flex;gap:6px">
+          <input type="text" id="configUrl" placeholder="https://…/songs-config.json" style="flex:1">
+          <button class="btn btn-secondary" onclick="loadConfigFromUrl()" style="white-space:nowrap;padding:7px 12px">Load</button>
+        </div>
+        <div style="margin-top:6px;display:flex;align-items:center;gap:8px">
+          <label class="btn btn-secondary" style="cursor:pointer;padding:6px 12px;font-size:12px" title="Load a local config .json file">
+            Browse…<input type="file" id="configFileInput" accept=".json" style="display:none">
+          </label>
+          <span style="font-size:11px;color:var(--text3)">or pick a local config file</span>
+        </div>
+        <div id="configStatus" style="display:none;margin-top:8px;font-size:12px;padding:6px 10px;border-radius:var(--radius)"></div>
+      </div>
+
+      <div style="height:1px;background:var(--border);margin-bottom:14px"></div>
+
       <div class="field-row">
         <label>GitHub JSON URL (raw)</label>
         <div style="display:flex;gap:6px">
@@ -267,7 +286,8 @@
         <div class="tab active" id="tabPreview" onclick="switchTab('preview')">Preview</div>
         <div class="tab" id="tabCode" onclick="switchTab('code')">HTML</div>
       </div>
-      <button class="btn btn-secondary copy-btn" id="copyBtn" onclick="copyCode()" style="display:none">Copy</button>
+      <button class="btn btn-secondary copy-btn" id="copyConfigBtn" onclick="copyConfig()" style="display:none">Copy Config</button>
+      <button class="btn btn-secondary copy-btn" id="copyBtn" onclick="copyCode()" style="display:none">Copy HTML</button>
     </div>
 
     <div class="output-content" id="outputContent">
@@ -451,10 +471,11 @@ document.getElementById('generateBtn').addEventListener('click', () => {
     types: detectedTypes,
   };
   lastCfg = cfg;
-  generatedCode = buildViewCode(cfg, null);  // output file: no embedded data, fetches live
+  generatedCode = buildViewCode(cfg, null);
   renderOutput();
   document.getElementById('outputTitle').textContent = cfg.viewName;
   document.getElementById('copyBtn').style.display = '';
+  document.getElementById('copyConfigBtn').style.display = '';
   setStatus('ready', `View "${cfg.viewName}" generated · ${jsonData.length.toLocaleString()} records`);
 });
 
@@ -485,8 +506,132 @@ function copyCode() {
   navigator.clipboard.writeText(generatedCode).then(() => {
     const btn = document.getElementById('copyBtn');
     btn.textContent = 'Copied!'; btn.classList.add('copied');
-    setTimeout(() => { btn.textContent = 'Copy'; btn.classList.remove('copied'); }, 2000);
+    setTimeout(() => { btn.textContent = 'Copy HTML'; btn.classList.remove('copied'); }, 2000);
   });
+}
+
+// ── CONFIG SERIALIZATION ──────────────────────────────────────────────────────
+function buildConfigJson() {
+  if (!lastCfg) return null;
+  // Store only the user-facing settings — not fields/types (re-derived from URL)
+  const out = {
+    viewName:    lastCfg.viewName,
+    jsonUrl:     lastCfg.jsonUrl,
+    alwaysFresh: lastCfg.alwaysFresh,
+    logoChar:    lastCfg.logoChar,
+    fImage:      lastCfg.fImage    || '',
+    fPrimary:    lastCfg.fPrimary  || '',
+    fSecondary:  lastCfg.fSecondary|| '',
+    fSummary:    lastCfg.fSummary  || '',
+    fUrl:        lastCfg.fUrl      || '',
+    sortField:   lastCfg.sortField || '',
+    sortDir:     lastCfg.sortDir   || 'asc',
+    groupField:  lastCfg.groupField|| '',
+    groupDir:    lastCfg.groupDir  || 'asc',
+  };
+  return JSON.stringify(out, null, 2);
+}
+
+function copyConfig() {
+  const json = buildConfigJson();
+  if (!json) return;
+  navigator.clipboard.writeText(json).then(() => {
+    const btn = document.getElementById('copyConfigBtn');
+    btn.textContent = 'Copied!'; btn.classList.add('copied');
+    setTimeout(() => { btn.textContent = 'Copy Config'; btn.classList.remove('copied'); }, 2000);
+  });
+}
+
+// ── CONFIG LOADING ────────────────────────────────────────────────────────────
+function setConfigStatus(state, msg) {
+  const el = document.getElementById('configStatus');
+  el.style.display = 'block';
+  el.style.background = state === 'ok'    ? 'rgba(34,197,94,0.07)'   :
+                        state === 'error' ? 'rgba(239,68,68,0.08)'   : 'var(--bg3)';
+  el.style.border     = state === 'ok'    ? '1px solid rgba(34,197,94,0.2)'  :
+                        state === 'error' ? '1px solid rgba(239,68,68,0.25)' : '1px solid var(--border)';
+  el.style.color      = state === 'ok'    ? '#4ade80' :
+                        state === 'error' ? '#f87171' : 'var(--text2)';
+  el.textContent = msg;
+}
+
+async function loadConfigFromUrl() {
+  let url = document.getElementById('configUrl').value.trim();
+  if (!url) return setConfigStatus('error', 'Enter a config URL first');
+  if (!/^https?:\/\//i.test(url)) {
+    url = 'https://' + url;
+    document.getElementById('configUrl').value = url;
+  }
+  setConfigStatus('info', 'Loading…');
+  try {
+    const res = await fetch(url);
+    if (!res.ok) throw new Error(`HTTP ${res.status}`);
+    const cfg = await res.json();
+    await applyConfig(cfg);
+  } catch(e) {
+    setConfigStatus('error', 'Failed: ' + e.message);
+  }
+}
+
+// File picker handler
+document.getElementById('configFileInput').addEventListener('change', function() {
+  const file = this.files[0];
+  if (!file) return;
+  const reader = new FileReader();
+  reader.onload = async e => {
+    try {
+      const cfg = JSON.parse(e.target.result);
+      await applyConfig(cfg);
+    } catch(err) {
+      setConfigStatus('error', 'Invalid JSON: ' + err.message);
+    }
+  };
+  reader.readAsText(file);
+  this.value = ''; // reset so same file can be reloaded
+});
+
+async function applyConfig(cfg) {
+  // Validate it looks like a view config
+  if (!cfg.jsonUrl && !cfg.viewName) {
+    setConfigStatus('error', 'This doesn\'t look like a view config file');
+    return;
+  }
+
+  // Apply URL first, then fetch fields so selects are populated
+  if (cfg.jsonUrl) document.getElementById('jsonUrl').value = cfg.jsonUrl;
+  if (cfg.viewName)    document.getElementById('viewName').value = cfg.viewName;
+  if (cfg.logoChar)    { document.getElementById('logoChar').value = cfg.logoChar; updateLogoPreview(); }
+  if (cfg.alwaysFresh !== undefined) {
+    document.getElementById('alwaysFresh').checked = cfg.alwaysFresh;
+    document.getElementById('refreshHint').textContent = cfg.alwaysFresh
+      ? 'On — fetches live JSON every time this view is opened'
+      : 'Off — cached for 24 hours per session';
+  }
+
+  setConfigStatus('info', 'Fetching data to populate fields…');
+
+  // Fetch the JSON to populate field selects
+  await fetchAndAnalyze();
+
+  // Now apply field selections — must happen after selects are populated
+  const selMap = {
+    fImage: 'fImage', fPrimary: 'fPrimary', fSecondary: 'fSecondary',
+    fSummary: 'fSummary', fUrl: 'fUrl',
+    sortField: 'sortField', sortDir: 'sortDir',
+    groupField: 'groupField', groupDir: 'groupDir',
+  };
+  Object.entries(selMap).forEach(([key, elId]) => {
+    if (cfg[key] !== undefined) {
+      const sel = document.getElementById(elId);
+      if (sel && [...sel.options].some(o => o.value === cfg[key])) {
+        sel.value = cfg[key];
+      } else if (sel) {
+        sel.value = cfg[key]; // set even if not in list yet — user can adjust
+      }
+    }
+  });
+
+  setConfigStatus('ok', `✓ Config loaded: "${cfg.viewName || cfg.jsonUrl}"`);
 }
 
 function escHtml(s) { return s.replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
