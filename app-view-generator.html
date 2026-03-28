@@ -914,12 +914,14 @@ function renderDeckCard(row,idx){
     const el=document.createElement('div');
     el.className='deck-card-primary';
     el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    el.title=fmtVal(DECK.primary,row[DECK.primary]);
     body.appendChild(el);
   }
   if(DECK.secondary&&row[DECK.secondary]!==undefined){
     const el=document.createElement('div');
     el.className='deck-card-secondary';
     el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
     body.appendChild(el);
   }
   if(DECK.summary&&row[DECK.summary]!==undefined){
