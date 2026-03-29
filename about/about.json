@@ -96,6 +96,14 @@
     "body": "The next 4 BAND-MAID YouTube videos projected to reach a million mark based on yesterday's view rate. Updated daily."
   },
   {
+    "id": "about-top10",
+    "section": "Views",
+    "icon": "🔟",
+    "title": "Top🔟",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/top10.json",
+    "body": "The Top 10 performing YouTube videos for the previous day. Updated daily."
+  },
+  {
     "id": "about-tickets",
     "section": "Views",
     "icon": "🎟️",
