@@ -1,0 +1,16 @@
+{
+    "viewName": "Spotify",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "🟢",
+    "fImage": "Image",
+    "fPrimary": "Name",
+    "fSecondary": "Streams",
+    "fSummary": "",
+    "fUrl": "URL",
+    "sortField": "Streams",
+    "sortDir": "desc",
+    "groupField": "",
+    "groupDir": "asc"
+  }

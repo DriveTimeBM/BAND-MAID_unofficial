@@ -28,6 +28,13 @@
     "icon": "▶️"
   },
   {
+    "id": "spotify",
+    "name": "Spotify",
+    "file": "views/spotify.html",
+    "nav": "main",
+    "icon": "🟢"
+  },
+  {
     "id": "stream",
     "name": "Streaming",
     "file": "views/stream.html",

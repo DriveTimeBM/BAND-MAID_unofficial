@@ -40,6 +40,14 @@
     "body": "Information and links to all BAND-MAID YouTube content which includes view counts, updated daily."
   },
   {
+    "id": "about-spotify",
+    "section": "Views",
+    "icon": "🟢",
+    "title": "Spotify",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
+    "body": "All BAND-MAID songs on Spotify listed by stream count. Updated daily but each songs is updated once per week."
+  },
+  {
     "id": "about-stream",
     "section": "Views",
     "icon": "🎶",
