@@ -1,0 +1,114 @@
+[
+  {
+    "id": "about-app",
+    "section": "About This App",
+    "icon": "ℹ️",
+    "title": "BAND-MAID Unofficial",
+    "body": "Your description of the project goes here."
+  },
+  {
+    "id": "about-calendar",
+    "section": "Views",
+    "icon": "🗓️",
+    "title": "Calendar",
+    "body": "Your description of the Calendar view goes here."
+  },
+  {
+    "id": "about-songs",
+    "section": "Views",
+    "icon": "📝",
+    "title": "Songs",
+    "body": "Your description of the Songs view goes here."
+  },
+  {
+    "id": "about-releases",
+    "section": "Views",
+    "icon": "💿",
+    "title": "Releases",
+    "body": "Your description of the Releases view goes here."
+  },
+  {
+    "id": "about-videos",
+    "section": "Views",
+    "icon": "▶️",
+    "title": "Videos",
+    "body": "Your description of the Videos view goes here."
+  },
+  {
+    "id": "about-stream",
+    "section": "Views",
+    "icon": "🎶",
+    "title": "Streaming",
+    "body": "Your description of the Streaming view goes here."
+  },
+  {
+    "id": "about-okyuji",
+    "section": "Views",
+    "icon": "🎤",
+    "title": "Okyuji",
+    "body": "Your description of the Okyuji view goes here."
+  },
+  {
+    "id": "about-prime",
+    "section": "Views",
+    "icon": "🎬",
+    "title": "Prime",
+    "body": "Your description of the Prime view goes here."
+  },
+  {
+    "id": "about-fanclub",
+    "section": "Views",
+    "icon": "🏮",
+    "title": "Fan Club",
+    "body": "Your description of the Fan Club view goes here."
+  },
+  {
+    "id": "about-gallery",
+    "section": "Views",
+    "icon": "🖼️",
+    "title": "Gallery",
+    "body": "Your description of the Gallery view goes here."
+  },
+  {
+    "id": "about-upcoming",
+    "section": "Views",
+    "icon": "⏳",
+    "title": "Upcoming",
+    "body": "Your description of the Upcoming view goes here."
+  },
+  {
+    "id": "about-million",
+    "section": "Views",
+    "icon": "🎯",
+    "title": "Next Million",
+    "body": "Your description of the Next Million view goes here."
+  },
+  {
+    "id": "about-tickets",
+    "section": "Views",
+    "icon": "🎟️",
+    "title": "Tickets",
+    "body": "Your description of the Tickets view goes here."
+  },
+  {
+    "id": "about-charts",
+    "section": "Views",
+    "icon": "📈",
+    "title": "Charts",
+    "body": "Your description of the Charts view goes here."
+  },
+  {
+    "id": "about-links",
+    "section": "Views",
+    "icon": "🔗",
+    "title": "Links",
+    "body": "Your description of the Links view goes here."
+  },
+  {
+    "id": "about-project",
+    "section": "About This App",
+    "icon": "🛠️",
+    "title": "About the Project",
+    "body": "Your description of the project background goes here."
+  }
+]
