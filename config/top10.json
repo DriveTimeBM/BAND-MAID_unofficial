@@ -1,0 +1,16 @@
+{
+    "viewName": "Top10",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/Top10.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "🔟",
+    "fImage": "Image",
+    "fPrimary": "Title",
+    "fSecondary": "ViewsYesterday",
+    "fSummary": "TotalViews",
+    "fUrl": "URL",
+    "sortField": "",
+    "sortDir": "asc",
+    "groupField": "",
+    "groupDir": "asc"
+  }

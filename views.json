@@ -77,6 +77,13 @@
     "icon": "🎯"
   },
   {
+    "id": "top10",
+    "name": "Top🔟",
+    "file": "views/top10.html",
+    "nav": "menu",
+    "icon": "🔟"
+  },
+  {
     "id": "tickets",
     "name": "Tickets",
     "file": "views/tickets.html",
