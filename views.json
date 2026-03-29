@@ -70,6 +70,13 @@
     "icon": "🖼️"
   },
   {
+    "id": "daily_photos",
+    "name": "Daily Photos",
+    "file": "views/daily_photos.html",
+    "nav": "menu",
+    "icon": "📸"
+  },
+  {
     "id": "upcoming",
     "name": "Upcoming",
     "file": "views/upcoming.html",

@@ -1,0 +1,16 @@
+{
+    "viewName": "Daily Photos",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/photos/daily_photos.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "📸",
+    "fImage": "Image",
+    "fPrimary": "PostedBy",
+    "fSecondary": "ApproxDate",
+    "fSummary": "",
+    "fUrl": "",
+    "sortField": "",
+    "sortDir": "asc",
+    "groupField": "",
+    "groupDir": "asc"
+  }

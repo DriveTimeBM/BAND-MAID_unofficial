@@ -88,6 +88,14 @@
     "body": "Links to all OMEISYUSAMA-NO-KAI special photo galleries."
   },
   {
+    "id": "about-daily-photos",
+    "section": "Views",
+    "icon": "📸",
+    "title": "Daily Photos",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/photos/daily_photos.json",
+    "body": "Random photos posted by BAND-MAID, Akane, Kanami, Miku, MISA, and Saiki updated daily"
+  },
+  {
     "id": "about-upcoming",
     "section": "Views",
     "icon": "⏳",
