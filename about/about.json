@@ -45,7 +45,7 @@
     "icon": "🟢",
     "title": "Spotify",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
-    "body": "All BAND-MAID songs on Spotify listed by stream count. Updated daily but each songs is updated once per week."
+    "body": "All BAND-MAID songs on Spotify with links listed by stream count. Updated daily but each song is updated once per week."
   },
   {
     "id": "about-stream",
