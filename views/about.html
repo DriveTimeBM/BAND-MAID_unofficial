@@ -92,7 +92,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">ℹ️</div>
+  <div class="app-logo">🎸</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
     <div class="view-label" id="viewLabel">About</div>
@@ -130,12 +130,12 @@ const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "About".replace(/\s+/g,'_');
 const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = [{"name":"id","type":"text"},{"name":"section","type":"text"},{"name":"icon","type":"text"},{"name":"title","type":"text"},{"name":"body","type":"text"}];
-const DECK = {"image":null,"primary":"title","secondary":"body","summary":null,"url":null};
+const FIELDS = [{"name":"id","type":"text"},{"name":"section","type":"text"},{"name":"icon","type":"text"},{"name":"title","type":"text"},{"name":"jsonUrl","type":"url"},{"name":"body","type":"text"}];
+const DECK = {"image":null,"primary":"title","secondary":"body","summary":null,"url":"jsonUrl"};
 const SORT = {"field":"","dir":"asc"};
 const GROUP = {"field":"section","dir":"asc"};
 const VIEW_NAME = "About";
-const LOGO_CHAR = "ℹ️";
+const LOGO_CHAR = "🎸";
 const PREVIEW_COUNT = 5;
 const PREVIEW_DATA = null;
 
