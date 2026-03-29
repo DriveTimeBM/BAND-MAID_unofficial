@@ -112,6 +112,14 @@
     "body": "The Top 10 performing YouTube videos for the previous day. Updated daily."
   },
   {
+    "id": "about-followers",
+    "section": "Followers",
+    "icon": "👥",
+    "title": "Followers",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/followers.json",
+    "body": "Follower counts and links to official social media sites. Updated weekly."
+  },
+  {
     "id": "about-tickets",
     "section": "Views",
     "icon": "🎟️",

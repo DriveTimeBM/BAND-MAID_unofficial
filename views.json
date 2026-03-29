@@ -91,6 +91,13 @@
     "icon": "🔟"
   },
   {
+    "id": "followers",
+    "name": "Followers",
+    "file": "views/followers.html",
+    "nav": "menu",
+    "icon": "👥"
+  },
+  {
     "id": "tickets",
     "name": "Tickets",
     "file": "views/tickets.html",
