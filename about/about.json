@@ -4,111 +4,126 @@
     "section": "About This App",
     "icon": "ℹ️",
     "title": "BAND-MAID Unofficial",
-    "body": "Your description of the project goes here."
+    "body": "As much BAND-MAID information as I can squeeze into one app. Song, Release, Event, Streaming information updated daily. Leveraged from the information used to build the BAND-MAID Dashboard Discord server which has more extensive data. Open to anyone: https://discord.gg/tfpJ6xBWEN"
   },
   {
     "id": "about-calendar",
     "section": "Views",
     "icon": "🗓️",
     "title": "Calendar",
-    "body": "Your description of the Calendar view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/calendar/calendar.json",
+    "body": "Upcoming BAND-MAID happenings. Updated as needed."
   },
   {
     "id": "about-songs",
     "section": "Views",
     "icon": "📝",
     "title": "Songs",
-    "body": "Your description of the Songs view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_songs/songs.json",
+    "body": "Information about all BAND-MAID songs including quotes about the songs from the members when available. Stream counts are Spotify stream counts, updated weekly"
   },
   {
     "id": "about-releases",
     "section": "Views",
     "icon": "💿",
     "title": "Releases",
-    "body": "Your description of the Releases view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json",
+    "body": "Information about all BAND-MAID releases."
   },
   {
     "id": "about-videos",
     "section": "Views",
     "icon": "▶️",
     "title": "Videos",
-    "body": "Your description of the Videos view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
+    "body": "Information and links to all BAND-MAID YouTube content which includes view counts, updated daily."
   },
   {
     "id": "about-stream",
     "section": "Views",
     "icon": "🎶",
     "title": "Streaming",
-    "body": "Your description of the Streaming view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
+    "body": "Links to BAND-MAID songs on several streaming services including stream counts when available."
   },
   {
     "id": "about-okyuji",
     "section": "Views",
     "icon": "🎤",
     "title": "Okyuji",
-    "body": "Your description of the Okyuji view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
+    "body": "All BAND-MAID live sets with links to the setlist.fm page for each set."
   },
   {
     "id": "about-prime",
     "section": "Views",
     "icon": "🎬",
     "title": "Prime",
-    "body": "Your description of the Prime view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json",
+    "body": "All BAND-MAID Prime videos with links grouped by video type."
   },
   {
     "id": "about-fanclub",
     "section": "Views",
     "icon": "🏮",
     "title": "Fan Club",
-    "body": "Your description of the Fan Club view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/fanclub.json",
+    "body": "All BAND-MAID fan club (OMEISYUSAMA-NO-KAI) videos with links grouped by video type."
   },
   {
     "id": "about-gallery",
     "section": "Views",
     "icon": "🖼️",
     "title": "Gallery",
-    "body": "Your description of the Gallery view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/gallery.json",
+    "body": "Links to all OMEISYUSAMA-NO-KAI special photo galleries."
   },
   {
     "id": "about-upcoming",
     "section": "Views",
     "icon": "⏳",
     "title": "Upcoming",
-    "body": "Your description of the Upcoming view goes here."
+    "jsonUrl": "https://api.jsonbin.io/v3/b/69c7e8f95fdde574550a99d9/latest",
+    "body": "Countdown clock to the next two upcoming BAND-MAID events. When a YouTube video gets within 24 hours of a million milestone, it is added to the countdown. Updated every 10 minutes"
   },
   {
     "id": "about-million",
     "section": "Views",
     "icon": "🎯",
     "title": "Next Million",
-    "body": "Your description of the Next Million view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million.json",
+    "body": "The next 4 BAND-MAID YouTube videos projected to reach a million mark based on yesterday's view rate. Updated daily."
   },
   {
     "id": "about-tickets",
     "section": "Views",
     "icon": "🎟️",
     "title": "Tickets",
-    "body": "Your description of the Tickets view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
+    "body": "All BAND-MAID events found with the Ticketmaster API with links to purchase. This will only show overseas shows. Updated daily"
   },
   {
     "id": "about-charts",
     "section": "Views",
     "icon": "📈",
     "title": "Charts",
-    "body": "Your description of the Charts view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/charts.json",
+    "body": "Stream count graphs since I started collecting detailed data (YouTube Feb. 2025, Spotify July 2025) plus a YouTube comment history graph since 2014. (Level 1 comments only. No replies)"
   },
   {
     "id": "about-links",
     "section": "Views",
     "icon": "🔗",
     "title": "Links",
-    "body": "Your description of the Links view goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/links.json",
+    "body": "Links to various BAND-MAID related things."
   },
   {
     "id": "about-project",
     "section": "About This App",
     "icon": "🛠️",
     "title": "About the Project",
-    "body": "Your description of the project background goes here."
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/about/about.json",
+    "body": "This app is powered by public JSON files that I've created and update on a daily basis. Anyone can use them. Links to the JSON are included for each view discussed in the About view."
   }
 ]

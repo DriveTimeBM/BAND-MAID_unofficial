@@ -1,0 +1,519 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · About</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#666;
+  --accent:#c8a96e;--accent2:#8b5cf6;
+  --danger:#ef4444;--success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+
+/* APP HEADER */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
+.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
+.back-btn:hover{border-color:var(--border2);color:var(--text)}
+.back-btn.visible{display:flex}
+.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+
+/* SEARCH BAR */
+.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
+.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+.search-input:focus{border-color:var(--accent)}
+
+/* GROUP HEADER */
+.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
+.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
+.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
+.group-collapsed .group-items{display:none}
+.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
+.group-collapsed .group-chevron{transform:rotate(-90deg)}
+
+/* DECK GRID */
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
+.deck-grid.no-group{margin:0}
+
+/* DECK CARD */
+.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
+.deck-card:hover{background:var(--bg3)}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
+.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
+.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
+.deck-card-url{position:absolute;top:8px;right:8px}
+.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
+.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
+.ext-icon svg{width:11px;height:11px}
+
+/* SHOW MORE */
+.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
+.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
+.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* DETAIL VIEW */
+.detail-view{display:none;min-height:calc(100vh - 57px)}
+.detail-view.visible{display:block}
+.list-view{display:block}
+.list-view.hidden{display:none}
+.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
+.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
+.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
+.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
+.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
+.detail-fields{display:flex;flex-direction:column;gap:0}
+.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
+.detail-field:last-child{border-bottom:none}
+.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
+.detail-url-link:hover{text-decoration:underline}
+.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+
+/* UTIL */
+.hidden{display:none}
+@keyframes spin{to{transform:rotate(360deg)}}
+</style>
+</head>
+<body>
+
+<!-- APP HEADER -->
+<div class="app-header">
+  <div class="app-logo">ℹ️</div>
+  <div>
+    <div class="app-nav-title">BAND-MAID Unofficial</div>
+    <div class="view-label" id="viewLabel">About</div>
+  </div>
+  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
+  <div class="record-count" id="recordCount"></div>
+</div>
+
+<!-- FETCH STATES -->
+<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
+  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
+  <span>Loading About…</span>
+</div>
+<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
+  <div style="font-size:32px">⚠️</div>
+  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
+  <div id="fetchErrorMsg"></div>
+  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+</div>
+
+<!-- LIST VIEW -->
+<div id="listView" class="list-view" style="display:none">
+  <div class="search-bar">
+    <input class="search-input" type="search" placeholder="Search About…" id="searchInput" oninput="onSearch()">
+  </div>
+  <div id="mainContent"></div>
+</div>
+
+<!-- DETAIL VIEW -->
+<div id="detailView" class="detail-view"></div>
+
+<script>
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_unofficial/about/about.json";
+const API_READ_KEY = "";
+const ALWAYS_FRESH = false;
+const CACHE_KEY = 'bmdata_' + "About".replace(/\s+/g,'_');
+const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
+const FIELDS = [{"name":"id","type":"text"},{"name":"section","type":"text"},{"name":"icon","type":"text"},{"name":"title","type":"text"},{"name":"body","type":"text"}];
+const DECK = {"image":null,"primary":"title","secondary":"body","summary":null,"url":null};
+const SORT = {"field":"","dir":"asc"};
+const GROUP = {"field":"section","dir":"asc"};
+const VIEW_NAME = "About";
+const LOGO_CHAR = "ℹ️";
+const PREVIEW_COUNT = 5;
+const PREVIEW_DATA = null;
+
+let RAW_DATA = [];
+
+// ── DATA LOADING ──────────────────────────────────────────────────────────────
+async function loadData(){
+  // Preview mode — data injected by generator at build time
+  if(PREVIEW_DATA){
+    RAW_DATA=PREVIEW_DATA;
+    currentData=RAW_DATA;
+    hideFetchState();
+    renderList();
+    return;
+  }
+
+  // No URL configured — nothing to fetch
+  if(!JSON_URL){
+    showFetchError('No JSON URL configured for this view.');
+    return;
+  }
+
+  // Always-fresh: skip cache entirely
+  if(!ALWAYS_FRESH){
+    try{
+      const cached=localStorage.getItem(CACHE_KEY);
+      if(cached){
+        const {ts,data}=JSON.parse(cached);
+        if(Date.now()-ts < CACHE_TTL){
+          RAW_DATA=data;
+          currentData=RAW_DATA;
+          hideFetchState();
+          renderList();
+          return;
+        }
+      }
+    }catch(e){}
+  }
+
+  // Fetch live
+  try{
+    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
+    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
+    const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
+    const res=await fetch(url,fetchOpts);
+    if(!res.ok) throw new Error('HTTP '+res.status);
+    const parsed=await res.json();
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.record||parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    currentData=RAW_DATA;
+    // Store in cache (even for always-fresh — just won't be read next time)
+    if(!ALWAYS_FRESH){
+      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
+    }
+    hideFetchState();
+    renderList();
+  }catch(e){
+    showFetchError('Failed to load data: '+e.message);
+  }
+}
+
+function showFetchError(msg){
+  document.getElementById('fetchError').style.display='flex';
+  document.getElementById('fetchErrorMsg').textContent=msg;
+  document.getElementById('fetchLoading').style.display='none';
+}
+function hideFetchState(){
+  document.getElementById('fetchLoading').style.display='none';
+  document.getElementById('fetchError').style.display='none';
+  document.getElementById('listView').style.display='';
+}
+
+// ── HELPERS ──────────────────────────────────────────────────────────────────
+function fmtNumber(v){return parseInt(v,10).toLocaleString()}
+function isAllDigits(v){return /^\d+$/.test(String(v))}
+const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
+function isDateTime(v){return ISO_DT_RE.test(String(v))}
+function fmtDateShort(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
+    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
+  }catch(e){return String(v)}
+}
+function fmtDateFull(v){
+  try{
+    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
+    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
+  }catch(e){return String(v)}
+}
+function detectRuntime(fieldName,val){
+  const lc=fieldName.toLowerCase();
+  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
+  if(val!==null&&val!==undefined&&val!==''){
+    if(isDateTime(val))return 'datetime';
+    if(/^https?:\/\//i.test(String(val)))return 'url';
+    if(isAllDigits(val))return 'number';
+  }
+  return 'text';
+}
+function getType(f,val){
+  const meta=FIELDS.find(x=>x.name===f);
+  if(meta)return meta.type;
+  return detectRuntime(f,val);
+}
+function extIconSvg(){
+  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
+}
+
+// ── SORT / GROUP ──────────────────────────────────────────────────────────────
+function processData(data){
+  let d=[...data];
+  if(SORT.field){
+    d.sort((a,b)=>{
+      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
+      const an=isAllDigits(av);const bn=isAllDigits(bv);
+      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
+      return SORT.dir==='desc'?-cmp:cmp;
+    });
+  }
+  if(!GROUP.field) return [{group:null,items:d}];
+  const map=new Map();
+  d.forEach(row=>{
+    const g=String(row[GROUP.field]??'');
+    if(!map.has(g))map.set(g,[]);
+    map.get(g).push(row);
+  });
+  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
+  groups.sort((a,b)=>{
+    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
+    return GROUP.dir==='desc'?-cmp:cmp;
+  });
+  return groups;
+}
+
+// ── SEARCH ───────────────────────────────────────────────────────────────────
+let expandedGroups={};
+let showAllGroups={};
+let showAllFlat=false;
+let currentData=[];
+
+function onSearch(){
+  const q=document.getElementById('searchInput').value.toLowerCase().trim();
+  if(!q){currentData=RAW_DATA;}
+  else{
+    currentData=RAW_DATA.filter(row=>
+      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
+    );
+  }
+  showAllFlat=false;
+  showAllGroups={};
+  expandedGroups={};
+  renderList();
+}
+
+// ── RENDER LIST ───────────────────────────────────────────────────────────────
+function renderList(scrollToGroup){
+  const groups=processData(currentData);
+  const total=currentData.length;
+  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
+  const container=document.getElementById('mainContent');
+  container.innerHTML='';
+
+  if(!currentData.length){
+    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    return;
+  }
+
+  if(!GROUP.field){
+    const items=groups[0].items;
+    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
+    container.appendChild(renderDeckGrid(shown,null));
+    if(!showAllFlat&&items.length>PREVIEW_COUNT){
+      const more=document.createElement('div');
+      more.className='show-more-row';
+      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
+      container.appendChild(more);
+    }
+  } else {
+    groups.forEach(({group,items})=>{
+      const key=group??'';
+      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
+      const collapsed=!expandedGroups[key];
+      const showAll=!!showAllGroups[key];
+
+      const wrap=document.createElement('div');
+      wrap.className='group-block'+(collapsed?' group-collapsed':'');
+      wrap.dataset.groupKey=key;
+
+      const hdr=document.createElement('div');
+      hdr.className='group-header';
+      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
+      hdr.style.cursor='pointer';
+      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+
+      const body=document.createElement('div');
+      body.className='group-items';
+      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
+      body.appendChild(renderDeckGrid(shown,group));
+
+      if(!showAll&&items.length>PREVIEW_COUNT){
+        const more=document.createElement('div');
+        more.className='show-more-row';
+        // Capture key in closure, scroll back to this group after re-render
+        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
+        more.querySelector('button').onclick=()=>{
+          showAllGroups[key]=true;
+          renderList(key);
+        };
+        body.appendChild(more);
+      }
+
+      wrap.appendChild(hdr);
+      wrap.appendChild(body);
+      container.appendChild(wrap);
+    });
+
+    // Scroll the expanded group back into view
+    if(scrollToGroup!==undefined){
+      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
+      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
+    }
+  }
+}
+
+function renderDeckGrid(items){
+  const grid=document.createElement('div');
+  grid.className='deck-grid';
+  items.forEach((row,i)=>{
+    grid.appendChild(renderDeckCard(row,i));
+  });
+  return grid;
+}
+
+function renderDeckCard(row,idx){
+  const card=document.createElement('div');
+  card.className='deck-card';
+  card.onclick=()=>showDetail(row);
+
+  // Image
+  if(DECK.image&&row[DECK.image]){
+    const img=document.createElement('img');
+    img.className='deck-card-img';
+    img.src=row[DECK.image];
+    img.alt='';
+    img.loading='lazy';
+    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
+    card.appendChild(img);
+  } else if(DECK.image){
+    card.appendChild(makePlaceholder());
+  }
+
+  const body=document.createElement('div');
+  body.className='deck-card-body';
+
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-primary';
+    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
+    el.title=fmtVal(DECK.primary,row[DECK.primary]);
+    body.appendChild(el);
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-secondary';
+    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
+    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
+    body.appendChild(el);
+  }
+  if(DECK.summary&&row[DECK.summary]!==undefined){
+    const el=document.createElement('div');
+    el.className='deck-card-summary';
+    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
+    body.appendChild(el);
+  }
+  card.appendChild(body);
+
+  // URL icon overlay
+  if(DECK.url&&row[DECK.url]){
+    const a=document.createElement('a');
+    a.className='deck-card-url';
+    a.href=row[DECK.url];
+    a.target='_blank';
+    a.rel='noopener';
+    a.title='Open external link: '+row[DECK.url];
+    a.onclick=e=>{e.stopPropagation()};
+    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
+    card.appendChild(a);
+  }
+
+  return card;
+}
+
+function makePlaceholder(){
+  const el=document.createElement('div');
+  el.className='deck-card-img-placeholder';
+  el.textContent=LOGO_CHAR;
+  return el;
+}
+
+function fmtVal(field,val){
+  if(val===null||val===undefined)return '';
+  const t=getType(field,val);
+  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
+  if(t==='datetime')return fmtDateShort(val);
+  return String(val);
+}
+
+// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
+function showDetail(row){
+  document.getElementById('listView').classList.add('hidden');
+  const detail=document.getElementById('detailView');
+  detail.classList.add('visible');
+  document.getElementById('backBtn').classList.add('visible');
+  document.getElementById('viewLabel').textContent='Detail';
+  document.getElementById('recordCount').textContent='';
+
+  let html='';
+
+  // Hero image
+  if(DECK.image&&row[DECK.image]){
+    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
+  } else {
+    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
+  }
+
+  html+='<div class="detail-body">';
+
+  // Primary / secondary as title
+  if(DECK.primary&&row[DECK.primary]!==undefined){
+    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
+  }
+  if(DECK.secondary&&row[DECK.secondary]!==undefined){
+    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
+  }
+
+  // All fields table
+  html+='<div class="detail-fields">';
+  FIELDS.forEach(({name,type})=>{
+    const val=row[name];
+    if(val===null||val===undefined||val==='')return;
+    const rtype=getType(name,val);
+    let valueHtml='';
+    if(rtype==='image'){
+      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
+    } else if(rtype==='url'){
+      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
+    } else if(rtype==='number'){
+      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
+    } else if(rtype==='datetime'){
+      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
+    } else {
+      valueHtml=escHtml(String(val));
+    }
+    html+=`<div class="detail-field">
+      <div class="detail-field-label">${escHtml(name)}</div>
+      <div class="detail-field-value">${valueHtml}</div>
+    </div>`;
+  });
+  html+='</div></div>';
+
+  detail.innerHTML=html;
+  window.scrollTo(0,0);
+}
+
+function showList(){
+  document.getElementById('listView').classList.remove('hidden');
+  document.getElementById('detailView').classList.remove('visible');
+  document.getElementById('detailView').innerHTML='';
+  document.getElementById('backBtn').classList.remove('visible');
+  document.getElementById('viewLabel').textContent=VIEW_NAME;
+  renderList();
+}
+
+// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
+function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
+function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+
+// ── INIT ──────────────────────────────────────────────────────────────────────
+loadData();
+</script>
+</body>
+</html>
