@@ -99,7 +99,7 @@
     "id": "about-top10",
     "section": "Views",
     "icon": "🔟",
-    "title": "Top🔟",
+    "title": "Top10",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/top10.json",
     "body": "The Top 10 performing YouTube videos for the previous day. Updated daily."
   },
