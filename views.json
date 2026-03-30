@@ -91,6 +91,13 @@
     "icon": "🎯"
   },
   {
+    "id": "shop",
+    "name": "Shop",
+    "file": "views/shop.html",
+    "nav": "menu",
+    "icon": "💵"
+  },
+  {
     "id": "top10",
     "name": "Top🔟",
     "file": "views/top10.html",

@@ -1,0 +1,16 @@
+{
+    "viewName": "Shop",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/shop.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "💵",
+    "fImage": "Image",
+    "fPrimary": "Item",
+    "fSecondary": "PriceDollar",
+    "fSummary": "PriceYen",
+    "fUrl": "Url",
+    "sortField": "",
+    "sortDir": "asc",
+    "groupField": "Vendor",
+    "groupDir": "asc"
+  }
