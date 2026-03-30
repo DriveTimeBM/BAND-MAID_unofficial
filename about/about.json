@@ -165,6 +165,6 @@
     "icon": "🛠️",
     "title": "About the Project",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/about/about.json",
-    "body": "This app is powered by public JSON files that I've created and update on a daily basis. Anyone can use them. Links to the JSON are included for each view discussed in the About view."
+    "body": "This app is powered by public JSON files that I've created and update on a daily basis. Anyone can use them. Links to the JSON are included for each view discussed in the About view. All of the JSON data is automatically imported to a public Google Sheet. You may use/copy the data as you wish. The sheet is here: https://docs.google.com/spreadsheets/d/1fUGjjPOjFFWoh8TbHOfgB4L6N0GmZIfo2JrPghNZsZU/edit?usp=sharing"
   }
 ]
