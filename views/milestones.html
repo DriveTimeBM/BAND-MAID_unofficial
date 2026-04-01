@@ -1,0 +1,470 @@
+
+Function Post-BandMaidMilestones {
+
+    [array]$objects = @()
+ 
+    # YouTube previous month views (only on first day of the month)
+ if ( (Get-Date).Day -eq 1 ) {
+    [hashtable]$top10Table = @{}
+ 
+    $lastMonth = (Get-Date).AddMonths(-1).ToString("MMMM")
+ 
+    $sql = "select * from [YouTube Last Month Summary Query]"
+ 
+    $monthlyViews = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+ 
+    foreach ( $item in $monthlyViews ) {
+ 
+       $medal = Get-Medal -Place $idx
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx), $item.MaxOfVideoTitle, $medal
+ 
+       $top10Table.($name) = "🔴  accumulated **{0:N0}** [*{2:N0} avg*] views during {1}. {3}" -f $item.SumOfViewsDelta, $lastMonth, $item.AvgOfViewsDelta, $item.MaxOfURL
+ 
+       $idx++
+ 
+       if ( $idx -gt 10 ) { break }
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_TOP10 -Title ("YouTube Top 10 for {0}" -f $lastMonth) -Icon "▶️" -Fields $top10Table #-PostBlueSky
+    }
+ 
+    # YTD / last year
+    [hashtable]$top10Table = @{}
+ 
+    if ( (Get-Date).Month -eq 1 ) {
+       $lastYear = (Get-Date).Year - 1
+    }
+    else {
+       $lastYear = (Get-Date).Year
+    }
+ 
+    $sql = "select * from [YouTube Last Year Summary Query]"
+ 
+    $monthlyViews = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+ 
+    foreach ( $item in $monthlyViews ) {
+ 
+       $medal = ""
+       if ( $idx -eq 1 ) { $medal = "🥇" }
+       if ( $idx -eq 2 ) { $medal = "🥈" }
+       if ( $idx -eq 3 ) { $medal = "🥉" }
+ 
+       if ( $minDate -eq $null ) { $minDate = $item.MinOfSnapshotDate }
+       if ( $item.MinOfSnapshotDate -lt $minDate ) { $minDate = $item.MinOfSnapshotDate }
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx), $item.MaxOfVideoTitle, $medal
+ 
+       $top10Table.($name) = "🔺  accumulated **{0:N0}** [*{2:N0} avg*] views during {1}. {3}" -f $item.SumOfViewsDelta, $lastYear, $item.AvgOfViewsDelta, $item.MaxOfURL
+ 
+       $idx++
+ 
+       if ( $idx -gt 10 ) { break }
+    }
+ 
+    if ( $idx -gt 1 ) {
+       # Needs work or removed
+       #Send-DiscordEmbedList2 -WebhookUrl $script:WH_TOP10 -Title ("YouTube Top 10 since {1})" -f $lastYear,$minDate.ToString("yyyy/MM/dd")) -Icon "▶️" -Fields $top10Table #-PostBlueSky
+    }
+ 
+ } #end 1st day of month
+ 
+    # YouTube song aggregate views
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [YouTube Aggregate Views Query]"
+ 
+    $aggregateViews = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+ 
+    $MILLION = 1000000
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $aggregateViews ) {
+ 
+       $curMillion  = [math]::Floor(($item.SumOfViews / $MILLION))
+       $prevMillion = [math]::Floor((($item.SumOfViews-$item.SumOfViewsDelta) / $MILLION))
+ 
+       if ( $curMillion -gt $prevMillion ) {
+          $name = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.SongName, $item.MaxOfDiscordEmoji
+          $jname = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.SongName, ""
+ 
+          $milestoneTable.($name) = "{1} aggregate views surpassed **{0:N0}** million!" -f $curMillion, $item.MaxOfEmoji
+ 
+          $objects += [pscustomobject]@{
+                          Categoty  = "YouTube AGGREGATE Views"
+                          Item      = $jname
+                          Milestone = $milestoneTable.($name)
+                      }
+ 
+          $idx++
+       }
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_YOUTUBE -Title "YouTube AGGREGATE View Milestone" -Icon "▶️" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # YouTube song audio aggregate views
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [YouTube Audio Aggregate Views Query]"
+ 
+    $aggregateViews = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+ 
+    $HUNDREDK = 100000
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $aggregateViews ) {
+ 
+       $cur100K  = [math]::Floor(($item.SumOfViews / $HUNDREDK))
+       $prev100K = [math]::Floor((($item.SumOfViews-$item.SumOfViewsDelta) / $HUNDREDK))
+ 
+       if ( $cur100K -gt $prev100K ) {
+          $name = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.SongName, $item.MaxOfDiscordEmoji
+          $jname = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.SongName, ""
+ 
+          $milestoneTable.($name) = "{1}  aggregate AUDIO streams surpassed **{0:N0}**!" -f ($cur100K*$HUNDREDK), $item.MaxOfEmoji
+ 
+          $objects += [pscustomobject]@{
+                          Categoty  = "YouTube AGGREGATE AUDIO stream Milestones"
+                          Item      = $jname
+                          Milestone = $milestoneTable.($name)
+                      }
+ 
+          $idx++
+       }
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_MILESTONES -Title "YouTube AGGREGATE AUDIO stream Milestone" -Icon "▶️" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+ 
+    # New YouTube comments
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [New Comments Query]"
+ 
+    $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $milestones ) {
+ 
+       $comment = "comments"
+       if ( $item.CommentsDelta -eq 1 ) { $comment = "comment" }
+ 
+       $name = "{0} {1}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.VideoTitle
+ 
+       $milestoneTable.($name) = "💬  {0:N0} new {3}. {1:N0} total. 🔗{2}" -f $item.CommentsDelta, $item.Comments, $item.URL, $comment
+ 
+       $idx++
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_YOUTUBE_CMNT -Title "New YouTube Comments" -Icon "🗨️" -Fields $milestoneTable
+    }
+ 
+    # YouTube
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [YouTube Milestone Query]"
+ 
+    $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $milestones ) {
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.VideoTitle, $item.URL
+ 
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** views!" -f $item.Milestone, "👀"
+ 
+       $objects += [pscustomobject]@{
+                       Categoty  = "YouTube"
+                          Item      = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+ 
+       $idx++
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_YOUTUBE -Title "YouTube Milestones" -Icon "🚨" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # YouTube likes
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [YouTube Like Milestone Query]"
+ 
+    $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+ 
+    foreach ( $item in $milestones ) {
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx), $item.VideoTitle, $item.URL
+ 
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** likes!" -f $item.Milestone, "👍"
+ 
+       $objects += [pscustomobject]@{
+                       Categoty  = "YouTube"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+ 
+       $idx++
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_MILESTONES -Title "YouTube Milestones" -Icon "🚨" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # YouTube comments
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [YouTube Comment Milestone Query]"
+ 
+    $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $milestones ) {
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.VideoTitle, $item.URL
+ 
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** comments!" -f $item.Milestone, "💬"
+ 
+       $objects += [pscustomobject]@{
+                       Categoty  = "YouTube"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+       $idx++
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_YOUTUBE -Title "YouTube Milestones" -Icon "🚨" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # Spotify
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [Spotify Milestone Query]"
+ 
+    $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $milestones ) {
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.SongName, $item.DiscordEmoji
+       $jname = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.SongName, ""
+ 
+       $milestoneTable.($name) = "{1} Surpassed **{0:N0}** streams!" -f $item.Milestone, $item.Emoji
+ 
+       $objects += [pscustomobject]@{
+                       Categoty  = "Spotify"
+                          Item   = $jname
+                       Milestone = $milestoneTable.($name)
+                   }
+ 
+       $idx++
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_SPOTIFY -Title "Spotify Milestones" -Icon "🚨" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # BilliBilli
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [BilliBilli Milestone Query]"
+ 
+    $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+    [int]$idx = 1
+    $numberSet = 0 #(0,20,40) | Get-Random
+ 
+    foreach ( $item in $milestones ) {
+ 
+       $name = "{0} {1} {2}" -f (Get-CircledNumber $idx -Offset $numberSet), $item.VideoTitle, $item.URL
+ 
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** views!" -f $item.Milestone, "📺"
+ 
+       $objects += [pscustomobject]@{
+                       Categoty  = "BilliBilli"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+ 
+       $idx++
+    }
+ 
+    if ( $idx -gt 1 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_MILESTONES -Title "BilliBilli Milestones" -Icon "🚨" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # Total Streams
+    $MILLION = 1000000
+    [hashtable]$milestoneTable = @{}
+ 
+    $sql = "select * from [TotalStreams] order by [SnapshotDate] DESC"
+ 
+    $streams = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+      # yt
+    $curMillion  = [Math]::Floor($streams[0].TotalYouTubeStreams / $MILLION)
+    $prevMillion = [Math]::Floor($streams[0].PrevYouTubeStreams  / $MILLION)
+ 
+    if ( $curMillion -ne $prevMillion ) {
+       $name = "YouTube Total Streams"
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** MILLION views!" -f $curMillion, "👀"
+       
+       $objects += [pscustomobject]@{
+                       Categoty  = "Total Streams"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+ 
+    }
+ 
+      # spotify
+    $curMillion  = [Math]::Floor($streams[0].TotalSpotifyStreams / $MILLION)
+    $prevMillion = [Math]::Floor($streams[0].PrevSpotifyStreams  / $MILLION)
+ 
+    if ( $curMillion -ne $prevMillion ) {
+       $name = "Spotify Total Streams"
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** MILLION streams!" -f $curMillion, "🎧"
+       
+       $objects += [pscustomobject]@{
+                       Categoty  = "Total Streams"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+    }
+ 
+      # billi
+    $curMillion  = [Math]::Floor($streams[0].TotalBilliBilliStreams / $MILLION)
+    $prevMillion = [Math]::Floor($streams[0].PrevBilliBilliStreams  / $MILLION)
+ 
+    if ( $curMillion -ne $prevMillion ) {
+       $name = "BilliBilli Total Streams"
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** MILLION streams!" -f $curMillion, "📺"
+       
+       $objects += [pscustomobject]@{
+                       Categoty  = "Total Streams"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+    }
+ 
+      # Grand Total Streams - alert every 10M
+    $curMillion  = [Math]::Floor($streams[0].TotalStreams      / (10*$MILLION))
+    $prevMillion = [Math]::Floor($streams[0].PrevTotalStreams  / (10*$MILLION))
+ 
+    if ( $curMillion -ne $prevMillion ) {
+       $name = "Combined Total Streams [YT+Spotify+Billi]"
+       $milestoneTable.($name) = "  {1} Surpassed **{0:N0}** MILLION streams!" -f ($curMillion*10), "📺"
+       
+       $objects += [pscustomobject]@{
+                       Categoty  = "Total Streams"
+                          Item   = $name
+                       Milestone = $milestoneTable.($name)
+                   }
+    }
+ 
+    # Send all TOTAL milestones
+    if ( $milestoneTable.Count -gt 0 ) {
+       Send-DiscordEmbedList2 -WebhookUrl $script:WH_MILESTONES -Title "Total Stream Milestones" -Icon "🌐" -Fields $milestoneTable #-PostBlueSky
+    }
+ 
+    # Social Media (Monday ONLY)
+    if ( ([datetime]::Now).DayOfWeek -eq "Monday" )
+    {
+       [hashtable]$milestoneTable = @{}
+ 
+       $sql = "select * from [Social Media Milestone Query]"
+ 
+       $milestones = Read-Access -AccessDatabase $script:BANDMAIDdb -Sql $sql
+ 
+       [int]$idx = 1
+       $numberSet = 0 #(0,20,40) | Get-Random
+ 
+       foreach ( $item in $milestones ) {
+ 
+          if ( $item.Twitter100 -gt $item.PrevTwitter100 ) {
+             $name = "{0} X/Twitter milestone." -f (Get-CircledNumber $idx -Offset $numberSet)
+             $milestoneTable.($name) = "{2}{0} followers surpassed **{1:N0}**!" -f $item.MemberName, ($item.Twitter100*1000), "Ⓧ"
+       
+             $objects += [pscustomobject]@{
+                             Categoty  = "Twitter/X Followers"
+                                Item   = $name
+                             Milestone = $milestoneTable.($name)
+                         }
+             $idx++
+          }
+ 
+          if ( $item.Instagram100 -gt $item.PrevInstagram100 ) {
+             $name = "{0} Instagram milestone" -f (Get-CircledNumber $idx -Offset $numberSet)
+             $milestoneTable.($name) = "{2}{0} followers surpassed **{1:N0}**!" -f $item.MemberName, ($item.Instagram100*1000), "📸"
+       
+             $objects += [pscustomobject]@{
+                             Categoty  = "Instagram Followers"
+                                Item   = $name
+                             Milestone = $milestoneTable.($name)
+                         }
+             $idx++
+          }
+ 
+          if ( $item.TikTok100 -gt $item.PrevTikTok100 ) {
+             $name = "{0} TikTok milestone" -f (Get-CircledNumber $idx -Offset $numberSet)
+             $milestoneTable.($name) = "{2}{0} followers surpassed **{1:N0}**!" -f $item.MemberName, ($item.TikTok100*1000), "🕺"
+       
+             $objects += [pscustomobject]@{
+                             Categoty  = "TikTok Followers"
+                                Item   = $name
+                             Milestone = $milestoneTable.($name)
+                         }
+             $idx++
+          }
+ 
+          if ( $item.Facebook100 -gt $item.PrevFacebook100 ) {
+             $name = "{0} Facebook milestone" -f (Get-CircledNumber $idx -Offset $numberSet)
+             $milestoneTable.($name) = "{2}{0} followers surpassed **{1:N0}**!" -f $item.MemberName, ($item.Facebook100*1000), "Ⓕ"
+       
+             $objects += [pscustomobject]@{
+                             Categoty  = "Facebook Followers"
+                                Item   = $name
+                             Milestone = $milestoneTable.($name)
+                         }
+             $idx++
+          }
+ 
+       }
+ 
+       if ( $idx -gt 1 ) {
+          Send-DiscordEmbedList2 -WebhookUrl $script:WH_MILESTONES -Title "Social Media Milestones" -Icon "🚨" -Fields $milestoneTable #-PostBlueSky
+       }
+    }
+    
+    # JSON
+    $json = $objects | ConvertTo-Json  
+    $json | Out-File -FilePath "C:\Users\Al\BAND-MAID_gpt\misc\milestones.json" -Encoding utf8
+ 
+ } # end Post-BandMaidMilestones
+ 

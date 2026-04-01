@@ -1,0 +1,16 @@
+{
+    "viewName": "Milestones",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/milestones.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "📍",
+    "fImage": "",
+    "fPrimary": "Item",
+    "fSecondary": "Milestone",
+    "fSummary": "",
+    "fUrl": "",
+    "sortField": "",
+    "sortDir": "asc",
+    "groupField": "Categoty",
+    "groupDir": "asc"
+  }

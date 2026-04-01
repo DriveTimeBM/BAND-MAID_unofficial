@@ -91,6 +91,13 @@
     "icon": "🎯"
   },
   {
+    "id": "milestones",
+    "name": "Milestones",
+    "file": "views/milestones.html",
+    "nav": "menu",
+    "icon": "📍"
+  },
+  {
     "id": "shop",
     "name": "Shop",
     "file": "views/shop.html",

@@ -112,6 +112,14 @@
     "body": "The next 4 BAND-MAID YouTube videos projected to reach a million mark based on yesterday's view rate. Updated daily."
   },
   {
+    "id": "about-milestones",
+    "section": "Views",
+    "icon": "📍",
+    "title": "Milestones",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/milestones.json",
+    "body": "The next 4 BAND-MAID YouTube videos projected to reach a million mark based on yesterday's view rate. Updated daily."
+  },
+  {
     "id": "about-shop",
     "section": "Views",
     "icon": "💵",
