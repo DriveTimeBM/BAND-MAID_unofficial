@@ -120,6 +120,15 @@
     "body": "Various milestones for streaming platforms and social media. Updated daily."
   },
   {
+    "id": "about-anniversaries",
+    "section": "Views",
+    "icon": "📍",
+    "title": "Anniversaries",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
+    "body": "Various anniversaries for song releases, birthdays, live debuts, okyuji, and YouTube videos. Updated daily."
+  },
+
+  {
     "id": "about-shop",
     "section": "Views",
     "icon": "💵",
