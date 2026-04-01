@@ -122,7 +122,7 @@
   {
     "id": "about-anniversaries",
     "section": "Views",
-    "icon": "📍",
+    "icon": "🎉",
     "title": "Anniversaries",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
     "body": "Various anniversaries for song releases, birthdays, live debuts, okyuji, and YouTube videos. Updated daily."
