@@ -99,7 +99,7 @@
   },
   {
     "id": "anniversaries",
-    "name": "Anniversaries *new*]",
+    "name": "Anniversaries *new*",
     "file": "views/anniversaries.html",
     "nav": "menu",
     "icon": "🎉"
