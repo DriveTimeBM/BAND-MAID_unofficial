@@ -127,7 +127,14 @@
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
     "body": "Various anniversaries for song releases, birthdays, live debuts, okyuji, and YouTube videos. Updated daily."
   },
-
+  {
+    "id": "about-gifs",
+    "section": "Views",
+    "icon": "🎞️",
+    "title": "GIFs",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/gifs.json",
+    "body": "Collection of over 400 BAND-MAID GIFs, optimized for size/load speed."
+  },
   {
     "id": "about-shop",
     "section": "Views",

@@ -92,17 +92,24 @@
   },
   {
     "id": "milestones",
-    "name": "Milestones🆕",
+    "name": "Milestones *new*",
     "file": "views/milestones.html",
     "nav": "menu",
     "icon": "📍"
   },
   {
     "id": "anniversaries",
-    "name": "Anniversaries🆕",
+    "name": "Anniversaries *new*]",
     "file": "views/anniversaries.html",
     "nav": "menu",
     "icon": "🎉"
+  },
+  {
+    "id": "gifs",
+    "name": "GIFs *new*",
+    "file": "views/gifs.html",
+    "nav": "menu",
+    "icon": "🎞️"
   },
   {
     "id": "shop",

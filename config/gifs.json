@@ -1,0 +1,16 @@
+{
+    "viewName": "Gifs",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/gifs.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "🎞️",
+    "fImage": "URL",
+    "fPrimary": "Name",
+    "fSecondary": "Category",
+    "fSummary": "",
+    "fUrl": "URL",
+    "sortField": "Name",
+    "sortDir": "asc",
+    "groupField": "Category",
+    "groupDir": "asc"
+  }
