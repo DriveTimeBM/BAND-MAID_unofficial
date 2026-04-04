@@ -1,30 +1,24 @@
-{
-  "title": "BAND-MAID Quiz",
-  "description": "How well do you know BAND-MAID?",
-  "questions": [
-    {
-      "id": 1,
-      "image": "https://drivetimebm.github.io/BAND-MAID_creations//misc/spotify.png",
-      "question": "What BAND-MAID song has the most streams on Spotify?",
-      "explanation": "Top 4 by streams: 1. Choose me  2. Sense  3. DOMINATION  4. Thrill",
-      "choices": [
-        { "text": "Choose me", "correct": true },
-        { "text": "Sense" },
-        { "text": "DOMINATION" },
-        { "text": "Thrill" }
-      ]
-    },
-    {
-      "id": 2,
-      "image": null,
-      "question": "What integer is greater than 1 and less than 3?",
-      "explanation": "2 is the only integer between 1 and 3.",
-      "choices": [
-        { "text": "2", "correct": true },
-        { "text": "3" },
-        { "text": "4" },
-        { "text": "5" }
-      ]
-    }
-  ]
+﻿{
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "questions":  [
+                      {
+                          "id":  1,
+                          "image":  "https://img.youtube.com/vi/nbFF1513ptw/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Ready to Rock (Official Live Video ver. 2 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 223,659 | Yesterday: 26\nBAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 69,769 | Yesterday: 14\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 27,949 | Yesterday: 4",
+                          "choices":  [
+                                          {
+                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video ver. 2 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "correct":  true
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
+                                          }
+                                      ]
+                      }
+                  ]
 }
