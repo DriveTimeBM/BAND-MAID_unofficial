@@ -3,6 +3,7 @@
   "description": "How well do you know BAND-MAID?",
   "questions": [
     {
+      "image": "https://drivetimebm.github.io/BAND-MAID_creations//misc/spotify.png",
       "id": 1,
       "image": null,
       "question": "What BAND-MAID song has the most streams on Spotify?",
