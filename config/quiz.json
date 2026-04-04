@@ -1,0 +1,30 @@
+{
+  "title": "BAND-MAID Quiz",
+  "description": "How well do you know BAND-MAID?",
+  "questions": [
+    {
+      "id": 1,
+      "image": null,
+      "question": "What BAND-MAID song has the most streams on Spotify?",
+      "explanation": "Top 4 by streams: 1. Choose me  2. Sense  3. DOMINATION  4. Thrill",
+      "choices": [
+        { "text": "Choose me", "correct": true },
+        { "text": "Sense" },
+        { "text": "DOMINATION" },
+        { "text": "Thrill" }
+      ]
+    },
+    {
+      "id": 2,
+      "image": null,
+      "question": "What integer is greater than 1 and less than 3?",
+      "explanation": "2 is the only integer between 1 and 3.",
+      "choices": [
+        { "text": "2", "correct": true },
+        { "text": "3" },
+        { "text": "4" },
+        { "text": "5" }
+      ]
+    }
+  ]
+}

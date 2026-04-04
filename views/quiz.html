@@ -1,0 +1,314 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Quiz</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--bg4:#242424;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --accent:#c8a96e;--accent2:#8b5cf6;
+  --correct:#22c55e;--correct-bg:rgba(34,197,94,0.1);--correct-border:rgba(34,197,94,0.35);
+  --wrong:#ef4444;--wrong-bg:rgba(239,68,68,0.1);--wrong-border:rgba(239,68,68,0.35);
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+
+/* ── HEADER ── */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
+.app-logo img{width:22px;height:22px;object-fit:contain}
+.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.quiz-meta{margin-left:auto;font-size:11px;color:var(--text3);letter-spacing:0.04em}
+
+/* ── PROGRESS BAR ── */
+.progress-wrap{height:3px;background:var(--border);position:sticky;top:57px;z-index:99}
+.progress-bar{height:100%;background:var(--accent);transition:width 0.4s ease;width:0%}
+
+/* ── MAIN CONTENT ── */
+.quiz-stage{max-width:640px;margin:0 auto;padding:24px 16px 48px}
+
+/* ── QUESTION CARD ── */
+.question-card{animation:fadeIn 0.25s ease}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+.question-img{width:100%;max-height:260px;object-fit:cover;border-radius:var(--radius);margin-bottom:20px;border:1px solid var(--border);display:block}
+.question-number{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);margin-bottom:10px}
+.question-text{font-size:18px;font-weight:600;line-height:1.45;margin-bottom:24px;color:var(--text)}
+
+/* ── CHOICES ── */
+.choices{display:flex;flex-direction:column;gap:10px}
+.choice{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:13px 16px;cursor:pointer;font-size:14px;color:var(--text);
+  display:flex;align-items:center;gap:12px;
+  transition:border-color 0.15s,background 0.15s;
+  -webkit-tap-highlight-color:transparent;
+  text-align:left;width:100%;font-family:var(--font);
+}
+.choice:hover:not(.answered){border-color:var(--accent);background:var(--bg3)}
+.choice-marker{
+  width:26px;height:26px;border-radius:50%;border:1.5px solid var(--border2);
+  display:flex;align-items:center;justify-content:center;
+  font-size:12px;font-weight:700;color:var(--text2);flex-shrink:0;
+  transition:all 0.15s;
+}
+.choice-text{flex:1;line-height:1.4}
+
+/* ── ANSWER STATES ── */
+.choice.correct{background:var(--correct-bg);border-color:var(--correct-border);color:var(--correct)}
+.choice.correct .choice-marker{background:var(--correct);border-color:var(--correct);color:#000}
+.choice.wrong{background:var(--wrong-bg);border-color:var(--wrong-border);color:var(--wrong)}
+.choice.wrong .choice-marker{background:var(--wrong);border-color:var(--wrong);color:#fff}
+.choice.revealed{border-color:var(--correct-border);background:var(--correct-bg);color:var(--correct)}
+.choice.revealed .choice-marker{background:var(--correct);border-color:var(--correct);color:#000}
+.choice.dimmed{opacity:0.4}
+.choice.answered{cursor:default}
+
+/* ── EXPLANATION ── */
+.explanation{
+  margin-top:16px;padding:13px 16px;
+  background:rgba(200,169,110,0.08);border:1px solid rgba(200,169,110,0.25);
+  border-radius:var(--radius);font-size:13px;color:var(--text2);line-height:1.6;
+  animation:fadeIn 0.2s ease;
+}
+.explanation strong{color:var(--accent);display:block;margin-bottom:4px;font-size:11px;letter-spacing:0.08em;text-transform:uppercase}
+
+/* ── NEXT BUTTON ── */
+.next-btn{
+  margin-top:20px;width:100%;padding:13px;
+  background:var(--accent);color:#0a0a0a;border:none;border-radius:var(--radius);
+  font-size:14px;font-weight:700;cursor:pointer;font-family:var(--font);
+  letter-spacing:0.04em;transition:opacity 0.15s,transform 0.1s;
+  animation:fadeIn 0.2s ease;
+}
+.next-btn:hover{opacity:0.88}
+.next-btn:active{transform:scale(0.98)}
+
+/* ── SCORE CARD ── */
+.score-card{text-align:center;padding:40px 16px;animation:fadeIn 0.35s ease}
+.score-icon{font-size:56px;margin-bottom:16px}
+.score-title{font-size:24px;font-weight:700;margin-bottom:8px}
+.score-fraction{font-size:48px;font-weight:700;color:var(--accent);margin:16px 0}
+.score-fraction span{font-size:22px;color:var(--text2);font-weight:400}
+.score-message{font-size:15px;color:var(--text2);line-height:1.6;max-width:320px;margin:0 auto 32px}
+.score-bar-wrap{background:var(--border);border-radius:20px;height:8px;margin:16px 0 32px;overflow:hidden}
+.score-bar{height:100%;border-radius:20px;background:var(--accent);transition:width 0.8s ease}
+.restart-btn{
+  padding:13px 36px;background:var(--bg3);border:1px solid var(--border2);
+  color:var(--text);border-radius:var(--radius);font-size:14px;font-weight:600;
+  cursor:pointer;font-family:var(--font);transition:border-color 0.15s,color 0.15s;
+}
+.restart-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── LOADING / ERROR ── */
+.state-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:60vh;color:var(--text3);font-size:13px;text-align:center;padding:24px}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-icon{font-size:32px}
+.err-title{font-size:15px;color:var(--text2)}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="logo" onerror="this.parentNode.textContent='🎸'"></div>
+  <div>
+    <div class="app-nav-title">BAND-MAID Unofficial</div>
+  </div>
+  <div class="quiz-meta" id="quizMeta"></div>
+</div>
+
+<div class="progress-wrap"><div class="progress-bar" id="progressBar"></div></div>
+
+<div class="quiz-stage" id="quizStage">
+  <div class="state-msg" id="loadingState">
+    <div class="spinner"></div>
+    <span>Loading quiz…</span>
+  </div>
+</div>
+
+<script>
+// ── CONFIG ────────────────────────────────────────────────────────────────────
+const QUIZ_JSON = 'quiz.json';   // path relative to this file
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let questions = [];
+let shuffledQuestions = [];
+let current = 0;
+let score = 0;
+let answered = false;
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(QUIZ_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const data = await res.json();
+    // Support both { questions: [...] } and plain array
+    questions = Array.isArray(data) ? data : (data.questions || []);
+    if (!questions.length) throw new Error('No questions found in quiz.json');
+
+    // Set header title from metadata if present
+    if (data.title) document.querySelector('.app-nav-title').textContent = data.title;
+
+    startQuiz();
+  } catch(e) {
+    showError(e.message);
+  }
+}
+
+// ── QUIZ LOGIC ────────────────────────────────────────────────────────────────
+function startQuiz() {
+  // Shuffle question order
+  shuffledQuestions = shuffle([...questions]);
+  current = 0;
+  score = 0;
+  answered = false;
+  showQuestion();
+}
+
+function showQuestion() {
+  answered = false;
+  const q = shuffledQuestions[current];
+  const total = shuffledQuestions.length;
+
+  // Progress
+  document.getElementById('progressBar').style.width = (current / total * 100) + '%';
+  document.getElementById('quizMeta').textContent = (current + 1) + ' / ' + total;
+
+  // Shuffle choices, remembering which is correct
+  const choices = shuffle(q.choices.map(c => ({ ...c })));
+
+  let html = '';
+
+  if (q.image) {
+    html += `<img class="question-img" src="${esc(q.image)}" alt="" onerror="this.style.display='none'">`;
+  }
+
+  html += `<div class="question-number">Question ${current + 1} of ${total}</div>`;
+  html += `<div class="question-text">${esc(q.question)}</div>`;
+  html += `<div class="choices" id="choiceList">`;
+
+  const letters = ['A','B','C','D','E','F','G','H'];
+  choices.forEach((c, i) => {
+    html += `
+      <button class="choice" data-correct="${c.correct ? '1' : '0'}" onclick="selectChoice(this)">
+        <div class="choice-marker">${letters[i] || (i+1)}</div>
+        <div class="choice-text">${esc(c.text)}</div>
+      </button>`;
+  });
+
+  html += `</div>`;
+  // Placeholder for explanation + next button (injected after answer)
+  html += `<div id="feedback"></div>`;
+
+  const stage = document.getElementById('quizStage');
+  stage.innerHTML = `<div class="question-card">${html}</div>`;
+}
+
+function selectChoice(btn) {
+  if (answered) return;
+  answered = true;
+
+  const isCorrect = btn.dataset.correct === '1';
+  const q = shuffledQuestions[current];
+  const allChoices = document.querySelectorAll('.choice');
+
+  // Mark all choices
+  allChoices.forEach(c => {
+    c.classList.add('answered');
+    if (c === btn) {
+      c.classList.add(isCorrect ? 'correct' : 'wrong');
+    } else if (c.dataset.correct === '1') {
+      c.classList.add('revealed');   // show correct answer if wrong was picked
+    } else {
+      c.classList.add('dimmed');
+    }
+  });
+
+  if (isCorrect) score++;
+
+  // Feedback area
+  const feedback = document.getElementById('feedback');
+  let feedbackHtml = '';
+
+  if (q.explanation) {
+    feedbackHtml += `
+      <div class="explanation">
+        <strong>${isCorrect ? '✓ Correct' : '✗ Incorrect'}</strong>
+        ${esc(q.explanation)}
+      </div>`;
+  }
+
+  const isLast = current === shuffledQuestions.length - 1;
+  feedbackHtml += `
+    <button class="next-btn" onclick="${isLast ? 'showScore()' : 'nextQuestion()'}">
+      ${isLast ? 'See Results' : 'Next Question →'}
+    </button>`;
+
+  feedback.innerHTML = feedbackHtml;
+  feedback.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+function nextQuestion() {
+  current++;
+  showQuestion();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+function showScore() {
+  const total = shuffledQuestions.length;
+  const pct = Math.round(score / total * 100);
+
+  document.getElementById('progressBar').style.width = '100%';
+  document.getElementById('quizMeta').textContent = '';
+
+  const msg = pct === 100 ? 'Perfect score! 🎉 You really know your BAND-MAID!' :
+              pct >= 80  ? 'Great job! You\'re a true BAND-MAID fan.' :
+              pct >= 60  ? 'Not bad! A few more listens and you\'ll ace it.' :
+              pct >= 40  ? 'Keep listening! There\'s more to discover.' :
+                           'Time to dive deeper into the BAND-MAID discography!';
+
+  document.getElementById('quizStage').innerHTML = `
+    <div class="score-card">
+      <div class="score-icon">${pct === 100 ? '🏆' : pct >= 80 ? '🎸' : pct >= 60 ? '🎵' : '📝'}</div>
+      <div class="score-title">Quiz Complete</div>
+      <div class="score-fraction">${score}<span> / ${total}</span></div>
+      <div class="score-bar-wrap"><div class="score-bar" style="width:${pct}%"></div></div>
+      <div class="score-message">${msg}</div>
+      <button class="restart-btn" onclick="startQuiz()">Try Again</button>
+    </div>`;
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function shuffle(arr) {
+  for (let i = arr.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [arr[i], arr[j]] = [arr[j], arr[i]];
+  }
+  return arr;
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+function showError(msg) {
+  document.getElementById('quizStage').innerHTML = `
+    <div class="state-msg">
+      <div class="err-icon">⚠️</div>
+      <div class="err-title">Could not load quiz</div>
+      <div>${esc(msg)}</div>
+    </div>`;
+}
+
+// ── GO ────────────────────────────────────────────────────────────────────────
+boot();
+</script>
+</body>
+</html>
