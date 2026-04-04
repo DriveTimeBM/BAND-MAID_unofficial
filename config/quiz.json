@@ -3,9 +3,8 @@
   "description": "How well do you know BAND-MAID?",
   "questions": [
     {
-      "image": "https://drivetimebm.github.io/BAND-MAID_creations//misc/spotify.png",
       "id": 1,
-      "image": null,
+      "image": "https://drivetimebm.github.io/BAND-MAID_creations//misc/spotify.png",
       "question": "What BAND-MAID song has the most streams on Spotify?",
       "explanation": "Top 4 by streams: 1. Choose me  2. Sense  3. DOMINATION  4. Thrill",
       "choices": [
