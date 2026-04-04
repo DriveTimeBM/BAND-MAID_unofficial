@@ -92,24 +92,31 @@
   },
   {
     "id": "milestones",
-    "name": "Milestones *new*",
+    "name": "Milestones",
     "file": "views/milestones.html",
     "nav": "menu",
     "icon": "📍"
   },
   {
     "id": "anniversaries",
-    "name": "Anniversaries *new*",
+    "name": "Anniversaries",
     "file": "views/anniversaries.html",
     "nav": "menu",
     "icon": "🎉"
   },
   {
     "id": "gifs",
-    "name": "GIFs *new*",
+    "name": "GIFs",
     "file": "views/gifs.html",
     "nav": "menu",
     "icon": "🎞️"
+  },
+  {
+    "id": "quiz *new*",
+    "name": "Quiz",
+    "file": "views/quiz.html",
+    "nav": "menu",
+    "icon": "❓"
   },
   {
     "id": "shop",
