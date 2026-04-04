@@ -136,6 +136,14 @@
     "body": "Collection of over 400 BAND-MAID GIFs, optimized for size/load speed."
   },
   {
+    "id": "about-quiz",
+    "section": "Views",
+    "icon": "❓",
+    "title": "Quiz",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/config/quiz.json",
+    "body": "Collection of over 400 BAND-MAID GIFs, optimized for size/load speed."
+  },
+  {
     "id": "about-shop",
     "section": "Views",
     "icon": "💵",

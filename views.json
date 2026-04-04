@@ -112,8 +112,8 @@
     "icon": "🎞️"
   },
   {
-    "id": "quiz *new*",
-    "name": "Quiz",
+    "id": "quiz",
+    "name": "Quiz *new*",
     "file": "views/quiz.html",
     "nav": "menu",
     "icon": "❓"
