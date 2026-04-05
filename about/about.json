@@ -208,6 +208,14 @@
     "body": "Links to various BAND-MAID related things."
   },
   {
+    "id": "about-sorter",
+    "section": "Views",
+    "icon": "🔢",
+    "title": "Sorter",
+    "jsonUrl": null,
+    "body": "Rank all BAND-MAID songs. Save progress as many times as needed. Optionally, submit results to be aggregated across the fanbase."
+  },
+  {
     "id": "about-feedback",
     "section": "Views",
     "icon": "📢",

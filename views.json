@@ -168,6 +168,13 @@
     "icon": "📹"
   },
   {
+    "id": "sorter",
+    "name": "Sorter *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_sorter/",
+    "nav": "menu",
+    "icon": "🔢"
+  },
+  {
     "id": "links",
     "name": "Links",
     "file": "views/links.html",
