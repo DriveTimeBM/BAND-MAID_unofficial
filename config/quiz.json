@@ -5,18 +5,18 @@
                       {
                           "id":  1,
                           "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Honey (ハニー) — Spotify: 1,000,584 | Played Live: 1\nI\u0027ll — Spotify: 872,267 | Played Live: 4\nKEY — Spotify: 826,650 | Played Live: 8",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "FREEDOM — Spotify: 1,768,008 | Played Live: 260\nalone — Spotify: 2,305,665 | Played Live: 233\nPlay — Spotify: 3,919,618 | Played Live: 170",
                           "choices":  [
                                           {
-                                              "text":  "Honey (ハニー)",
+                                              "text":  "Play"
+                                          },
+                                          {
+                                              "text":  "FREEDOM",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "I\u0027ll"
-                                          },
-                                          {
-                                              "text":  "KEY"
+                                              "text":  "alone"
                                           }
                                       ]
                       }

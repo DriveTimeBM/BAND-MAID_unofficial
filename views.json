@@ -155,10 +155,17 @@
   },
   {
     "id": "links",
-    "name": "links",
+    "name": "Links",
     "file": "views/links.html",
     "nav": "menu",
     "icon": "🔗"
+  },
+  {
+    "id": "map",
+    "name": "Okyuji Map",
+    "file": "https://drivetimebm.github.io/BAND-MAID_okyuji/index.html",
+    "nav": "menu",
+    "icon": "🗺️"
   },
   {
     "id": "about",
