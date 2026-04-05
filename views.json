@@ -161,6 +161,13 @@
     "icon": "📝"
   },
   {
+    "id": "instagram",
+    "name": "Instagram *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_instagram/index.html",
+    "nav": "menu",
+    "icon": "📹"
+  },
+  {
     "id": "links",
     "name": "Links",
     "file": "views/links.html",

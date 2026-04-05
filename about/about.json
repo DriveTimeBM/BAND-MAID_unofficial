@@ -184,6 +184,14 @@
     "body": "Dozens of BAND-MAID reports looking at the data in various ways. Updated daily."
   },
   {
+    "id": "about-instagram",
+    "section": "Views",
+    "icon": "📹",
+    "title": "Instagram",
+    "jsonUrl": null,
+    "body": "Archive of translated Instagram posts from 2014-09-30 to 2025-09-11"
+  },
+  {
     "id": "about-charts",
     "section": "Views",
     "icon": "📈",
