@@ -175,6 +175,13 @@
     "icon": "🔗"
   },
   {
+    "id": "feedback",
+    "name": "Feedback",
+    "file": "https://forms.gle/iXaxsLagbDVvCGc18",
+    "nav": "menu",
+    "icon": "📢"
+  },
+  {
     "id": "about",
     "name": "About",
     "file": "views/about.html",

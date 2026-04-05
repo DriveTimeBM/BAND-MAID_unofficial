@@ -208,6 +208,14 @@
     "body": "Links to various BAND-MAID related things."
   },
   {
+    "id": "about-feedback",
+    "section": "Views",
+    "icon": "📢",
+    "title": "Feedback",
+    "jsonUrl": null,
+    "body": "Anonymous feedback form. Leave likes, dislikes, ideas for improvement, etc."
+  },
+  {
     "id": "about-project",
     "section": "About This App",
     "icon": "🛠️",
