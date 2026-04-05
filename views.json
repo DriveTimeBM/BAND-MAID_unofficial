@@ -196,6 +196,13 @@
     "icon": "📢"
   },
   {
+    "id": "gpt",
+    "name": "test",
+    "file": "https://chatgpt.com/g/g-68db200d63cc819190a84f2ff7cbf58f-unofficial-band-maid-gpt",
+    "nav": "menu",
+    "icon": "🧠"
+  },
+  {
     "id": "about",
     "name": "About",
     "file": "views/about.html",
