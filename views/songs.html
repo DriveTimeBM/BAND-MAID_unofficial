@@ -126,10 +126,11 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <script>
 const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_songs/songs.json";
+const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Songs".replace(/\s+/g,'_');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = [{"name":"Name","type":"text"},{"name":"AlternativeName","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"Album","type":"text"},{"name":"Duration","type":"text"},{"name":"HasMusicVideo","type":"text"},{"name":"HasLiveVideo","type":"text"},{"name":"InstrumentalTrack","type":"text"},{"name":"KobatoLead","type":"text"},{"name":"PlayedLiveCount","type":"number"},{"name":"FirstLiveDate","type":"datetime"},{"name":"FirstLivePerf","type":"text"},{"name":"SpotifyStreams","type":"number"},{"name":"SpotifyStreamRank","type":"number"},{"name":"YouTubeTotalStreams","type":"number"},{"name":"YouTubeStreamRank","type":"number"},{"name":"DeezerRank","type":"number"},{"name":"ShazamRank","type":"number"},{"name":"LyricsBy","type":"text"},{"name":"MusicBy","type":"text"},{"name":"ArrangementBy","type":"text"},{"name":"MediaTieIn","type":"text"},{"name":"MaikoVersion","type":"text"},{"name":"CoverOf","type":"image"},{"name":"Collaboration","type":"text"},{"name":"LyricsURL","type":"url"},{"name":"EnglishLyricsURL","type":"url"},{"name":"Notes","type":"text"},{"name":"Quotes","type":"text"},{"name":"AlbumCoverUrl","type":"image"}];
+const CACHE_TTL = 8 * 60 * 60 * 1000; // 8 hours in ms
+const FIELDS = [{"name":"Name","type":"text"},{"name":"AlternativeName","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"Album","type":"text"},{"name":"ReleasesOn","type":"text"},{"name":"Duration","type":"text"},{"name":"HasMusicVideo","type":"text"},{"name":"HasLiveVideo","type":"text"},{"name":"InstrumentalTrack","type":"text"},{"name":"KobatoLead","type":"text"},{"name":"PlayedLiveCount","type":"number"},{"name":"FirstLiveDate","type":"datetime"},{"name":"FirstLivePerf","type":"text"},{"name":"SpotifyStreams","type":"number"},{"name":"SpotifyStreamRank","type":"number"},{"name":"YouTubeTotalStreams","type":"number"},{"name":"YouTubeStreamRank","type":"number"},{"name":"DeezerRank","type":"number"},{"name":"ShazamRank","type":"number"},{"name":"LyricsBy","type":"text"},{"name":"MusicBy","type":"text"},{"name":"ArrangementBy","type":"text"},{"name":"MediaTieIn","type":"text"},{"name":"MaikoVersion","type":"text"},{"name":"CoverOf","type":"image"},{"name":"Collaboration","type":"text"},{"name":"LyricsURL","type":"url"},{"name":"EnglishLyricsURL","type":"url"},{"name":"Notes","type":"text"},{"name":"Quotes","type":"text"},{"name":"AlbumCoverUrl","type":"image"}];
 const DECK = {"image":"AlbumCoverUrl","primary":"Name","secondary":"AlternativeName","summary":"SpotifyStreams","url":"EnglishLyricsURL"};
 const SORT = {"field":"SpotifyStreams","dir":"desc"};
 const GROUP = {"field":"Album","dir":"desc"};
@@ -178,10 +179,11 @@ async function loadData(){
   try{
     // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
     const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
-    const res=await fetch(url);
+    const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
+    const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.record||parsed.data||parsed.items||Object.values(parsed)[0]||[]);
     currentData=RAW_DATA;
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
