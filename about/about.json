@@ -180,7 +180,7 @@
     "section": "Views",
     "icon": "📝",
     "title": "Reports",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/charts.json",
+    "jsonUrl": null,
     "body": "Dozens of BAND-MAID reports looking at the data in various ways. Updated daily."
   },
   {
