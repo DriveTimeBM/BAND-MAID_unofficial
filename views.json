@@ -154,6 +154,13 @@
     "icon": "📈"
   },
   {
+    "id": "reports",
+    "name": "Reports *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_reports/index.html",
+    "nav": "menu",
+    "icon": "📝"
+  },
+  {
     "id": "links",
     "name": "Links",
     "file": "views/links.html",
