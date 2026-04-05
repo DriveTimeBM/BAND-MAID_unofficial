@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "FREEDOM — Spotify: 1,768,008 | Played Live: 260\nalone — Spotify: 2,305,665 | Played Live: 233\nPlay — Spotify: 3,919,618 | Played Live: 170",
+                          "image":  "https://img.youtube.com/vi/umSt7oMUMcs/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video) — Views: 2,180,430 | Yesterday: 250\nBAND-MAID / endless Story (Official Music Video) — Views: 1,973,372 | Yesterday: 243\nBAND-MAID / Protect You (Official Music Video) — Views: 1,806,051 | Yesterday: 566",
                           "choices":  [
                                           {
-                                              "text":  "Play"
+                                              "text":  "BAND-MAID / Protect You (Official Music Video)"
                                           },
                                           {
-                                              "text":  "FREEDOM",
+                                              "text":  "BAND-MAID / endless Story (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video)",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "alone"
                                           }
                                       ]
                       }
