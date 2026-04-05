@@ -192,6 +192,14 @@
     "body": "Archive of translated Instagram posts from 2014-09-30 to 2025-09-11"
   },
   {
+    "id": "about-twitter",
+    "section": "Views",
+    "icon": "🐦",
+    "title": "Twitter",
+    "jsonUrl": null,
+    "body": "Archive of translated tweets from 2013-07-19 to 2025-09-10"
+  },
+  {
     "id": "about-charts",
     "section": "Views",
     "icon": "📈",

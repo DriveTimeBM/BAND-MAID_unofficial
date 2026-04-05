@@ -168,6 +168,13 @@
     "icon": "📹"
   },
   {
+    "id": "twitter",
+    "name": "Twitter *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_tweets/index.html",
+    "nav": "menu",
+    "icon": "🐦"
+  },
+  {
     "id": "sorter",
     "name": "Sorter *new*",
     "file": "https://drivetimebm.github.io/BAND-MAID_sorter/",
