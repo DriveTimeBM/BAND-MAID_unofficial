@@ -549,7 +549,7 @@ function activateView(id) {
   iframe.className = 'view-frame';
   iframe.title = view.name;
   // Sandbox: allow scripts and same-origin so views work; allow-popups for external links
-  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms');
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-downloads');
   iframe.src = view.file;
   iframe.onload  = () => { hideLoading(); iframe.classList.add('active'); };
   iframe.onerror = () => { hideLoading(); showError(`Could not load: ${view.file}`); };
