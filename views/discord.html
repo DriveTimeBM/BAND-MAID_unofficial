@@ -131,17 +131,30 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 </div>
 
 <script>
-const WIDGET_URL = 'https://discord.com/api/guilds/1404984552161673448/widget.json';
-const REFRESH_MS = 60 * 1000;  // refresh every 60 seconds
+const WIDGET_URL   = 'https://discord.com/api/guilds/1404984552161673448/widget.json';
+const CORS_PROXY   = 'https://corsproxy.io/?url=';
+const REFRESH_MS   = 60 * 1000;
 
 async function load() {
-  try {
-    const res = await fetch(WIDGET_URL);
-    if (!res.ok) throw new Error('HTTP ' + res.status);
-    const data = await res.json();
+  // Try direct first, fall back to CORS proxy if blocked
+  let data = null;
+  let lastErr = '';
+
+  for (const url of [WIDGET_URL, CORS_PROXY + encodeURIComponent(WIDGET_URL)]) {
+    try {
+      const res = await fetch(url);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      data = await res.json();
+      break;
+    } catch(e) {
+      lastErr = e.message;
+    }
+  }
+
+  if (data) {
     render(data);
-  } catch(e) {
-    showError(e.message);
+  } else {
+    showError(lastErr);
   }
 }
 
