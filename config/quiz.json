@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/umSt7oMUMcs/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video) — Views: 2,180,430 | Yesterday: 250\nBAND-MAID / endless Story (Official Music Video) — Views: 1,973,372 | Yesterday: 243\nBAND-MAID / Protect You (Official Music Video) — Views: 1,806,051 | Yesterday: 566",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Don\u0027t let me down — Spotify: 1,786,925 | Played Live: 122\nFATE — Spotify: 1,758,645 | Played Live: 3\nManners — Spotify: 1,668,388 | Played Live: 43",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Protect You (Official Music Video)"
+                                              "text":  "FATE"
                                           },
                                           {
-                                              "text":  "BAND-MAID / endless Story (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video)",
+                                              "text":  "Don\u0027t let me down",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Manners"
                                           }
                                       ]
                       }
