@@ -131,12 +131,43 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 </div>
 
 <script>
-const WIDGET_URL   = 'https://discord.com/api/guilds/1404984552161673448/widget.json';
-const CORS_PROXY   = 'https://corsproxy.io/?url=';
-const REFRESH_MS   = 60 * 1000;
+const CONFIG_URL  = 'discord-config.json';
+const CORS_PROXY  = 'https://corsproxy.io/?url=';
+const CACHE_KEY   = 'bm_discord_widget';
+
+let WIDGET_URL  = 'https://discord.com/api/guilds/1404984552161673448/widget.json';
+let REFRESH_MS  = 5 * 60 * 1000;
+let CACHE_TTL   = 3 * 60 * 1000;
+
+async function init() {
+  try {
+    const res = await fetch(CONFIG_URL);
+    if (res.ok) {
+      const cfg = await res.json();
+      if (cfg.widgetUrl)       WIDGET_URL = cfg.widgetUrl;
+      if (cfg.refreshSeconds)  REFRESH_MS = cfg.refreshSeconds * 1000;
+      if (cfg.cacheTTLSeconds) CACHE_TTL  = cfg.cacheTTLSeconds * 1000;
+    }
+  } catch(e) {
+    // Config load failure — use defaults silently
+  }
+  load();
+}
 
 async function load() {
-  // Try direct first, fall back to CORS proxy if blocked
+  // Serve from cache if fresh enough
+  try {
+    const cached = localStorage.getItem(CACHE_KEY);
+    if (cached) {
+      const { ts, data } = JSON.parse(cached);
+      if (Date.now() - ts < CACHE_TTL) {
+        render(data);
+        return;
+      }
+    }
+  } catch(e) {}
+
+  // Fetch live — direct first, proxy fallback
   let data = null;
   let lastErr = '';
 
@@ -152,13 +183,23 @@ async function load() {
   }
 
   if (data) {
+    try { localStorage.setItem(CACHE_KEY, JSON.stringify({ ts: Date.now(), data })); } catch(e) {}
     render(data);
   } else {
+    // If fetch failed but we have stale cache, show it with a note rather than error
+    try {
+      const cached = localStorage.getItem(CACHE_KEY);
+      if (cached) {
+        const { data: stale } = JSON.parse(cached);
+        render(stale, true);   // true = stale flag
+        return;
+      }
+    } catch(e) {}
     showError(lastErr);
   }
 }
 
-function render(data) {
+function render(data, stale) {
   const members  = data.members  || [];
   const name     = data.name     || 'Discord Server';
   const invite   = data.instant_invite || null;
@@ -166,6 +207,14 @@ function render(data) {
 
   const stage = document.getElementById('stage');
   stage.innerHTML = '';
+
+  // Stale data notice
+  if (stale) {
+    const notice = document.createElement('div');
+    notice.style.cssText = 'font-size:11px;color:var(--text3);margin-bottom:12px;text-align:center';
+    notice.textContent = 'Showing cached data — Discord is temporarily rate limiting requests.';
+    stage.appendChild(notice);
+  }
 
   const card = document.createElement('div');
   card.className = 'server-card';
@@ -269,7 +318,7 @@ function esc(s) {
   return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
-load();
+init();
 </script>
 </body>
 </html>
