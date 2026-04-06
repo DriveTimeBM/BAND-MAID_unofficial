@@ -1,0 +1,15 @@
+{
+  "viewName": "Discord",
+  "jsonUrl": "https://discord.com/api/guilds/1404984552161673448/widget.json",
+  "alwaysFresh": true,
+  "logoChar": "💬",
+  "fImage": "",
+  "fPrimary": "name",
+  "fSecondary": "",
+  "fSummary": "presence_count",
+  "fUrl": "instant_invite",
+  "sortField": "",
+  "sortDir": "asc",
+  "groupField": "",
+  "groupDir": "asc"
+}
