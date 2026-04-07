@@ -1,0 +1,16 @@
+{
+    "viewName": "Locations",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
+    "apiReadKey": "",
+    "alwaysFresh": false,
+    "logoChar": "🌏",
+    "fImage": "",
+    "fPrimary": "Name",
+    "fSecondary": "ViewCount",
+    "fSummary": "Rank",
+    "fUrl": "",
+    "sortField": "",
+    "sortDir": "asc",
+    "groupField": "RegionTimeFrame",
+    "groupDir": "asc"
+  }
