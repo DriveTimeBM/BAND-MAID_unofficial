@@ -4,6 +4,7 @@
 
 A comprehensive fan web app for BAND-MAID data — songs, releases, events, streaming, and much more. Built on publicly hosted JSON files that update daily. No accounts, no ads, no login required.
 
+👉 **[BAND-MAID Unofficial app](https://drivetimebm.github.io/BAND-MAID_unofficial/)**
 ---
 
 ## Views
