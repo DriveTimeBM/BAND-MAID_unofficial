@@ -82,4 +82,4 @@ This app draws from the same data that powers the **BAND-MAID Dashboard** Discor
 
 ---
 
-*Unofficial fan project. Not affiliated with BAND-MAID or DOMINO RECORDING CO.*
+*Unofficial fan project. Not affiliated with BAND-MAID, MAIDIT, or Pony Canyon*
