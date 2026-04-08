@@ -12,5 +12,5 @@
     "sortField": "",
     "sortDir": "asc",
     "groupField": "RegionTimeFrame",
-    "groupDir": "asc"
+    "groupDir": "desc"
   }

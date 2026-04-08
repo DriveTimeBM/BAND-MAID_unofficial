@@ -125,7 +125,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <div id="detailView" class="detail-view"></div>
 
 <script>
-const JSON_URL = "";
+const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json";
 const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Locations".replace(/\s+/g,'_');
@@ -133,7 +133,7 @@ const CACHE_TTL = 8 * 60 * 60 * 1000; // 8 hours in ms
 const FIELDS = [{"name":"DataType","type":"text"},{"name":"TimeFrame","type":"text"},{"name":"Rank","type":"number"},{"name":"Name","type":"text"},{"name":"ViewCount","type":"number"},{"name":"StartDate","type":"datetime"},{"name":"EndDate","type":"datetime"},{"name":"DateRange","type":"text"},{"name":"RegionTimeFrame","type":"text"},{"name":"RegionName","type":"text"}];
 const DECK = {"image":null,"primary":"RegionName","secondary":"ViewCount","summary":"Rank","url":null};
 const SORT = {"field":"","dir":"asc"};
-const GROUP = {"field":"RegionTimeFrame","dir":"asc"};
+const GROUP = {"field":"RegionTimeFrame","dir":"desc"};
 const VIEW_NAME = "Locations";
 const LOGO_CHAR = "🌏";
 const PREVIEW_COUNT = 5;
