@@ -176,6 +176,14 @@
     "body": "All BAND-MAID events found with the Ticketmaster API with links to purchase. This will only show overseas shows. Updated daily"
   },
   {
+    "id": "about-locations",
+    "section": "Views",
+    "icon": "🌏",
+    "title": "Locations",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/locations.json",
+    "body": "YouTube viewer location data for 7-day and 28-day periods. Updated daily"
+  }, 
+  {
     "id": "about-reports",
     "section": "Views",
     "icon": "📝",

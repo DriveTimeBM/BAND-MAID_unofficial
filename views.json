@@ -43,7 +43,7 @@
   },
   {
     "id": "map",
-    "name": "Okyuji *improved*",
+    "name": "Okyuji",
     "file": "https://drivetimebm.github.io/BAND-MAID_okyuji/index.html",
     "nav": "main",
     "icon": "🗺️"
@@ -113,7 +113,7 @@
   },
   {
     "id": "quiz",
-    "name": "Quiz *new*",
+    "name": "Quiz",
     "file": "views/quiz.html",
     "nav": "menu",
     "icon": "❓"
@@ -147,6 +147,13 @@
     "icon": "🎟️"
   },
   {
+    "id": "locations",
+    "name": "Locations",
+    "file": "views/locations.html",
+    "nav": "menu",
+    "icon": "🌏"
+  },
+  {
     "id": "charts",
     "name": "Charts",
     "file": "views/charts.html",
@@ -155,28 +162,28 @@
   },
   {
     "id": "reports",
-    "name": "Reports *new*",
+    "name": "Reports",
     "file": "https://drivetimebm.github.io/BAND-MAID_reports/index.html",
     "nav": "menu",
     "icon": "📝"
   },
   {
     "id": "instagram",
-    "name": "Instagram *new*",
+    "name": "Instagram",
     "file": "https://drivetimebm.github.io/BAND-MAID_instagram/index.html",
     "nav": "menu",
     "icon": "📹"
   },
   {
     "id": "twitter",
-    "name": "Twitter *new*",
+    "name": "Twitter",
     "file": "https://drivetimebm.github.io/BAND-MAID_tweets/index.html",
     "nav": "menu",
     "icon": "🐦"
   },
   {
     "id": "sorter",
-    "name": "Sorter *new*",
+    "name": "Sorter",
     "file": "https://drivetimebm.github.io/BAND-MAID_sorter/",
     "nav": "menu",
     "icon": "🔢"
@@ -190,7 +197,7 @@
   },
   {
     "id": "feedback",
-    "name": "Feedback *new*",
+    "name": "Feedback",
     "file": "https://forms.gle/iXaxsLagbDVvCGc18",
     "nav": "menu",
     "icon": "📢"
