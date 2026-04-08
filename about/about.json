@@ -180,7 +180,7 @@
     "section": "Views",
     "icon": "🌏",
     "title": "Locations",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/locations.json",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
     "body": "YouTube viewer location data for 7-day and 28-day periods. Updated daily"
   }, 
   {
