@@ -1,6 +1,6 @@
 {
     "viewName": "Locations",
-    "jsonUrl": "",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
     "apiReadKey": "",
     "alwaysFresh": false,
     "logoChar": "🌏",
