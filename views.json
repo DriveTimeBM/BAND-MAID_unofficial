@@ -148,7 +148,7 @@
   },
   {
     "id": "locations",
-    "name": "Locations",
+    "name": "Locations *new*",
     "file": "views/locations.html",
     "nav": "menu",
     "icon": "🌏"
