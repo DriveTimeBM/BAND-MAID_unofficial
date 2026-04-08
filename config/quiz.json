@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/X4IQwPJN7E0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) KANAMI — Views: 31,173 | Yesterday: 10\nBAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video) — Views: 26,351 | Yesterday: 5\nBAND-MAID / Forbidden tale (Official Teaser Video) — Views: 25,772 | Yesterday: 4",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Wonderland — Spotify: 1,100,692 | Played Live: 37\nProtect You — Spotify: 1,275,884 | Played Live: 36\nSpirit!! — Spotify: 1,249,456 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video) KANAMI",
+                                              "text":  "Wonderland",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video)"
+                                              "text":  "Spirit!!"
+                                          },
+                                          {
+                                              "text":  "Protect You"
                                           }
                                       ]
                       }
