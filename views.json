@@ -50,14 +50,14 @@
   },
   {
     "id": "prime",
-    "name": "Prime",
+    "name": "Prime *improved*",
     "file": "views/prime.html",
     "nav": "main",
     "icon": "🎬"
   },
   {
     "id": "fanclub",
-    "name": "Fan Club",
+    "name": "Fan Club *improved*",
     "file": "views/fanclub.html",
     "nav": "main",
     "icon": "🏮"
