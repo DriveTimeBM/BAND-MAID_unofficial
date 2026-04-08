@@ -205,7 +205,7 @@
           </label>
           <div class="toggle-label">
             Always fresh
-            <small id="refreshHint">Off — cached for 4 hours per session</small>
+            <small id="refreshHint">Off — cached for 24 hours per session</small>
           </div>
         </div>
       </div>
@@ -345,7 +345,7 @@ async function fetchAndAnalyze() {
     const res = await fetch(url, fetchOpts);
     if (!res.ok) throw new Error(`HTTP ${res.status} ${res.statusText}`);
     const parsed = await res.json();
-    jsonData = Array.isArray(parsed) ? parsed : (parsed.record || parsed.data || parsed.items || Object.values(parsed)[0] || []);
+    jsonData = normalizeToArray(parsed);
     if (!jsonData.length) throw new Error('JSON array is empty');
 
     analyzeFields();
@@ -375,6 +375,20 @@ function setFetchStatus(state, msg) {
 }
 
 // ── FIELD ANALYSIS ────────────────────────────────────────────────────────────
+// Normalize any JSON shape to an array of objects
+function normalizeToArray(parsed) {
+  if (Array.isArray(parsed)) return parsed;
+  // Known wrapper keys (e.g. JSONBin)
+  if (parsed && typeof parsed === 'object') {
+    for (const key of ['record', 'data', 'items', 'results', 'values']) {
+      if (Array.isArray(parsed[key])) return parsed[key];
+    }
+    // Plain single object from PowerShell — wrap it
+    if (Object.keys(parsed).length > 0) return [parsed];
+  }
+  return [];
+}
+
 const ISO_DT_RE = /^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
 
 function detectType(fieldName, samples) {
@@ -452,7 +466,7 @@ function updateLogoPreview() {
 document.getElementById('alwaysFresh').addEventListener('change', function() {
   document.getElementById('refreshHint').textContent = this.checked
     ? 'On — fetches live JSON every time this view is opened'
-    : 'Off — cached for 4 hours per session';
+    : 'Off — cached for 24 hours per session';
 });
 
 document.getElementById('generateBtn').addEventListener('click', () => {
@@ -615,7 +629,7 @@ async function applyConfig(cfg) {
     document.getElementById('alwaysFresh').checked = cfg.alwaysFresh;
     document.getElementById('refreshHint').textContent = cfg.alwaysFresh
       ? 'On — fetches live JSON every time this view is opened'
-      : 'Off — cached for 4 hours per session';
+      : 'Off — cached for 24 hours per session';
   }
 
   setConfigStatus('info', 'Fetching data to populate fields…');
@@ -863,7 +877,7 @@ async function loadData(){
     const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.record||parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
@@ -888,6 +902,16 @@ function hideFetchState(){
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+function normalizeToArray(parsed){
+  if(Array.isArray(parsed))return parsed;
+  if(parsed&&typeof parsed==='object'){
+    for(const key of ['record','data','items','results','values']){
+      if(Array.isArray(parsed[key]))return parsed[key];
+    }
+    if(Object.keys(parsed).length>0)return [parsed];
+  }
+  return [];
+}
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
 function isAllDigits(v){return /^\\d+$/.test(String(v))}
 const ISO_DT_RE=/^\\d{4}-\\d{2}-\\d{2}T\\d{2}:\\d{2}:\\d{2}/;
