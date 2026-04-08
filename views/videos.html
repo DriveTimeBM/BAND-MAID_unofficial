@@ -128,7 +128,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Videos".replace(/\s+/g,'_');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
+const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
 const FIELDS = [{"name":"Title","type":"text"},{"name":"Date","type":"datetime"},{"name":"URL","type":"url"},{"name":"VideoId","type":"text"},{"name":"Song","type":"text"},{"name":"Views","type":"number"},{"name":"ViewsDelta","type":"number"},{"name":"Type","type":"text"},{"name":"Duration","type":"text"},{"name":"Image","type":"image"}];
 const DECK = {"image":"Image","primary":"Title","secondary":"Song","summary":"Views","url":"URL"};
 const SORT = {"field":"Views","dir":"desc"};

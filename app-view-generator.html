@@ -205,7 +205,7 @@
           </label>
           <div class="toggle-label">
             Always fresh
-            <small id="refreshHint">Off — cached for 8 hours per session</small>
+            <small id="refreshHint">Off — cached for 4 hours per session</small>
           </div>
         </div>
       </div>
@@ -452,7 +452,7 @@ function updateLogoPreview() {
 document.getElementById('alwaysFresh').addEventListener('change', function() {
   document.getElementById('refreshHint').textContent = this.checked
     ? 'On — fetches live JSON every time this view is opened'
-    : 'Off — cached for 24 hours per session';
+    : 'Off — cached for 4 hours per session';
 });
 
 document.getElementById('generateBtn').addEventListener('click', () => {
@@ -615,7 +615,7 @@ async function applyConfig(cfg) {
     document.getElementById('alwaysFresh').checked = cfg.alwaysFresh;
     document.getElementById('refreshHint').textContent = cfg.alwaysFresh
       ? 'On — fetches live JSON every time this view is opened'
-      : 'Off — cached for 24 hours per session';
+      : 'Off — cached for 4 hours per session';
   }
 
   setConfigStatus('info', 'Fetching data to populate fields…');
@@ -809,7 +809,7 @@ const JSON_URL = ${JSON.stringify(cfg.jsonUrl || '')};
 const API_READ_KEY = ${JSON.stringify(apiReadKey)};
 const ALWAYS_FRESH = ${alwaysFresh};
 const CACHE_KEY = 'bmdata_' + ${JSON.stringify(cfg.viewName || 'view')}.replace(/\\s+/g,'_');
-const CACHE_TTL = 8 * 60 * 60 * 1000; // 8 hours in ms
+const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
 const FIELDS = ${JSON.stringify(fieldsMeta)};
 const DECK = ${JSON.stringify(deckConfig)};
 const SORT = ${JSON.stringify(sortCfg)};
