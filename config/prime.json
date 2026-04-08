@@ -1,15 +1,16 @@
 {
-    "viewName": "Prime",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json",
-    "alwaysFresh": false,
-    "logoChar": "🎬",
-    "fImage": "",
-    "fPrimary": "Title",
-    "fSecondary": "Category",
-    "fSummary": "",
-    "fUrl": "URL",
-    "sortField": "Title",
-    "sortDir": "asc",
-    "groupField": "Category",
-    "groupDir": "asc"
-  }
+  "viewName": "Prime",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🎸",
+  "fImage": "Image",
+  "fPrimary": "Title",
+  "fSecondary": "Category",
+  "fSummary": "Members",
+  "fUrl": "URL",
+  "sortField": "Song",
+  "sortDir": "asc",
+  "groupField": "Category",
+  "groupDir": "asc"
+}

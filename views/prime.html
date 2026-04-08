@@ -92,7 +92,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">🎬</div>
+  <div class="app-logo">🎸</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
     <div class="view-label" id="viewLabel">Prime</div>
@@ -126,15 +126,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <script>
 const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json";
+const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Prime".replace(/\s+/g,'_');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"}];
-const DECK = {"image":null,"primary":"Title","secondary":"Category","summary":null,"url":"URL"};
-const SORT = {"field":"Title","dir":"asc"};
+const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
+const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"},{"name":"Members","type":"text"},{"name":"Song","type":"text"},{"name":"Image","type":"image"}];
+const DECK = {"image":"Image","primary":"Title","secondary":"Category","summary":"Members","url":"URL"};
+const SORT = {"field":"Song","dir":"asc"};
 const GROUP = {"field":"Category","dir":"asc"};
 const VIEW_NAME = "Prime";
-const LOGO_CHAR = "🎬";
+const LOGO_CHAR = "🎸";
 const PREVIEW_COUNT = 5;
 const PREVIEW_DATA = null;
 
@@ -178,10 +179,11 @@ async function loadData(){
   try{
     // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
     const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
-    const res=await fetch(url);
+    const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
+    const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
@@ -206,6 +208,16 @@ function hideFetchState(){
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+function normalizeToArray(parsed){
+  if(Array.isArray(parsed))return parsed;
+  if(parsed&&typeof parsed==='object'){
+    for(const key of ['record','data','items','results','values']){
+      if(Array.isArray(parsed[key]))return parsed[key];
+    }
+    if(Object.keys(parsed).length>0)return [parsed];
+  }
+  return [];
+}
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
 function isAllDigits(v){return /^\d+$/.test(String(v))}
 const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
