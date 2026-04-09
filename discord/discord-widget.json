@@ -1,7 +1,7 @@
 ﻿{
     "id":  "1404984552161673448",
     "name":  "BAND-MAID Dashboard",
-    "instant_invite":  "https://discord.com/invite/JT2sq3jY",
+    "instant_invite":  "https://discord.com/invite/RM5J4jWz",
     "channels":  [
 
                  ],
@@ -38,16 +38,16 @@
                         "username":  "Blooddrunk",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "online",
+                        "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/mm4OPmyN-xQsWeSO__RMBxP1rnnlTiAEQtySNyoCf30/dxkywCay9aCmGI-YElBdx3aFeEWh_p0AkEm1adfA06qbj7_qGw2axBg39_ife-08aw5FqSpKc4W3OwxNYPHtlApk-12ZgiuTLkY9A-Uji0w45_Xnx_jxAtGCj2s5kJJCXCe34EId81mVJQ"
                     },
                     {
                         "id":  "4",
-                        "username":  "Falagar",
+                        "username":  "BUFFER",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "idle",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/79xHmF7kRB-ScCSa0PwKNvnYYjNt2g75vjQ6GuENs7g/er9w3eZmKiyrzb5smDucwBrsvfFWiEO6Up3p6lk_DPHkcFNXYqkvuyZJbHYpLHjUhaOTveCxaDSsC9W6cztXi3HD1PnHhpMXw9ySJpq9QEeGS1PZPPb428Dfuh6vf9Fmb8tlymM2jGUJfw"
+                        "status":  "online",
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/RXQC_guPGtaMIG4nbNpPZNdOSDtovC2kK148a5-N8PM/3EW_DJJwn2tDCArw2mkSS6RV6F3YxBx8BTWaOcxIesuMpoRHNzKUm8iBla-0jZTCK6qhLpGHF1nvpFJEgu8"
                     },
                     {
                         "id":  "5",
@@ -62,7 +62,7 @@
                         "username":  "Mads",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "idle",
+                        "status":  "online",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/OC13xFcYGJBGweLRjdfX7ISt8OPFNqxcT2D68CBPOcc/HyJxC0rCteVGcxFl7Tsoa1w5OZaRHRiXbjPgVuDv_gfKPTGa-o4qxKvaJvTj0Y4sz9LNRNZ8Rj6a6t0tGr2HuUd1FaXK8gwsqAyi219SGX9sMzXHB2nP5NeYjFzwqCKB9bWjtkMyMLnZEw"
                     },
                     {
@@ -75,22 +75,6 @@
                     },
                     {
                         "id":  "8",
-                        "username":  "n...",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/twQZ-5BhVddZVlhq5tGaqm_5iEll4byHh7a7xkZJBWY/0Ui9gJK_vCPskUJBRfh7OyAplQAGhsJ0p1q1y-TSf7aUjGTG-7LKFvwNbh-q23xRc5dObJqzP16pQIrBewhmQgjLQrAw_8vGdGOwCq8ZHpcPgc7_NNqbKvjx_oY3V0dIfLivYGlHmJZh3w"
-                    },
-                    {
-                        "id":  "9",
-                        "username":  "p...",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "dnd",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/h-TiBcuBZg-R8ku7YB52Q-NJqLPTcSn9L_UimEVsMjE/hdDMYM_jSAa0hBKq3TutN3hU05TrNxkbfpL5l_z_ZpMBkLO55RCM3TFtITgc5XPoox2hcIFQaoLfH8E6hw2FcejThmi2KPMaI73zMAE8KZtK6u8CM0ykjQ_879wRatEfX6JzMe6looJ4Iw"
-                    },
-                    {
-                        "id":  "10",
                         "username":  "r...",
                         "discriminator":  "0000",
                         "avatar":  null,
@@ -98,7 +82,7 @@
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/irp8rM0UU8lyVJojxbbDT_UOQ2B1c6BUt7Em9LHUVoY/3brT5Y8f_E2N04J3uYnPny43jx3RzMJeIB0-p7bg3FdZv3fptWIuNcZ3b_MfzQsbSM_DDYg94sm1B6G7hq8"
                     },
                     {
-                        "id":  "11",
+                        "id":  "9",
                         "username":  "s...",
                         "discriminator":  "0000",
                         "avatar":  null,
@@ -106,7 +90,7 @@
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/odZI11jOk1t9gpGvljYLdYHY05nUXmYUqpqPo2fN__E/0Ndr_UaiTx9LPgZuQXSamxcSXJyuYS980QxXE0oGqe62Q-ajJOlu1kwU3pMpVsgVsRtLHX_0axKsdd0rkCAxt6C9bhZasGjTIkc27QdizB6juGJCRE4IA8-uKLxHe2J_QeUjOB-REBnZVA"
                     },
                     {
-                        "id":  "12",
+                        "id":  "10",
                         "username":  "Zakson85",
                         "discriminator":  "0000",
                         "avatar":  null,
@@ -114,5 +98,5 @@
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/uQOO6XNNPDOwvN1cEb-SVsKeyZFv5bvbkhrbCHxD9p8/ILc9BwtDtryHBGJsZsgajLLqcyQ8KyJmouqA9aEhOqp2KKoSJtMx6Vo2Fld6Y27p-WzH93GRlLCsLfIcEqJ9sTjgnyd8sXol6dJ_pFeoM21YRS1wlIRBsTyLlLqzikaBFoXV-Q-BFHpRCA"
                     }
                 ],
-    "presence_count":  13
+    "presence_count":  11
 }

@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Wonderland — Spotify: 1,100,692 | Played Live: 37\nProtect You — Spotify: 1,275,884 | Played Live: 36\nSpirit!! — Spotify: 1,249,456 | Played Live: 36",
+                          "image":  "https://img.youtube.com/vi/y_P3bYEjsbE/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE) — Views: 53,058 | Yesterday: 145\nBAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 104,789 | Yesterday: 53\nBAND-MAID / Present Perfect (Official Teaser Video SAIKI) — Views: 34,640 | Yesterday: 30",
                           "choices":  [
                                           {
-                                              "text":  "Wonderland",
+                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Spirit!!"
+                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
                                           },
                                           {
-                                              "text":  "Protect You"
+                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video SAIKI)"
                                           }
                                       ]
                       }
