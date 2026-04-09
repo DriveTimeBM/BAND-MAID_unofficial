@@ -88,6 +88,14 @@
     "body": "Links to all OMEISYUSAMA-NO-KAI special photo galleries."
   },
   {
+    "id": "about-news",
+    "section": "Views",
+    "icon": "🗞️",
+    "title": "News",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/news.json",
+    "body": "Links to all BAND-MAID news releases. Updated daily"
+  },
+  {
     "id": "about-daily-photos",
     "section": "Views",
     "icon": "📸",

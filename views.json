@@ -63,8 +63,15 @@
     "icon": "🏮"
   },
   {
+    "id": "news",
+    "name": "News *new*",
+    "file": "views/news.html",
+    "nav": "main",
+    "icon": "🗞️"
+  },
+  {
     "id": "gallery",
-    "name": "Gallery *improved*",
+    "name": "Gallery",
     "file": "views/gallery.html",
     "nav": "main",
     "icon": "🖼️"
