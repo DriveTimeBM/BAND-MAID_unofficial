@@ -1,16 +1,16 @@
 {
-    "viewName": "Tickets",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
-    "apiReadKey": "",
-    "alwaysFresh": false,
-    "logoChar": "🎟️",
-    "fImage": "",
-    "fPrimary": "Event",
-    "fSecondary": "Venue",
-    "fSummary": "",
-    "fUrl": "URL",
-    "sortField": "",
-    "sortDir": "asc",
-    "groupField": "",
-    "groupDir": "asc"
-  }
+  "viewName": "Tickets",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🎟️",
+  "fImage": "Image",
+  "fPrimary": "Event",
+  "fSecondary": "Venue",
+  "fSummary": "",
+  "fUrl": "URL",
+  "sortField": "",
+  "sortDir": "asc",
+  "groupField": "",
+  "groupDir": "asc"
+}
