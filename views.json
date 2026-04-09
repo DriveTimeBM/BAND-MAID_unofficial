@@ -70,8 +70,8 @@
     "icon": "🗞️"
   },
   {
-    "id": "gallery *improved*",
-    "name": "Gallery",
+    "id": "gallery",
+    "name": "Gallery *improved*",
     "file": "views/gallery.html",
     "nav": "main",
     "icon": "🖼️"
