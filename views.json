@@ -64,7 +64,7 @@
   },
   {
     "id": "gallery",
-    "name": "Gallery",
+    "name": "Gallery *improved*",
     "file": "views/gallery.html",
     "nav": "main",
     "icon": "🖼️"
