@@ -1,16 +1,16 @@
 {
-    "viewName": "News",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/news.json",
-    "apiReadKey": "",
-    "alwaysFresh": false,
-    "logoChar": "🗞️",
-    "fImage": "",
-    "fPrimary": "Title",
-    "fSecondary": "Date",
-    "fSummary": "Category",
-    "fUrl": "Url",
-    "sortField": "Date",
-    "sortDir": "desc",
-    "groupField": "Category",
-    "groupDir": "asc"
-  }
+  "viewName": "News",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/news.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🗞️",
+  "fImage": "Thumbnail",
+  "fPrimary": "Title",
+  "fSecondary": "Date",
+  "fSummary": "Category",
+  "fUrl": "Url",
+  "sortField": "Date",
+  "sortDir": "desc",
+  "groupField": "Category",
+  "groupDir": "asc"
+}
