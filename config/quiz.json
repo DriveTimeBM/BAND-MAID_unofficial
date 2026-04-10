@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/y_P3bYEjsbE/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE) — Views: 53,058 | Yesterday: 145\nBAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 104,789 | Yesterday: 53\nBAND-MAID / Present Perfect (Official Teaser Video SAIKI) — Views: 34,640 | Yesterday: 30",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "decided by myself — Spotify: 705,682 | Played Live: 27\nWhat is justice? — Spotify: 1,584,718 | Played Live: 21\nCorallium — Spotify: 1,558,875 | Played Live: 18",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE)",
+                                              "text":  "Corallium"
+                                          },
+                                          {
+                                              "text":  "What is justice?"
+                                          },
+                                          {
+                                              "text":  "decided by myself",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video SAIKI)"
                                           }
                                       ]
                       }
