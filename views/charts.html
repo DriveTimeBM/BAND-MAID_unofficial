@@ -129,9 +129,9 @@ const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/misc/charts.json";
 const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Charts".replace(/\s+/g,'_');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = [{"name":"Description","type":"text"},{"name":"URL","type":"url"}];
-const DECK = {"image":null,"primary":"Description","secondary":null,"summary":null,"url":"URL"};
+const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
+const FIELDS = [{"name":"Description","type":"text"},{"name":"URL","type":"url"},{"name":"Thumbnail","type":"image"}];
+const DECK = {"image":"Thumbnail","primary":"Description","secondary":null,"summary":null,"url":"URL"};
 const SORT = {"field":"","dir":"asc"};
 const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Charts";
@@ -183,7 +183,7 @@ async function loadData(){
     const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.record||parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
@@ -208,6 +208,16 @@ function hideFetchState(){
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+function normalizeToArray(parsed){
+  if(Array.isArray(parsed))return parsed;
+  if(parsed&&typeof parsed==='object'){
+    for(const key of ['record','data','items','results','values']){
+      if(Array.isArray(parsed[key]))return parsed[key];
+    }
+    if(Object.keys(parsed).length>0)return [parsed];
+  }
+  return [];
+}
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
 function isAllDigits(v){return /^\d+$/.test(String(v))}
 const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;

@@ -50,28 +50,28 @@
   },
   {
     "id": "prime",
-    "name": "Prime *improved*",
+    "name": "Prime",
     "file": "views/prime.html",
     "nav": "main",
     "icon": "🎬"
   },
   {
     "id": "fanclub",
-    "name": "Fan Club *improved*",
+    "name": "Fan Club",
     "file": "views/fanclub.html",
     "nav": "main",
     "icon": "🏮"
   },
   {
     "id": "news",
-    "name": "News *new*",
+    "name": "News",
     "file": "views/news.html",
     "nav": "main",
     "icon": "🗞️"
   },
   {
     "id": "gallery",
-    "name": "Gallery *improved*",
+    "name": "Gallery",
     "file": "views/gallery.html",
     "nav": "main",
     "icon": "🖼️"
@@ -155,7 +155,7 @@
   },
   {
     "id": "locations",
-    "name": "Locations *new*",
+    "name": "Locations",
     "file": "views/locations.html",
     "nav": "menu",
     "icon": "🌏"
