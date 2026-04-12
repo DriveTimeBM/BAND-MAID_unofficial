@@ -2,7 +2,7 @@
   {
     "id": "calendar",
     "name": "Calendar",
-    "file": "views/calendar.html",
+    "file": "https://drivetimebm.github.io/BAND-MAID_calendar/index.html",
     "nav": "main",
     "icon": "🗓️"
   },
