@@ -77,8 +77,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
 .detail-field:last-child{border-bottom:none}
 .detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.7}
 .detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-field-value br{display:block;content:'';margin-top:0.5em}
 .detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
 .detail-url-link:hover{text-decoration:underline}
 .detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
@@ -496,7 +497,9 @@ function showDetail(row){
     } else if(rtype==='datetime'){
       valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
     } else {
-      valueHtml=escHtml(String(val));
+      // If value contains HTML tags (e.g. <br>) render as HTML, otherwise escape as plain text
+      const strVal=String(val);
+      valueHtml=/<[a-z][^>]*>/i.test(strVal) ? strVal : escHtml(strVal);
     }
     html+=`<div class="detail-field">
       <div class="detail-field-label">${escHtml(name)}</div>
