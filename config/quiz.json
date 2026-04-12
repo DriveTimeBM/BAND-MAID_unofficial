@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/lBkdxHmvyAA/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Live Video ver. 3 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 124,401 | Yesterday: 16\nBAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 77,463 | Yesterday: 10\nBAND-MAID / without holding back (Official Live Teaser 1) — Views: 69,504 | Yesterday: 96",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "DICE — Spotify: 6,075,430 | Played Live: 152\nPlay — Spotify: 3,925,907 | Played Live: 170\nglory — Spotify: 3,835,601 | Played Live: 116",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 1)"
+                                              "text":  "Play"
                                           },
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video ver. 3 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "DICE",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "glory"
                                           }
                                       ]
                       }
