@@ -9,7 +9,7 @@
   "fSecondary": "Start_Local",
   "fSummary": "Location",
   "fUrl": "URL",
-  "sortField": "",
+  "sortField": "Start_Local",
   "sortDir": "asc",
   "groupField": "",
   "groupDir": "asc"
