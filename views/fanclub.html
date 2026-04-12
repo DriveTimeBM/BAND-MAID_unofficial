@@ -92,7 +92,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">🏮</div>
+  <div class="app-logo">🎸</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
     <div class="view-label" id="viewLabel">Fanclub</div>
@@ -130,12 +130,12 @@ const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Fanclub".replace(/\s+/g,'_');
 const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
-const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"},{"name":"ReleaseDate","type":"text"},{"name":"Members","type":"text"},{"name":"Image","type":"image"},{"name":"Translation","type":"url"}];
+const FIELDS = [{"name":"Title","type":"text"},{"name":"Category","type":"text"},{"name":"URL","type":"url"},{"name":"ReleaseDate","type":"text"},{"name":"Members","type":"text"},{"name":"Image","type":"image"},{"name":"Translation","type":"text"},{"name":"TranslationURL","type":"url"}];
 const DECK = {"image":"Image","primary":"Title","secondary":"Category","summary":"Members","url":"URL"};
 const SORT = {"field":"Title","dir":"asc"};
 const GROUP = {"field":"Category","dir":"asc"};
 const VIEW_NAME = "Fanclub";
-const LOGO_CHAR = "🏮";
+const LOGO_CHAR = "🎸";
 const PREVIEW_COUNT = 5;
 const PREVIEW_DATA = null;
 
