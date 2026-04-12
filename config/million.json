@@ -1,16 +1,16 @@
 {
-    "viewName": "Next Million",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million.json",
-    "apiReadKey": "",
-    "alwaysFresh": false,
-    "logoChar": "🎯",
-    "fImage": "",
-    "fPrimary": "Video",
-    "fSecondary": "Views",
-    "fSummary": "Days",
-    "fUrl": "URL",
-    "sortField": "",
-    "sortDir": "asc",
-    "groupField": "",
-    "groupDir": "asc"
-  }
+  "viewName": "Next Million",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🎯",
+  "fImage": "Image",
+  "fPrimary": "Video",
+  "fSecondary": "Views",
+  "fSummary": "Days",
+  "fUrl": "URL",
+  "sortField": "",
+  "sortDir": "asc",
+  "groupField": "",
+  "groupDir": "asc"
+}
