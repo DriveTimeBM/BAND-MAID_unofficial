@@ -1,15 +1,16 @@
 {
-    "viewName": "Songs",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_songs/songs.json",
-    "alwaysFresh": false,
-    "logoChar": "📝",
-    "fImage": "AlbumCoverUrl",
-    "fPrimary": "Name",
-    "fSecondary": "AlternativeName",
-    "fSummary": "SpotifyStreams",
-    "fUrl": "EnglishLyricsURL",
-    "sortField": "SpotifyStreams",
-    "sortDir": "desc",
-    "groupField": "Album",
-    "groupDir": "desc"
-  }
+  "viewName": "Songs",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_songs/songs.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "📝",
+  "fImage": "AlbumCoverUrl",
+  "fPrimary": "Name",
+  "fSecondary": "SpotifyStreams",
+  "fSummary": "ReleaseDate",
+  "fUrl": "EnglishLyricsURL",
+  "sortField": "SpotifyStreams",
+  "sortDir": "desc",
+  "groupField": "Album",
+  "groupDir": "desc"
+}

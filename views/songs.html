@@ -77,8 +77,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
 .detail-field:last-child{border-bottom:none}
 .detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.7}
 .detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-field-value br{display:block;content:'';margin-top:0.5em}
 .detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
 .detail-url-link:hover{text-decoration:underline}
 .detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
@@ -131,7 +132,7 @@ const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Songs".replace(/\s+/g,'_');
 const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
 const FIELDS = [{"name":"Name","type":"text"},{"name":"AlternativeName","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"Album","type":"text"},{"name":"ReleasesOn","type":"text"},{"name":"Duration","type":"text"},{"name":"HasMusicVideo","type":"text"},{"name":"HasLiveVideo","type":"text"},{"name":"InstrumentalTrack","type":"text"},{"name":"KobatoLead","type":"text"},{"name":"PlayedLiveCount","type":"number"},{"name":"FirstLiveDate","type":"datetime"},{"name":"FirstLivePerf","type":"text"},{"name":"SpotifyStreams","type":"number"},{"name":"SpotifyStreamRank","type":"number"},{"name":"YouTubeTotalStreams","type":"number"},{"name":"YouTubeStreamRank","type":"number"},{"name":"DeezerRank","type":"number"},{"name":"ShazamRank","type":"number"},{"name":"LyricsBy","type":"text"},{"name":"MusicBy","type":"text"},{"name":"ArrangementBy","type":"text"},{"name":"MediaTieIn","type":"text"},{"name":"MaikoVersion","type":"text"},{"name":"CoverOf","type":"image"},{"name":"Collaboration","type":"text"},{"name":"LyricsURL","type":"url"},{"name":"EnglishLyricsURL","type":"url"},{"name":"Notes","type":"text"},{"name":"Quotes","type":"text"},{"name":"AlbumCoverUrl","type":"image"}];
-const DECK = {"image":"AlbumCoverUrl","primary":"Name","secondary":"AlternativeName","summary":"SpotifyStreams","url":"EnglishLyricsURL"};
+const DECK = {"image":"AlbumCoverUrl","primary":"Name","secondary":"SpotifyStreams","summary":"ReleaseDate","url":"EnglishLyricsURL"};
 const SORT = {"field":"SpotifyStreams","dir":"desc"};
 const GROUP = {"field":"Album","dir":"desc"};
 const VIEW_NAME = "Songs";
@@ -183,7 +184,7 @@ async function loadData(){
     const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.record||parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
@@ -208,6 +209,16 @@ function hideFetchState(){
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+function normalizeToArray(parsed){
+  if(Array.isArray(parsed))return parsed;
+  if(parsed&&typeof parsed==='object'){
+    for(const key of ['record','data','items','results','values']){
+      if(Array.isArray(parsed[key]))return parsed[key];
+    }
+    if(Object.keys(parsed).length>0)return [parsed];
+  }
+  return [];
+}
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
 function isAllDigits(v){return /^\d+$/.test(String(v))}
 const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
@@ -486,7 +497,9 @@ function showDetail(row){
     } else if(rtype==='datetime'){
       valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
     } else {
-      valueHtml=escHtml(String(val));
+      // If value contains HTML tags (e.g. <br>) render as HTML, otherwise escape as plain text
+      const strVal=String(val);
+      valueHtml=/<[a-z][^>]*>/i.test(strVal) ? strVal : escHtml(strVal);
     }
     html+=`<div class="detail-field">
       <div class="detail-field-label">${escHtml(name)}</div>
