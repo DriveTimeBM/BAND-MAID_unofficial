@@ -9,7 +9,7 @@
   "fSecondary": "Category",
   "fSummary": "Members",
   "fUrl": "URL",
-  "sortField": "Song",
+  "sortField": "Title",
   "sortDir": "asc",
   "groupField": "Category",
   "groupDir": "asc"
