@@ -1,16 +1,16 @@
 {
-    "viewName": "Anniversaries",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
-    "apiReadKey": "",
-    "alwaysFresh": false,
-    "logoChar": "🎉",
-    "fImage": "",
-    "fPrimary": "Item",
-    "fSecondary": "Detail",
-    "fSummary": "",
-    "fUrl": "",
-    "sortField": "Item",
-    "sortDir": "asc",
-    "groupField": "Category",
-    "groupDir": "asc"
-  }
+  "viewName": "Anniversaries",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🎉",
+  "fImage": "Image",
+  "fPrimary": "Item",
+  "fSecondary": "Detail",
+  "fSummary": "",
+  "fUrl": "",
+  "sortField": "Item",
+  "sortDir": "asc",
+  "groupField": "Category",
+  "groupDir": "asc"
+}

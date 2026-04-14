@@ -57,7 +57,7 @@
   },
   {
     "id": "fanclub",
-    "name": "Fan Club *Translations added*",
+    "name": "Fan Club",
     "file": "views/fanclub.html",
     "nav": "main",
     "icon": "🏮"
