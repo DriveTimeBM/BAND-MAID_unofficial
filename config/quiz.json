@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/qicgVAxCYV8/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / about Us (Official Live Video) — Views: 1,192,755 | Yesterday: 153\nBAND-MAID / Wonderland  (Official Live Video) — Views: 948,906 | Yesterday: 103\nBAND-MAID / NO GOD (Official Live Video) — Views: 916,244 | Yesterday: 173",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "OOPARTS — Spotify: 685,312 | Played Live: 0\nLOOK AT ME — Spotify: 629,603 | Played Live: 49\nflying high — Spotify: 628,353 | Played Live: 1",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / NO GOD (Official Live Video)"
+                                              "text":  "flying high"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Wonderland  (Official Live Video)"
+                                              "text":  "LOOK AT ME"
                                           },
                                           {
-                                              "text":  "BAND-MAID / about Us (Official Live Video)",
+                                              "text":  "OOPARTS",
                                               "correct":  true
                                           }
                                       ]
