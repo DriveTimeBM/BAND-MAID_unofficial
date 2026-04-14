@@ -36,7 +36,7 @@
   },
   {
     "id": "stream",
-    "name": "Streaming",
+    "name": "Streaming (Other)",
     "file": "views/stream.html",
     "nav": "main",
     "icon": "🎶"

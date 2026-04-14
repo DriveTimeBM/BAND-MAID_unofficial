@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" href="../logo.png">
-<title>BAND-MAID Unofficial · Stream</title>
+<title>BAND-MAID Unofficial · Streaming (Other)</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -77,8 +77,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
 .detail-field:last-child{border-bottom:none}
 .detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.7}
 .detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-field-value br{display:block;content:'';margin-top:0.5em}
 .detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
 .detail-url-link:hover{text-decoration:underline}
 .detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
@@ -95,7 +96,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   <div class="app-logo">🎶</div>
   <div>
     <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">Stream</div>
+    <div class="view-label" id="viewLabel">Streaming (Other)</div>
   </div>
   <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
   <div class="record-count" id="recordCount"></div>
@@ -104,7 +105,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- FETCH STATES -->
 <div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
   <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-  <span>Loading Stream…</span>
+  <span>Loading Streaming (Other)…</span>
 </div>
 <div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
   <div style="font-size:32px">⚠️</div>
@@ -116,7 +117,7 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 <!-- LIST VIEW -->
 <div id="listView" class="list-view" style="display:none">
   <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search Stream…" id="searchInput" oninput="onSearch()">
+    <input class="search-input" type="search" placeholder="Search Streaming (Other)…" id="searchInput" oninput="onSearch()">
   </div>
   <div id="mainContent"></div>
 </div>
@@ -126,14 +127,15 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 
 <script>
 const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json";
+const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
-const CACHE_KEY = 'bmdata_' + "Stream".replace(/\s+/g,'_');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = [{"name":"Song","type":"text"},{"name":"Title","type":"text"},{"name":"Service","type":"text"},{"name":"Streams","type":"number"},{"name":"URL","type":"url"}];
-const DECK = {"image":null,"primary":"Service","secondary":"Title","summary":"Streams","url":"URL"};
-const SORT = {"field":"Streams","dir":"desc"};
-const GROUP = {"field":"Song","dir":"asc"};
-const VIEW_NAME = "Stream";
+const CACHE_KEY = 'bmdata_' + "Streaming (Other)".replace(/\s+/g,'_');
+const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
+const FIELDS = [{"name":"Song","type":"text"},{"name":"Service","type":"text"},{"name":"URL","type":"url"},{"name":"Image","type":"image"},{"name":"Emoji","type":"text"}];
+const DECK = {"image":"Image","primary":"Song","secondary":"Emoji","summary":null,"url":"URL"};
+const SORT = {"field":"Song","dir":"asc"};
+const GROUP = {"field":"Service","dir":"asc"};
+const VIEW_NAME = "Streaming (Other)";
 const LOGO_CHAR = "🎶";
 const PREVIEW_COUNT = 5;
 const PREVIEW_DATA = null;
@@ -178,10 +180,11 @@ async function loadData(){
   try{
     // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
     const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
-    const res=await fetch(url);
+    const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
+    const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
     const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
+    RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
@@ -206,6 +209,16 @@ function hideFetchState(){
 }
 
 // ── HELPERS ──────────────────────────────────────────────────────────────────
+function normalizeToArray(parsed){
+  if(Array.isArray(parsed))return parsed;
+  if(parsed&&typeof parsed==='object'){
+    for(const key of ['record','data','items','results','values']){
+      if(Array.isArray(parsed[key]))return parsed[key];
+    }
+    if(Object.keys(parsed).length>0)return [parsed];
+  }
+  return [];
+}
 function fmtNumber(v){return parseInt(v,10).toLocaleString()}
 function isAllDigits(v){return /^\d+$/.test(String(v))}
 const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
@@ -484,7 +497,9 @@ function showDetail(row){
     } else if(rtype==='datetime'){
       valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
     } else {
-      valueHtml=escHtml(String(val));
+      // If value contains HTML tags (e.g. <br>) render as HTML, otherwise escape as plain text
+      const strVal=String(val);
+      valueHtml=/<[a-z][^>]*>/i.test(strVal) ? strVal : escHtml(strVal);
     }
     html+=`<div class="detail-field">
       <div class="detail-field-label">${escHtml(name)}</div>

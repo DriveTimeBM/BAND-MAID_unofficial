@@ -1,15 +1,16 @@
 {
-    "viewName": "Stream",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
-    "alwaysFresh": false,
-    "logoChar": "🎶",
-    "fImage": "",
-    "fPrimary": "Service",
-    "fSecondary": "Title",
-    "fSummary": "Streams",
-    "fUrl": "URL",
-    "sortField": "Streams",
-    "sortDir": "desc",
-    "groupField": "Song",
-    "groupDir": "asc"
-  }
+  "viewName": "Streaming (Other)",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🎶",
+  "fImage": "Image",
+  "fPrimary": "Song",
+  "fSecondary": "Emoji",
+  "fSummary": "",
+  "fUrl": "URL",
+  "sortField": "Song",
+  "sortDir": "asc",
+  "groupField": "Service",
+  "groupDir": "asc"
+}
