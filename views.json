@@ -155,7 +155,7 @@
   },
   {
     "id": "locations",
-    "name": "Locations",
+    "name": "Locations (YouTube)",
     "file": "views/locations.html",
     "nav": "menu",
     "icon": "🌏"
