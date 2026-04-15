@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "OOPARTS — Spotify: 685,312 | Played Live: 0\nLOOK AT ME — Spotify: 629,603 | Played Live: 49\nflying high — Spotify: 628,353 | Played Live: 1",
+                          "image":  "https://img.youtube.com/vi/uMQicabwqus/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "火花 — Views: 499,835 | Yesterday: 206\nanemone — Views: 278,466 | Yesterday: 196\nManners — Views: 417,498 | Yesterday: 194",
                           "choices":  [
                                           {
-                                              "text":  "flying high"
+                                              "text":  "Manners"
                                           },
                                           {
-                                              "text":  "LOOK AT ME"
-                                          },
-                                          {
-                                              "text":  "OOPARTS",
+                                              "text":  "火花",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "anemone"
                                           }
                                       ]
                       }
