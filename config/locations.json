@@ -1,16 +1,16 @@
 {
-    "viewName": "Locations",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
-    "apiReadKey": "",
-    "alwaysFresh": false,
-    "logoChar": "🌏",
-    "fImage": "",
-    "fPrimary": "RegionName",
-    "fSecondary": "ViewCount",
-    "fSummary": "Rank",
-    "fUrl": "",
-    "sortField": "",
-    "sortDir": "asc",
-    "groupField": "RegionTimeFrame",
-    "groupDir": "desc"
-  }
+  "viewName": "Locations",
+  "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
+  "apiReadKey": "",
+  "alwaysFresh": false,
+  "logoChar": "🌏",
+  "fImage": "FlagUrl",
+  "fPrimary": "RegionName",
+  "fSecondary": "ViewCount",
+  "fSummary": "Rank",
+  "fUrl": "",
+  "sortField": "",
+  "sortDir": "asc",
+  "groupField": "RegionTimeFrame",
+  "groupDir": "desc"
+}
