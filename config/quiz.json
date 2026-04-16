@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/uMQicabwqus/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "火花 — Views: 499,835 | Yesterday: 206\nanemone — Views: 278,466 | Yesterday: 196\nManners — Views: 417,498 | Yesterday: 194",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Turn me on — Spotify: 1,970,724 | Played Live: 13\nAlive-or-Dead — Spotify: 932,329 | Played Live: 13\nThe Dragon Cries — Spotify: 810,119 | Played Live: 12",
                           "choices":  [
                                           {
-                                              "text":  "Manners"
+                                              "text":  "Alive-or-Dead"
                                           },
                                           {
-                                              "text":  "火花",
+                                              "text":  "Turn me on",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "anemone"
+                                              "text":  "The Dragon Cries"
                                           }
                                       ]
                       }
