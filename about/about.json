@@ -13,7 +13,8 @@
     "icon": "🗓️",
     "title": "Calendar",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/calendar/calendar.json",
-    "body": "Upcoming BAND-MAID events and shows. Links to purchase tickets for overseas shows (Ticketmaster events only). Updated as needed."
+    "body": "Upcoming BAND-MAID events and shows. Links to purchase tickets for overseas shows (Ticketmaster events only). Updated as needed.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/calendar.png"
   },
   {
     "id": "about-songs",
@@ -21,7 +22,8 @@
     "icon": "📝",
     "title": "Songs",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_songs/songs.json",
-    "body": "Information about all BAND-MAID songs including quotes about the songs from the members when available. Stream counts are Spotify stream counts, updated weekly"
+    "body": "Information about all BAND-MAID songs including quotes about the songs from the members when available. Stream counts are Spotify stream counts, updated weekly",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/songs.png"
   },
   {
     "id": "about-releases",
@@ -29,7 +31,8 @@
     "icon": "💿",
     "title": "Releases",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json",
-    "body": "Information about all BAND-MAID releases."
+    "body": "Information about all BAND-MAID releases.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/releases.png"
   },
   {
     "id": "about-videos",
@@ -37,7 +40,8 @@
     "icon": "▶️",
     "title": "Videos",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
-    "body": "Information and links to all BAND-MAID YouTube content which includes view counts, updated daily."
+    "body": "Information and links to all BAND-MAID YouTube content which includes view counts, updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/videos.png"
   },
   {
     "id": "about-spotify",
@@ -45,7 +49,8 @@
     "icon": "🟢",
     "title": "Spotify",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
-    "body": "All BAND-MAID songs on Spotify with links listed by stream count. Updated daily but each song is updated once per week."
+    "body": "All BAND-MAID songs on Spotify with links listed by stream count. Updated daily but each song is updated once per week.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/spotify.png"
   },
   {
     "id": "about-stream",
@@ -53,7 +58,8 @@
     "icon": "🎶",
     "title": "Streaming",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
-    "body": "Links to BAND-MAID songs on several streaming services including stream counts when available."
+    "body": "Links to BAND-MAID songs on several streaming services including stream counts when available.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/stream.png"
   },
   {
     "id": "about-okyuji",
@@ -61,7 +67,8 @@
     "icon": "🗺️",
     "title": "Okyuji",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
-    "body": "All BAND-MAID live sets with links to the setlist.fm page for each set."
+    "body": "All BAND-MAID live sets with links to the setlist.fm page for each set.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/okyuji.png"
   },
   {
     "id": "about-map",
@@ -69,7 +76,8 @@
     "icon": "🌐",
     "title": "Tour Map",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
-    "body": "Interactive, filterable map of all BAND-MAID live sets with setlists, links to the setlist.fm page and Google Maps."
+    "body": "Interactive, filterable map of all BAND-MAID live sets with setlists, links to the setlist.fm page and Google Maps.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/map.png"
   },
   {
     "id": "about-prime",
@@ -77,7 +85,8 @@
     "icon": "🎬",
     "title": "Prime",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json",
-    "body": "All BAND-MAID Prime videos with links grouped by video type."
+    "body": "All BAND-MAID Prime videos with links grouped by video type.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/prime.png"
   },
   {
     "id": "about-fanclub",
@@ -85,7 +94,8 @@
     "icon": "🏮",
     "title": "Fan Club",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/fanclub.json",
-    "body": "All BAND-MAID fan club (OMEISYUSAMA-NO-KAI) videos with links grouped by video type. Full English translations in the details view."
+    "body": "All BAND-MAID fan club (OMEISYUSAMA-NO-KAI) videos with links grouped by video type. Full English translations in the details view.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/fanclub.png"
   },
   {
     "id": "about-gallery",
@@ -93,7 +103,8 @@
     "icon": "🖼️",
     "title": "Gallery",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/gallery.json",
-    "body": "Links to all OMEISYUSAMA-NO-KAI special photo galleries."
+    "body": "Links to all OMEISYUSAMA-NO-KAI special photo galleries.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/gallery.png"
   },
   {
     "id": "about-news",
@@ -101,7 +112,8 @@
     "icon": "🗞️",
     "title": "News",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/news.json",
-    "body": "Links to all BAND-MAID news releases. Updated daily"
+    "body": "Links to all BAND-MAID news releases. Updated daily",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/news.png"
   },
   {
     "id": "about-daily-photos",
@@ -109,7 +121,8 @@
     "icon": "📸",
     "title": "Daily Photos",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/photos/daily_photos.json",
-    "body": "Random photos posted by BAND-MAID, Akane, Kanami, Miku, MISA, and Saiki updated daily"
+    "body": "Random photos posted by BAND-MAID, Akane, Kanami, Miku, MISA, and Saiki updated daily",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/daily_photos.png"
   },
   {
     "id": "about-upcoming",
@@ -117,7 +130,8 @@
     "icon": "⏳",
     "title": "Upcoming",
     "jsonUrl": "https://api.jsonbin.io/v3/b/69c7e8f95fdde574550a99d9/latest",
-    "body": "Countdown clock to the next two upcoming BAND-MAID events. When a YouTube video gets within 24 hours of a million milestone, it is added to the countdown. Updated every 10 minutes"
+    "body": "Countdown clock to the next two upcoming BAND-MAID events. When a YouTube video gets within 24 hours of a million milestone, it is added to the countdown. Updated every 10 minutes",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/upcoming.png"
   },
   {
     "id": "about-million",
@@ -125,7 +139,8 @@
     "icon": "🎯",
     "title": "Next Million",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million.json",
-    "body": "The next 4 BAND-MAID YouTube videos projected to reach a million mark based on yesterday's view rate. Updated daily."
+    "body": "The next 4 BAND-MAID YouTube videos projected to reach a million mark based on yesterday's view rate. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/million.png"
   },
   {
     "id": "about-milestones",
@@ -133,7 +148,8 @@
     "icon": "📍",
     "title": "Milestones",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/milestones.json",
-    "body": "Various milestones for streaming platforms and social media. Updated daily."
+    "body": "Various milestones for streaming platforms and social media. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/milestones.png"
   },
   {
     "id": "about-anniversaries",
@@ -141,7 +157,8 @@
     "icon": "🎉",
     "title": "Anniversaries",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
-    "body": "Various anniversaries for song releases, birthdays, live debuts, okyuji, and YouTube videos. Updated daily."
+    "body": "Various anniversaries for song releases, birthdays, live debuts, okyuji, and YouTube videos. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/anniversaries.png"
   },
   {
     "id": "about-gifs",
@@ -149,7 +166,8 @@
     "icon": "🎞️",
     "title": "GIFs",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/gifs.json",
-    "body": "Collection of over 400 BAND-MAID GIFs, optimized for size/load speed."
+    "body": "Collection of over 400 BAND-MAID GIFs, optimized for size/load speed.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/gifs.png"
   },
   {
     "id": "about-quiz",
@@ -157,7 +175,8 @@
     "icon": "❓",
     "title": "Quiz",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/config/quiz.json",
-    "body": "BAND-MAID trivia quiz. Updated daily."
+    "body": "BAND-MAID trivia quiz. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/quiz.png"
   },
   {
     "id": "about-shop",
@@ -165,7 +184,8 @@
     "icon": "💵",
     "title": "Shop",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/shop.json",
-    "body": "All BAND-MAID offered by BAND-MAID ONLINE SHOP, Amped Japan, Pony Canyon (USA and Japan), and CDJapan. Updated weekly."
+    "body": "All BAND-MAID offered by BAND-MAID ONLINE SHOP, Amped Japan, Pony Canyon (USA and Japan), and CDJapan. Updated weekly.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/shop.png"
   },
   {
     "id": "about-top10",
@@ -173,7 +193,8 @@
     "icon": "🔟",
     "title": "Top10",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/top10.json",
-    "body": "The Top 10 performing YouTube videos for the previous day. Updated daily."
+    "body": "The Top 10 performing YouTube videos for the previous day. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/top10.png"
   },
   {
     "id": "about-followers",
@@ -181,7 +202,8 @@
     "icon": "👥",
     "title": "Followers",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/followers.json",
-    "body": "Follower counts and links to official social media sites. Updated weekly."
+    "body": "Follower counts and links to official social media sites. Updated weekly.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/followers.png"
   },
   {
     "id": "about-tickets",
@@ -189,7 +211,8 @@
     "icon": "🎟️",
     "title": "Tickets",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
-    "body": "All BAND-MAID events found with the Ticketmaster API with links to purchase. This will only show overseas shows. Updated daily"
+    "body": "All BAND-MAID events found with the Ticketmaster API with links to purchase. This will only show overseas shows. Updated daily",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/tickets.png"
   },
   {
     "id": "about-locations",
@@ -197,14 +220,16 @@
     "icon": "🌏",
     "title": "Locations",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
-    "body": "YouTube viewer location data for 7-day and 28-day periods. Updated daily"
+    "body": "YouTube viewer location data for 7-day and 28-day periods. Updated daily",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/locations.png"
   }, 
   {
     "id": "about-mv",
     "section": "Views",
     "icon": "🌏",
     "title": "Okyuji-MV map",
-    "body": "Okyu-ji and MV map - created by @Simeon from Brazil."
+    "body": "Okyu-ji and MV map - created by @Simeon from Brazil.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/mv.png"
   }, 
   {
     "id": "about-reports",
@@ -212,7 +237,8 @@
     "icon": "📝",
     "title": "Reports",
     "jsonUrl": null,
-    "body": "Dozens of BAND-MAID reports looking at the data in various ways. Updated daily."
+    "body": "Dozens of BAND-MAID reports looking at the data in various ways. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/reports.png"
   },
   {
     "id": "about-instagram",
@@ -220,7 +246,8 @@
     "icon": "📹",
     "title": "Instagram",
     "jsonUrl": null,
-    "body": "Archive of translated Instagram posts from 2014-09-30 to 2025-09-11"
+    "body": "Archive of translated Instagram posts from 2014-09-30 to 2025-09-11",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/instagram.png"
   },
   {
     "id": "about-twitter",
@@ -228,7 +255,8 @@
     "icon": "🐦",
     "title": "Twitter",
     "jsonUrl": null,
-    "body": "Archive of translated tweets from 2013-07-19 to 2025-09-10"
+    "body": "Archive of translated tweets from 2013-07-19 to 2025-09-10",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/twitter.png"
   },
   {
     "id": "about-charts",
@@ -236,7 +264,8 @@
     "icon": "📈",
     "title": "Charts",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/charts.json",
-    "body": "Stream count graphs since I started collecting detailed data (YouTube Feb. 2025, Spotify July 2025) plus a YouTube comment history graph since 2014. (Level 1 comments only. No replies)"
+    "body": "Stream count graphs since I started collecting detailed data (YouTube Feb. 2025, Spotify July 2025) plus a YouTube comment history graph since 2014. (Level 1 comments only. No replies)",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/charts.png"
   },
   {
     "id": "about-links",
@@ -244,7 +273,8 @@
     "icon": "🔗",
     "title": "Links",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/links.json",
-    "body": "Links to various BAND-MAID related things."
+    "body": "Links to various BAND-MAID related things.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/links.png"
   },
   {
     "id": "about-sorter",
@@ -252,7 +282,8 @@
     "icon": "🔢",
     "title": "Sorter",
     "jsonUrl": null,
-    "body": "Rank all BAND-MAID songs. Save progress as many times as needed. Optionally, submit results to be aggregated across the fanbase."
+    "body": "Rank all BAND-MAID songs. Save progress as many times as needed. Optionally, submit results to be aggregated across the fanbase.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/sorter.png"
   },
   {
     "id": "about-feedback",
@@ -260,7 +291,8 @@
     "icon": "📢",
     "title": "Feedback",
     "jsonUrl": null,
-    "body": "Anonymous feedback form. Leave likes, dislikes, ideas for improvement, etc."
+    "body": "Anonymous feedback form. Leave likes, dislikes, ideas for improvement, etc.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/feedback.png"
   },
   {
     "id": "about-project",
@@ -268,6 +300,7 @@
     "icon": "🛠️",
     "title": "About the Project",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/about/about.json",
-    "body": "This app is powered by public JSON files that I've created and update on a daily basis. Anyone can use them. Links to the JSON are included for each view discussed in the About view. All of the JSON data is automatically imported to a public Google Sheet. You may use/copy the data as you wish. The sheet is here: https://docs.google.com/spreadsheets/d/1fUGjjPOjFFWoh8TbHOfgB4L6N0GmZIfo2JrPghNZsZU/edit?usp=sharing"
+    "body": "This app is powered by public JSON files that I've created and update on a daily basis. Anyone can use them. Links to the JSON are included for each view discussed in the About view. All of the JSON data is automatically imported to a public Google Sheet. You may use/copy the data as you wish. The sheet is here: https://docs.google.com/spreadsheets/d/1fUGjjPOjFFWoh8TbHOfgB4L6N0GmZIfo2JrPghNZsZU/edit?usp=sharing",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/about.png"
   }
 ]
