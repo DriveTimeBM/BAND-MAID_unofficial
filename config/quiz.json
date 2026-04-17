@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Turn me on — Spotify: 1,970,724 | Played Live: 13\nAlive-or-Dead — Spotify: 932,329 | Played Live: 13\nThe Dragon Cries — Spotify: 810,119 | Played Live: 12",
+                          "image":  "https://img.youtube.com/vi/Uds7g3M-4lQ/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Thrill (スリル)  (Official Music Video) — Views: 23,312,884 | Yesterday: 3,101\nBAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 3,122,077 | Yesterday: 2,473\nBAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,490,618 | Yesterday: 1,194",
                           "choices":  [
                                           {
-                                              "text":  "Alive-or-Dead"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)"
                                           },
                                           {
-                                              "text":  "Turn me on",
+                                              "text":  "BAND-MAID / Thrill (スリル)  (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "The Dragon Cries"
+                                              "text":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌"
                                           }
                                       ]
                       }
