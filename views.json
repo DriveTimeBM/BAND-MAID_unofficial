@@ -175,13 +175,6 @@
     "icon": "🗾"
   },
   {
-    "id": "charts",
-    "name": "Charts",
-    "file": "views/charts.html",
-    "nav": "menu",
-    "icon": "📈"
-  },
-  {
     "id": "reports",
     "name": "Reports",
     "file": "https://drivetimebm.github.io/BAND-MAID_reports/index.html",
