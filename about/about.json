@@ -200,6 +200,13 @@
     "body": "YouTube viewer location data for 7-day and 28-day periods. Updated daily"
   }, 
   {
+    "id": "about-mv",
+    "section": "Views",
+    "icon": "🌏",
+    "title": "Okyuji-MV map",
+    "body": "Okyu-ji and MV map - created by @Simeon from Brazil."
+  }, 
+  {
     "id": "about-reports",
     "section": "Views",
     "icon": "📝",
