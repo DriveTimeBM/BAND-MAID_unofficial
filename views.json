@@ -168,13 +168,6 @@
     "icon": "🌏"
   },
   {
-    "id": "mv",
-    "name": "Okyuji-MV map",
-    "file": "https://www.google.com/maps/d/u/0/viewer?mid=1-hUU-25MYERexy7XrFTF_vi1S9l550Q1&ll=-3.81666561775622e-14%2C0&z=1",
-    "nav": "menu",
-    "icon": "🗾"
-  },
-  {
     "id": "charts",
     "name": "Charts",
     "file": "views/charts.html",
