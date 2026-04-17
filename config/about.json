@@ -1,10 +1,10 @@
 {
-  "viewName": "About ",
+  "viewName": "About",
   "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/about/about.json",
   "apiReadKey": "",
   "alwaysFresh": false,
   "logoChar": "ℹ️",
-  "fImage": "",
+  "fImage": "image",
   "fPrimary": "title",
   "fSecondary": "body",
   "fSummary": "",
