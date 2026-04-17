@@ -64,6 +64,14 @@
     "body": "All BAND-MAID live sets with links to the setlist.fm page for each set."
   },
   {
+    "id": "about-map",
+    "section": "Views",
+    "icon": "🌐",
+    "title": "Tour Map",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
+    "body": "Interactive, filterable map of all BAND-MAID live sets with setlists, links to the setlist.fm page and Google Maps."
+  },
+  {
     "id": "about-prime",
     "section": "Views",
     "icon": "🎬",
