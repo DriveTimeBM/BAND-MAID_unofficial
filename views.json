@@ -189,15 +189,15 @@
     "icon": "📝"
   },
   {
-    "id": "instagram *improved*",
-    "name": "Instagram",
+    "id": "instagram",
+    "name": "Instagram *improved*",
     "file": "https://drivetimebm.github.io/BAND-MAID_instagram/index.html",
     "nav": "menu",
     "icon": "📹"
   },
   {
-    "id": "twitter *improved*",
-    "name": "Twitter",
+    "id": "twitter",
+    "name": "Twitter *improved*",
     "file": "https://drivetimebm.github.io/BAND-MAID_tweets/index.html",
     "nav": "menu",
     "icon": "🐦"
