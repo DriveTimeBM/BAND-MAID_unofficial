@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "NO GOD — Spotify: 2,072,960 | Played Live: 117\nUnleash!!!!! — Spotify: 3,493,148 | Played Live: 96\nScreaming — Spotify: 1,874,248 | Played Live: 92",
+                          "image":  "https://img.youtube.com/vi/NNHGABwme50/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAIKO / secret MAIKO lips (Official Music Video) — Views: 4,721,826 | Yesterday: 361\nBAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video) — Views: 2,184,025 | Yesterday: 249\nBAND-MAID / start over (Official Music Video) — Views: 2,335,077 | Yesterday: 153",
                           "choices":  [
                                           {
-                                              "text":  "NO GOD",
+                                              "text":  "BAND-MAID / start over (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAIKO / secret MAIKO lips (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Unleash!!!!!"
-                                          },
-                                          {
-                                              "text":  "Screaming"
+                                              "text":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video)"
                                           }
                                       ]
                       }

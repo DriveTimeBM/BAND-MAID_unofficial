@@ -1,7 +1,7 @@
 ﻿{
     "id":  "1404984552161673448",
     "name":  "BAND-MAID Dashboard",
-    "instant_invite":  "https://discord.com/invite/NveSXamj",
+    "instant_invite":  "https://discord.com/invite/hsaswCcd",
     "channels":  [
 
                  ],
@@ -67,7 +67,7 @@
                         "username":  "Marshall \"The Bald\" LAU",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "idle",
+                        "status":  "online",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/bb5qJmwhNGIV25iHTYgs84Z2Qs0G_2OfLuQiY0OZstQ/cvn8FB4X_iMoOrZeu0BAxTxRUJlKP3nuhMfYxcgSXXn6Jmeo0f94QvnAllsp8FEzU6GvZ9uzDIcYU2jTlZosxbiLykx-u0abRwK9r8CGdcqeit8VdyWlwcvZcqjrwP6N1ss0O3pjjj-rlA"
                     },
                     {
@@ -93,7 +93,15 @@
                         "avatar":  null,
                         "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/odZI11jOk1t9gpGvljYLdYHY05nUXmYUqpqPo2fN__E/0Ndr_UaiTx9LPgZuQXSamxcSXJyuYS980QxXE0oGqe62Q-ajJOlu1kwU3pMpVsgVsRtLHX_0axKsdd0rkCAxt6C9bhZasGjTIkc27QdizB6juGJCRE4IA8-uKLxHe2J_QeUjOB-REBnZVA"
+                    },
+                    {
+                        "id":  "11",
+                        "username":  "Zakson85",
+                        "discriminator":  "0000",
+                        "avatar":  null,
+                        "status":  "idle",
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/uQOO6XNNPDOwvN1cEb-SVsKeyZFv5bvbkhrbCHxD9p8/ILc9BwtDtryHBGJsZsgajLLqcyQ8KyJmouqA9aEhOqp2KKoSJtMx6Vo2Fld6Y27p-WzH93GRlLCsLfIcEqJ9sTjgnyd8sXol6dJ_pFeoM21YRS1wlIRBsTyLlLqzikaBFoXV-Q-BFHpRCA"
                     }
                 ],
-    "presence_count":  11
+    "presence_count":  12
 }
