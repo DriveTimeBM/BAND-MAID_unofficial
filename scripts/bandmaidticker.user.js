@@ -17,7 +17,7 @@
     const JSON_URL      = 'https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json';
     const REFRESH_MS    = 4 * 60 * 60 * 1000;   // 4 hours
     const SCROLL_PXPS   = 60;
-    const ALLOWED_TYPES = ['Official Music Video', 'Official Live Video'];
+    const ALLOWED_TYPES = ['Official Music Video', 'Official Live Video', 'Anime Music Video'];
     const TOP_N         = 30;
 
     // ---------- styles ----------
