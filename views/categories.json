@@ -84,7 +84,17 @@
                     "\\bupdate\\w*\\b"
                 ]}
             ]
-        }
+        },
+        {
+            "category": "Live",
+            "color": "#9cb4d4",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "live",
+                    "session"
+                ]}
+            ]
+        }    
     ],
     "default_category": {
         "category": "MISC",
