@@ -1,0 +1,814 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAND-MAID YouTube</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg:       #0a0a0a;
+    --bg2:      #141414;
+    --bg3:      #1c1c1c;
+    --bg4:      #242424;
+    --border:   #2a2a2a;
+    --border2:  #3a3a3a;
+    --text:     #f0f0f0;
+    --text2:    #999;
+    --text3:    #555;
+    --accent:   #c8a96e;
+    --accent2:  #8a7550;
+    --radius:   8px;
+    --font:     'Segoe UI', system-ui, sans-serif;
+  }
+
+  html { background: var(--bg); }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    padding: 16px;
+    line-height: 1.5;
+  }
+
+  h1 {
+    font-size: 15px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+    margin-bottom: 4px;
+  }
+  .header-row {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    gap: 12px;
+    flex-wrap: wrap;
+    margin-bottom: 16px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid var(--border);
+  }
+  .header-meta {
+    font-size: 12px;
+    color: var(--text2);
+  }
+  .header-meta .count { color: var(--accent); font-weight: 600; }
+
+  /* ── TOOLBAR ── */
+  .toolbar {
+    display: flex;
+    gap: 10px;
+    margin-bottom: 16px;
+    flex-wrap: wrap;
+  }
+  .search-wrap {
+    flex: 1;
+    min-width: 220px;
+    position: relative;
+  }
+  #search {
+    width: 100%;
+    background: var(--bg2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 9px 34px 9px 12px;
+    font-family: inherit;
+    font-size: 13px;
+    outline: none;
+    transition: border-color 0.12s;
+  }
+  #search:focus { border-color: var(--accent2); }
+  #search-clear {
+    position: absolute;
+    right: 8px;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    color: var(--text3);
+    cursor: pointer;
+    font-size: 16px;
+    padding: 2px 6px;
+    display: none;
+  }
+  #search-clear:hover { color: var(--text); }
+
+  .sort-btn, .filter-toggle {
+    background: var(--bg2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 9px 14px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    white-space: nowrap;
+  }
+  .sort-btn:hover, .filter-toggle:hover {
+    background: var(--bg3);
+    border-color: var(--border2);
+  }
+  .filter-toggle { display: none; }
+
+  /* ── LAYOUT ── */
+  .layout {
+    display: grid;
+    grid-template-columns: 220px 1fr;
+    gap: 20px;
+  }
+
+  /* ── SIDEBAR ── */
+  aside {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 12px 14px;
+    align-self: start;
+    position: sticky;
+    top: 16px;
+  }
+  aside h2 {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text2);
+    margin-bottom: 10px;
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--border);
+  }
+  .filter-actions {
+    display: flex;
+    gap: 6px;
+    margin-bottom: 10px;
+  }
+  .filter-actions button {
+    flex: 1;
+    background: var(--bg3);
+    color: var(--text2);
+    border: 1px solid var(--border);
+    border-radius: 4px;
+    padding: 5px 8px;
+    font-family: inherit;
+    font-size: 10px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: color 0.12s, border-color 0.12s;
+  }
+  .filter-actions button:hover { color: var(--text); border-color: var(--border2); }
+
+  .cat-list { display: flex; flex-direction: column; gap: 2px; }
+  .cat-item {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 6px 4px;
+    cursor: pointer;
+    border-radius: 4px;
+    transition: background 0.12s;
+  }
+  .cat-item:hover { background: var(--bg3); }
+  .cat-item input {
+    appearance: none;
+    -webkit-appearance: none;
+    width: 14px;
+    height: 14px;
+    border: 1px solid var(--border2);
+    border-radius: 3px;
+    background: var(--bg);
+    cursor: pointer;
+    position: relative;
+    flex-shrink: 0;
+  }
+  .cat-item input:checked {
+    background: var(--accent);
+    border-color: var(--accent);
+  }
+  .cat-item input:checked::after {
+    content: '';
+    position: absolute;
+    left: 3px;
+    top: 0px;
+    width: 5px;
+    height: 9px;
+    border: solid var(--bg);
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg);
+  }
+  .cat-swatch {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+  }
+  .cat-label { font-size: 13px; flex: 1; }
+  .cat-count {
+    font-size: 11px;
+    color: var(--text3);
+    font-variant-numeric: tabular-nums;
+  }
+
+  /* ── MAIN / VIDEO LIST ── */
+  main { min-width: 0; }
+  .video-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1px;
+    background: var(--border);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .video-row {
+    background: var(--bg2);
+    padding: 12px 14px;
+    display: grid;
+    grid-template-columns: 120px 1fr auto;
+    gap: 12px;
+    align-items: center;
+    transition: background 0.12s;
+  }
+  .video-row:hover { background: var(--bg3); }
+
+  .thumb {
+    width: 120px;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+    cursor: zoom-in;
+    flex-shrink: 0;
+  }
+  .thumb img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+    transition: transform 0.3s;
+  }
+  .thumb:hover img { transform: scale(1.05); }
+
+  .video-info { min-width: 0; }
+  .video-title {
+    color: var(--text);
+    font-size: 14px;
+    font-weight: 500;
+    cursor: pointer;
+    margin-bottom: 4px;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    -webkit-box-orient: vertical;
+  }
+  .video-title:hover { color: var(--accent); }
+  .video-meta {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    font-size: 12px;
+    color: var(--text2);
+    flex-wrap: wrap;
+  }
+  .video-meta .channel { color: var(--text); }
+  .video-meta .separator { color: var(--text3); }
+  .video-meta .time { color: var(--text2); }
+  .video-meta .duration { color: var(--text3); font-variant-numeric: tabular-nums; }
+
+  .cat-badge {
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 3px 8px;
+    border-radius: 3px;
+    color: var(--bg);
+    white-space: nowrap;
+  }
+
+  /* embedded player when title clicked */
+  .video-row.expanded { background: var(--bg3); }
+  .video-player {
+    grid-column: 1 / -1;
+    margin-top: 12px;
+    aspect-ratio: 16 / 9;
+    background: var(--bg);
+    border-radius: 4px;
+    overflow: hidden;
+    display: none;
+  }
+  .video-row.expanded .video-player { display: block; }
+  .video-player iframe {
+    width: 100%;
+    height: 100%;
+    border: none;
+  }
+
+  /* highlight matches in search */
+  mark {
+    background: rgba(200, 169, 110, 0.25);
+    color: var(--accent);
+    padding: 0 2px;
+    border-radius: 2px;
+  }
+
+  /* load more + empty state */
+  #load-more-wrap {
+    margin-top: 12px;
+    text-align: center;
+  }
+  #load-more {
+    background: var(--bg2);
+    color: var(--text);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 24px;
+    font-family: inherit;
+    font-size: 12px;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  #load-more:hover {
+    background: var(--bg3);
+    border-color: var(--accent2);
+  }
+  .empty-state, .loading-state {
+    padding: 40px 20px;
+    text-align: center;
+    color: var(--text2);
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+  }
+  .loading-state .spinner {
+    width: 24px;
+    height: 24px;
+    border: 2px solid var(--border);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    margin: 0 auto 12px;
+    animation: spin 0.8s linear infinite;
+  }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  /* ── LIGHTBOX ── */
+  .lightbox {
+    position: fixed;
+    inset: 0;
+    background: rgba(0, 0, 0, 0.92);
+    display: none;
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+    cursor: zoom-out;
+    padding: 20px;
+  }
+  .lightbox.active { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    border-radius: var(--radius);
+    border: 1px solid var(--border2);
+  }
+  .lightbox-close {
+    position: absolute;
+    top: 16px;
+    right: 16px;
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    color: var(--text);
+    width: 36px;
+    height: 36px;
+    border-radius: 50%;
+    font-size: 20px;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .lightbox-close:hover { border-color: var(--accent); color: var(--accent); }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 768px) {
+    body { padding: 12px; }
+    .layout { grid-template-columns: 1fr; }
+    aside {
+      position: static;
+      display: none;
+    }
+    aside.open { display: block; }
+    .filter-toggle { display: inline-block; }
+    .video-row {
+      grid-template-columns: 100px 1fr;
+    }
+    .video-row .cat-badge {
+      grid-column: 2;
+      justify-self: start;
+      margin-top: 4px;
+    }
+    .thumb { width: 100px; }
+    .video-title { -webkit-line-clamp: 3; }
+  }
+</style>
+</head>
+<body>
+
+<div class="header-row">
+  <div>
+    <h1>BAND-MAID YouTube</h1>
+    <div class="header-meta">
+      <span class="count" id="total-count">—</span> videos
+      <span class="separator">•</span>
+      updated <span id="last-updated">—</span>
+    </div>
+  </div>
+</div>
+
+<div class="toolbar">
+  <button class="filter-toggle" id="filter-toggle">Categories</button>
+  <div class="search-wrap">
+    <input type="text" id="search" placeholder="Search title or channel…" autocomplete="off">
+    <button id="search-clear" title="Clear">×</button>
+  </div>
+  <button class="sort-btn" id="sort-btn" title="Toggle sort direction">
+    <span id="sort-icon">↓</span> <span id="sort-label">Newest</span>
+  </button>
+</div>
+
+<div class="layout">
+  <aside id="sidebar">
+    <h2>Categories</h2>
+    <div class="filter-actions">
+      <button id="filter-all">All</button>
+      <button id="filter-none">None</button>
+    </div>
+    <div class="cat-list" id="cat-list"></div>
+  </aside>
+
+  <main>
+    <div id="list-container"></div>
+    <div id="load-more-wrap" style="display:none;">
+      <button id="load-more">Load More</button>
+    </div>
+  </main>
+</div>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close">×</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  // ── Config ──
+  const FEED_URL       = 'https://drivetimebm.github.io/BAND-MAID_feed/videos.json';
+  const CATEGORIES_URL = './categories.json';
+  const PAGE_SIZE      = 50;
+
+  // ── State ──
+  let allVideos    = [];       // full archive with categoryInfo attached
+  let filtered     = [];       // after filter + search + sort
+  let categoryCfg  = null;
+  let selectedCats = new Set(); // active category filter
+  let sortDesc     = true;      // newest first
+  let searchTerm   = '';
+  let renderedCount = 0;
+  let expandedVideoId = null;
+
+  // ── Utilities ──
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function escapeRegex(s) {
+    return s.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+  }
+
+  function highlight(text, term) {
+    const safe = escapeHtml(text);
+    if (!term) return safe;
+    const re = new RegExp('(' + escapeRegex(term) + ')', 'gi');
+    return safe.replace(re, '<mark>$1</mark>');
+  }
+
+  function relativeTime(iso) {
+    const then = new Date(iso).getTime();
+    const now = Date.now();
+    const diff = Math.floor((now - then) / 1000);
+    if (diff < 60)        return 'just now';
+    if (diff < 3600)      return Math.floor(diff / 60) + 'm ago';
+    if (diff < 86400)     return Math.floor(diff / 3600) + 'h ago';
+    if (diff < 604800)    return Math.floor(diff / 86400) + 'd ago';
+    if (diff < 2592000)   return Math.floor(diff / 604800) + 'w ago';
+    if (diff < 31536000)  return Math.floor(diff / 2592000) + 'mo ago';
+    return Math.floor(diff / 31536000) + 'y ago';
+  }
+
+  function absoluteTime(iso) {
+    const d = new Date(iso);
+    return d.toLocaleString(undefined, {
+      year: 'numeric', month: 'short', day: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    });
+  }
+
+  // ── Categorization ──
+  function categorize(video) {
+    for (const cat of categoryCfg.categories) {
+      for (const rule of cat.rules) {
+        const field = rule.field === 'channelId' ? video.ChannelId
+                    : rule.field === 'channel'   ? video.Channel
+                    : rule.field === 'title'     ? video.Title
+                    : '';
+        if (!field) continue;
+
+        for (const pat of rule.patterns) {
+          if (rule.type === 'exact' && field === pat) return cat;
+          if (rule.type === 'substring' && field.toLowerCase().includes(pat.toLowerCase())) return cat;
+          if (rule.type === 'regex') {
+            try {
+              if (new RegExp(pat, 'i').test(field)) return cat;
+            } catch (e) {
+              console.warn('Bad regex in categories.json:', pat, e);
+            }
+          }
+        }
+      }
+    }
+    return categoryCfg.default_category;
+  }
+
+  // ── Data load ──
+  async function loadData() {
+    document.getElementById('list-container').innerHTML =
+      '<div class="loading-state"><div class="spinner"></div>Loading videos…</div>';
+
+    try {
+      const [videosRes, catsRes] = await Promise.all([
+        fetch(FEED_URL + '?t=' + Date.now()),  // cache bust
+        fetch(CATEGORIES_URL)
+      ]);
+      if (!videosRes.ok) throw new Error('videos.json: ' + videosRes.status);
+      if (!catsRes.ok)   throw new Error('categories.json: ' + catsRes.status);
+
+      const videos = await videosRes.json();
+      categoryCfg = await catsRes.json();
+
+      // Attach category info to each video
+      allVideos = videos.map(v => ({
+        ...v,
+        categoryInfo: categorize(v)
+      }));
+
+      // Default: all categories selected
+      const allCatNames = new Set(categoryCfg.categories.map(c => c.category));
+      allCatNames.add(categoryCfg.default_category.category);
+      selectedCats = allCatNames;
+
+      renderSidebar();
+      applyFilters();
+
+      // Header stats
+      document.getElementById('total-count').textContent = allVideos.length.toLocaleString();
+      const newest = allVideos.reduce((acc, v) => {
+        const d = new Date(v.DiscoveredAt || v.PublishedAt);
+        return (!acc || d > acc) ? d : acc;
+      }, null);
+      document.getElementById('last-updated').textContent = newest ? relativeTime(newest.toISOString()) : '—';
+    }
+    catch (err) {
+      console.error(err);
+      document.getElementById('list-container').innerHTML =
+        '<div class="empty-state">Failed to load: ' + escapeHtml(err.message) + '</div>';
+    }
+  }
+
+  // ── Sidebar ──
+  function renderSidebar() {
+    const container = document.getElementById('cat-list');
+    const counts = {};
+    for (const v of allVideos) {
+      counts[v.categoryInfo.category] = (counts[v.categoryInfo.category] || 0) + 1;
+    }
+
+    // Build list: configured categories first (in order), then MISC if used
+    const rows = [];
+    for (const cat of categoryCfg.categories) {
+      rows.push({ name: cat.category, color: cat.color, count: counts[cat.category] || 0 });
+    }
+    const miscName = categoryCfg.default_category.category;
+    if (counts[miscName]) {
+      rows.push({ name: miscName, color: categoryCfg.default_category.color, count: counts[miscName] });
+    }
+
+    container.innerHTML = rows.map(r => `
+      <label class="cat-item">
+        <input type="checkbox" data-cat="${escapeHtml(r.name)}" ${selectedCats.has(r.name) ? 'checked' : ''}>
+        <span class="cat-swatch" style="background:${escapeHtml(r.color)}"></span>
+        <span class="cat-label">${escapeHtml(r.name)}</span>
+        <span class="cat-count">${r.count}</span>
+      </label>
+    `).join('');
+
+    container.querySelectorAll('input[data-cat]').forEach(cb => {
+      cb.addEventListener('change', () => {
+        const name = cb.dataset.cat;
+        if (cb.checked) selectedCats.add(name);
+        else selectedCats.delete(name);
+        applyFilters();
+      });
+    });
+  }
+
+  // ── Filter / search / sort ──
+  function applyFilters() {
+    const term = searchTerm.toLowerCase();
+    filtered = allVideos.filter(v => {
+      if (!selectedCats.has(v.categoryInfo.category)) return false;
+      if (term) {
+        const hay = (v.Title + ' ' + v.Channel).toLowerCase();
+        if (!hay.includes(term)) return false;
+      }
+      return true;
+    });
+
+    filtered.sort((a, b) => {
+      const da = new Date(a.PublishedAt || a.DiscoveredAt).getTime();
+      const db = new Date(b.PublishedAt || b.DiscoveredAt).getTime();
+      return sortDesc ? db - da : da - db;
+    });
+
+    renderedCount = 0;
+    document.getElementById('list-container').innerHTML = '';
+    expandedVideoId = null;
+    renderNextBatch();
+  }
+
+  function renderNextBatch() {
+    const container = document.getElementById('list-container');
+    const slice = filtered.slice(renderedCount, renderedCount + PAGE_SIZE);
+
+    if (renderedCount === 0 && slice.length === 0) {
+      container.innerHTML = '<div class="empty-state">No videos match the current filters.</div>';
+      document.getElementById('load-more-wrap').style.display = 'none';
+      return;
+    }
+
+    const frag = document.createDocumentFragment();
+    for (const v of slice) {
+      frag.appendChild(buildRow(v));
+    }
+    container.appendChild(frag);
+    renderedCount += slice.length;
+
+    document.getElementById('load-more-wrap').style.display =
+      renderedCount < filtered.length ? 'block' : 'none';
+  }
+
+  function buildRow(v) {
+    const row = document.createElement('div');
+    row.className = 'video-row';
+    row.dataset.videoId = v.VideoId;
+
+    const timeIso = v.PublishedAt || v.DiscoveredAt;
+
+    row.innerHTML = `
+      <div class="thumb" data-full="${escapeHtml(v.Thumbnail.replace('hqdefault', 'maxresdefault'))}" data-fallback="${escapeHtml(v.Thumbnail)}">
+        <img src="${escapeHtml(v.Thumbnail)}" alt="" loading="lazy">
+      </div>
+      <div class="video-info">
+        <div class="video-title">${highlight(v.Title, searchTerm)}</div>
+        <div class="video-meta">
+          <span class="channel">${highlight(v.Channel.trim(), searchTerm)}</span>
+          <span class="separator">❯</span>
+          <span class="time" title="${escapeHtml(absoluteTime(timeIso))}">${escapeHtml(relativeTime(timeIso))}</span>
+          ${v.Duration ? `<span class="separator">❯</span><span class="duration">${escapeHtml(v.Duration)}</span>` : ''}
+        </div>
+      </div>
+      <span class="cat-badge" style="background:${escapeHtml(v.categoryInfo.color)}">${escapeHtml(v.categoryInfo.category)}</span>
+      <div class="video-player"></div>
+    `;
+
+    // Thumb click → lightbox
+    row.querySelector('.thumb').addEventListener('click', () => {
+      const thumbEl = row.querySelector('.thumb');
+      openLightbox(thumbEl.dataset.full, thumbEl.dataset.fallback);
+    });
+
+    // Title click → toggle embedded player
+    row.querySelector('.video-title').addEventListener('click', () => {
+      toggleEmbed(row, v.VideoId);
+    });
+
+    return row;
+  }
+
+  function toggleEmbed(row, videoId) {
+    const list = document.getElementById('list-container');
+    const currently = list.querySelector('.video-row.expanded');
+    const wasThisRow = currently === row;
+
+    if (currently) {
+      currently.classList.remove('expanded');
+      currently.querySelector('.video-player').innerHTML = '';
+    }
+
+    if (!wasThisRow) {
+      row.classList.add('expanded');
+      row.querySelector('.video-player').innerHTML =
+        `<iframe src="https://www.youtube.com/embed/${encodeURIComponent(videoId)}?autoplay=1" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>`;
+      expandedVideoId = videoId;
+    } else {
+      expandedVideoId = null;
+    }
+  }
+
+  // ── Lightbox ──
+  function openLightbox(src, fallback) {
+    const img = document.getElementById('lightbox-img');
+    img.onerror = () => { img.onerror = null; img.src = fallback; };
+    img.src = src;
+    document.getElementById('lightbox').classList.add('active');
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('active');
+    document.getElementById('lightbox-img').src = '';
+  }
+
+  // ── Events ──
+  function initEvents() {
+    const searchEl = document.getElementById('search');
+    const clearBtn = document.getElementById('search-clear');
+    let searchTimer;
+
+    searchEl.addEventListener('input', e => {
+      const q = e.target.value;
+      clearBtn.style.display = q ? 'block' : 'none';
+      clearTimeout(searchTimer);
+      searchTimer = setTimeout(() => {
+        searchTerm = q.trim();
+        applyFilters();
+      }, 160);
+    });
+
+    clearBtn.addEventListener('click', () => {
+      searchEl.value = '';
+      clearBtn.style.display = 'none';
+      searchTerm = '';
+      applyFilters();
+      searchEl.focus();
+    });
+
+    document.getElementById('sort-btn').addEventListener('click', () => {
+      sortDesc = !sortDesc;
+      document.getElementById('sort-icon').textContent = sortDesc ? '↓' : '↑';
+      document.getElementById('sort-label').textContent = sortDesc ? 'Newest' : 'Oldest';
+      applyFilters();
+    });
+
+    document.getElementById('filter-all').addEventListener('click', () => {
+      selectedCats = new Set(
+        categoryCfg.categories.map(c => c.category).concat([categoryCfg.default_category.category])
+      );
+      renderSidebar();
+      applyFilters();
+    });
+    document.getElementById('filter-none').addEventListener('click', () => {
+      selectedCats = new Set();
+      renderSidebar();
+      applyFilters();
+    });
+
+    document.getElementById('filter-toggle').addEventListener('click', () => {
+      document.getElementById('sidebar').classList.toggle('open');
+    });
+
+    document.getElementById('load-more').addEventListener('click', renderNextBatch);
+
+    document.getElementById('lightbox').addEventListener('click', closeLightbox);
+    document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+    document.addEventListener('keydown', e => {
+      if (e.key === 'Escape') closeLightbox();
+    });
+  }
+
+  initEvents();
+  loadData();
+})();
+</script>
+</body>
+</html>

@@ -144,6 +144,13 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/upcoming.png"
   },
   {
+    "id": "about-youtube",
+    "section": "Views",
+    "icon": "🔎",
+    "title": "YouTube",
+    "body": "Browse BAND-MAID related content from across YouTube — reactions, covers, interviews, live reports, and the occasional gem from the official channel. New videos are discovered automatically every 30 minutes. Filter by category, search by title or channel, and preview inline."
+  },
+  {
     "id": "about-million",
     "section": "Views",
     "icon": "🎯",

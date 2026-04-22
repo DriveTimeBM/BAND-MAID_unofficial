@@ -1,0 +1,92 @@
+{
+    "schema_version": 1,
+    "categories": [
+        {
+            "category": "Official",
+            "color": "#c8a96e",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": ["UCJToUvYrmkmTCR-bluEaQfA"] }
+            ],
+            "notes": "Official BAND-MAID YouTube channel"
+        },
+        {
+            "category": "Reaction",
+            "color": "#a8c4a0",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\breact\\w*\\b",
+                    "\\bhear\\w*\\b",
+                    "\\blisten\\w*\\b"
+                ]}
+            ],
+            "notes": "Matches react/reacts/reacting/reaction/reactions, hear/hears/hearing/heard, listen/listens/listening/listened"
+        },
+        {
+            "category": "Cover",
+            "color": "#c4a484",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\bcover\\w*\\b",
+                    "\\bdrum\\s*cam\\b",
+                    "(guitar|bass|drum|vocal)\\s+cover\\b",
+                    "歌ってみた",
+                    "弾いてみた",
+                    "叩いてみた"
+                ]}
+            ],
+            "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
+        },
+        {
+            "category": "Live Report",
+            "color": "#9cb4d4",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\blive\\s*report\\b",
+                    "\\bconcert\\s*report\\b",
+                    "\\bshow\\s*report\\b",
+                    "\\bgig\\s*report\\b"
+                ]}
+            ]
+        },
+        {
+            "category": "Interview",
+            "color": "#b4a4c4",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\binterview\\b",
+                    "\\bsit[-\\s]down\\b",
+                    "\\btalks?\\s+with\\b",
+                    "\\bQ\\s*&\\s*A\\b"
+                ]}
+            ]
+        },
+        {
+            "category": "Analysis",
+            "color": "#a4b4c4",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\banalysis\\b",
+                    "\\bbreakdown\\b",
+                    "\\bdeep\\s*dive\\b",
+                    "\\breview\\w*\\b",
+                    "\\bretrospective\\b"
+                ]}
+            ]
+        },
+        {
+            "category": "News",
+            "color": "#d4b89c",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\bnews\\b",
+                    "\\bannounc\\w*\\b",
+                    "\\bupdate\\w*\\b"
+                ]}
+            ]
+        }
+    ],
+    "default_category": {
+        "category": "MISC",
+        "color": "#666666"
+    }
+}

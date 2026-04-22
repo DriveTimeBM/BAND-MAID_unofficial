@@ -105,6 +105,13 @@
     "icon": "⏳"
   },
   {
+    "id": "youtube",
+    "name": "YouTube *new*",
+    "file": "views/youtube.html",
+    "nav": "main",
+    "icon": "🔎"
+  },
+  {
     "id": "million",
     "name": "Next Million",
     "file": "views/million.html",
