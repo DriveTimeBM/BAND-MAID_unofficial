@@ -84,6 +84,12 @@
     "icon": "📺"
   },
   {
+    "id": "browsefanclub",
+    "name": "Browse Fan Club *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_browse_fanclub/index.html",
+    "nav": "main",
+    "icon": "🎥"
+  },  {
     "id": "news",
     "name": "News",
     "file": "views/news.html",

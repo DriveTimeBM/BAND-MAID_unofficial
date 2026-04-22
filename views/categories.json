@@ -45,7 +45,8 @@
                     "\\blive\\s*report\\b",
                     "\\bconcert\\s*report\\b",
                     "\\bshow\\s*report\\b",
-                    "\\bgig\\s*report\\b"
+                    "\\bgig\\s*report\\b",
+                    "Impression"
                 ]}
             ]
         },

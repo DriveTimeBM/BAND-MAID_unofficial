@@ -108,13 +108,22 @@
     "image": "https://dj8b9lmjd3uu7.cloudfront.net/Thumbnails/5855990841147/0de9e318-4968-4bd3-92a5-0e8cfa95ea25-1744043393673.jpg"
   },  
   {
-  "id": "about-browseprime",
-  "section": "Views",
-  "icon": "📺",
-  "title": "Browse Prime",
-  "jsonUrl": null,
-  "body": "All other BAND-MAID Prime (non-live show) content organized with tracklist details (where available) and timestamps. Jump straight to what you want to see.",
-  "image": "https://dj8b9lmjd3uu7.cloudfront.net/Thumbnails/5855990841147/85e047a3-3d34-4b79-9d0a-604bb1122f95-1766941730608.png"
+    "id": "about-browseprime",
+    "section": "Views",
+    "icon": "📺",
+    "title": "Browse Prime",
+    "jsonUrl": null,
+    "body": "All other BAND-MAID Prime (non-live show) content organized with tracklist details (where available) and timestamps. Jump straight to what you want to see.",
+    "image": "https://dj8b9lmjd3uu7.cloudfront.net/Thumbnails/5855990841147/85e047a3-3d34-4b79-9d0a-604bb1122f95-1766941730608.png"
+  },  
+  {
+      "id": "about-browsefanclub",
+      "section": "Views",
+      "icon": "🎥",
+      "title": "Browse Fan Club",
+      "jsonUrl": null,
+      "body": "Browse all Fan Club (OMEISYUSAMA-NO-KAI) content organized with tracklist details (where available) and timestamps. Jump straight to what you want to see.",
+      "image": "https://i.vimeocdn.com/video/1089025637-97e5250e5e098fa8ea7031f434a856ca07339b85694913a4978d271eb221f829-d_640"
   },
   {
     "id": "about-gallery",
