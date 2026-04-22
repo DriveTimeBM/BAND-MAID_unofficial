@@ -99,13 +99,22 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/fanclub.png"
   },
   {
-      "id": "about-live",
-      "section": "Views",
-      "icon": "🎤",
-      "title": "Live Video",
-      "jsonUrl": null,
-      "body": "All BAND-MAID Prime shows organized with setlist details and timestamps. Jump straight to what you want to see.",
-      "image": "https://dj8b9lmjd3uu7.cloudfront.net/Thumbnails/5855990841147/0de9e318-4968-4bd3-92a5-0e8cfa95ea25-1744043393673.jpg"
+    "id": "about-live",
+    "section": "Views",
+    "icon": "🎤",
+    "title": "Live Video",
+    "jsonUrl": null,
+    "body": "All BAND-MAID Prime shows organized with setlist details and timestamps. Jump straight to what you want to see.",
+    "image": "https://dj8b9lmjd3uu7.cloudfront.net/Thumbnails/5855990841147/0de9e318-4968-4bd3-92a5-0e8cfa95ea25-1744043393673.jpg"
+  },  
+  {
+  "id": "about-otherprime",
+  "section": "Views",
+  "icon": "📺",
+  "title": "Other Prime",
+  "jsonUrl": null,
+  "body": "All other BAND-MAID Prime (non-live show) content organized with tracklist details (where available) and timestamps. Jump straight to what you want to see.",
+  "image": "https://dj8b9lmjd3uu7.cloudfront.net/Thumbnails/5855990841147/85e047a3-3d34-4b79-9d0a-604bb1122f95-1766941730608.png"
   },
   {
     "id": "about-gallery",

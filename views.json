@@ -77,6 +77,13 @@
     "icon": "🎤"
   },
   {
+    "id": "map",
+    "name": "Other Prime *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_other_prime/index.html",
+    "nav": "main",
+    "icon": "📺"
+  },
+  {
     "id": "news",
     "name": "News",
     "file": "views/news.html",
