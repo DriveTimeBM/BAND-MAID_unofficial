@@ -14,7 +14,7 @@
             "color": "#a8c4a0",
             "rules": [
                 { "field": "Channel", "type": "regex", "patterns": [
-                    "react"] 
+                    "\\breact(s|ion|ing|ed)?\\b"] 
                 },
                 { "field": "channelId", "type": "exact", "patterns": [
                     "UCvKUIZjMmlHJ9vjGJey0SBQ"] 
