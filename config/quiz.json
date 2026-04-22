@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/L1prF8ArZb8/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MIKU KOBATO — Views: 45,740 | Yesterday: 8\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) SAIKI vs Dany  part 2 — Views: 11,541 | Yesterday: 7\nBAND-MAID / What is justice? (Official Teaser Video MISA ver.) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 36,519 | Yesterday: 6",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Giovanni — Spotify: 783,332 | Played Live: 6\nCatharsis (カタルシス) — Spotify: 778,684 | Played Live: 18\nDilemma — Spotify: 742,703 | Played Live: 13",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Teaser Video MISA ver.) TVアニメ「桃源暗鬼」エンディング主題歌"
+                                              "text":  "Catharsis (カタルシス)"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) SAIKI vs Dany  part 2"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MIKU KOBATO",
+                                              "text":  "Giovanni",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Dilemma"
                                           }
                                       ]
                       }
