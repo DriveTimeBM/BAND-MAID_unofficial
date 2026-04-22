@@ -13,6 +13,7 @@
             "category": "Reaction",
             "color": "#a8c4a0",
             "rules": [
+                { "field": "channelId", "type": "exact", "patterns": ["UCvKUIZjMmlHJ9vjGJey0SBQ"] }
                 { "field": "title", "type": "regex", "patterns": [
                     "\\breact\\w*\\b",
                     "\\bhear\\w*\\b",
@@ -95,7 +96,16 @@
                     "session"
                 ]}
             ]
-        }    
+        },
+        {
+            "category": "Lyric Video",
+            "color": "#9cb4d4",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "Legendado"
+                ]}
+            ]
+        }        
     ],
     "default_category": {
         "category": "MISC",
