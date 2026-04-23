@@ -1,0 +1,52 @@
+{
+    "schema_version": 1,
+    "feeds": [
+        {
+            "id": "bandmaid-youtube",
+            "name": "BAND-MAID YouTube",
+            "url": "https://drivetimebm.github.io/BAND-MAID_feed/feed.xml",
+            "color": "#8a3a3a",
+            "enabled": true,
+            "use_proxy": false,
+            "notes": "New BAND-MAID related YouTube videos discovered by the feed bot"
+        },
+        {
+            "id": "bandmaid-google-alerts",
+            "name": "BAND-MAID Google Alerts",
+            "url": "https://www.google.com/alerts/feeds/02177536775022193961/12638660897224162323",
+            "color": "#4a6fa5",
+            "enabled": true,
+            "use_proxy": true,
+            "notes": "New BAND-MAID related Google Alerts"
+        },    
+        {
+            "id": "reddit-bandmaid",
+            "name": "r/BandMaid",
+            "url": "https://www.reddit.com/r/BandMaid/new/.rss",
+            "color": "#ff4500",
+            "enabled": true,
+            "use_proxy": true,
+            "notes": "New posts in r/BandMaid subreddit"
+        },
+        {
+            "id": "reddit-mentions",
+            "name": "Reddit Mentions",
+            "url": "https://www.reddit.com/search.rss?q=%22band-maid%22+-subreddit%3ABandMaid&sort=new&restrict_sr=off",
+            "color": "#ff8c42",
+            "enabled": true,
+            "use_proxy": true,
+            "notes": "Exact-phrase BAND-MAID mentions, excluding r/BandMaid (which has its own feed)"
+        },
+        {
+            "id": "bandmaid-social",
+            "name": "Social Mentions",
+            "url": "https://drivetimebm.github.io/BAND-MAID_feed/mentions.xml",
+            "color": "#5b88bd",
+            "enabled": true,
+            "use_proxy": false,
+            "notes": "BAND-MAID mentions from Bluesky, Mastodon, and other social platforms"
+        }
+    ],
+    "cors_proxy": "https://corsproxy.io/?url=",
+    "refresh_minutes": 30
+}

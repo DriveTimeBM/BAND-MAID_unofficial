@@ -1,0 +1,881 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>The BAND-MAID SCOOOOOP</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --paper:      #f4ede0;
+    --paper2:     #ece4d3;
+    --paper3:     #e4dbc7;
+    --ink:        #1a1814;
+    --ink2:       #4a4640;
+    --ink3:       #8a857c;
+    --rule:       #2a2620;
+    --rule-soft:  #c5bda9;
+    --accent:     #8a3a3a;
+    --accent-dk:  #5a2626;
+    --unread:     #8a3a3a;
+    --serif-hd:   'Playfair Display', Georgia, serif;
+    --serif-body: 'Source Serif 4', 'Source Serif Pro', Georgia, serif;
+    --sans:       'Inter', system-ui, sans-serif;
+  }
+
+  html { background: var(--paper); }
+
+  body {
+    background: var(--paper);
+    color: var(--ink);
+    font-family: var(--serif-body);
+    font-size: 16px;
+    line-height: 1.55;
+    min-height: 100vh;
+    background-image:
+      radial-gradient(ellipse at 20% 30%, rgba(0,0,0,0.015) 0, transparent 60%),
+      radial-gradient(ellipse at 80% 70%, rgba(0,0,0,0.015) 0, transparent 60%),
+      repeating-linear-gradient(0deg,
+        transparent 0, transparent 3px,
+        rgba(0,0,0,0.006) 3px, rgba(0,0,0,0.006) 4px);
+  }
+
+  ::selection { background: var(--accent); color: var(--paper); }
+
+  .masthead {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 28px 32px 18px;
+    border-bottom: 3px double var(--rule);
+    text-align: center;
+  }
+  .masthead-top {
+    display: flex;
+    justify-content: space-between;
+    align-items: baseline;
+    font-family: var(--sans);
+    font-size: 10px;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    margin-bottom: 10px;
+  }
+  .masthead-top .edition { font-weight: 600; }
+  .masthead-title {
+    font-family: var(--serif-hd);
+    font-weight: 900;
+    font-size: clamp(38px, 6vw, 62px);
+    letter-spacing: -0.02em;
+    line-height: 1.0;
+    color: var(--ink);
+    margin-bottom: 4px;
+  }
+  .masthead-sub {
+    font-family: var(--serif-body);
+    font-style: italic;
+    font-size: 14px;
+    color: var(--ink2);
+    letter-spacing: 0.02em;
+  }
+
+  .toolbar {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 14px 32px;
+    border-bottom: 1px solid var(--rule-soft);
+    display: flex;
+    gap: 12px;
+    align-items: center;
+    flex-wrap: wrap;
+    font-family: var(--sans);
+    font-size: 13px;
+  }
+  .mode-toggle {
+    display: flex;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    overflow: hidden;
+  }
+  .mode-toggle button {
+    background: transparent;
+    border: none;
+    padding: 7px 14px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink2);
+    transition: background 0.15s, color 0.15s;
+  }
+  .mode-toggle button + button { border-left: 1px solid var(--rule); }
+  .mode-toggle button.active { background: var(--ink); color: var(--paper); }
+  .mode-toggle button:not(.active):hover { background: var(--paper3); color: var(--ink); }
+
+  .toolbar-spacer { flex: 1; }
+
+  .tb-btn {
+    background: transparent;
+    border: 1px solid var(--rule);
+    border-radius: 2px;
+    padding: 7px 12px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background 0.15s;
+  }
+  .tb-btn:hover { background: var(--paper3); }
+  .tb-btn .spin { display: inline-block; animation: spin 1s linear infinite; }
+  @keyframes spin { to { transform: rotate(360deg); } }
+
+  .refresh-meta {
+    font-size: 11px;
+    color: var(--ink3);
+    font-family: var(--sans);
+    letter-spacing: 0.04em;
+  }
+
+  .main-container {
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px 32px 60px;
+  }
+
+  .layout-unified .feed-list-wrap { display: none; }
+  .layout-unified .content-wrap { grid-template-columns: 1fr; }
+
+  .content-wrap {
+    display: grid;
+    grid-template-columns: 240px 1fr;
+    gap: 32px;
+  }
+
+  .feed-list-wrap {
+    align-self: start;
+    position: sticky;
+    top: 20px;
+  }
+  .feed-list-title {
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 700;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink3);
+    padding-bottom: 8px;
+    border-bottom: 1px solid var(--rule-soft);
+    margin-bottom: 8px;
+  }
+  .feed-list { display: flex; flex-direction: column; }
+  .feed-item {
+    padding: 10px 4px;
+    border-bottom: 1px solid var(--rule-soft);
+    cursor: pointer;
+    transition: background 0.12s;
+    display: flex;
+    align-items: baseline;
+    gap: 8px;
+    font-family: var(--serif-body);
+  }
+  .feed-item:hover { background: var(--paper2); }
+  .feed-item.active .feed-name {
+    font-weight: 600;
+    color: var(--accent-dk);
+  }
+  .feed-dot {
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    flex-shrink: 0;
+    margin-top: 2px;
+  }
+  .feed-name {
+    flex: 1;
+    font-size: 15px;
+    line-height: 1.3;
+  }
+  .feed-count {
+    font-family: var(--sans);
+    font-size: 11px;
+    color: var(--ink3);
+    font-variant-numeric: tabular-nums;
+  }
+  .feed-count.has-unread { color: var(--accent); font-weight: 600; }
+
+  .article-list { display: flex; flex-direction: column; }
+
+  .article {
+    padding: 22px 0;
+    border-bottom: 1px solid var(--rule-soft);
+    position: relative;
+  }
+  .article:first-child { padding-top: 6px; }
+
+  .article-head {
+    display: flex;
+    align-items: baseline;
+    gap: 10px;
+    font-family: var(--sans);
+    font-size: 10px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--ink2);
+    margin-bottom: 8px;
+  }
+  .article-feed-tag {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+  }
+  .article-feed-dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+  }
+  .article-feed-name { color: var(--ink); }
+  .article-sep { color: var(--rule-soft); }
+  .article-time { color: var(--ink3); font-weight: 400; letter-spacing: 0.08em; }
+
+  .article-unread-mark {
+    position: absolute;
+    left: -22px;
+    top: 28px;
+    width: 12px;
+    height: 12px;
+    border-radius: 50%;
+    background: #3d9a5f;
+    box-shadow: 0 0 0 2px rgba(61, 154, 95, 0.2);
+    opacity: 0;
+    transition: opacity 0.2s;
+  }
+  .article.unread .article-unread-mark { opacity: 1; }
+
+  .article-title {
+    font-family: var(--serif-hd);
+    font-weight: 700;
+    font-size: 24px;
+    line-height: 1.18;
+    color: var(--ink);
+    cursor: pointer;
+    margin-bottom: 6px;
+    letter-spacing: -0.005em;
+    transition: color 0.15s;
+  }
+  .article-title:hover { color: var(--accent-dk); }
+  .article.read .article-title { color: var(--ink2); }
+
+  .article-meta {
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--ink3);
+    margin-bottom: 10px;
+    letter-spacing: 0.02em;
+  }
+  .article-meta .author { color: var(--ink2); font-weight: 500; }
+
+  .article-body {
+    display: none;
+    margin-top: 14px;
+    padding: 16px 18px;
+    background: var(--paper2);
+    border-left: 3px solid var(--accent);
+    font-size: 15px;
+    line-height: 1.6;
+  }
+  .article.expanded .article-body { display: block; }
+  .article-body p { margin-bottom: 10px; }
+  .article-body p:last-child { margin-bottom: 0; }
+  .article-body a { color: var(--accent-dk); text-decoration: underline; text-decoration-thickness: 1px; text-underline-offset: 2px; }
+  .article-body a:hover { color: var(--accent); }
+  .article-body img {
+    max-width: 100%;
+    height: auto;
+    display: block;
+    margin: 10px 0;
+    border: 1px solid var(--rule-soft);
+  }
+
+  .article-actions {
+    margin-top: 14px;
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+  }
+  .article-action {
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 6px 12px;
+    border: 1px solid var(--rule);
+    background: var(--paper);
+    color: var(--ink);
+    text-decoration: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    transition: background 0.15s, color 0.15s;
+  }
+  .article-action:hover { background: var(--ink); color: var(--paper); }
+  .article-action.primary { background: var(--accent); color: var(--paper); border-color: var(--accent); }
+  .article-action.primary:hover { background: var(--accent-dk); border-color: var(--accent-dk); }
+
+  .yt-embed {
+    margin-top: 14px;
+    aspect-ratio: 16 / 9;
+    width: 100%;
+    max-width: 720px;
+    background: #000;
+    display: none;
+  }
+  .yt-embed.active { display: block; }
+  .yt-embed iframe { width: 100%; height: 100%; border: none; }
+
+  .state-box {
+    padding: 60px 20px;
+    text-align: center;
+    font-family: var(--serif-body);
+    font-style: italic;
+    color: var(--ink3);
+    border: 1px solid var(--rule-soft);
+    background: var(--paper2);
+  }
+  .state-box .spinner {
+    width: 28px;
+    height: 28px;
+    border: 2px solid var(--rule-soft);
+    border-top-color: var(--accent);
+    border-radius: 50%;
+    margin: 0 auto 14px;
+    animation: spin 0.9s linear infinite;
+  }
+
+  .feed-error {
+    font-size: 9px;
+    color: var(--accent);
+    letter-spacing: 0.1em;
+    font-family: var(--sans);
+    font-weight: 700;
+    text-transform: uppercase;
+    margin-left: 6px;
+  }
+
+  .proxy-warning {
+    max-width: 1200px;
+    margin: 12px auto 0;
+    padding: 10px 16px;
+    background: rgba(138, 58, 58, 0.08);
+    border: 1px solid var(--accent);
+    border-radius: 2px;
+    font-family: var(--sans);
+    font-size: 12px;
+    color: var(--accent-dk);
+    display: none;
+  }
+  .proxy-warning.active { display: block; }
+  .proxy-warning strong { font-weight: 700; }
+
+  #load-more-wrap { text-align: center; margin-top: 30px; }
+  #load-more {
+    background: transparent;
+    border: 1px solid var(--rule);
+    padding: 10px 28px;
+    font-family: var(--sans);
+    font-size: 11px;
+    font-weight: 600;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    cursor: pointer;
+    color: var(--ink);
+    transition: background 0.15s;
+  }
+  #load-more:hover { background: var(--ink); color: var(--paper); }
+
+  @media (max-width: 768px) {
+    .masthead { padding: 20px 20px 14px; }
+    .masthead-title { font-size: 38px; }
+    .toolbar { padding: 12px 20px; }
+    .main-container { padding: 16px 20px 40px; }
+    .content-wrap { grid-template-columns: 1fr; gap: 20px; }
+    .feed-list-wrap {
+      position: static;
+      border-bottom: 1px solid var(--rule-soft);
+      padding-bottom: 14px;
+    }
+    .article-title { font-size: 20px; }
+    .article-unread-mark { left: -10px; width: 5px; height: 5px; top: 28px; }
+  }
+</style>
+</head>
+<body>
+
+<header class="masthead">
+  <div class="masthead-top">
+    <span class="edition" id="edition-date">—</span>
+    <span>No. <span id="edition-num">I</span></span>
+  </div>
+  <h1 class="masthead-title">The BAND-MAID SCOOOOOP</h1>
+  <div class="masthead-sub">BAND-MAID news, covers, and reactions — fresh off the wire</div>
+</header>
+
+<div class="proxy-warning" id="proxy-warning">
+  <strong>Note:</strong> One or more feeds are routed through a public CORS proxy
+  (<code>corsproxy.io</code>). Traffic is visible to the proxy operator. Only use for non-sensitive feeds.
+</div>
+
+<div class="toolbar">
+  <div class="mode-toggle">
+    <button id="mode-unified" class="active">Unified</button>
+    <button id="mode-detail">By Feed</button>
+  </div>
+  <div class="toolbar-spacer"></div>
+  <button class="tb-btn" id="mark-all-read" title="Mark everything read">Mark All Read</button>
+  <button class="tb-btn" id="refresh-btn">
+    <span id="refresh-label">Refresh</span>
+  </button>
+  <span class="refresh-meta" id="refresh-meta">—</span>
+</div>
+
+<div class="main-container layout-unified" id="layout-root">
+  <div class="content-wrap">
+    <aside class="feed-list-wrap">
+      <div class="feed-list-title">Sources</div>
+      <div class="feed-list" id="feed-list"></div>
+    </aside>
+    <main>
+      <div class="article-list" id="article-list"></div>
+      <div id="load-more-wrap" style="display:none;">
+        <button id="load-more">Continue Reading</button>
+      </div>
+    </main>
+  </div>
+</div>
+
+<script>
+(function() {
+  'use strict';
+
+  const CONFIG_URL = './feeds.json';
+  const PAGE_SIZE = 40;
+  const LS_READ = 'bm_register_read_v1';
+  const LS_CACHE = 'bm_register_cache_v1';
+
+  let config = null;
+  let feeds = [];
+  let readSet = loadReadSet();
+  let currentMode = 'unified';
+  let activeFeedId = null;
+  let renderedCount = 0;
+  let filteredItems = [];
+  let refreshTimer = null;
+
+  function loadReadSet() {
+    try { return new Set(JSON.parse(localStorage.getItem(LS_READ) || '[]')); }
+    catch { return new Set(); }
+  }
+  function saveReadSet() {
+    try { localStorage.setItem(LS_READ, JSON.stringify([...readSet])); }
+    catch {}
+  }
+  function loadCache() {
+    try { return JSON.parse(localStorage.getItem(LS_CACHE) || '{}'); }
+    catch { return {}; }
+  }
+  function saveCache(cache) {
+    try { localStorage.setItem(LS_CACHE, JSON.stringify(cache)); }
+    catch {}
+  }
+
+  function escapeHtml(s) {
+    return String(s == null ? '' : s).replace(/[&<>"']/g, c => ({
+      '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'
+    }[c]));
+  }
+
+  function relativeTime(date) {
+    if (!date || isNaN(date)) return '';
+    const diff = Math.floor((Date.now() - date.getTime()) / 1000);
+    if (diff < 60) return 'just now';
+    if (diff < 3600) return Math.floor(diff / 60) + ' min ago';
+    if (diff < 86400) return Math.floor(diff / 3600) + ' hr ago';
+    if (diff < 604800) return Math.floor(diff / 86400) + ' d ago';
+    if (diff < 2592000) return Math.floor(diff / 604800) + ' wk ago';
+    if (diff < 31536000) return Math.floor(diff / 2592000) + ' mo ago';
+    return Math.floor(diff / 31536000) + ' yr ago';
+  }
+
+  function absoluteTime(date) {
+    if (!date || isNaN(date)) return '';
+    return date.toLocaleString(undefined, {
+      year: 'numeric', month: 'long', day: 'numeric',
+      hour: 'numeric', minute: '2-digit'
+    });
+  }
+
+  function formatEditionDate() {
+    return new Date().toLocaleDateString(undefined, {
+      weekday: 'long', year: 'numeric', month: 'long', day: 'numeric'
+    }).toUpperCase();
+  }
+
+  function toRoman(n) {
+    if (n < 1) return 'I';
+    const vals = [['M',1000],['CM',900],['D',500],['CD',400],['C',100],['XC',90],
+                  ['L',50],['XL',40],['X',10],['IX',9],['V',5],['IV',4],['I',1]];
+    let out = '';
+    for (const [sym, v] of vals) {
+      while (n >= v) { out += sym; n -= v; }
+    }
+    return out;
+  }
+
+  function extractYoutubeId(url) {
+    if (!url) return null;
+    const m = url.match(/(?:youtu\.be\/|youtube\.com\/(?:watch\?v=|embed\/|v\/))([A-Za-z0-9_-]{11})/);
+    return m ? m[1] : null;
+  }
+
+  async function fetchFeed(feed) {
+    const url = feed.use_proxy
+      ? (config.cors_proxy || 'https://corsproxy.io/?url=') + encodeURIComponent(feed.url)
+      : feed.url + (feed.url.includes('?') ? '&' : '?') + '_t=' + Date.now();
+
+    const res = await fetch(url);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const text = await res.text();
+    return parseRss(text, feed);
+  }
+
+  function parseRss(xmlText, feed) {
+    const parser = new DOMParser();
+    const doc = parser.parseFromString(xmlText, 'application/xml');
+
+    const parseErr = doc.querySelector('parsererror');
+    if (parseErr) throw new Error('XML parse error');
+
+    const items = [];
+    const dcNs = 'http://purl.org/dc/elements/1.1/';
+    const mediaNs = 'http://search.yahoo.com/mrss/';
+
+    doc.querySelectorAll('item').forEach(el => {
+      const title = el.querySelector('title')?.textContent?.trim() || '';
+      const link = el.querySelector('link')?.textContent?.trim() || '';
+      const guid = el.querySelector('guid')?.textContent?.trim() || link;
+      const pubDate = el.querySelector('pubDate')?.textContent?.trim();
+      const description = el.querySelector('description')?.textContent || '';
+      const creator = el.getElementsByTagNameNS(dcNs, 'creator')[0]?.textContent?.trim()
+                  || el.querySelector('author')?.textContent?.trim() || '';
+      const thumbEl = el.getElementsByTagNameNS(mediaNs, 'thumbnail')[0];
+      const thumbnail = thumbEl?.getAttribute('url') || '';
+
+      items.push({
+        feedId: feed.id,
+        guid: guid || (title + '|' + link),
+        title, link, creator, description, thumbnail,
+        date: pubDate ? new Date(pubDate) : null
+      });
+    });
+
+    if (items.length === 0) {
+       const stripHtml = (s) => {
+          const tmp = document.createElement('div');
+          tmp.innerHTML = s;
+          return (tmp.textContent || tmp.innerText || '').trim();
+       };
+
+       doc.querySelectorAll('entry').forEach(el => {
+         const titleEl = el.querySelector('title');
+         let title = titleEl?.textContent?.trim() || '';
+         if (titleEl?.getAttribute('type') === 'html' || /<[a-z][^>]*>/i.test(title)) {
+           title = stripHtml(title);
+         } 
+
+        const link = el.querySelector('link')?.getAttribute('href') || '';
+        const guid = el.querySelector('id')?.textContent?.trim() || link;
+        const pubDate = el.querySelector('published, updated')?.textContent?.trim();
+        const summary = el.querySelector('summary, content')?.textContent || '';
+        const creator = el.querySelector('author name')?.textContent?.trim() || '';
+
+        items.push({
+          feedId: feed.id, guid, title, link, creator,
+          description: summary, thumbnail: '',
+          date: pubDate ? new Date(pubDate) : null
+        });
+      });
+    }
+
+    return items;
+  }
+
+  function rehydrateDate(item) {
+    return { ...item, date: item.date ? new Date(item.date) : null };
+  }
+  function dehydrateDate(item) {
+    return { ...item, date: item.date ? item.date.toISOString() : null };
+  }
+
+  async function refreshAll(useCache = false) {
+    const btn = document.getElementById('refresh-btn');
+    const label = document.getElementById('refresh-label');
+    btn.disabled = true;
+    label.innerHTML = '<span class="spin">◐</span> Refreshing';
+
+    const cache = loadCache();
+    const anyProxy = feeds.some(f => f.use_proxy);
+    //document.getElementById('proxy-warning').classList.toggle('active', anyProxy);
+
+    await Promise.all(feeds.map(async feed => {
+      if (useCache && cache[feed.id]) {
+        feed.items = cache[feed.id].items.map(rehydrateDate);
+        feed.error = null;
+        return;
+      }
+      try {
+        feed.items = await fetchFeed(feed);
+        feed.error = null;
+        cache[feed.id] = {
+          fetchedAt: Date.now(),
+          items: feed.items.map(dehydrateDate)
+        };
+      } catch (err) {
+        console.warn('Feed failed:', feed.name, err);
+        feed.error = err.message;
+        if (cache[feed.id]) {
+          feed.items = cache[feed.id].items.map(rehydrateDate);
+        } else {
+          feed.items = [];
+        }
+      }
+    }));
+
+    saveCache(cache);
+
+    label.textContent = 'Refresh';
+    btn.disabled = false;
+    updateRefreshMeta();
+    renderAll();
+  }
+
+  function updateRefreshMeta() {
+    document.getElementById('refresh-meta').textContent =
+      'updated ' + new Date().toLocaleTimeString([], { hour: 'numeric', minute: '2-digit' });
+  }
+
+  function renderAll() {
+    renderFeedList();
+    renderArticles();
+  }
+
+  function renderFeedList() {
+    const container = document.getElementById('feed-list');
+    const rows = feeds.map(feed => {
+      const unread = feed.items.filter(i => !readSet.has(i.guid)).length;
+      const isActive = currentMode === 'detail' && activeFeedId === feed.id;
+      const errBadge = feed.error ? '<span class="feed-error">Err</span>' : '';
+      return `
+        <div class="feed-item ${isActive ? 'active' : ''}" data-feed-id="${escapeHtml(feed.id)}">
+          <span class="feed-dot" style="background:${escapeHtml(feed.color)}"></span>
+          <span class="feed-name">${escapeHtml(feed.name)}${errBadge}</span>
+          <span class="feed-count ${unread > 0 ? 'has-unread' : ''}">${unread > 0 ? unread : feed.items.length}</span>
+        </div>
+      `;
+    }).join('');
+    container.innerHTML = rows;
+
+    container.querySelectorAll('.feed-item').forEach(el => {
+      el.addEventListener('click', () => {
+        activeFeedId = el.dataset.feedId;
+        setMode('detail');
+      });
+    });
+  }
+
+  function renderArticles() {
+    if (currentMode === 'unified') {
+      filteredItems = feeds.flatMap(f => f.items);
+    } else {
+      const feed = feeds.find(f => f.id === activeFeedId) || feeds[0];
+      activeFeedId = feed?.id;
+      filteredItems = feed ? feed.items : [];
+    }
+    filteredItems.sort((a, b) => {
+      const da = a.date ? a.date.getTime() : 0;
+      const db = b.date ? b.date.getTime() : 0;
+      return db - da;
+    });
+
+    renderedCount = 0;
+    document.getElementById('article-list').innerHTML = '';
+    renderNextBatch();
+  }
+
+  function renderNextBatch() {
+    const container = document.getElementById('article-list');
+    const slice = filteredItems.slice(renderedCount, renderedCount + PAGE_SIZE);
+
+    if (renderedCount === 0 && slice.length === 0) {
+      container.innerHTML = `<div class="state-box">
+        No items in this view.${feeds.some(f => f.error) ? ' (Some feeds failed to load.)' : ''}
+      </div>`;
+      document.getElementById('load-more-wrap').style.display = 'none';
+      return;
+    }
+
+    const frag = document.createDocumentFragment();
+    for (const item of slice) {
+      frag.appendChild(buildArticle(item));
+    }
+    container.appendChild(frag);
+    renderedCount += slice.length;
+
+    document.getElementById('load-more-wrap').style.display =
+      renderedCount < filteredItems.length ? 'block' : 'none';
+  }
+
+  function buildArticle(item) {
+    const feed = feeds.find(f => f.id === item.feedId);
+    const isRead = readSet.has(item.guid);
+    const article = document.createElement('article');
+    article.className = 'article ' + (isRead ? 'read' : 'unread');
+    article.dataset.guid = item.guid;
+
+    const relTime = relativeTime(item.date);
+    const absTime = absoluteTime(item.date);
+    const ytId = extractYoutubeId(item.link);
+
+    article.innerHTML = `
+      <div class="article-unread-mark"></div>
+      <div class="article-head">
+        ${currentMode === 'unified' ? `
+          <span class="article-feed-tag">
+            <span class="article-feed-dot" style="background:${escapeHtml(feed?.color || '#888')}"></span>
+            <span class="article-feed-name">${escapeHtml(feed?.name || '')}</span>
+          </span>
+          <span class="article-sep">•</span>
+        ` : ''}
+        <span class="article-time" title="${escapeHtml(absTime)}">${escapeHtml(relTime)}</span>
+      </div>
+      <h2 class="article-title">${escapeHtml(item.title)}</h2>
+      ${item.creator ? `<div class="article-meta">by <span class="author">${escapeHtml(item.creator)}</span></div>` : ''}
+      <div class="article-body">${item.description || '<em>No description available.</em>'}</div>
+      ${ytId ? `<div class="yt-embed"><iframe src="" data-src="https://www.youtube.com/embed/${escapeHtml(ytId)}?autoplay=1" allow="autoplay; encrypted-media" allowfullscreen></iframe></div>` : ''}
+      <div class="article-actions" style="display:none;">
+        ${item.link ? `<a class="article-action primary" href="${escapeHtml(item.link)}" target="_blank" rel="noopener">Read Original ↗</a>` : ''}
+        ${ytId ? `<button class="article-action" data-action="play">Play Here</button>` : ''}
+      </div>
+    `;
+
+    article.querySelector('.article-body').addEventListener('click', e => e.stopPropagation());
+    article.querySelector('.article-actions')?.addEventListener('click', e => e.stopPropagation());
+
+    article.querySelector('.article-title').addEventListener('click', () => {
+      const wasExpanded = article.classList.contains('expanded');
+      article.classList.toggle('expanded');
+      const actions = article.querySelector('.article-actions');
+      if (actions) actions.style.display = wasExpanded ? 'none' : 'flex';
+
+      if (!wasExpanded && !readSet.has(item.guid)) {
+        readSet.add(item.guid);
+        saveReadSet();
+        article.classList.remove('unread');
+        article.classList.add('read');
+        renderFeedList();
+      }
+    });
+
+    const playBtn = article.querySelector('[data-action="play"]');
+    if (playBtn) {
+      playBtn.addEventListener('click', e => {
+        e.stopPropagation();
+        const embed = article.querySelector('.yt-embed');
+        const iframe = embed.querySelector('iframe');
+        if (!embed.classList.contains('active')) {
+          iframe.src = iframe.dataset.src;
+          embed.classList.add('active');
+          playBtn.textContent = 'Stop';
+        } else {
+          iframe.src = '';
+          embed.classList.remove('active');
+          playBtn.textContent = 'Play Here';
+        }
+      });
+    }
+
+    return article;
+  }
+
+  function setMode(mode) {
+    currentMode = mode;
+    document.getElementById('mode-unified').classList.toggle('active', mode === 'unified');
+    document.getElementById('mode-detail').classList.toggle('active', mode === 'detail');
+    document.getElementById('layout-root').classList.toggle('layout-unified', mode === 'unified');
+
+    if (mode === 'detail' && !activeFeedId && feeds.length) {
+      activeFeedId = feeds[0].id;
+    }
+    renderAll();
+  }
+
+  async function init() {
+    document.getElementById('edition-date').textContent = formatEditionDate();
+    const epoch = new Date('2026-04-21').getTime();
+    const days = Math.max(1, Math.floor((Date.now() - epoch) / 86400000) + 1);
+    document.getElementById('edition-num').textContent = toRoman(days);
+
+    document.getElementById('article-list').innerHTML =
+      '<div class="state-box"><div class="spinner"></div>Gathering the day\'s items…</div>';
+
+    try {
+      const res = await fetch(CONFIG_URL);
+      if (!res.ok) throw new Error('Missing feeds.json');
+      config = await res.json();
+    } catch (err) {
+      document.getElementById('article-list').innerHTML =
+        '<div class="state-box">Could not load feeds.json: ' + escapeHtml(err.message) + '</div>';
+      return;
+    }
+
+    feeds = (config.feeds || []).filter(f => f.enabled !== false).map(f => ({
+      ...f, items: [], error: null
+    }));
+
+    document.getElementById('mode-unified').addEventListener('click', () => setMode('unified'));
+    document.getElementById('mode-detail').addEventListener('click', () => setMode('detail'));
+    document.getElementById('refresh-btn').addEventListener('click', () => refreshAll(false));
+    document.getElementById('load-more').addEventListener('click', renderNextBatch);
+    document.getElementById('mark-all-read').addEventListener('click', () => {
+      for (const feed of feeds) for (const item of feed.items) readSet.add(item.guid);
+      saveReadSet();
+      document.querySelectorAll('.article').forEach(el => {
+        el.classList.remove('unread');
+        el.classList.add('read');
+      });
+      renderFeedList();
+    });
+
+    await refreshAll(true);
+    refreshAll(false);
+
+    const mins = config.refresh_minutes || 30;
+    if (mins > 0) {
+      refreshTimer = setInterval(() => refreshAll(false), mins * 60 * 1000);
+    }
+  }
+
+  init();
+})();
+</script>
+</body>
+</html>

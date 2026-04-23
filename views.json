@@ -197,7 +197,7 @@
   {
     "id": "rss",
     "name": "RSS Feed *new*",
-    "file": "https://drivetimebm.github.io/BAND-MAID_feed/index.html",
+    "file": "views/rss.html",
     "nav": "menu",
     "icon": "📰"
   },
