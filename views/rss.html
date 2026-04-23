@@ -778,6 +778,12 @@
     `;
 
     article.querySelector('.article-body').addEventListener('click', e => e.stopPropagation());
+
+// Open all links inside the description in a new tab (avoids sandboxed navigation errors)
+article.querySelectorAll('.article-body a').forEach(a => {
+  a.setAttribute('target', '_blank');
+  a.setAttribute('rel', 'noopener noreferrer');
+});
     article.querySelector('.article-actions')?.addEventListener('click', e => e.stopPropagation());
 
     article.querySelector('.article-title').addEventListener('click', () => {
