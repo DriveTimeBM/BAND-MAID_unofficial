@@ -31,10 +31,6 @@
             "category": "Cover",
             "color": "#c4a484",
             "rules": [
-                { "field": "channelId", "type": "exact", "patterns": [
-                    "UC2HQH01Et8x48Mb4MWap2Hg"
-                  ] 
-                },
                { "field": "title", "type": "regex", "patterns": [
                     "\\bcover\\w*\\b",
                     "\\bdrum\\s*cam\\b",
@@ -43,6 +39,20 @@
                     "歌ってみた",
                     "弾いてみた",
                     "叩いてみた"
+                ]}
+            ],
+            "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
+        },
+        {
+            "category": "Isolated Tracks",
+            "color": "#c4a484",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UC2HQH01Et8x48Mb4MWap2Hg"
+                  ] 
+                },
+               { "field": "title", "type": "regex", "patterns": [
+                    "isolated"
                 ]}
             ],
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
