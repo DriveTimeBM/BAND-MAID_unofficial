@@ -71,21 +71,21 @@
   },
   {
     "id": "live",
-    "name": "Live Video *new*",
+    "name": "Live Video",
     "file": "https://drivetimebm.github.io/BAND-MAID_live/index.html",
     "nav": "main",
     "icon": "🎤"
   },
   {
     "id": "browseprime",
-    "name": "Browse Prime *new*",
+    "name": "Browse Prime",
     "file": "https://drivetimebm.github.io/BAND-MAID_other_prime/index.html",
     "nav": "main",
     "icon": "📺"
   },
   {
     "id": "browsefanclub",
-    "name": "Browse Fan Club *new*",
+    "name": "Browse Fan Club",
     "file": "https://drivetimebm.github.io/BAND-MAID_browse_fanclub/index.html",
     "nav": "main",
     "icon": "🎥"
@@ -119,7 +119,7 @@
   },
   {
     "id": "youtube",
-    "name": "YouTube *new*",
+    "name": "YouTube",
     "file": "views/youtube.html",
     "nav": "main",
     "icon": "🔎"
@@ -193,6 +193,13 @@
     "file": "views/locations.html",
     "nav": "menu",
     "icon": "🌏"
+  },
+  {
+    "id": "rss",
+    "name": "RSS Feed *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_feed/index.html",
+    "nav": "menu",
+    "icon": "📰"
   },
   {
     "id": "mv",

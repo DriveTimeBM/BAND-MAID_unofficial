@@ -257,8 +257,17 @@
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
     "body": "YouTube viewer location data for 7-day and 28-day periods. Updated daily",
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/locations.png"
-  }, 
+  },
   {
+  "id": "about-rss",
+  "section": "Views",
+  "icon": "📰",
+  "title": "RSS Feed",
+  "jsonUrl": null,
+  "body": "RSS feed of BAND-MAID mentions from Google Alerts, YouTube, reddit, Bluesky, Mastodon, and other social platforms.",
+  "image": "https://drivetimebm.github.io/BAND-MAID_creations/misc/rss.png"
+ }, 
+ {
     "id": "about-mv",
     "section": "Views",
     "icon": "🌏",
