@@ -13,17 +13,17 @@
             "category": "Reaction",
             "color": "#a8c4a0",
             "rules": [
-                { "field": "channel", "type": "regex", "patterns": [
-                    "react"
-                ]},
-                        { "field": "channelId", "type": "exact", "patterns": [
-                    "UCvKUIZjMmlHJ9vjGJey0SBQ"] 
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UCvKUIZjMmlHJ9vjGJey0SBQ"
+                  ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
                     "\\breact\\w*\\b",
                     "\\bhear\\w*\\b",
-                    "\\blisten\\w*\\b"
-                ]}
+                    "\\blisten\\w*\\b",
+                    "react"
+                  ]
+                }
             ],
             "notes": "Matches react/reacts/reacting/reaction/reactions, hear/hears/hearing/heard, listen/listens/listening/listened"
         },
@@ -31,7 +31,11 @@
             "category": "Cover",
             "color": "#c4a484",
             "rules": [
-                { "field": "title", "type": "regex", "patterns": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UC2HQH01Et8x48Mb4MWap2Hg"
+                  ] 
+                },
+               { "field": "title", "type": "regex", "patterns": [
                     "\\bcover\\w*\\b",
                     "\\bdrum\\s*cam\\b",
                     "(guitar|bass|drum|vocal)\\s+cover\\b",
