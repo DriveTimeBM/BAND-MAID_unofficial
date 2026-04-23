@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Giovanni — Spotify: 783,332 | Played Live: 6\nCatharsis (カタルシス) — Spotify: 778,684 | Played Live: 18\nDilemma — Spotify: 742,703 | Played Live: 13",
+                          "image":  "https://img.youtube.com/vi/QbyQCJn6rYg/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / DOMINATION  (Official Live Video) — Views: 4,971,469 | Yesterday: 848\nBAND-MAID / FREEDOM (Official Live Video) — Views: 4,002,507 | Yesterday: 784\nBAND-MAID / Play (Official Live Video) — Views: 2,275,951 | Yesterday: 321",
                           "choices":  [
                                           {
-                                              "text":  "Catharsis (カタルシス)"
+                                              "text":  "BAND-MAID / Play (Official Live Video)"
                                           },
                                           {
-                                              "text":  "Giovanni",
+                                              "text":  "BAND-MAID / DOMINATION  (Official Live Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Dilemma"
+                                              "text":  "BAND-MAID / FREEDOM (Official Live Video)"
                                           }
                                       ]
                       }
