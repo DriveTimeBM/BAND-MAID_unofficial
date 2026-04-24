@@ -10,6 +10,21 @@
             "notes": "Official BAND-MAID YouTube channel"
         },
         {
+            "category": "Rip",
+            "color": "#d06560",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UC8ZHI_MbdV67n-04_kNFtGA"
+                  ] 
+                },
+                { "field": "title", "type": "regex", "patterns": [
+                    "medium in summer"
+                  ]
+                }
+            ],
+            "notes": "Matches react/reacts/reacting/reaction/reactions, hear/hears/hearing/heard, listen/listens/listening/listened"
+        },
+        {
             "category": "Reaction",
             "color": "#a8c4a0",
             "rules": [
@@ -49,7 +64,7 @@
         },
         {
             "category": "Isolated Tracks",
-            "color": "#c4a484",
+            "color": "#8ab098",
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
                     "UC2HQH01Et8x48Mb4MWap2Hg"
@@ -112,7 +127,7 @@
         },
         {
             "category": "Live",
-            "color": "#9cb4d4",
+            "color": "#7ba87a",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
                     "live",
