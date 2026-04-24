@@ -35,6 +35,10 @@
             "category": "Cover",
             "color": "#c4a484",
             "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UCOi-oaygEodP5SpzX7sw3nQ"
+                  ] 
+                },
                { "field": "title", "type": "regex", "patterns": [
                     "\\bcover\\w*\\b",
                     "\\bdrum\\s*cam\\b",
