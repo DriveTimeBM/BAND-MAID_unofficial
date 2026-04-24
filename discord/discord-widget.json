@@ -1,7 +1,7 @@
 ﻿{
     "id":  "1404984552161673448",
     "name":  "BAND-MAID Dashboard",
-    "instant_invite":  "https://discord.com/invite/yEdg2fYd",
+    "instant_invite":  "https://discord.com/invite/AH7zKvZ4",
     "channels":  [
 
                  ],
@@ -35,7 +35,7 @@
                         "username":  "Blooddrunk",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "dnd",
+                        "status":  "online",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/mm4OPmyN-xQsWeSO__RMBxP1rnnlTiAEQtySNyoCf30/dxkywCay9aCmGI-YElBdx3aFeEWh_p0AkEm1adfA06qbj7_qGw2axBg39_ife-08aw5FqSpKc4W3OwxNYPHtlApk-12ZgiuTLkY9A-Uji0w45_Xnx_jxAtGCj2s5kJJCXCe34EId81mVJQ"
                     },
                     {
@@ -48,11 +48,11 @@
                     },
                     {
                         "id":  "5",
-                        "username":  "DriveTime",
+                        "username":  "CrunchBar",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/iRWYUExgExFxqAzxBBFOxErda_xxFPQFgw0-bDfMozg/DUtrzZNSGrkl7XP-IuvbpnEQQ1-ZOnZW4CuKCPd6ASQm_9H-DLYbHIGtKjUHX8Axz1lB0yxEe1hrghLr7R0nNVDG0Y2Wi-DTLV8NND1qG4-xEiMzqse2URpWQ5NRBCWrOIO7qXB1EWJImg"
+                        "status":  "idle",
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/KICG4sGvQaX0oRA8P7mNefLleI9GdzWNm9WFrAscFeA/T78Kx5pEE3XRNTyOFb789maSqReCH10sf46Q4_nPHgWFk2Wokhf8F2Oo1tV1TCrnxxVqMFSkuWKAjoz1A7OPNOVk4C5KjE7YFYM0wrzjPdeZ-4ail6OuZidITcmJbOC_xSmlHJIcHsxfDQ"
                     },
                     {
                         "id":  "6",
@@ -72,38 +72,22 @@
                     },
                     {
                         "id":  "8",
-                        "username":  "Mads",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "idle",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/OC13xFcYGJBGweLRjdfX7ISt8OPFNqxcT2D68CBPOcc/HyJxC0rCteVGcxFl7Tsoa1w5OZaRHRiXbjPgVuDv_gfKPTGa-o4qxKvaJvTj0Y4sz9LNRNZ8Rj6a6t0tGr2HuUd1FaXK8gwsqAyi219SGX9sMzXHB2nP5NeYjFzwqCKB9bWjtkMyMLnZEw"
-                    },
-                    {
-                        "id":  "9",
                         "username":  "Marshall \"The Bald\" LAU",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "online",
+                        "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/bb5qJmwhNGIV25iHTYgs84Z2Qs0G_2OfLuQiY0OZstQ/cvn8FB4X_iMoOrZeu0BAxTxRUJlKP3nuhMfYxcgSXXn6Jmeo0f94QvnAllsp8FEzU6GvZ9uzDIcYU2jTlZosxbiLykx-u0abRwK9r8CGdcqeit8VdyWlwcvZcqjrwP6N1ss0O3pjjj-rlA"
                     },
                     {
-                        "id":  "10",
+                        "id":  "9",
                         "username":  "Ohrenje",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "idle",
+                        "status":  "online",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/OZaOCXbb3aHlxRnNzBQlahoTFa1RazrygJdTXUzSrKs/QlPHfKTB3eog17b-MlVFSkZfg0T1s2EngG1mMxdk7BKhH0f7pd4xDO2jN-3p-txsIjRpMhDYBeGkDbN0fcXv-XxOe56tM1qUPmgGRkDgU2npcgwydhl8OsjJNFAB1GphuuefXy_ff2_y6g"
                     },
                     {
-                        "id":  "11",
-                        "username":  "p...",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "dnd",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/h-TiBcuBZg-R8ku7YB52Q-NJqLPTcSn9L_UimEVsMjE/hdDMYM_jSAa0hBKq3TutN3hU05TrNxkbfpL5l_z_ZpMBkLO55RCM3TFtITgc5XPoox2hcIFQaoLfH8E6hw2FcejThmi2KPMaI73zMAE8KZtK6u8CM0ykjQ_879wRatEfX6JzMe6looJ4Iw"
-                    },
-                    {
-                        "id":  "12",
+                        "id":  "10",
                         "username":  "r...",
                         "discriminator":  "0000",
                         "avatar":  null,
@@ -111,29 +95,13 @@
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/irp8rM0UU8lyVJojxbbDT_UOQ2B1c6BUt7Em9LHUVoY/3brT5Y8f_E2N04J3uYnPny43jx3RzMJeIB0-p7bg3FdZv3fptWIuNcZ3b_MfzQsbSM_DDYg94sm1B6G7hq8"
                     },
                     {
-                        "id":  "13",
-                        "username":  "rocotocloc",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "idle",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/tGJz2CftrDeuu8yZvJQnH-9LJqcWgs6neIyr1we1yPc/s5eQmK4k44vw5Xjulq1axqM-wM5o5qbEXR3rhMLjqjPzBeIKEMy7lGvd2qbnZt2xdO9GZUwBzlI9hI3txlAUZCgy2rrJJrf8mbrA6QU4RmUz5m_teiUpqjwXkn-dWZZ8ducyUNXQCkf2vQ"
-                    },
-                    {
-                        "id":  "14",
+                        "id":  "11",
                         "username":  "s...",
                         "discriminator":  "0000",
                         "avatar":  null,
                         "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/odZI11jOk1t9gpGvljYLdYHY05nUXmYUqpqPo2fN__E/0Ndr_UaiTx9LPgZuQXSamxcSXJyuYS980QxXE0oGqe62Q-ajJOlu1kwU3pMpVsgVsRtLHX_0axKsdd0rkCAxt6C9bhZasGjTIkc27QdizB6juGJCRE4IA8-uKLxHe2J_QeUjOB-REBnZVA"
-                    },
-                    {
-                        "id":  "15",
-                        "username":  "Zakson85",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "idle",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/uQOO6XNNPDOwvN1cEb-SVsKeyZFv5bvbkhrbCHxD9p8/ILc9BwtDtryHBGJsZsgajLLqcyQ8KyJmouqA9aEhOqp2KKoSJtMx6Vo2Fld6Y27p-WzH93GRlLCsLfIcEqJ9sTjgnyd8sXol6dJ_pFeoM21YRS1wlIRBsTyLlLqzikaBFoXV-Q-BFHpRCA"
                     }
                 ],
-    "presence_count":  16
+    "presence_count":  12
 }
