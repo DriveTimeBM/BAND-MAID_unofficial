@@ -10,21 +10,6 @@
             "notes": "Official BAND-MAID YouTube channel"
         },
         {
-            "category": "Rip",
-            "color": "#d06560",
-            "rules": [
-                { "field": "channelId", "type": "exact", "patterns": [
-                    "UC8ZHI_MbdV67n-04_kNFtGA"
-                  ] 
-                },
-                { "field": "title", "type": "regex", "patterns": [
-                    "medium in summer"
-                  ]
-                }
-            ],
-            "notes": "Matches react/reacts/reacting/reaction/reactions, hear/hears/hearing/heard, listen/listens/listening/listened"
-        },
-        {
             "category": "Reaction",
             "color": "#a8c4a0",
             "rules": [
@@ -35,7 +20,7 @@
                 { "field": "channel", "type": "regex", "patterns": [
                     "react"
                   ]
-                }
+                },
                 { "field": "title", "type": "regex", "patterns": [
                     "\\breact\\w*\\b",
                     "\\bhear\\w*\\b",
@@ -61,6 +46,21 @@
                 ]}
             ],
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
+        },
+        {
+            "category": "Rip",
+            "color": "#d06560",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UC8ZHI_MbdV67n-04_kNFtGA"
+                  ] 
+                },
+                { "field": "title", "type": "regex", "patterns": [
+                    "medium in summer"
+                  ]
+                }
+            ],
+            "notes": "Matches react/reacts/reacting/reaction/reactions, hear/hears/hearing/heard, listen/listens/listening/listened"
         },
         {
             "category": "Isolated Tracks",
