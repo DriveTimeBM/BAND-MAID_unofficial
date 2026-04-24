@@ -52,7 +52,10 @@
             "color": "#d06560",
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
-                    "UC8ZHI_MbdV67n-04_kNFtGA"
+                    "UC8ZHI_MbdV67n-04_kNFtGA",
+                    "UCQMt91QkRr-Wcuh6tvUTRYQ",
+                    "UC73ztb_5-dSktncSSrnLxZg",
+                    "UCE40hmYnghI0UgYcO_FYr-g"
                   ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
