@@ -91,8 +91,8 @@
                     "\\blive\\s*report\\b",
                     "\\bconcert\\s*report\\b",
                     "\\bshow\\s*report\\b",
-                    "\\bgig\\s*report\\b",
-                    "Impression"
+                    "Impression",
+                    "(?i)\\bokyu-?ji\\b"
                 ]}
             ]
         },
@@ -109,15 +109,11 @@
             ]
         },
         {
-            "category": "Analysis",
+            "category": "Unboxing",
             "color": "#a4b4c4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
-                    "\\banalysis\\b",
-                    "\\bbreakdown\\b",
-                    "\\bdeep\\s*dive\\b",
-                    "\\breview\\w*\\b",
-                    "\\bretrospective\\b"
+                    "\\bunbox\\w*\\b"
                 ]}
             ]
         },
