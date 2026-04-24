@@ -17,6 +17,10 @@
                     "UCvKUIZjMmlHJ9vjGJey0SBQ"
                   ] 
                 },
+                { "field": "channel", "type": "regex", "patterns": [
+                    "react"
+                  ]
+                }
                 { "field": "title", "type": "regex", "patterns": [
                     "\\breact\\w*\\b",
                     "\\bhear\\w*\\b",
