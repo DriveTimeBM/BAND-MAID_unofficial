@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Screaming — Spotify: 1,874,248 | Played Live: 92\nsecret My lips — Spotify: 1,797,352 | Played Live: 85\nfrom now on — Spotify: 1,374,300 | Played Live: 72",
+                          "image":  "https://img.youtube.com/vi/vvpswsFRawM/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "TAMAYA! — Views: 206,210 | Yesterday: 184\n祇園町 — Views: 184,929 | Yesterday: 183\nTurn me on — Views: 245,388 | Yesterday: 169",
                           "choices":  [
                                           {
-                                              "text":  "Screaming",
+                                              "text":  "Turn me on"
+                                          },
+                                          {
+                                              "text":  "祇園町"
+                                          },
+                                          {
+                                              "text":  "TAMAYA!",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "secret My lips"
-                                          },
-                                          {
-                                              "text":  "from now on"
                                           }
                                       ]
                       }
