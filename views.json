@@ -56,20 +56,6 @@
     "icon": "🌐"
   },
   {
-    "id": "prime",
-    "name": "Prime",
-    "file": "views/prime.html",
-    "nav": "main",
-    "icon": "🎬"
-  },
-  {
-    "id": "fanclub",
-    "name": "Fan Club",
-    "file": "views/fanclub.html",
-    "nav": "main",
-    "icon": "🏮"
-  },
-  {
     "id": "live",
     "name": "Live Video",
     "file": "https://drivetimebm.github.io/BAND-MAID_live/index.html",

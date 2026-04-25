@@ -81,24 +81,6 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/map.png"
   },
   {
-    "id": "about-prime",
-    "section": "Views",
-    "icon": "🎬",
-    "title": "Prime",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/prime/prime.json",
-    "body": "All BAND-MAID Prime videos with links grouped by video type.",
-    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/prime.png"
-  },
-  {
-    "id": "about-fanclub",
-    "section": "Views",
-    "icon": "🏮",
-    "title": "Fan Club",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/fanclub.json",
-    "body": "All BAND-MAID fan club (OMEISYUSAMA-NO-KAI) videos with links grouped by video type. Full English translations in the details view.",
-    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/fanclub.png"
-  },
-  {
     "id": "about-live",
     "section": "Views",
     "icon": "🎤",
