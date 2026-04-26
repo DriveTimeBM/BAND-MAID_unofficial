@@ -14,7 +14,8 @@
             "color": "#a8c4a0",
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
-                    "UCvKUIZjMmlHJ9vjGJey0SBQ"
+                    "UCvKUIZjMmlHJ9vjGJey0SBQ",
+                    "UCXj2vn4DScTLfa2Dtw3f5HA"
                   ] 
                 },
                 { "field": "channel", "type": "regex", "patterns": [
