@@ -59,7 +59,8 @@
                     "UC8ZHI_MbdV67n-04_kNFtGA",
                     "UCQMt91QkRr-Wcuh6tvUTRYQ",
                     "UC73ztb_5-dSktncSSrnLxZg",
-                    "UCE40hmYnghI0UgYcO_FYr-g"
+                    "UCE40hmYnghI0UgYcO_FYr-g",
+                    "UCxBRex5MDuCgo1Zgzfw8SQQ"
                   ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
@@ -118,13 +119,12 @@
             ]
         },
         {
-            "category": "News",
+            "category": "Fan Art",
             "color": "#d4b89c",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
-                    "\\bnews\\b",
-                    "\\bannounc\\w*\\b",
-                    "\\bupdate\\w*\\b"
+                    "\\bdraw\\w*\\b",
+                    "\\bpaint\\w*\\b"
                 ]}
             ]
         },
