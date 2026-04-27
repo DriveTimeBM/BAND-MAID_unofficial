@@ -182,14 +182,14 @@
   },
   {
     "id": "rss",
-    "name": "RSS Feed *new*",
+    "name": "RSS Feed",
     "file": "views/rss.html",
     "nav": "menu",
     "icon": "📰"
   },
   {
     "id": "mv",
-    "name": "MV map",
+    "name": "MV map *new*",
     "file": "views/mv.html",
     "nav": "menu",
     "icon": "🗾"
