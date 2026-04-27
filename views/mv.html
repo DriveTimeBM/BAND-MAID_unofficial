@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>BAND-MAID MV Locations</title>
-<link rel="icon" type="image/png" href="https://drivetimebm.github.io/BAND-MAID_mv/logo.png">
+<link rel="icon" type="image/png" href="logo.png">
 
 <!-- Leaflet -->
 <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
@@ -530,9 +530,13 @@
 
 <script>
   // ── CONFIG (absolute paths so this file can move repos cleanly) ──────
-  const REPO_BASE   = 'https://drivetimebm.github.io/BAND-MAID_mv/';
-  const JSON_URL    = REPO_BASE + 'mv.json';
-  const IMAGE_BASE  = REPO_BASE + 'images/';   // mv.json stores bare filenames
+  // Paths:
+  // - mv.json is colocated with this HTML file (relative path), so this works
+  //   whether the file lives at the BAND-MAID_mv root or inside the
+  //   BAND-MAID_unofficial views folder.
+  // - Images stay on the BAND-MAID_mv repo so we don't have to duplicate them.
+  const JSON_URL    = 'mv.json';
+  const IMAGE_BASE  = 'https://drivetimebm.github.io/BAND-MAID_mv/images/';
 
   // ── MAP CONFIG ───────────────────────────────────────────────────────
   // To enable language-switching map labels: get a free MapTiler key from
