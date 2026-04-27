@@ -76,7 +76,8 @@
             "color": "#8ab098",
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
-                    "UC2HQH01Et8x48Mb4MWap2Hg"
+                    "UC2HQH01Et8x48Mb4MWap2Hg",
+                    "UCYZ1ZZi0kyL6nggbaVZEQKQ"
                   ] 
                 },
                { "field": "title", "type": "regex", "patterns": [
