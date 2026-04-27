@@ -801,6 +801,16 @@
     return Number(parts[0]) || 0;
   }
 
+  // localStorage can throw in sandboxed iframes (e.g. without
+  // allow-same-origin) or when storage is disabled. Guard so a SecurityError
+  // doesn't abort initMap() and leave the map in a half-built state.
+  function safeStorageGet(key) {
+    try { return localStorage.getItem(key); } catch (_) { return null; }
+  }
+  function safeStorageSet(key, value) {
+    try { localStorage.setItem(key, value); } catch (_) { /* ignore */ }
+  }
+
   // ── MAP ──────────────────────────────────────────────────────────────
   function initMap() {
     map = L.map('map', {
@@ -809,8 +819,8 @@
     }).setView([35.6762, 139.6503], 5); // Tokyo-ish default
 
     // Restore saved prefs (or fall back to defaults).
-    const savedStyle = localStorage.getItem(PREF_STYLE_KEY);
-    const savedLang  = localStorage.getItem(PREF_LANG_KEY);
+    const savedStyle = safeStorageGet(PREF_STYLE_KEY);
+    const savedLang  = safeStorageGet(PREF_LANG_KEY);
     if (savedStyle && MAP_STYLES[savedStyle]) currentStyleKey = savedStyle;
     if (savedLang) currentLangCode = savedLang;
 
@@ -836,7 +846,7 @@
       ).join('');
     styleSel.addEventListener('change', e => {
       currentStyleKey = e.target.value;
-      localStorage.setItem(PREF_STYLE_KEY, currentStyleKey);
+      safeStorageSet(PREF_STYLE_KEY, currentStyleKey);
       applyTileLayer();
       updateLangVisibility();
     });
@@ -847,7 +857,7 @@
     ).join('');
     langSel.addEventListener('change', e => {
       currentLangCode = e.target.value;
-      localStorage.setItem(PREF_LANG_KEY, currentLangCode);
+      safeStorageSet(PREF_LANG_KEY, currentLangCode);
       applyTileLayer();
     });
 
