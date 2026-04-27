@@ -648,26 +648,78 @@
   // ── BOOT ─────────────────────────────────────────────────────────────
   async function boot() {
     initMap();
+
+    let data;
     try {
       const res = await fetch(JSON_URL);
       if (!res.ok) throw new Error('HTTP ' + res.status);
-      let data = await res.json();
+      data = await res.json();
       // Accept either an array or { mvs: [...] } shape — normalize
       if (!Array.isArray(data)) data = data.mvs || data.MVs || data.items || [];
-      allMVs = data;
-      renderMVList();
-      document.getElementById('count').textContent =
-        allMVs.length + ' MV' + (allMVs.length === 1 ? '' : 's');
-
-      // Auto-select first MV on load — saves a click and gives a clear
-      // starting state instead of two "select something" panes.
-      if (allMVs.length > 0) selectMV(0);
     } catch (err) {
       document.getElementById('mvList').innerHTML =
         '<div class="empty-state">Failed to load mv.json<br><small>' +
         escapeHtml(err.message) + '</small></div>';
-      console.error(err);
+      console.error('mv.json load failed:', err);
+      return;
     }
+
+    allMVs = data;
+    renderMVList();
+    document.getElementById('count').textContent =
+      allMVs.length + ' MV' + (allMVs.length === 1 ? '' : 's');
+
+    // Auto-select first MV — but only after the map has real dimensions.
+    // Inside an iframe-based app shell, the map container can be 0×0 at
+    // initial paint, which makes Leaflet's projection math produce NaN on
+    // any flyTo call. invalidateSize() forces Leaflet to remeasure.
+    if (allMVs.length > 0) {
+      whenMapHasSize(() => {
+        try { selectMV(0); }
+        catch (e) { console.error('Initial MV selection failed:', e); }
+      });
+    }
+  }
+
+  // Resolve once the map container has non-zero dimensions, then
+  // call invalidateSize so Leaflet knows about them.
+  function whenMapHasSize(cb) {
+    const el = document.getElementById('map');
+    const ready = () => {
+      try { map.invalidateSize(false); } catch (_) {}
+      cb();
+    };
+    if (el.clientWidth > 0 && el.clientHeight > 0) {
+      ready();
+      return;
+    }
+    // Container has no size yet (iframe not visible, lazy mount, etc.).
+    // Watch for it to gain size, then proceed.
+    const ro = new ResizeObserver(entries => {
+      for (const e of entries) {
+        if (e.contentRect.width > 0 && e.contentRect.height > 0) {
+          ro.disconnect();
+          ready();
+          return;
+        }
+      }
+    });
+    ro.observe(el);
+    // Safety fallback: if ResizeObserver never fires (very old browsers,
+    // or display:none parent that never becomes visible), try again on
+    // the next animation frame and after a short timeout.
+    requestAnimationFrame(() => {
+      if (el.clientWidth > 0 && el.clientHeight > 0) {
+        ro.disconnect();
+        ready();
+      }
+    });
+    setTimeout(() => {
+      if (el.clientWidth > 0 && el.clientHeight > 0) {
+        ro.disconnect();
+        ready();
+      }
+    }, 800);
   }
 
   // ── HELPERS ──────────────────────────────────────────────────────────
@@ -835,6 +887,16 @@
 
     populateMapControls();
     applyTileLayer();
+
+    // Keep Leaflet informed of any future container size changes (e.g.
+    // app shell tab swap, mobile rotation, panel resize). Without this,
+    // tiles can render at the wrong size and projection math produces NaN.
+    if (typeof ResizeObserver !== 'undefined') {
+      const ro = new ResizeObserver(() => {
+        try { map.invalidateSize(false); } catch (_) {}
+      });
+      ro.observe(document.getElementById('map'));
+    }
   }
 
   function populateMapControls() {
@@ -1181,18 +1243,25 @@
     if (!currentMV) return;
     const places = getPlaces(currentMV);
     currentPlace = places[idx];
+    if (!currentPlace) return;
     document.querySelectorAll('.place-item').forEach((el, i) =>
       el.classList.toggle('active', i === idx));
     highlightMarker(idx);
 
     const c = getCoords(currentPlace);
-    if (c.type === 'point') {
-      map.flyTo(c.center, Math.max(map.getZoom(), 16), { duration: 0.6 });
-      if (markers[idx]) markers[idx].openPopup();
-    } else if (c.type === 'line') {
-      // Fit the whole segment on screen, but don't zoom out absurdly close.
-      map.flyToBounds(c.points, { padding: [60, 60], maxZoom: 17, duration: 0.6 });
-      if (markers[idx]) markers[idx].openPopup();
+    // Final guard: an in-progress map (no dimensions yet) can still produce
+    // bad projection math. Make sure the values we hand Leaflet are real.
+    const allFinite = c.points.every(([la, lo]) => isFinite(la) && isFinite(lo))
+                   && isFinite(c.center[0]) && isFinite(c.center[1]);
+    if (allFinite) {
+      try { map.invalidateSize(false); } catch (_) {}
+      if (c.type === 'point') {
+        map.flyTo(c.center, Math.max(map.getZoom(), 16), { duration: 0.6 });
+        if (markers[idx]) markers[idx].openPopup();
+      } else if (c.type === 'line') {
+        map.flyToBounds(c.points, { padding: [60, 60], maxZoom: 17, duration: 0.6 });
+        if (markers[idx]) markers[idx].openPopup();
+      }
     }
     renderDetails();
   }
