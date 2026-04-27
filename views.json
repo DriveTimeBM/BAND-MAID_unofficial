@@ -190,7 +190,7 @@
   {
     "id": "mv",
     "name": "MV map",
-    "file": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/mv.html",
+    "file": "views/mv.html",
     "nav": "menu",
     "icon": "🗾"
   },
