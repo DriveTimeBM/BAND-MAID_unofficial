@@ -189,8 +189,8 @@
   },
   {
     "id": "mv",
-    "name": "Okyuji-MV map",
-    "file": "https://drivetimebm.github.io/BAND-MAID_unofficial/map.html",
+    "name": "MV map",
+    "file": "views/mv.html",
     "nav": "menu",
     "icon": "🗾"
   },
