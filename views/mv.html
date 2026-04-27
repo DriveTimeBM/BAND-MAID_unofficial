@@ -1,0 +1,1191 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>BAND-MAID MV Locations</title>
+<link rel="icon" type="image/png" href="https://drivetimebm.github.io/BAND-MAID_mv/logo.png">
+
+<!-- Leaflet -->
+<link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css"
+      integrity="sha256-p4NxAoJBhIIN+hmNHrzRCf9tD/miZyoHS5obTRR9BMY=" crossorigin=""/>
+<script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"
+        integrity="sha256-20nQCchB9co0qIjJZRGuk2/Z9VM+kNiyxNV1lvTlZBo=" crossorigin=""></script>
+
+<style>
+  /* ── RESET & ROOT ─────────────────────────────────────────────────── */
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --bg:      #0a0a0a;
+    --bg2:     #141414;
+    --bg3:     #1c1c1c;
+    --bg4:     #242424;
+    --border:  #2a2a2a;
+    --border2: #3a3a3a;
+    --text:    #f0f0f0;
+    --text2:   #999;
+    --text3:   #555;
+    --accent:  #c8a96e;
+    --accent2: #e0c590;
+    --radius:  8px;
+    --font:    'Segoe UI', system-ui, sans-serif;
+  }
+
+  /* ── BASE ─────────────────────────────────────────────────────────── */
+  html, body { height: 100%; }
+  html { background: var(--bg); }
+  body {
+    background: var(--bg);
+    color: var(--text);
+    font-family: var(--font);
+    font-size: 14px;
+    line-height: 1.5;
+    overflow: hidden;
+  }
+
+  /* ── HEADER ───────────────────────────────────────────────────────── */
+  .app-header {
+    background: var(--bg2);
+    border-bottom: 1px solid var(--border);
+    padding: 10px 16px;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    flex-shrink: 0;
+  }
+  .app-header h1 {
+    font-size: 14px;
+    font-weight: 700;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--accent);
+  }
+  .app-header .count {
+    font-size: 12px;
+    color: var(--text2);
+    margin-left: auto;
+  }
+  .hdr-control {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    font-size: 11px;
+  }
+  .hdr-label {
+    color: var(--text2);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+  }
+  .hdr-control select {
+    background: var(--bg);
+    color: var(--text);
+    border: 1px solid var(--border2);
+    border-radius: 4px;
+    padding: 3px 6px;
+    font-size: 12px;
+    font-family: var(--font);
+    cursor: pointer;
+    outline: none;
+  }
+  .hdr-control select:hover { border-color: var(--accent); }
+  .hdr-control select:focus { border-color: var(--accent); }
+
+  /* ── LAYOUT ───────────────────────────────────────────────────────── */
+  .app {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+  }
+  .panes {
+    display: grid;
+    grid-template-columns: 260px 1fr 1fr;
+    flex: 1;
+    overflow: hidden;
+  }
+  .pane {
+    overflow-y: auto;
+    border-right: 1px solid var(--border);
+    background: var(--bg);
+  }
+  .pane:last-child { border-right: none; }
+
+  /* Custom scrollbar */
+  .pane::-webkit-scrollbar { width: 8px; }
+  .pane::-webkit-scrollbar-track { background: var(--bg); }
+  .pane::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  /* ── PANE: MV LIST ────────────────────────────────────────────────── */
+  .mv-list { padding: 8px; }
+  .mv-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+  }
+  .mv-item:hover {
+    background: var(--bg3);
+    border-color: var(--border2);
+  }
+  .mv-item.active {
+    background: var(--bg3);
+    border-color: var(--accent);
+  }
+  .mv-item .mv-title {
+    flex: 1;
+    font-weight: 500;
+    color: var(--text);
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+  .mv-item.active .mv-title { color: var(--accent); }
+  .mv-item .mv-pin-count {
+    font-size: 11px;
+    color: var(--text2);
+    background: var(--bg);
+    border: 1px solid var(--border);
+    padding: 1px 6px;
+    border-radius: 10px;
+  }
+
+  /* ── PANE: VIDEO + PLACES ─────────────────────────────────────────── */
+  .video-section {
+    padding: 14px;
+    border-bottom: 1px solid var(--border);
+    position: sticky;
+    top: 0;
+    background: var(--bg);
+    z-index: 5;
+  }
+  .video-wrapper {
+    position: relative;
+    width: 100%;
+    aspect-ratio: 16 / 9;
+    background: #000;
+    border-radius: var(--radius);
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .video-wrapper iframe {
+    position: absolute;
+    top: 0; left: 0;
+    width: 100%;
+    height: 100%;
+    border: 0;
+  }
+  .video-title {
+    margin-top: 10px;
+    font-size: 16px;
+    font-weight: 600;
+    color: var(--accent);
+    letter-spacing: 0.02em;
+  }
+
+  .section-label {
+    font-size: 11px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    color: var(--text2);
+    padding: 14px 14px 6px 14px;
+  }
+
+  .places-list { padding: 0 8px 14px 8px; }
+  .place-item {
+    background: var(--bg2);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    padding: 10px 12px;
+    margin-bottom: 6px;
+    cursor: pointer;
+    transition: background 0.12s, border-color 0.12s;
+  }
+  .place-item:hover {
+    background: var(--bg3);
+    border-color: var(--border2);
+  }
+  .place-item.active {
+    background: var(--bg3);
+    border-color: var(--accent);
+  }
+  .place-item .place-scene {
+    font-size: 13px;
+    font-weight: 500;
+    color: var(--text);
+    margin-bottom: 4px;
+  }
+  .place-item.active .place-scene { color: var(--accent); }
+  .place-item .place-meta {
+    font-size: 11px;
+    color: var(--text3);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+  .maps-link {
+    color: var(--text2);
+    text-decoration: none;
+    font-size: 12px;
+    padding: 1px 5px;
+    border-radius: 3px;
+    transition: color 0.12s, background 0.12s;
+    flex-shrink: 0;
+  }
+  .maps-link:hover {
+    color: var(--accent);
+    background: var(--bg);
+  }
+  .line-badge {
+    font-size: 10px;
+    color: var(--accent);
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    padding: 1px 5px;
+    border-radius: 8px;
+    font-family: 'Consolas', monospace;
+    flex-shrink: 0;
+    line-height: 1;
+  }
+
+  /* ── PANE: MAP + DETAILS ──────────────────────────────────────────── */
+  .map-pane { display: flex; flex-direction: column; }
+  #map {
+    flex: 1;
+    min-height: 320px;
+    background: var(--bg2);
+  }
+  .details {
+    border-top: 1px solid var(--border);
+    padding: 14px;
+    background: var(--bg2);
+    max-height: 50%;
+    overflow-y: auto;
+  }
+  .details::-webkit-scrollbar { width: 8px; }
+  .details::-webkit-scrollbar-track { background: var(--bg2); }
+  .details::-webkit-scrollbar-thumb { background: var(--border2); border-radius: 4px; }
+
+  .details-empty {
+    color: var(--text3);
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+    padding: 20px;
+  }
+  .details-title {
+    font-size: 15px;
+    font-weight: 600;
+    color: var(--accent);
+    margin-bottom: 8px;
+  }
+  .details-description {
+    color: var(--text);
+    margin-bottom: 12px;
+    font-size: 13px;
+  }
+  .details-location {
+    font-size: 13px;
+    color: var(--text);
+    margin-bottom: 8px;
+  }
+  .details-coords {
+    font-size: 11px;
+    color: var(--text3);
+    font-family: 'Consolas', monospace;
+    margin-bottom: 12px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    flex-wrap: wrap;
+  }
+  .details-coords .maps-link {
+    font-family: var(--font);
+    font-size: 12px;
+  }
+  .details-coords-line {
+    align-items: flex-start;
+  }
+  .line-points {
+    display: flex;
+    flex-direction: column;
+    gap: 2px;
+  }
+  .line-points-label {
+    font-family: var(--font);
+    font-size: 11px;
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.06em;
+    font-weight: 600;
+    margin-bottom: 4px;
+  }
+
+  /* Timestamp chips */
+  .timestamps {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 6px;
+    margin-bottom: 12px;
+  }
+  .ts-chip {
+    background: var(--bg);
+    border: 1px solid var(--border2);
+    color: var(--accent);
+    padding: 3px 8px;
+    border-radius: 12px;
+    font-size: 11px;
+    font-family: 'Consolas', monospace;
+    cursor: pointer;
+    transition: background 0.12s, color 0.12s, border-color 0.12s;
+  }
+  .ts-chip:hover {
+    background: var(--accent);
+    color: var(--bg);
+    border-color: var(--accent);
+  }
+
+  /* Image gallery */
+  .images {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(120px, 1fr));
+    gap: 6px;
+  }
+  .images img {
+    width: 100%;
+    height: 90px;
+    object-fit: cover;
+    border-radius: 4px;
+    border: 1px solid var(--border);
+    cursor: pointer;
+    transition: border-color 0.12s, transform 0.12s;
+  }
+  .images img:hover {
+    border-color: var(--accent);
+    transform: scale(1.02);
+  }
+
+  /* Lightbox */
+  .lightbox {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background: rgba(0,0,0,0.92);
+    z-index: 9999;
+    align-items: center;
+    justify-content: center;
+    padding: 20px;
+    cursor: pointer;
+  }
+  .lightbox.show { display: flex; }
+  .lightbox img {
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+    border-radius: 4px;
+  }
+
+  /* ── EMPTY / LOADING STATES ───────────────────────────────────────── */
+  .empty-state {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    color: var(--text3);
+    font-style: italic;
+    font-size: 13px;
+    text-align: center;
+    padding: 20px;
+  }
+
+  /* ── LEAFLET CUSTOMIZATION (lighter than the calendar map) ────────── */
+  .leaflet-container {
+    background: #e8e8e8;
+    font-family: var(--font);
+  }
+  .leaflet-popup-content-wrapper {
+    background: var(--bg2);
+    color: var(--text);
+    border-radius: var(--radius);
+    border: 1px solid var(--border2);
+  }
+  .leaflet-popup-content { margin: 8px 12px; font-size: 12px; }
+  .leaflet-popup-content b { color: var(--accent); }
+  .leaflet-popup-tip { background: var(--bg2); }
+  .leaflet-control-zoom a {
+    background: var(--bg2);
+    color: var(--text);
+    border-color: var(--border2);
+  }
+  .leaflet-control-zoom a:hover { background: var(--bg3); }
+  .leaflet-control-attribution {
+    background: rgba(20,20,20,0.85) !important;
+    color: var(--text2) !important;
+  }
+  .leaflet-control-attribution a { color: var(--accent) !important; }
+
+  /* Custom gold marker */
+  .mv-marker {
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    background: var(--accent);
+    border: 2px solid var(--bg);
+    box-shadow: 0 0 0 1px var(--accent), 0 2px 6px rgba(0,0,0,0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: var(--bg);
+    font-size: 11px;
+    font-weight: 700;
+    font-family: var(--font);
+  }
+  .mv-marker.active {
+    background: var(--accent2);
+    transform: scale(1.25);
+    box-shadow: 0 0 0 2px var(--accent), 0 0 12px var(--accent);
+  }
+
+  /* ── MOBILE ───────────────────────────────────────────────────────── */
+  @media (max-width: 900px) {
+    body { overflow: auto; }
+    .app { height: auto; min-height: 100vh; }
+    .panes {
+      grid-template-columns: 1fr;
+      overflow: visible;
+    }
+    .pane {
+      border-right: none;
+      border-bottom: 1px solid var(--border);
+      overflow-y: visible;
+      max-height: none;
+    }
+    .pane.mv-pane { max-height: 30vh; overflow-y: auto; }
+    #map { height: 50vh; min-height: 300px; }
+    .details { max-height: none; }
+    .hdr-label { display: none; }
+    .app-header h1 { font-size: 12px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="app">
+
+  <header class="app-header">
+    <h1>BAND-MAID MV Locations</h1>
+    <span class="count" id="count"></span>
+    <label class="hdr-control">
+      <span class="hdr-label">Map</span>
+      <select id="mapStyleSelect"></select>
+    </label>
+    <label class="hdr-control" id="langWrap" style="display:none;">
+      <span class="hdr-label">Lang</span>
+      <select id="mapLangSelect"></select>
+    </label>
+  </header>
+
+  <div class="panes">
+
+    <!-- ── MV LIST ─────────────────────────────────────────────── -->
+    <div class="pane mv-pane">
+      <div class="mv-list" id="mvList">
+        <div class="empty-state">Loading…</div>
+      </div>
+    </div>
+
+    <!-- ── VIDEO + PLACES ──────────────────────────────────────── -->
+    <div class="pane">
+      <div id="videoSection">
+        <div class="empty-state">Select a music video to begin.</div>
+      </div>
+    </div>
+
+    <!-- ── MAP + DETAILS ───────────────────────────────────────── -->
+    <div class="pane map-pane">
+      <div id="map"></div>
+      <div class="details" id="details">
+        <div class="details-empty">Select a place to see details.</div>
+      </div>
+    </div>
+
+  </div>
+</div>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox" onclick="this.classList.remove('show')">
+  <img id="lightboxImg" alt="">
+</div>
+
+<!-- YouTube IFrame API (loaded once) -->
+<script src="https://www.youtube.com/iframe_api"></script>
+
+<script>
+  // ── CONFIG (absolute paths so this file can move repos cleanly) ──────
+  const REPO_BASE   = 'https://drivetimebm.github.io/BAND-MAID_mv/';
+  const JSON_URL    = REPO_BASE + 'mv.json';
+  const IMAGE_BASE  = REPO_BASE + 'images/';   // mv.json stores bare filenames
+
+  // ── MAP CONFIG ───────────────────────────────────────────────────────
+  // To enable language-switching map labels: get a free MapTiler key from
+  // https://www.maptiler.com/cloud/ and paste it below. Free tier = 100k
+  // tile loads/month, no card required. With no key the language dropdown
+  // is hidden and only the OSM/Carto styles are available.
+  const MAPTILER_KEY = 'VVjNt2XpIt3m3qNgLhkp';   // ← paste your key here
+
+  // Tile-layer presets. {lang} placeholder is replaced for MapTiler styles.
+  const MAP_STYLES = {
+    osm: {
+      label: 'OpenStreetMap (color)',
+      url: 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png',
+      options: {
+        maxZoom: 19,
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OpenStreetMap</a>'
+      },
+      multilang: false
+    },
+    positron: {
+      label: 'Positron (light)',
+      url: 'https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png',
+      options: {
+        maxZoom: 20,
+        subdomains: 'abcd',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      },
+      multilang: false
+    },
+    voyager: {
+      label: 'Voyager (muted color)',
+      url: 'https://{s}.basemaps.cartocdn.com/rastertiles/voyager/{z}/{x}/{y}{r}.png',
+      options: {
+        maxZoom: 20,
+        subdomains: 'abcd',
+        attribution: '&copy; <a href="https://www.openstreetmap.org/copyright">OSM</a> &copy; <a href="https://carto.com/attributions">CARTO</a>'
+      },
+      multilang: false
+    },
+    'maptiler-streets': {
+      label: 'MapTiler Streets',
+      url: 'https://api.maptiler.com/maps/streets-v2/{z}/{x}/{y}.png?key=' + MAPTILER_KEY + '&language={lang}',
+      options: {
+        maxZoom: 22,
+        attribution: '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+        crossOrigin: true
+      },
+      multilang: true,
+      requiresKey: true
+    },
+    'maptiler-basic': {
+      label: 'MapTiler Basic',
+      url: 'https://api.maptiler.com/maps/basic-v2/{z}/{x}/{y}.png?key=' + MAPTILER_KEY + '&language={lang}',
+      options: {
+        maxZoom: 22,
+        attribution: '&copy; <a href="https://www.maptiler.com/copyright/">MapTiler</a> &copy; <a href="https://www.openstreetmap.org/copyright">OSM</a>',
+        crossOrigin: true
+      },
+      multilang: true,
+      requiresKey: true
+    }
+  };
+
+  // Languages MapTiler supports. The 'name' option uses each region's local
+  // name (Tokyo → 東京, Roma stays Roma). Good "default" for international maps.
+  const MAP_LANGUAGES = [
+    { code: 'name',   label: 'Local (default)' },
+    { code: 'en',     label: 'English' },
+    { code: 'ja',     label: '日本語 (Japanese)' },
+    { code: 'es',     label: 'Español' },
+    { code: 'fr',     label: 'Français' },
+    { code: 'de',     label: 'Deutsch' },
+    { code: 'zh',     label: '中文' },
+    { code: 'ko',     label: '한국어' },
+    { code: 'ru',     label: 'Русский' },
+    { code: 'ar',     label: 'العربية' },
+    { code: 'pt',     label: 'Português' },
+    { code: 'it',     label: 'Italiano' }
+  ];
+
+  const PREF_STYLE_KEY = 'bm-mv-map-style';
+  const PREF_LANG_KEY  = 'bm-mv-map-lang';
+
+  // ── STATE ────────────────────────────────────────────────────────────
+  let allMVs        = [];
+  let currentMV     = null;
+  let currentPlace  = null;
+  let map           = null;
+  let markers       = [];           // Leaflet marker refs (parallel to currentMV.Places)
+  let polylines     = [];           // Leaflet polyline refs (parallel; null for point places)
+  let ytPlayer      = null;
+  let ytReady       = false;
+  let pendingVideoId = null;        // queued before YT API ready
+  let currentTileLayer = null;      // active Leaflet TileLayer (so we can swap it)
+  let currentStyleKey  = 'osm';
+  let currentLangCode  = 'name';
+
+  // ── YOUTUBE API READY ────────────────────────────────────────────────
+  function onYouTubeIframeAPIReady() {
+    ytReady = true;
+    if (pendingVideoId) {
+      buildPlayer(pendingVideoId);
+      pendingVideoId = null;
+    }
+  }
+  // Make global for the YT API to call
+  window.onYouTubeIframeAPIReady = onYouTubeIframeAPIReady;
+
+  // ── BOOT ─────────────────────────────────────────────────────────────
+  async function boot() {
+    initMap();
+    try {
+      const res = await fetch(JSON_URL);
+      if (!res.ok) throw new Error('HTTP ' + res.status);
+      let data = await res.json();
+      // Accept either an array or { mvs: [...] } shape — normalize
+      if (!Array.isArray(data)) data = data.mvs || data.MVs || data.items || [];
+      allMVs = data;
+      renderMVList();
+      document.getElementById('count').textContent =
+        allMVs.length + ' MV' + (allMVs.length === 1 ? '' : 's');
+
+      // Auto-select first MV on load — saves a click and gives a clear
+      // starting state instead of two "select something" panes.
+      if (allMVs.length > 0) selectMV(0);
+    } catch (err) {
+      document.getElementById('mvList').innerHTML =
+        '<div class="empty-state">Failed to load mv.json<br><small>' +
+        escapeHtml(err.message) + '</small></div>';
+      console.error(err);
+    }
+  }
+
+  // ── HELPERS ──────────────────────────────────────────────────────────
+  // Field accessors are tolerant of different casing in case the JSON
+  // uses lowercase, camelCase, or PascalCase.
+  function getField(obj, ...names) {
+    for (const n of names) {
+      if (obj[n] !== undefined && obj[n] !== null) return obj[n];
+    }
+    return undefined;
+  }
+  const getSong    = mv => getField(mv, 'Song', 'song', 'Title', 'title') || 'Untitled';
+  const getVideoId = mv => getField(mv, 'VideoId', 'videoId', 'video_id', 'YouTubeId');
+  const getPlaces  = mv => getField(mv, 'Places', 'places') || [];
+  // Backward-compat single-coord accessors. These always return a SCALAR
+  // (the centroid for line geometries) so existing code paths keep working.
+  // For new line-aware code, use getCoords() below.
+  const getLat     = p  => {
+    const c = getCoords(p);
+    return c.type === 'invalid' ? NaN : c.center[0];
+  };
+  const getLon     = p  => {
+    const c = getCoords(p);
+    return c.type === 'invalid' ? NaN : c.center[1];
+  };
+
+  // Normalize a place's coordinates into a single shape:
+  //   { type, points, center, count }
+  // - type   : 'point' (1 point) | 'line' (>=2 points) | 'invalid'
+  // - points : array of [lat, lon] tuples (always an array)
+  // - center : [lat, lon] centroid — used for marker placement + flyTo
+  // - count  : number of points
+  // Accepts either scalar Lat/Lon (point) or parallel arrays (polyline).
+  function getCoords(p) {
+    const latRaw = getField(p, 'Lat', 'lat', 'Latitude', 'latitude');
+    const lonRaw = getField(p, 'Lon', 'lon', 'Lng', 'lng', 'Longitude', 'longitude');
+    if (latRaw === undefined || lonRaw === undefined) {
+      return { type: 'invalid', points: [], center: [NaN, NaN], count: 0 };
+    }
+    const lats = Array.isArray(latRaw) ? latRaw : [latRaw];
+    const lons = Array.isArray(lonRaw) ? lonRaw : [lonRaw];
+    // If arrays don't pair up, treat as invalid rather than guess.
+    if (lats.length !== lons.length || lats.length === 0) {
+      return { type: 'invalid', points: [], center: [NaN, NaN], count: 0 };
+    }
+    const points = [];
+    for (let i = 0; i < lats.length; i++) {
+      const la = +lats[i], lo = +lons[i];
+      if (isNaN(la) || isNaN(lo)) {
+        return { type: 'invalid', points: [], center: [NaN, NaN], count: 0 };
+      }
+      points.push([la, lo]);
+    }
+    // Centroid (simple average — fine for short segments at the scales we care about).
+    const center = [
+      points.reduce((s, pt) => s + pt[0], 0) / points.length,
+      points.reduce((s, pt) => s + pt[1], 0) / points.length
+    ];
+    return {
+      type:   points.length === 1 ? 'point' : 'line',
+      points,
+      center,
+      count: points.length
+    };
+  }
+  const getScene   = p  => getField(p, 'Scene', 'scene') || '';
+  const getDesc    = p  => getField(p, 'Description', 'description') || '';
+  const getLocation = p => getField(p, 'Location', 'location') || '';
+  // Images may be a single string, an array of strings, or null/missing.
+  // Always normalize to an array so the rest of the code can iterate uniformly.
+  function getImages(p) {
+    const v = getField(p, 'Images', 'images');
+    if (!v) return [];
+    return Array.isArray(v) ? v : [v];
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    }[c]));
+  }
+
+  // Resolve image path: if absolute (http/https), leave alone; otherwise
+  // prefix with the IMAGE_BASE so relative paths in mv.json keep working.
+  function resolveImage(path) {
+    if (!path) return '';
+    if (/^https?:\/\//i.test(path)) return path;
+    return IMAGE_BASE + path.replace(/^\//, '');
+  }
+
+  // Build a Google Maps URL appropriate to the geometry:
+  // - point: ?q=lat,lon (drops a pin)
+  // - line:  /maps/dir/lat,lon/lat,lon/... (shows a route between the points,
+  //          which is the cleanest standard way to visualize a polyline on
+  //          Google Maps without a custom map ID)
+  // The t= parameter controls the base layer:
+  //   t=m  standard map      t=k  satellite (no labels)
+  //   t=h  hybrid (sat+labels — the most useful default for location scouting)
+  //   t=p  terrain
+  const GMAPS_LAYER = 'h';   // ← change to 'k' for pure satellite, 'm' for map
+  function buildGoogleMapsUrl(coords) {
+    if (coords.type === 'point') {
+      const [lat, lon] = coords.center;
+      return `https://www.google.com/maps?q=${lat},${lon}&t=${GMAPS_LAYER}`;
+    }
+    if (coords.type === 'line') {
+      const segs = coords.points.map(([la, lo]) => `${la},${lo}`).join('/');
+      return `https://www.google.com/maps/dir/${segs}/data=!3m1!1e3`;
+    }
+    return '';
+  }
+
+  // Parse "0:19-0:22, 0:41-0:49" into an array of { label, start } objects.
+  // Captures both M:SS and H:MM:SS, and ranges or single timestamps.
+  function parseTimestamps(scene) {
+    if (!scene) return [];
+    const re = /(\d{1,2}:\d{2}(?::\d{2})?)(?:\s*[-–]\s*(\d{1,2}:\d{2}(?::\d{2})?))?/g;
+    const out = [];
+    let m;
+    while ((m = re.exec(scene)) !== null) {
+      const startTs = m[1];
+      const endTs   = m[2];
+      out.push({
+        label: endTs ? `${startTs}–${endTs}` : startTs,
+        start: tsToSeconds(startTs)
+      });
+    }
+    return out;
+  }
+
+  function tsToSeconds(ts) {
+    const parts = ts.split(':').map(Number);
+    if (parts.length === 3) return parts[0]*3600 + parts[1]*60 + parts[2];
+    if (parts.length === 2) return parts[0]*60 + parts[1];
+    return Number(parts[0]) || 0;
+  }
+
+  // ── MAP ──────────────────────────────────────────────────────────────
+  function initMap() {
+    map = L.map('map', {
+      zoomControl: true,
+      worldCopyJump: true
+    }).setView([35.6762, 139.6503], 5); // Tokyo-ish default
+
+    // Restore saved prefs (or fall back to defaults).
+    const savedStyle = localStorage.getItem(PREF_STYLE_KEY);
+    const savedLang  = localStorage.getItem(PREF_LANG_KEY);
+    if (savedStyle && MAP_STYLES[savedStyle]) currentStyleKey = savedStyle;
+    if (savedLang) currentLangCode = savedLang;
+
+    // If MapTiler isn't configured but the saved pref needs it, fall back.
+    if (MAP_STYLES[currentStyleKey].requiresKey && !MAPTILER_KEY) {
+      currentStyleKey = 'osm';
+    }
+
+    populateMapControls();
+    applyTileLayer();
+  }
+
+  function populateMapControls() {
+    const styleSel = document.getElementById('mapStyleSelect');
+    const langSel  = document.getElementById('mapLangSelect');
+    const langWrap = document.getElementById('langWrap');
+
+    // Style dropdown — hide MapTiler entries if no key configured.
+    styleSel.innerHTML = Object.entries(MAP_STYLES)
+      .filter(([_, cfg]) => !cfg.requiresKey || MAPTILER_KEY)
+      .map(([key, cfg]) =>
+        `<option value="${key}"${key === currentStyleKey ? ' selected' : ''}>${cfg.label}</option>`
+      ).join('');
+    styleSel.addEventListener('change', e => {
+      currentStyleKey = e.target.value;
+      localStorage.setItem(PREF_STYLE_KEY, currentStyleKey);
+      applyTileLayer();
+      updateLangVisibility();
+    });
+
+    // Language dropdown — only meaningful for multilang styles.
+    langSel.innerHTML = MAP_LANGUAGES.map(l =>
+      `<option value="${l.code}"${l.code === currentLangCode ? ' selected' : ''}>${l.label}</option>`
+    ).join('');
+    langSel.addEventListener('change', e => {
+      currentLangCode = e.target.value;
+      localStorage.setItem(PREF_LANG_KEY, currentLangCode);
+      applyTileLayer();
+    });
+
+    updateLangVisibility();
+  }
+
+  function updateLangVisibility() {
+    const langWrap = document.getElementById('langWrap');
+    const cfg = MAP_STYLES[currentStyleKey];
+    langWrap.style.display = (cfg && cfg.multilang) ? '' : 'none';
+  }
+
+  function applyTileLayer() {
+    if (currentTileLayer) {
+      map.removeLayer(currentTileLayer);
+      currentTileLayer = null;
+    }
+    const cfg = MAP_STYLES[currentStyleKey];
+    if (!cfg) return;
+    const url = cfg.url.replace('{lang}', currentLangCode);
+    currentTileLayer = L.tileLayer(url, cfg.options).addTo(map);
+  }
+
+  function clearMarkers() {
+    markers.forEach(m => map.removeLayer(m));
+    polylines.forEach(p => { if (p) map.removeLayer(p); });
+    markers = [];
+    polylines = [];
+  }
+
+  function makeMarkerIcon(label, active) {
+    return L.divIcon({
+      className: '',
+      html: `<div class="mv-marker${active ? ' active' : ''}">${label || ''}</div>`,
+      iconSize: [22, 22],
+      iconAnchor: [11, 11]
+    });
+  }
+
+  function renderMarkers() {
+    clearMarkers();
+    if (!currentMV) return;
+    const places = getPlaces(currentMV);
+    const bounds = [];
+    places.forEach((p, i) => {
+      const c = getCoords(p);
+      if (c.type === 'invalid') {
+        // Keep arrays parallel to places so highlightMarker(i) lines up.
+        markers.push(null);
+        polylines.push(null);
+        return;
+      }
+
+      // For line-type places, draw a polyline AND a numbered pin at the centroid.
+      // The pin keeps the place clickable + visible at low zoom; the line
+      // shows the actual segment when you zoom in.
+      let polyline = null;
+      if (c.type === 'line') {
+        polyline = L.polyline(c.points, {
+          color:       '#c8a96e',          // var(--accent), inlined for Leaflet
+          weight:      4,
+          opacity:     0.85,
+          lineCap:     'round',
+          lineJoin:    'round'
+        });
+        polyline.on('click', () => selectPlace(i));
+        polyline.addTo(map);
+        c.points.forEach(pt => bounds.push(pt));
+      }
+      polylines.push(polyline);
+
+      const marker = L.marker(c.center, {
+        icon: makeMarkerIcon(i + 1, false)
+      });
+      marker.on('click', () => selectPlace(i));
+      const sceneShort = (getScene(p) || '').slice(0, 40);
+      const lineHint = c.type === 'line' ? `<br><i>line · ${c.count} pts</i>` : '';
+      marker.bindPopup(
+        '<b>' + escapeHtml(getSong(currentMV)) + '</b><br>' +
+        escapeHtml(sceneShort) + (getScene(p).length > 40 ? '…' : '') +
+        lineHint
+      );
+      marker.addTo(map);
+      markers.push(marker);
+      bounds.push(c.center);
+    });
+    const validBounds = bounds.filter(b => !isNaN(b[0]) && !isNaN(b[1]));
+    if (validBounds.length) {
+      if (validBounds.length === 1) map.setView(validBounds[0], 16);
+      else map.fitBounds(validBounds, { padding: [40, 40], maxZoom: 16 });
+    }
+  }
+
+  function highlightMarker(idx) {
+    markers.forEach((m, i) => {
+      if (m) m.setIcon(makeMarkerIcon(i + 1, i === idx));
+    });
+    polylines.forEach((pl, i) => {
+      if (!pl) return;
+      pl.setStyle({
+        weight:  i === idx ? 6   : 4,
+        opacity: i === idx ? 1.0 : 0.85,
+        color:   i === idx ? '#e0c590' : '#c8a96e'   // accent2 vs accent
+      });
+    });
+  }
+
+  // ── RENDER: MV LIST ──────────────────────────────────────────────────
+  function renderMVList() {
+    const list = document.getElementById('mvList');
+    if (!allMVs.length) {
+      list.innerHTML = '<div class="empty-state">No MVs found.</div>';
+      return;
+    }
+    list.innerHTML = allMVs.map((mv, i) => {
+      const places = getPlaces(mv).length;
+      return `
+        <div class="mv-item" data-idx="${i}">
+          <span class="mv-title">${escapeHtml(getSong(mv))}</span>
+          <span class="mv-pin-count">${places} 📍</span>
+        </div>`;
+    }).join('');
+    list.querySelectorAll('.mv-item').forEach(el => {
+      el.addEventListener('click', () => selectMV(+el.dataset.idx));
+    });
+  }
+
+  // ── RENDER: VIDEO + PLACES ───────────────────────────────────────────
+  function renderVideoAndPlaces() {
+    const section = document.getElementById('videoSection');
+    if (!currentMV) {
+      section.innerHTML = '<div class="empty-state">Select a music video to begin.</div>';
+      return;
+    }
+    const videoId = getVideoId(currentMV);
+    const places  = getPlaces(currentMV);
+
+    const videoBlock = videoId
+      ? `<div class="video-wrapper"><div id="ytPlayer"></div></div>`
+      : `<div class="video-wrapper" style="display:flex;align-items:center;justify-content:center;color:var(--text3);font-style:italic;font-size:13px;">No video available</div>`;
+
+    section.innerHTML = `
+      <div class="video-section">
+        ${videoBlock}
+        <div class="video-title">${escapeHtml(getSong(currentMV))}</div>
+      </div>
+      <div class="section-label">Places (${places.length})</div>
+      <div class="places-list" id="placesList">
+        ${places.map((p, i) => {
+          const c = getCoords(p);
+          const validCoords = c.type !== 'invalid';
+          const loc = getLocation(p);
+          let metaText;
+          if (loc) {
+            metaText = loc;
+          } else if (validCoords) {
+            metaText = `${c.center[0].toFixed(4)}, ${c.center[1].toFixed(4)}`;
+          } else {
+            metaText = '—';
+          }
+          const lineBadge = c.type === 'line'
+            ? `<span class="line-badge" title="Line segment with ${c.count} points">↔ ${c.count}</span>`
+            : '';
+          const mapsHref = buildGoogleMapsUrl(c);
+          const mapsLink = mapsHref
+            ? `<a class="maps-link" href="${mapsHref}" target="_blank" rel="noopener" title="Open in Google Maps" onclick="event.stopPropagation()">↗</a>`
+            : '';
+          return `
+            <div class="place-item" data-idx="${i}">
+              <div class="place-scene">${escapeHtml(getScene(p) || ('Place ' + (i+1)))}</div>
+              <div class="place-meta">
+                <span>${escapeHtml(metaText)}</span>
+                <span style="display:flex;align-items:center;gap:6px;">${lineBadge}${mapsLink}</span>
+              </div>
+            </div>`;
+        }).join('')}
+      </div>`;
+
+    // Build / reuse YT player only if there's a video
+    if (videoId) {
+      if (ytReady) buildPlayer(videoId);
+      else pendingVideoId = videoId;
+    }
+
+    document.querySelectorAll('.place-item').forEach(el => {
+      el.addEventListener('click', () => selectPlace(+el.dataset.idx));
+    });
+  }
+
+  function buildPlayer(videoId) {
+    // Destroy existing player so it reloads with the new video
+    if (ytPlayer && typeof ytPlayer.destroy === 'function') {
+      try { ytPlayer.destroy(); } catch (_) {}
+    }
+    ytPlayer = new YT.Player('ytPlayer', {
+      videoId: videoId,
+      playerVars: {
+        rel: 0,
+        modestbranding: 1,
+        playsinline: 1
+      }
+    });
+  }
+
+  // ── RENDER: PLACE DETAILS ────────────────────────────────────────────
+  function renderDetails() {
+    const details = document.getElementById('details');
+    if (!currentPlace) {
+      details.innerHTML = '<div class="details-empty">Select a place to see details.</div>';
+      return;
+    }
+    const p = currentPlace;
+    const stamps = parseTimestamps(getScene(p));
+    const images = getImages(p);
+    const c = getCoords(p);
+    const validCoords = c.type !== 'invalid';
+    const location = getLocation(p);
+    const mapsUrl  = buildGoogleMapsUrl(c);
+
+    // Coords block: single line for points, list of points for lines.
+    let coordsHtml = '';
+    if (validCoords) {
+      const linkLabel = c.type === 'line' ? 'View segment in Google Maps ↗' : 'Open in Google Maps ↗';
+      if (c.type === 'point') {
+        const [la, lo] = c.center;
+        coordsHtml = `
+          <div class="details-coords">
+            <span>${la.toFixed(6)}, ${lo.toFixed(6)}</span>
+            <a href="${mapsUrl}" target="_blank" rel="noopener" class="maps-link">${linkLabel}</a>
+          </div>`;
+      } else {
+        const ptList = c.points.map(([la, lo], idx) =>
+          `<div>${idx + 1}. ${la.toFixed(6)}, ${lo.toFixed(6)}</div>`
+        ).join('');
+        coordsHtml = `
+          <div class="details-coords details-coords-line">
+            <div class="line-points">
+              <div class="line-points-label">Line segment · ${c.count} points</div>
+              ${ptList}
+            </div>
+            <a href="${mapsUrl}" target="_blank" rel="noopener" class="maps-link">${linkLabel}</a>
+          </div>`;
+      }
+    }
+
+    details.innerHTML = `
+      <div class="details-title">${escapeHtml(getScene(p) || 'Place')}</div>
+      ${getDesc(p)
+        ? `<div class="details-description">${escapeHtml(getDesc(p))}</div>`
+        : ''}
+      ${location
+        ? `<div class="details-location">📍 ${escapeHtml(location)}</div>`
+        : ''}
+      ${coordsHtml}
+      ${stamps.length
+        ? `<div class="timestamps">
+            ${stamps.map(t =>
+              `<span class="ts-chip" data-start="${t.start}">▶ ${escapeHtml(t.label)}</span>`
+            ).join('')}
+          </div>`
+        : ''}
+      ${images.length
+        ? `<div class="images">
+            ${images.map(src =>
+              `<img src="${escapeHtml(resolveImage(src))}" alt="" loading="lazy">`
+            ).join('')}
+          </div>`
+        : ''}
+    `;
+
+    // Timestamp chip clicks → seek YT player
+    details.querySelectorAll('.ts-chip').forEach(chip => {
+      chip.addEventListener('click', () => {
+        const seconds = +chip.dataset.start;
+        seekYouTube(seconds);
+      });
+    });
+
+    // Image clicks → lightbox
+    details.querySelectorAll('.images img').forEach(img => {
+      img.addEventListener('click', () => {
+        const lb  = document.getElementById('lightbox');
+        const lbi = document.getElementById('lightboxImg');
+        lbi.src = img.src;
+        lb.classList.add('show');
+      });
+    });
+  }
+
+  function seekYouTube(seconds) {
+    if (!ytPlayer) return;
+    try {
+      ytPlayer.seekTo(seconds, true);
+      ytPlayer.playVideo();
+    } catch (e) {
+      console.warn('Seek failed:', e);
+    }
+  }
+
+  // ── SELECTION HANDLERS ───────────────────────────────────────────────
+  function selectMV(idx) {
+    currentMV    = allMVs[idx];
+    currentPlace = null;
+    document.querySelectorAll('.mv-item').forEach((el, i) =>
+      el.classList.toggle('active', i === idx));
+    renderVideoAndPlaces();
+    renderMarkers();
+    renderDetails();
+
+    // Auto-select first place — most MVs have just one, and it removes a
+    // pointless extra click for the rest.
+    const places = getPlaces(currentMV);
+    if (places.length > 0) selectPlace(0);
+  }
+
+  function selectPlace(idx) {
+    if (!currentMV) return;
+    const places = getPlaces(currentMV);
+    currentPlace = places[idx];
+    document.querySelectorAll('.place-item').forEach((el, i) =>
+      el.classList.toggle('active', i === idx));
+    highlightMarker(idx);
+
+    const c = getCoords(currentPlace);
+    if (c.type === 'point') {
+      map.flyTo(c.center, Math.max(map.getZoom(), 16), { duration: 0.6 });
+      if (markers[idx]) markers[idx].openPopup();
+    } else if (c.type === 'line') {
+      // Fit the whole segment on screen, but don't zoom out absurdly close.
+      map.flyToBounds(c.points, { padding: [60, 60], maxZoom: 17, duration: 0.6 });
+      if (markers[idx]) markers[idx].openPopup();
+    }
+    renderDetails();
+  }
+
+  // ── GO ───────────────────────────────────────────────────────────────
+  boot();
+</script>
+
+</body>
+</html>
