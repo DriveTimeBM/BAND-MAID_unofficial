@@ -303,6 +303,15 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/links.png"
   },
   {
+    "id": "about-okyujumvmap",
+    "section": "Views",
+    "icon": "🧭",
+    "title": "Okyu-ji and MV Map",
+    "jsonUrl": null,
+    "body": "Okyu-ji and MV Map created by Simeon",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/okyujimvmap.png"
+  },
+  {
     "id": "about-sorter",
     "section": "Views",
     "icon": "🔢",
