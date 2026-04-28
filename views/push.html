@@ -344,6 +344,7 @@ function buildPlayerInfo(i) {
     ? v._pubDate.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'})
     : '—';
   const needed = Math.max(0, 1000000 - v.Views).toLocaleString();
+  return `
     <div class="now-playing">
       <div class="np-eyebrow">
         <div class="np-dot"></div>
