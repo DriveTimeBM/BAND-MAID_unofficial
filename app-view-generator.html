@@ -926,7 +926,14 @@ async function loadData(){
     const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
     const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
-    const parsed=await res.json();
+    let parsed;
+    try{
+      const text=await res.text();
+      parsed=text.trim()?JSON.parse(text):[];
+    }catch(e){
+      if(ALLOW_EMPTY){parsed=[];}
+      else throw new Error('Invalid JSON: '+e.message);
+    }
     RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
     // If empty and ALLOW_EMPTY, skip cache and just render the friendly message
