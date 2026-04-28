@@ -118,6 +118,13 @@
     "icon": "🎯"
   },
   {
+    "id": "push",
+    "name": "1 Million Push *new*",
+    "file": "views/push.html",
+    "nav": "menu",
+    "icon": "🚀"
+  },
+  {
     "id": "milestones",
     "name": "Milestones",
     "file": "views/milestones.html",

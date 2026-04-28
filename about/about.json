@@ -160,6 +160,15 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/million.png"
   },
   {
+    "id": "about-push",
+    "section": "Views",
+    "icon": "🚀",
+    "title": "1 Million Push",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/push.json",
+    "body": "Official videos under 1M views that need a little help from fans to reach 1M. Updated daily.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/push.png"
+  },
+  {
     "id": "about-milestones",
     "section": "Views",
     "icon": "📍",
