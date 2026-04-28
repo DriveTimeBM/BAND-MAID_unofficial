@@ -12,98 +12,170 @@
   --border:#2a2a2a;--border2:#3a3a3a;
   --text:#f0f0f0;--text2:#999;--text3:#555;
   --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
-  --red:#ff0000;--red-dim:rgba(255,0,0,0.1);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.08);
   --success:#22c55e;
   --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:57px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
 
-/* ── HEADER ── */
-.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200}
+/* ── APP HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:0 16px;display:flex;align-items:center;gap:12px;
+}
 .app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
 .app-logo img{width:22px;height:22px;object-fit:contain}
 .app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
-.app-nav-sub{font-size:11px;color:var(--text3);letter-spacing:0.04em}
+.app-nav-sub{font-size:11px;color:var(--text3)}
 
-/* ── PLAYER ── */
-.player-wrap{
-  position:sticky;top:57px;z-index:100;
-  background:#000;
-  aspect-ratio:16/9;
-  width:100%;
+/* ── TWO-COLUMN BODY ── */
+.app-body{
+  position:fixed;
+  top:var(--header-h);left:0;right:0;bottom:0;
+  display:grid;
+  grid-template-columns:360px 1fr;
 }
-.player-wrap iframe{width:100%;height:100%;border:none;display:block}
 
-/* ── NOW PLAYING BAR ── */
-.now-playing{
-  background:var(--bg2);border-bottom:1px solid var(--border);
-  padding:10px 14px;display:flex;align-items:center;gap:10px;
-  position:sticky;top:calc(57px + 56.25vw);z-index:99;
+/* ── LEFT: VIDEO LIST ── */
+.list-col{
+  background:var(--bg2);
+  border-right:1px solid var(--border);
+  overflow-y:auto;
+  display:flex;flex-direction:column;
 }
-.now-playing-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.4s ease-in-out infinite}
-@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
-.now-playing-title{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.now-playing-index{font-size:11px;color:var(--text3);flex-shrink:0}
+.list-header{
+  padding:12px 14px 10px;
+  border-bottom:1px solid var(--border);
+  background:var(--bg2);
+  position:sticky;top:0;z-index:10;
+}
+.list-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
+.list-count{font-size:11px;color:var(--text3);margin-top:2px}
 
-/* ── VIDEO LIST ── */
-.video-list{padding:0 0 32px}
-
+/* Video item */
 .video-item{
-  display:flex;gap:12px;padding:10px 14px;
+  display:flex;gap:10px;padding:10px 12px;
   border-bottom:1px solid var(--border);cursor:pointer;
   transition:background 0.12s;align-items:flex-start;
-  position:relative;
+  border-left:3px solid transparent;
 }
 .video-item:hover{background:var(--bg3)}
-.video-item.active{background:rgba(255,0,0,0.05);border-left:3px solid var(--red)}
-.video-item.active .video-thumb-wrap::after{opacity:1}
+.video-item.active{background:var(--red-dim);border-left-color:var(--red)}
+.video-item.active .video-title{color:#ff8080}
 
-/* Thumbnail */
-.video-thumb-wrap{position:relative;flex-shrink:0;width:120px}
-@media(max-width:480px){.video-thumb-wrap{width:90px}}
-.video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;background:var(--bg3)}
-.video-thumb-wrap::after{
-  content:'▶';position:absolute;inset:0;
+/* Rank badge */
+.video-rank{
+  width:22px;height:22px;flex-shrink:0;
+  background:var(--bg3);border:1px solid var(--border);border-radius:4px;
   display:flex;align-items:center;justify-content:center;
-  background:rgba(0,0,0,0.55);border-radius:4px;
-  color:#fff;font-size:20px;opacity:0;transition:opacity 0.15s;
-  pointer-events:none;
+  font-size:10px;font-weight:700;color:var(--text3);margin-top:1px;
 }
-.video-item:not(.active):hover .video-thumb-wrap::after{opacity:0.7}
-.video-playing-badge{
-  position:absolute;bottom:4px;left:4px;
+.video-item.active .video-rank{background:var(--red);border-color:var(--red);color:#fff}
+
+/* Thumb */
+.video-thumb-wrap{position:relative;flex-shrink:0;width:96px}
+.video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;background:var(--bg3)}
+.playing-badge{
+  position:absolute;bottom:3px;left:3px;
   background:var(--red);color:#fff;
-  font-size:9px;font-weight:700;letter-spacing:0.06em;
-  padding:2px 5px;border-radius:3px;
+  font-size:8px;font-weight:700;letter-spacing:0.05em;
+  padding:1px 4px;border-radius:2px;
 }
 
 /* Info */
-.video-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
-.video-rank{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.06em}
-.video-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.video-item.active .video-title{color:#ff6b6b}
+.video-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:3px}
+.video-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.video-stats{display:flex;flex-wrap:wrap;gap:4px 10px;margin-top:1px}
+.stat{font-size:10px;color:var(--text2);display:flex;align-items:center;gap:2px}
+.stat.views{color:var(--accent);font-weight:600}
+.stat.rate{color:var(--success)}
 
-/* Stats row */
-.video-stats{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:2px}
-.video-stat{font-size:11px;color:var(--text2);display:flex;align-items:center;gap:3px}
-.video-stat.views{color:var(--accent);font-weight:600}
-.video-stat.rate{color:var(--success)}
-.progress-wrap{margin-top:5px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
-.progress-bar{height:100%;border-radius:2px;background:var(--accent);transition:width 0.3s}
+/* Progress */
+.progress-wrap{height:3px;background:var(--border);border-radius:2px;overflow:hidden;margin-top:4px}
+.progress-bar{height:100%;border-radius:2px;background:var(--accent)}
+.progress-label{font-size:9px;color:var(--text3);margin-top:2px;display:flex;justify-content:space-between}
 
-/* Projection pill */
-.projection{
-  display:inline-flex;align-items:center;gap:5px;
+/* ── RIGHT: PLAYER COL ── */
+.player-col{
+  display:flex;flex-direction:column;
+  background:var(--bg);
+  overflow-y:auto;
+}
+
+/* Player */
+.player-wrap{background:#000;flex-shrink:0}
+.player-wrap iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+
+/* Now playing */
+.now-playing{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:12px 16px;flex-shrink:0;
+}
+.np-eyebrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.np-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.np-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+.np-index{font-size:10px;color:var(--text3);margin-left:auto}
+.np-title{font-size:15px;font-weight:700;color:var(--text);line-height:1.35;margin-bottom:10px}
+
+/* Metadata grid */
+.meta-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.meta-item{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+.meta-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.meta-value{font-size:15px;font-weight:700;color:var(--text);line-height:1.2}
+.meta-value.accent{color:var(--accent)}
+.meta-value.success{color:var(--success)}
+.meta-sub{font-size:10px;color:var(--text3);margin-top:1px}
+
+/* Big progress */
+.big-progress-section{padding:14px 16px 0;flex-shrink:0}
+.big-progress-label{font-size:11px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:6px;display:flex;justify-content:space-between;align-items:center}
+.big-progress-label span{color:var(--accent);font-size:12px}
+.big-progress-bar-wrap{height:8px;background:var(--border);border-radius:4px;overflow:hidden}
+.big-progress-bar{height:100%;border-radius:4px;background:linear-gradient(90deg,var(--accent),#e8c97e)}
+.big-progress-sublabels{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);margin-top:4px}
+
+/* Projection box */
+.projection-box{
+  margin:14px 16px 0;flex-shrink:0;
   background:var(--accent-dim);border:1px solid var(--accent-border);
-  border-radius:20px;padding:2px 8px;font-size:10px;color:var(--accent);
-  margin-top:4px;align-self:flex-start;
+  border-radius:var(--radius);overflow:hidden;
+}
+.proj-row{
+  display:flex;justify-content:space-between;align-items:center;
+  padding:8px 12px;font-size:12px;
+  border-bottom:1px solid rgba(200,169,110,0.1);
+}
+.proj-row:last-child{border-bottom:none}
+.proj-label{color:var(--text3)}
+.proj-value{color:var(--accent);font-weight:600}
+
+/* YT link */
+.yt-link{
+  display:inline-flex;align-items:center;gap:6px;
+  margin:12px 16px 16px;flex-shrink:0;align-self:flex-start;
+  color:var(--red);font-size:12px;text-decoration:none;font-weight:600;
+}
+.yt-link:hover{text-decoration:underline}
+.yt-link svg{width:13px;height:13px}
+
+/* ── MOBILE ── */
+@media(max-width:720px){
+  .app-body{
+    grid-template-columns:1fr;
+    grid-template-rows:auto 1fr;
+    overflow:hidden;
+  }
+  .player-col{grid-row:1;max-height:70vh}
+  .list-col{grid-row:2;border-right:none;border-top:1px solid var(--border)}
 }
 
 /* ── LOADING / ERROR ── */
-.state-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:60vh;color:var(--text3);font-size:13px;text-align:center;padding:24px}
+.state-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;height:100%;color:var(--text3);font-size:13px;text-align:center;padding:24px}
 .spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-.err-icon{font-size:32px}
 .retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
 .retry-btn:hover{border-color:var(--accent);color:var(--accent)}
 </style>
@@ -118,15 +190,16 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
   </div>
 </div>
 
-<div id="root"><div class="state-msg"><div class="spinner"></div><span>Loading…</span></div></div>
+<div class="app-body" id="appBody">
+  <div class="list-col"><div class="state-msg"><div class="spinner"></div><span>Loading…</span></div></div>
+  <div class="player-col"><div class="state-msg"><div class="spinner"></div></div></div>
+</div>
 
 <script>
-const JSON_URL  = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json';
-
-let videos  = [];
+const JSON_URL = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json';
+let videos = [];
 let current = 0;
 
-// ── BOOT ─────────────────────────────────────────────────────────────────────
 async function boot() {
   try {
     const res = await fetch(JSON_URL);
@@ -134,154 +207,205 @@ async function boot() {
     const raw = await res.json();
     videos = (Array.isArray(raw) ? raw : [raw]).map((v, i) => ({
       ...v,
-      _videoId:   extractId(v.URL),
+      _id:        extractId(v.URL),
       _thumb:     thumbUrl(extractId(v.URL)),
       _pubDate:   parseDotNetDate(v.PublishDate),
       _milestone: parseDotNetDate(v.DateofNextMillion),
       _rank:      i + 1,
+      _pct:       Math.min(100, ((v.Views / 1000000) * 100).toFixed(1)),
     }));
     render();
   } catch(e) {
-    document.getElementById('root').innerHTML = `
-      <div class="state-msg">
-        <div class="err-icon">🎯</div>
-        <div>Could not load data: ${esc(e.message)}</div>
+    document.getElementById('appBody').innerHTML = `
+      <div class="list-col"><div class="state-msg">
+        <div>⚠️</div><div>${esc(e.message)}</div>
         <button class="retry-btn" onclick="boot()">Retry</button>
-      </div>`;
+      </div></div><div class="player-col"></div>`;
   }
 }
 
-// ── RENDER ────────────────────────────────────────────────────────────────────
 function render() {
-  const root = document.getElementById('root');
-  root.innerHTML = '';
+  const body = document.getElementById('appBody');
+  body.innerHTML = '';
 
-  // Player
-  const playerWrap = document.createElement('div');
-  playerWrap.className = 'player-wrap';
-  playerWrap.id = 'playerWrap';
-  playerWrap.innerHTML = playerHtml(current);
-  root.appendChild(playerWrap);
+  // LEFT COLUMN
+  const listCol = document.createElement('div');
+  listCol.className = 'list-col';
+  listCol.id = 'listCol';
+  const lh = document.createElement('div');
+  lh.className = 'list-header';
+  lh.innerHTML = `<div class="list-title">🎯 Push to One Million</div>
+    <div class="list-count">${videos.length} videos · sorted by proximity to 1M</div>`;
+  listCol.appendChild(lh);
+  videos.forEach((v, i) => listCol.appendChild(buildItem(v, i)));
 
-  // Now playing bar
-  const npBar = document.createElement('div');
-  npBar.className = 'now-playing';
-  npBar.id = 'nowPlayingBar';
-  npBar.innerHTML = nowPlayingHtml(current);
-  root.appendChild(npBar);
+  // RIGHT COLUMN
+  const playerCol = document.createElement('div');
+  playerCol.className = 'player-col';
+  playerCol.id = 'playerCol';
+  playerCol.innerHTML = buildPlayerCol(current);
 
-  // Video list
-  const list = document.createElement('div');
-  list.className = 'video-list';
-  list.id = 'videoList';
-  videos.forEach((v, i) => list.appendChild(buildItem(v, i)));
-  root.appendChild(list);
-}
-
-function playerHtml(i) {
-  const v = videos[i];
-  if (!v?._videoId) return '';
-  return `<iframe
-    src="https://www.youtube.com/embed/${esc(v._videoId)}?autoplay=0&rel=0&modestbranding=1"
-    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-    allowfullscreen></iframe>`;
-}
-
-function nowPlayingHtml(i) {
-  const v = videos[i];
-  return `<div class="now-playing-dot"></div>
-    <div class="now-playing-title">${esc(v.VideoTitle)}</div>
-    <div class="now-playing-index">${i + 1} / ${videos.length}</div>`;
+  body.appendChild(listCol);
+  body.appendChild(playerCol);
 }
 
 function buildItem(v, i) {
-  const pct = Math.min(100, Math.round((v.Views / 1000000) * 100));
-
   const item = document.createElement('div');
   item.className = 'video-item' + (i === current ? ' active' : '');
   item.id = `item-${i}`;
   item.onclick = () => selectVideo(i);
 
   const milestoneStr = v._milestone
-    ? v._milestone.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' })
+    ? v._milestone.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'})
     : '—';
 
   item.innerHTML = `
+    <div class="video-rank">${v._rank}</div>
     <div class="video-thumb-wrap">
       <img class="video-thumb" src="${esc(v._thumb)}" alt="" loading="lazy"
-           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 9%22><rect fill=%22%231c1c1c%22 width=%2216%22 height=%229%22/></svg>'">
-      ${i === current ? '<div class="video-playing-badge">LOADED</div>' : ''}
+        onerror="this.style.display='none'">
+      ${i === current ? '<div class="playing-badge">▶ NOW</div>' : ''}
     </div>
     <div class="video-info">
-      <div class="video-rank">#${v._rank}</div>
       <div class="video-title">${esc(v.VideoTitle)}</div>
       <div class="video-stats">
-        <div class="video-stat views">👁 ${fmt(v.Views)}</div>
-        <div class="video-stat rate">+${fmt(v.ViewsRatePerDay)}/day</div>
-        <div class="video-stat">👍 ${fmt(v.Likes)}</div>
-        <div class="video-stat">💬 ${fmt(v.Comments)}</div>
+        <div class="stat views">👁 ${fmt(v.Views)}</div>
+        <div class="stat rate">+${fmt(v.ViewsRatePerDay)}/day</div>
+        <div class="stat">👍 ${fmt(v.Likes)}</div>
+        <div class="stat">💬 ${fmt(v.Comments)}</div>
       </div>
-      <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
-      <div class="projection">🎯 ~${v.DaysToNextMillion}d · ${milestoneStr}</div>
+      <div class="progress-wrap">
+        <div class="progress-bar" style="width:${v._pct}%"></div>
+      </div>
+      <div class="progress-label">
+        <span>${v._pct}% to 1M</span>
+        <span>~${v.DaysToNextMillion}d · ${milestoneStr}</span>
+      </div>
     </div>`;
-
   return item;
 }
 
+function buildPlayerCol(i) {
+  const v = videos[i];
+  if (!v) return '';
+  const milestoneStr = v._milestone
+    ? v._milestone.toLocaleDateString(undefined, {year:'numeric',month:'long',day:'numeric'})
+    : '—';
+  const pubStr = v._pubDate
+    ? v._pubDate.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'})
+    : '—';
+  const needed = Math.max(0, 1000000 - v.Views).toLocaleString();
+
+  return `
+    <div class="player-wrap">
+      <iframe src="https://www.youtube.com/embed/${esc(v._id)}?rel=0&modestbranding=1"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen></iframe>
+    </div>
+    <div class="now-playing">
+      <div class="np-eyebrow">
+        <div class="np-dot"></div>
+        <div class="np-label">Now Loaded</div>
+        <div class="np-index">#${v._rank} of ${videos.length}</div>
+      </div>
+      <div class="np-title">${esc(v.VideoTitle)}</div>
+      <div class="meta-grid">
+        <div class="meta-item">
+          <div class="meta-label">Views</div>
+          <div class="meta-value accent">${fmt(v.Views)}</div>
+          <div class="meta-sub">${needed} still needed</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Views / Day</div>
+          <div class="meta-value success">+${fmt(v.ViewsRatePerDay)}</div>
+          <div class="meta-sub">current rate</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Likes</div>
+          <div class="meta-value">${fmt(v.Likes)}</div>
+        </div>
+        <div class="meta-item">
+          <div class="meta-label">Comments</div>
+          <div class="meta-value">${fmt(v.Comments)}</div>
+        </div>
+      </div>
+    </div>
+    <div class="big-progress-section">
+      <div class="big-progress-label">
+        Progress to 1,000,000
+        <span>${v._pct}%</span>
+      </div>
+      <div class="big-progress-bar-wrap">
+        <div class="big-progress-bar" style="width:${v._pct}%"></div>
+      </div>
+      <div class="big-progress-sublabels">
+        <span>${fmt(v.Views)} views</span>
+        <span>1,000,000</span>
+      </div>
+    </div>
+    <div class="projection-box">
+      <div class="proj-row">
+        <span class="proj-label">Days to milestone</span>
+        <span class="proj-value">~${v.DaysToNextMillion} days</span>
+      </div>
+      <div class="proj-row">
+        <span class="proj-label">Projected date</span>
+        <span class="proj-value">${milestoneStr}</span>
+      </div>
+      <div class="proj-row">
+        <span class="proj-label">Published</span>
+        <span class="proj-value">${pubStr}</span>
+      </div>
+    </div>
+    <a class="yt-link" href="${esc(v.URL)}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+        <polyline points="15 3 21 3 21 9"/>
+        <line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      Open in YouTube
+    </a>`;
+}
+
 function selectVideo(i) {
+  const prev = current;
   current = i;
 
-  // Swap iframe
-  document.getElementById('playerWrap').innerHTML = playerHtml(i);
-
-  // Update now playing bar
-  document.getElementById('nowPlayingBar').innerHTML = nowPlayingHtml(i);
-
-  // Update active state in list
-  document.querySelectorAll('.video-item').forEach((el, idx) => {
-    el.classList.toggle('active', idx === i);
-    // Swap playing badge
-    const badge = el.querySelector('.video-playing-badge');
-    if (idx === i && !badge) {
-      const wrap = el.querySelector('.video-thumb-wrap');
+  // Update list
+  const prevEl = document.getElementById(`item-${prev}`);
+  const nextEl = document.getElementById(`item-${i}`);
+  if (prevEl) {
+    prevEl.classList.remove('active');
+    prevEl.querySelector('.playing-badge')?.remove();
+  }
+  if (nextEl) {
+    nextEl.classList.add('active');
+    const tw = nextEl.querySelector('.video-thumb-wrap');
+    if (!tw.querySelector('.playing-badge')) {
       const b = document.createElement('div');
-      b.className = 'video-playing-badge';
-      b.textContent = 'LOADED';
-      wrap.appendChild(b);
-    } else if (idx !== i && badge) {
-      badge.remove();
+      b.className = 'playing-badge';
+      b.textContent = '▶ NOW';
+      tw.appendChild(b);
     }
-  });
+    nextEl.scrollIntoView({behavior:'smooth', block:'nearest'});
+  }
 
-  // Scroll item into view in the list (not the whole page)
-  const el = document.getElementById(`item-${i}`);
-  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  // Rebuild player col
+  document.getElementById('playerCol').innerHTML = buildPlayerCol(i);
 }
 
-// ── UTILS ─────────────────────────────────────────────────────────────────────
 function extractId(url) {
-  if (!url) return '';
-  // Handles youtu.be/ID and youtube.com/watch?v=ID
-  const m = url.match(/(?:youtu\.be\/|[?&]v=)([A-Za-z0-9_-]{11})/);
+  const m = String(url||'').match(/(?:youtu\.be\/|[?&]v=)([A-Za-z0-9_-]{11})/);
   return m ? m[1] : '';
 }
-
-function thumbUrl(id) {
-  return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : '';
-}
-
+function thumbUrl(id) { return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : ''; }
 function parseDotNetDate(s) {
-  if (!s) return null;
-  const m = String(s).match(/Date\((\d+)\)/);
+  const m = String(s||'').match(/Date\((\d+)\)/);
   return m ? new Date(parseInt(m[1])) : null;
 }
-
-function fmt(n) {
-  return Number(n).toLocaleString();
-}
-
+function fmt(n) { return Number(n).toLocaleString(); }
 function esc(s) {
-  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
 }
 
 boot();
