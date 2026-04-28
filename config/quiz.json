@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/A1vhzIBfTGQ/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 106,124 | Yesterday: 68\nBAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 345,900 | Yesterday: 20\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany — Views: 50,084 | Yesterday: 19",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Beauty and the beast — Spotify: 1,034,289 | Played Live: 36\nyou. — Spotify: 893,130 | Played Live: 125\nTora and Tora (虎and虎) — Spotify: 891,685 | Played Live: 1",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング",
+                                              "text":  "Beauty and the beast",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany"
+                                              "text":  "you."
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "Tora and Tora (虎and虎)"
                                           }
                                       ]
                       }
