@@ -41,14 +41,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:228px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:228px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -131,13 +131,14 @@ const API_READ_KEY = "";
 const ALWAYS_FRESH = false;
 const CACHE_KEY = 'bmdata_' + "Anniversaries".replace(/\s+/g,'_');
 const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
-const FIELDS = [{"name":"Category","type":"text"},{"name":"Item","type":"text"},{"name":"Detail","type":"text"},{"name":"Image","type":"image"}];
+const FIELDS = [{"name":"Categoty","type":"text"},{"name":"Item","type":"text"},{"name":"Detail","type":"text"},{"name":"Image","type":"image"}];
 const DECK = {"image":"Image","primary":"Item","secondary":"Detail","summary":null,"url":null};
 const SORT = {"field":"Item","dir":"asc"};
-const GROUP = {"field":"Category","dir":"asc"};
+const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Anniversaries";
 const LOGO_CHAR = "🎉";
-const PREVIEW_COUNT = 5;
+const PREVIEW_COUNT = 999999;
+const ALLOW_EMPTY   = true;
 const PREVIEW_DATA = null;
 
 let RAW_DATA = [];
@@ -186,6 +187,12 @@ async function loadData(){
     const parsed=await res.json();
     RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
+    // If empty and ALLOW_EMPTY, skip cache and just render the friendly message
+    if(!RAW_DATA.length && ALLOW_EMPTY){
+      hideFetchState();
+      renderList();
+      return;
+    }
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
       try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
@@ -309,7 +316,9 @@ function renderList(scrollToGroup){
   container.innerHTML='';
 
   if(!currentData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    container.innerHTML=ALLOW_EMPTY
+      ? '<div style="padding:40px;text-align:center;color:var(--text3);font-size:15px">No items today</div>'
+      : '<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
     return;
   }
 

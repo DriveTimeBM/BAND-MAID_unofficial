@@ -3,6 +3,9 @@
   "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
   "apiReadKey": "",
   "alwaysFresh": false,
+  "previewCount": 999999,
+  "cardWidth": 200,
+  "allowEmpty": true,
   "logoChar": "🎉",
   "fImage": "Image",
   "fPrimary": "Item",
@@ -11,6 +14,6 @@
   "fUrl": "",
   "sortField": "Item",
   "sortDir": "asc",
-  "groupField": "Category",
+  "groupField": "",
   "groupDir": "asc"
 }
