@@ -1,0 +1,290 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Push to One Million</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ff0000;--red-dim:rgba(255,0,0,0.1);
+  --success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+}
+body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+
+/* ── HEADER ── */
+.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:22px;height:22px;object-fit:contain}
+.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.app-nav-sub{font-size:11px;color:var(--text3);letter-spacing:0.04em}
+
+/* ── PLAYER ── */
+.player-wrap{
+  position:sticky;top:57px;z-index:100;
+  background:#000;
+  aspect-ratio:16/9;
+  width:100%;
+}
+.player-wrap iframe{width:100%;height:100%;border:none;display:block}
+
+/* ── NOW PLAYING BAR ── */
+.now-playing{
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:10px 14px;display:flex;align-items:center;gap:10px;
+  position:sticky;top:calc(57px + 56.25vw);z-index:99;
+}
+.now-playing-dot{width:8px;height:8px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1;transform:scale(1)}50%{opacity:0.5;transform:scale(0.8)}}
+.now-playing-title{font-size:12px;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.now-playing-index{font-size:11px;color:var(--text3);flex-shrink:0}
+
+/* ── VIDEO LIST ── */
+.video-list{padding:0 0 32px}
+
+.video-item{
+  display:flex;gap:12px;padding:10px 14px;
+  border-bottom:1px solid var(--border);cursor:pointer;
+  transition:background 0.12s;align-items:flex-start;
+  position:relative;
+}
+.video-item:hover{background:var(--bg3)}
+.video-item.active{background:rgba(255,0,0,0.05);border-left:3px solid var(--red)}
+.video-item.active .video-thumb-wrap::after{opacity:1}
+
+/* Thumbnail */
+.video-thumb-wrap{position:relative;flex-shrink:0;width:120px}
+@media(max-width:480px){.video-thumb-wrap{width:90px}}
+.video-thumb{width:100%;aspect-ratio:16/9;object-fit:cover;border-radius:4px;display:block;background:var(--bg3)}
+.video-thumb-wrap::after{
+  content:'▶';position:absolute;inset:0;
+  display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.55);border-radius:4px;
+  color:#fff;font-size:20px;opacity:0;transition:opacity 0.15s;
+  pointer-events:none;
+}
+.video-item:not(.active):hover .video-thumb-wrap::after{opacity:0.7}
+.video-playing-badge{
+  position:absolute;bottom:4px;left:4px;
+  background:var(--red);color:#fff;
+  font-size:9px;font-weight:700;letter-spacing:0.06em;
+  padding:2px 5px;border-radius:3px;
+}
+
+/* Info */
+.video-info{flex:1;min-width:0;display:flex;flex-direction:column;gap:4px}
+.video-rank{font-size:10px;font-weight:700;color:var(--text3);letter-spacing:0.06em}
+.video-title{font-size:13px;font-weight:600;color:var(--text);line-height:1.35;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.video-item.active .video-title{color:#ff6b6b}
+
+/* Stats row */
+.video-stats{display:flex;flex-wrap:wrap;gap:6px 12px;margin-top:2px}
+.video-stat{font-size:11px;color:var(--text2);display:flex;align-items:center;gap:3px}
+.video-stat.views{color:var(--accent);font-weight:600}
+.video-stat.rate{color:var(--success)}
+.progress-wrap{margin-top:5px;height:3px;background:var(--border);border-radius:2px;overflow:hidden}
+.progress-bar{height:100%;border-radius:2px;background:var(--accent);transition:width 0.3s}
+
+/* Projection pill */
+.projection{
+  display:inline-flex;align-items:center;gap:5px;
+  background:var(--accent-dim);border:1px solid var(--accent-border);
+  border-radius:20px;padding:2px 8px;font-size:10px;color:var(--accent);
+  margin-top:4px;align-self:flex-start;
+}
+
+/* ── LOADING / ERROR ── */
+.state-msg{display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;min-height:60vh;color:var(--text3);font-size:13px;text-align:center;padding:24px}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.err-icon{font-size:32px}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='🎯'"></div>
+  <div>
+    <div class="app-nav-title">Push to One Million</div>
+    <div class="app-nav-sub">BAND-MAID Unofficial</div>
+  </div>
+</div>
+
+<div id="root"><div class="state-msg"><div class="spinner"></div><span>Loading…</span></div></div>
+
+<script>
+const JSON_URL  = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json';
+
+let videos  = [];
+let current = 0;
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(JSON_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    const raw = await res.json();
+    videos = (Array.isArray(raw) ? raw : [raw]).map((v, i) => ({
+      ...v,
+      _videoId:   extractId(v.URL),
+      _thumb:     thumbUrl(extractId(v.URL)),
+      _pubDate:   parseDotNetDate(v.PublishDate),
+      _milestone: parseDotNetDate(v.DateofNextMillion),
+      _rank:      i + 1,
+    }));
+    render();
+  } catch(e) {
+    document.getElementById('root').innerHTML = `
+      <div class="state-msg">
+        <div class="err-icon">🎯</div>
+        <div>Could not load data: ${esc(e.message)}</div>
+        <button class="retry-btn" onclick="boot()">Retry</button>
+      </div>`;
+  }
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  const root = document.getElementById('root');
+  root.innerHTML = '';
+
+  // Player
+  const playerWrap = document.createElement('div');
+  playerWrap.className = 'player-wrap';
+  playerWrap.id = 'playerWrap';
+  playerWrap.innerHTML = playerHtml(current);
+  root.appendChild(playerWrap);
+
+  // Now playing bar
+  const npBar = document.createElement('div');
+  npBar.className = 'now-playing';
+  npBar.id = 'nowPlayingBar';
+  npBar.innerHTML = nowPlayingHtml(current);
+  root.appendChild(npBar);
+
+  // Video list
+  const list = document.createElement('div');
+  list.className = 'video-list';
+  list.id = 'videoList';
+  videos.forEach((v, i) => list.appendChild(buildItem(v, i)));
+  root.appendChild(list);
+}
+
+function playerHtml(i) {
+  const v = videos[i];
+  if (!v?._videoId) return '';
+  return `<iframe
+    src="https://www.youtube.com/embed/${esc(v._videoId)}?autoplay=0&rel=0&modestbranding=1"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+}
+
+function nowPlayingHtml(i) {
+  const v = videos[i];
+  return `<div class="now-playing-dot"></div>
+    <div class="now-playing-title">${esc(v.VideoTitle)}</div>
+    <div class="now-playing-index">${i + 1} / ${videos.length}</div>`;
+}
+
+function buildItem(v, i) {
+  const pct = Math.min(100, Math.round((v.Views / 1000000) * 100));
+
+  const item = document.createElement('div');
+  item.className = 'video-item' + (i === current ? ' active' : '');
+  item.id = `item-${i}`;
+  item.onclick = () => selectVideo(i);
+
+  const milestoneStr = v._milestone
+    ? v._milestone.toLocaleDateString(undefined, { year:'numeric', month:'short', day:'numeric' })
+    : '—';
+
+  item.innerHTML = `
+    <div class="video-thumb-wrap">
+      <img class="video-thumb" src="${esc(v._thumb)}" alt="" loading="lazy"
+           onerror="this.src='data:image/svg+xml,<svg xmlns=%22http://www.w3.org/2000/svg%22 viewBox=%220 0 16 9%22><rect fill=%22%231c1c1c%22 width=%2216%22 height=%229%22/></svg>'">
+      ${i === current ? '<div class="video-playing-badge">LOADED</div>' : ''}
+    </div>
+    <div class="video-info">
+      <div class="video-rank">#${v._rank}</div>
+      <div class="video-title">${esc(v.VideoTitle)}</div>
+      <div class="video-stats">
+        <div class="video-stat views">👁 ${fmt(v.Views)}</div>
+        <div class="video-stat rate">+${fmt(v.ViewsRatePerDay)}/day</div>
+        <div class="video-stat">👍 ${fmt(v.Likes)}</div>
+        <div class="video-stat">💬 ${fmt(v.Comments)}</div>
+      </div>
+      <div class="progress-wrap"><div class="progress-bar" style="width:${pct}%"></div></div>
+      <div class="projection">🎯 ~${v.DaysToNextMillion}d · ${milestoneStr}</div>
+    </div>`;
+
+  return item;
+}
+
+function selectVideo(i) {
+  current = i;
+
+  // Swap iframe
+  document.getElementById('playerWrap').innerHTML = playerHtml(i);
+
+  // Update now playing bar
+  document.getElementById('nowPlayingBar').innerHTML = nowPlayingHtml(i);
+
+  // Update active state in list
+  document.querySelectorAll('.video-item').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+    // Swap playing badge
+    const badge = el.querySelector('.video-playing-badge');
+    if (idx === i && !badge) {
+      const wrap = el.querySelector('.video-thumb-wrap');
+      const b = document.createElement('div');
+      b.className = 'video-playing-badge';
+      b.textContent = 'LOADED';
+      wrap.appendChild(b);
+    } else if (idx !== i && badge) {
+      badge.remove();
+    }
+  });
+
+  // Scroll item into view in the list (not the whole page)
+  const el = document.getElementById(`item-${i}`);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function extractId(url) {
+  if (!url) return '';
+  // Handles youtu.be/ID and youtube.com/watch?v=ID
+  const m = url.match(/(?:youtu\.be\/|[?&]v=)([A-Za-z0-9_-]{11})/);
+  return m ? m[1] : '';
+}
+
+function thumbUrl(id) {
+  return id ? `https://img.youtube.com/vi/${id}/mqdefault.jpg` : '';
+}
+
+function parseDotNetDate(s) {
+  if (!s) return null;
+  const m = String(s).match(/Date\((\d+)\)/);
+  return m ? new Date(parseInt(m[1])) : null;
+}
+
+function fmt(n) {
+  return Number(n).toLocaleString();
+}
+
+function esc(s) {
+  return String(s ?? '').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+boot();
+</script>
+</body>
+</html>
