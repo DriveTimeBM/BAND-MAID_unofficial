@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" href="../logo.png">
 <title>BAND-MAID Unofficial · Push to One Million</title>
+<script src="https://www.youtube.com/iframe_api"></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -197,8 +198,44 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 
 <script>
 const JSON_URL = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json';
-let videos = [];
+let videos  = [];
 let current = 0;
+let ytPlayer = null;
+let ytApiReady = false;
+let pendingVideoId = null;  // load this once API is ready
+
+// ── YOUTUBE API CALLBACK ──────────────────────────────────────────────────────
+// Called automatically by the YT API script when it's ready
+window.onYouTubeIframeAPIReady = function() {
+  ytApiReady = true;
+  if (pendingVideoId) createPlayer(pendingVideoId);
+};
+
+function createPlayer(videoId) {
+  if (!ytApiReady) { pendingVideoId = videoId; return; }
+  pendingVideoId = null;
+
+  // Destroy existing player if any
+  if (ytPlayer) { try { ytPlayer.destroy(); } catch(e) {} ytPlayer = null; }
+
+  // Ensure the target div exists
+  const el = document.getElementById('yt-player');
+  if (!el) return;
+
+  ytPlayer = new YT.Player('yt-player', {
+    videoId,
+    playerVars: { rel: 0, modestbranding: 1, autoplay: 0 },
+    events: {
+      onStateChange(e) {
+        // When a video ends, auto-advance to next
+        if (e.data === YT.PlayerState.ENDED) {
+          const next = current + 1;
+          if (next < videos.length) selectVideo(next, true); // true = autoplay
+        }
+      }
+    }
+  });
+}
 
 async function boot() {
   try {
@@ -247,6 +284,9 @@ function render() {
 
   body.appendChild(listCol);
   body.appendChild(playerCol);
+
+  // Initialise the YT player now the #yt-player div exists
+  createPlayer(videos[current]._id);
 }
 
 function buildItem(v, i) {
@@ -286,6 +326,15 @@ function buildItem(v, i) {
 }
 
 function buildPlayerCol(i) {
+  // The player div is created once; info panel is updated separately
+  return `
+    <div class="player-wrap">
+      <div id="yt-player"></div>
+    </div>
+    <div id="playerInfo">${buildPlayerInfo(i)}</div>`;
+}
+
+function buildPlayerInfo(i) {
   const v = videos[i];
   if (!v) return '';
   const milestoneStr = v._milestone
@@ -295,13 +344,6 @@ function buildPlayerCol(i) {
     ? v._pubDate.toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'})
     : '—';
   const needed = Math.max(0, 1000000 - v.Views).toLocaleString();
-
-  return `
-    <div class="player-wrap">
-      <iframe src="https://www.youtube.com/embed/${esc(v._id)}?rel=0&modestbranding=1"
-        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
-        allowfullscreen></iframe>
-    </div>
     <div class="now-playing">
       <div class="np-eyebrow">
         <div class="np-dot"></div>
@@ -367,11 +409,11 @@ function buildPlayerCol(i) {
     </a>`;
 }
 
-function selectVideo(i) {
+function selectVideo(i, autoplay = false) {
   const prev = current;
   current = i;
 
-  // Update list
+  // Update list highlight
   const prevEl = document.getElementById(`item-${prev}`);
   const nextEl = document.getElementById(`item-${i}`);
   if (prevEl) {
@@ -390,8 +432,21 @@ function selectVideo(i) {
     nextEl.scrollIntoView({behavior:'smooth', block:'nearest'});
   }
 
-  // Rebuild player col
-  document.getElementById('playerCol').innerHTML = buildPlayerCol(i);
+  // Load new video via API — autoplay if triggered by end-of-video
+  const v = videos[i];
+  if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+    if (autoplay) {
+      ytPlayer.loadVideoById(v._id);   // loadVideoById starts playing immediately
+    } else {
+      ytPlayer.cueVideoById(v._id);    // cueVideoById loads but doesn't autoplay
+    }
+  } else {
+    createPlayer(v._id);
+  }
+
+  // Rebuild the info/metadata panel below the player (not the player itself)
+  const infoEl = document.getElementById('playerInfo');
+  if (infoEl) infoEl.innerHTML = buildPlayerInfo(i);
 }
 
 function extractId(url) {
