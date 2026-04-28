@@ -54,6 +54,15 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 }
 .list-title{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
 .list-count{font-size:11px;color:var(--text3);margin-top:2px}
+.list-header-row{display:flex;align-items:center;justify-content:space-between}
+.loop-btn{
+  background:none;border:1px solid var(--border);border-radius:20px;
+  color:var(--text3);font-size:11px;font-weight:600;cursor:pointer;
+  padding:3px 10px;font-family:var(--font);transition:all 0.15s;
+  display:flex;align-items:center;gap:4px;
+}
+.loop-btn:hover{border-color:var(--accent);color:var(--accent)}
+.loop-btn.active{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
 
 /* Video item */
 .video-item{
@@ -198,8 +207,9 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 
 <script>
 const JSON_URL = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json';
-let videos  = [];
-let current = 0;
+let videos   = [];
+let current  = 0;
+let looping  = false;
 let ytPlayer = null;
 let ytApiReady = false;
 let pendingVideoId = null;  // load this once API is ready
@@ -227,10 +237,13 @@ function createPlayer(videoId) {
     playerVars: { rel: 0, modestbranding: 1, autoplay: 0 },
     events: {
       onStateChange(e) {
-        // When a video ends, auto-advance to next
         if (e.data === YT.PlayerState.ENDED) {
           const next = current + 1;
-          if (next < videos.length) selectVideo(next, true); // true = autoplay
+          if (next < videos.length) {
+            selectVideo(next, true);
+          } else if (looping) {
+            selectVideo(0, true);  // loop back to first
+          }
         }
       }
     }
@@ -271,7 +284,11 @@ function render() {
   listCol.id = 'listCol';
   const lh = document.createElement('div');
   lh.className = 'list-header';
-  lh.innerHTML = `<div class="list-title">🎯 Push to One Million</div>
+  lh.innerHTML = `
+    <div class="list-header-row">
+      <div class="list-title">🚀 Push to One Million</div>
+      <button class="loop-btn" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
+    </div>
     <div class="list-count">${videos.length} videos · sorted by proximity to 1M</div>`;
   listCol.appendChild(lh);
   videos.forEach((v, i) => listCol.appendChild(buildItem(v, i)));
@@ -448,6 +465,12 @@ function selectVideo(i, autoplay = false) {
   // Rebuild the info/metadata panel below the player (not the player itself)
   const infoEl = document.getElementById('playerInfo');
   if (infoEl) infoEl.innerHTML = buildPlayerInfo(i);
+}
+
+function toggleLoop() {
+  looping = !looping;
+  const btn = document.getElementById('loopBtn');
+  if (btn) btn.classList.toggle('active', looping);
 }
 
 function extractId(url) {
