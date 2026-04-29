@@ -718,11 +718,6 @@ window.addEventListener('message', e => {
   let msg;
   try { msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
 
-  // Log everything from Spotify to see the actual message structure
-  if (e.origin && e.origin.includes('spotify')) {
-    console.log('Spotify msg:', JSON.stringify(msg));
-  }
-
   if (msg.type === 'ready') {
     spotifyReady = true;
     endGuard = false;
@@ -730,23 +725,36 @@ window.addEventListener('message', e => {
 
   if (msg.type === 'playback_update') {
     const d = msg.payload || msg;
-    const isPaused  = d.isPaused  ?? d.is_paused;
-    const position  = d.position  ?? 0;   // ms
-    const duration  = d.duration  ?? 0;   // ms
+    const isPaused  = d.isPaused;
+    const position  = d.position  ?? 0;
+    const duration  = d.duration  ?? 0;
 
-    lastIsPaused = isPaused;
-    lastPosition = position;
-    lastDuration = duration;
-
-    // Detect end: track is paused AND position is within 1s of duration AND duration > 0
-    if (isPaused && duration > 0 && (duration - position) < 1000 && !endGuard) {
-      endGuard = true;
-      const next = currentIdx + 1;
-      if (next < playlist.length) playAt(next);
-      else if (looping && playlist.length) playAt(0);
+    // Track whether we were near the end before position resets
+    if (!isPaused && duration > 0) {
+      // Mark "near end" when within last 3 seconds
+      if (duration - position < 3000) {
+        lastPosition = position;
+        lastDuration = duration;
+      }
     }
-    // Reset guard when a new track is playing
-    if (!isPaused) endGuard = false;
+
+    // End-of-track: paused AND position reset to 0 AND we were near the end
+    if (isPaused && position === 0 && lastDuration > 0 && !endGuard) {
+      endGuard = true;
+      lastPosition = 0;
+      lastDuration = 0;
+      const next = currentIdx + 1;
+      if (next < playlist.length) {
+        setTimeout(() => playAt(next), 500); // small delay for iframe to settle
+      } else if (looping && playlist.length) {
+        setTimeout(() => playAt(0), 500);
+      }
+    }
+
+    // Reset guard when actively playing again
+    if (!isPaused && position > 1000) {
+      endGuard = false;
+    }
   }
 });
 
