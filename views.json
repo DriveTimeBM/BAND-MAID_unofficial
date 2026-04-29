@@ -232,7 +232,7 @@
   {
     "id": "okyujumvmap",
     "name": "Okyu-ji and MV Map",
-    "file": "https://www.google.com/maps/d/u/0/viewer?mid=1-hUU-25MYERexy7XrFTF_vi1S9l550Q1&ll=-3.81666561775622e-14%2C0&z=1",
+    "file": "views/map.html",
     "nav": "menu",
     "icon": "🧭"
   },  {
