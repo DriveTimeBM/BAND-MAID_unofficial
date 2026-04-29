@@ -169,6 +169,15 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/push.png"
   },
   {
+    "id": "about-playlist",
+    "section": "Views",
+    "icon": "🚀",
+    "title": "Playlist Builder",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
+    "body": "Create, play, and save playlists of any BAND-MAID YouTube content. Bypass YT playlist limitations.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/playlist.png"
+  },
+  {
     "id": "about-milestones",
     "section": "Views",
     "icon": "📍",
