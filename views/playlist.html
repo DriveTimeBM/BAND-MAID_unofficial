@@ -1,0 +1,753 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Playlist</title>
+<script src="https://www.youtube.com/iframe_api"></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--bg4:#242424;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.08);
+  --success:#22c55e;--purple:#8b5cf6;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:400;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.header-btn{
+  padding:6px 12px;border-radius:var(--radius);font-size:12px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);font-family:var(--font);transition:all 0.15s;
+  display:flex;align-items:center;gap:5px;white-space:nowrap;
+}
+.header-btn:hover{border-color:var(--accent);color:var(--accent)}
+.header-btn.primary{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
+.header-btn.primary:hover{opacity:0.85}
+.header-btn.active{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.playlist-count{
+  background:var(--accent);color:#0a0a0a;border-radius:20px;
+  padding:1px 7px;font-size:10px;font-weight:700;
+}
+
+/* ── MAIN LAYOUT ── */
+.app-body{
+  position:fixed;top:var(--header-h);left:0;right:0;bottom:0;
+  display:flex;
+}
+
+/* ══════════════════════════════════════════════════════
+   BUILDER PANEL (left slide-in)
+   ══════════════════════════════════════════════════════ */
+.builder-panel{
+  width:400px;flex-shrink:0;
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+  transform:translateX(0);transition:transform 0.28s cubic-bezier(0.4,0,0.2,1);
+  z-index:10;
+}
+.builder-panel.hidden{transform:translateX(-100%);width:0;overflow:hidden}
+
+/* Builder toolbar */
+.builder-toolbar{
+  padding:10px 12px;border-bottom:1px solid var(--border);
+  display:flex;flex-direction:column;gap:8px;flex-shrink:0;
+}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 10px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+
+/* Type groups */
+.builder-scroll{flex:1;overflow-y:auto}
+.type-group{border-bottom:1px solid var(--border)}
+.type-header{
+  display:flex;align-items:center;gap:8px;padding:9px 12px;
+  cursor:pointer;background:var(--bg2);position:sticky;top:0;z-index:5;
+  transition:background 0.12s;
+}
+.type-header:hover{background:var(--bg3)}
+.type-chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.type-group.open .type-chevron{transform:rotate(90deg)}
+.type-name{font-size:12px;font-weight:700;color:var(--text);flex:1}
+.type-badge{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:1px 7px;font-size:10px;color:var(--text3)}
+.type-add-all{
+  padding:3px 8px;font-size:10px;font-weight:600;border-radius:4px;
+  background:var(--accent-dim);border:1px solid var(--accent-border);
+  color:var(--accent);cursor:pointer;font-family:var(--font);transition:all 0.12s;
+  white-space:nowrap;
+}
+.type-add-all:hover{background:rgba(200,169,110,0.25)}
+
+.type-items{display:none;flex-direction:column}
+.type-group.open .type-items{display:flex}
+
+/* Builder video row */
+.builder-row{
+  display:flex;align-items:center;gap:8px;padding:6px 12px;
+  border-bottom:1px solid var(--border);transition:background 0.1s;cursor:pointer;
+}
+.builder-row:last-child{border-bottom:none}
+.builder-row:hover{background:var(--bg3)}
+.builder-row.in-playlist{opacity:0.45}
+.builder-thumb{width:64px;flex-shrink:0;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:var(--bg3)}
+.builder-info{flex:1;min-width:0}
+.builder-title{font-size:11px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.builder-meta{font-size:10px;color:var(--text3);margin-top:2px}
+.add-btn{
+  width:24px;height:24px;flex-shrink:0;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border2);
+  color:var(--text2);font-size:14px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;
+  transition:all 0.12s;line-height:1;
+}
+.add-btn:hover{background:var(--accent);border-color:var(--accent);color:#0a0a0a}
+.builder-row.in-playlist .add-btn{background:var(--border);color:var(--text3);cursor:default}
+
+/* ══════════════════════════════════════════════════════
+   PLAYLIST PANEL (middle)
+   ══════════════════════════════════════════════════════ */
+.playlist-panel{
+  width:320px;flex-shrink:0;
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;
+}
+.playlist-header{padding:10px 12px;border-bottom:1px solid var(--border);flex-shrink:0}
+.playlist-name-row{display:flex;gap:6px;margin-bottom:8px}
+.playlist-name-input{
+  flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 10px;font-size:12px;font-family:var(--font);outline:none;
+}
+.playlist-name-input:focus{border-color:var(--accent)}
+.pl-btn{
+  padding:5px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);font-family:var(--font);transition:all 0.12s;white-space:nowrap;
+}
+.pl-btn:hover{border-color:var(--accent);color:var(--accent)}
+.pl-btn.danger:hover{border-color:var(--red);color:var(--red)}
+.saved-row{display:flex;gap:6px;align-items:center}
+.saved-select{
+  flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+}
+.saved-select:focus{border-color:var(--accent)}
+.saved-select option{background:var(--bg3)}
+
+/* Playlist items */
+.playlist-scroll{flex:1;overflow-y:auto}
+.playlist-empty{padding:30px 16px;text-align:center;color:var(--text3);font-size:12px;line-height:1.6}
+.pl-item{
+  display:flex;align-items:center;gap:8px;padding:7px 10px;
+  border-bottom:1px solid var(--border);
+  transition:background 0.1s;
+}
+.pl-item.playing{background:var(--red-dim);border-left:3px solid var(--red)}
+.pl-item.dragging{opacity:0.4;background:var(--bg3)}
+.pl-item.drag-over{border-top:2px solid var(--accent)}
+.pl-drag{color:var(--text3);font-size:14px;cursor:grab;flex-shrink:0;padding:0 2px;user-select:none}
+.pl-drag:active{cursor:grabbing}
+.pl-num{font-size:10px;font-weight:700;color:var(--text3);min-width:18px;text-align:right;flex-shrink:0}
+.pl-thumb{width:56px;flex-shrink:0;aspect-ratio:16/9;object-fit:cover;border-radius:3px;background:var(--bg3);cursor:pointer}
+.pl-info{flex:1;min-width:0;cursor:pointer}
+.pl-title{font-size:11px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.pl-item.playing .pl-title{color:#ff8080}
+.pl-meta{font-size:10px;color:var(--text3);margin-top:1px}
+.pl-controls{display:flex;flex-direction:column;gap:2px;flex-shrink:0}
+.pl-ctrl{
+  width:18px;height:18px;border-radius:3px;border:1px solid var(--border);
+  background:var(--bg3);color:var(--text3);font-size:10px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all 0.12s;
+}
+.pl-ctrl:hover{border-color:var(--accent);color:var(--accent)}
+.pl-remove{
+  width:18px;height:18px;border-radius:3px;border:1px solid transparent;
+  background:none;color:var(--text3);font-size:12px;cursor:pointer;
+  display:flex;align-items:center;justify-content:center;transition:all 0.12s;flex-shrink:0;
+}
+.pl-remove:hover{color:var(--red)}
+
+/* Playlist footer */
+.playlist-footer{padding:8px 12px;border-top:1px solid var(--border);flex-shrink:0;display:flex;gap:6px}
+.loop-btn{
+  background:none;border:1px solid var(--border);border-radius:20px;
+  color:var(--text3);font-size:11px;font-weight:600;cursor:pointer;
+  padding:4px 10px;font-family:var(--font);transition:all 0.15s;
+}
+.loop-btn:hover{border-color:var(--accent);color:var(--accent)}
+.loop-btn.active{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.clear-btn{
+  background:none;border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text3);font-size:11px;cursor:pointer;padding:4px 10px;
+  font-family:var(--font);transition:all 0.15s;margin-left:auto;
+}
+.clear-btn:hover{border-color:var(--red);color:var(--red)}
+
+/* ══════════════════════════════════════════════════════
+   PLAYER PANEL (right)
+   ══════════════════════════════════════════════════════ */
+.player-panel{
+  flex:1;display:flex;flex-direction:column;background:var(--bg);overflow-y:auto;
+}
+.player-wrap{background:#000;flex-shrink:0}
+.player-wrap iframe,.player-wrap #yt-player{width:100%;aspect-ratio:16/9;border:none;display:block}
+
+.now-playing{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;flex-shrink:0}
+.np-eyebrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
+.np-dot{width:7px;height:7px;border-radius:50%;background:var(--red);flex-shrink:0;animation:pulse 1.4s ease-in-out infinite}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+.np-label{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3)}
+.np-pos{font-size:10px;color:var(--text3);margin-left:auto}
+.np-title{font-size:15px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:8px}
+.np-meta-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:8px;margin-bottom:10px}
+.np-meta{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:7px 8px;text-align:center}
+.np-meta-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:2px}
+.np-meta-val{font-size:13px;font-weight:700;color:var(--text)}
+.np-meta-val.accent{color:var(--accent)}
+.np-meta-val.success{color:var(--success)}
+.np-tags{display:flex;gap:6px;flex-wrap:wrap}
+.np-tag{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:2px 10px;font-size:11px;color:var(--text2)}
+.yt-link{
+  display:inline-flex;align-items:center;gap:5px;margin:10px 16px 16px;
+  color:var(--red);font-size:12px;text-decoration:none;font-weight:600;flex-shrink:0;
+}
+.yt-link:hover{text-decoration:underline}
+.yt-link svg{width:12px;height:12px}
+
+.player-empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:10px;color:var(--text3);text-align:center;padding:24px;
+}
+.player-empty-icon{font-size:40px;opacity:0.3}
+.player-empty-text{font-size:13px;line-height:1.6;max-width:260px}
+
+/* ── LOADING / ERROR ── */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);
+  display:flex;align-items:center;justify-content:center;
+  background:var(--bg);z-index:500;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;text-align:center;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── MOBILE ── */
+@media(max-width:768px){
+  .builder-panel{position:fixed;top:var(--header-h);left:0;bottom:0;z-index:300;transform:translateX(-100%)}
+  .builder-panel.mobile-open{transform:translateX(0)}
+  .playlist-panel{width:260px}
+}
+@media(max-width:540px){
+  .playlist-panel{display:none}
+  .player-panel{flex:1}
+}
+</style>
+</head>
+<body>
+
+<!-- HEADER -->
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='▶'"></div>
+  <div class="app-title">BAND-MAID Playlist</div>
+  <div class="header-spacer"></div>
+  <button class="header-btn active" id="builderToggleBtn" onclick="toggleBuilder()">
+    ＋ Add Videos
+  </button>
+  <button class="header-btn" id="loopHeaderBtn" onclick="toggleLoop()">⟳ Loop</button>
+</div>
+
+<!-- STATE OVERLAY -->
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading BAND-MAID videos…</span>
+</div>
+
+<!-- MAIN BODY -->
+<div class="app-body" id="appBody">
+
+  <!-- BUILDER PANEL -->
+  <div class="builder-panel" id="builderPanel">
+    <div class="builder-toolbar">
+      <input type="text" class="search-input" id="builderSearch"
+        placeholder="Search videos…" oninput="filterBuilder()">
+    </div>
+    <div class="builder-scroll" id="builderScroll"></div>
+  </div>
+
+  <!-- PLAYLIST PANEL -->
+  <div class="playlist-panel">
+    <div class="playlist-header">
+      <div class="playlist-name-row">
+        <input type="text" class="playlist-name-input" id="playlistName" placeholder="Playlist name…">
+        <button class="pl-btn" onclick="savePlaylist()">Save</button>
+        <button class="pl-btn danger" onclick="deletePlaylist()">Del</button>
+      </div>
+      <div class="saved-row">
+        <select class="saved-select" id="savedSelect" onchange="loadSelectedPlaylist()">
+          <option value="">— Load saved playlist —</option>
+        </select>
+      </div>
+    </div>
+    <div class="playlist-scroll" id="playlistScroll">
+      <div class="playlist-empty">Add videos from the left panel to build your playlist.</div>
+    </div>
+    <div class="playlist-footer">
+      <button class="loop-btn" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
+      <button class="clear-btn" onclick="clearPlaylist()">Clear all</button>
+    </div>
+  </div>
+
+  <!-- PLAYER PANEL -->
+  <div class="player-panel" id="playerPanel">
+    <div class="player-wrap"><div id="yt-player"></div></div>
+    <div class="player-empty" id="playerEmpty">
+      <div class="player-empty-icon">🎵</div>
+      <div class="player-empty-text">Build a playlist on the left, then click a video to start playing.</div>
+    </div>
+    <div id="playerInfo" style="display:none"></div>
+    <a class="yt-link" id="ytLink" href="#" target="_blank" rel="noopener" style="display:none">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      Open in YouTube
+    </a>
+  </div>
+
+</div><!-- /app-body -->
+
+<script>
+const YT_JSON = 'https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json';
+const PL_STORAGE_KEY = 'bm_playlists';
+
+let allVideos    = [];        // all 336 videos from JSON
+let typeGroups   = {};        // { Type: [video, ...] }
+let playlist     = [];        // current playlist (array of video objects)
+let currentIdx   = -1;        // playing index in playlist
+let looping      = false;
+let ytPlayer     = null;
+let ytApiReady   = false;
+let builderOpen  = true;
+let dragSrcIdx   = null;
+
+// ── YOUTUBE API ───────────────────────────────────────────────────────────────
+window.onYouTubeIframeAPIReady = function() {
+  ytApiReady = true;
+  ytPlayer = new YT.Player('yt-player', {
+    playerVars: { rel:0, modestbranding:1, autoplay:0 },
+    events: {
+      onStateChange(e) {
+        if (e.data === YT.PlayerState.ENDED) {
+          const next = currentIdx + 1;
+          if (next < playlist.length) playAt(next, true);
+          else if (looping && playlist.length) playAt(0, true);
+        }
+      }
+    }
+  });
+};
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(YT_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allVideos = await res.json();
+    if (!Array.isArray(allVideos)) allVideos = Object.values(allVideos)[0] || [];
+
+    // Group by Type, sort types alphabetically, videos by Date desc within type
+    allVideos.forEach(v => {
+      if (!typeGroups[v.Type]) typeGroups[v.Type] = [];
+      typeGroups[v.Type].push(v);
+    });
+    Object.keys(typeGroups).forEach(t => {
+      typeGroups[t].sort((a,b) => new Date(b.Date) - new Date(a.Date));
+    });
+
+    document.getElementById('stateOverlay').style.display = 'none';
+    buildBuilderPanel();
+    refreshSavedList();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load videos</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
+  }
+}
+
+// ── BUILDER PANEL ─────────────────────────────────────────────────────────────
+function buildBuilderPanel() {
+  const scroll = document.getElementById('builderScroll');
+  scroll.innerHTML = '';
+  const types = Object.keys(typeGroups).sort();
+  types.forEach(type => {
+    const videos = typeGroups[type];
+    const group = document.createElement('div');
+    group.className = 'type-group';
+    group.id = 'tg-' + slugify(type);
+
+    const hdr = document.createElement('div');
+    hdr.className = 'type-header';
+    hdr.innerHTML = `
+      <span class="type-chevron">▶</span>
+      <span class="type-name">${esc(type)}</span>
+      <span class="type-badge">${videos.length}</span>
+      <button class="type-add-all" onclick="event.stopPropagation();addAllOfType('${slugify(type)}')">+ Add All</button>`;
+    hdr.onclick = () => group.classList.toggle('open');
+
+    const items = document.createElement('div');
+    items.className = 'type-items';
+    items.id = 'ti-' + slugify(type);
+    videos.forEach(v => items.appendChild(buildBuilderRow(v)));
+
+    group.appendChild(hdr);
+    group.appendChild(items);
+    scroll.appendChild(group);
+  });
+}
+
+function buildBuilderRow(v) {
+  const row = document.createElement('div');
+  row.className = 'builder-row' + (isInPlaylist(v) ? ' in-playlist' : '');
+  row.id = 'br-' + v.VideoId;
+  row.innerHTML = `
+    <img class="builder-thumb" src="https://img.youtube.com/vi/${esc(v.VideoId)}/mqdefault.jpg"
+      alt="" loading="lazy" onerror="this.style.display='none'">
+    <div class="builder-info">
+      <div class="builder-title" title="${esc(v.Title)}">${esc(v.Title)}</div>
+      <div class="builder-meta">${esc(v.Duration || '')} · ${fmt(v.Views)} views</div>
+    </div>
+    <button class="add-btn" title="Add to playlist" onclick="event.stopPropagation();addToPlaylist('${esc(v.VideoId)}')">+</button>`;
+  return row;
+}
+
+function addAllOfType(typeSlug) {
+  const items = document.getElementById('ti-' + typeSlug);
+  if (!items) return;
+  const type = Object.keys(typeGroups).find(t => slugify(t) === typeSlug);
+  if (!type) return;
+  typeGroups[type].forEach(v => { if (!isInPlaylist(v)) playlist.push(v); });
+  refreshPlaylist();
+  refreshBuilderState();
+}
+
+function addToPlaylist(videoId) {
+  const v = allVideos.find(x => x.VideoId === videoId);
+  if (!v || isInPlaylist(v)) return;
+  playlist.push(v);
+  refreshPlaylist();
+  refreshBuilderState();
+}
+
+function isInPlaylist(v) { return playlist.some(p => p.VideoId === v.VideoId); }
+
+function refreshBuilderState() {
+  // Update all builder rows to reflect in-playlist state
+  allVideos.forEach(v => {
+    const row = document.getElementById('br-' + v.VideoId);
+    if (!row) return;
+    const inPl = isInPlaylist(v);
+    row.classList.toggle('in-playlist', inPl);
+  });
+  // Update header button count
+  const btn = document.getElementById('builderToggleBtn');
+  const cnt = playlist.length;
+  btn.innerHTML = cnt > 0
+    ? `＋ Add Videos <span class="playlist-count">${cnt}</span>`
+    : `＋ Add Videos`;
+}
+
+function filterBuilder() {
+  const q = document.getElementById('builderSearch').value.toLowerCase().trim();
+  allVideos.forEach(v => {
+    const row = document.getElementById('br-' + v.VideoId);
+    if (!row) return;
+    const match = !q || v.Title.toLowerCase().includes(q) || (v.Song||'').toLowerCase().includes(q);
+    row.style.display = match ? '' : 'none';
+  });
+  // Auto-open groups that have visible results, close empty ones
+  Object.keys(typeGroups).forEach(type => {
+    const group = document.getElementById('tg-' + slugify(type));
+    if (!group) return;
+    if (q) {
+      const hasVisible = typeGroups[type].some(v => {
+        const row = document.getElementById('br-' + v.VideoId);
+        return row && row.style.display !== 'none';
+      });
+      group.classList.toggle('open', hasVisible);
+    }
+  });
+}
+
+function toggleBuilder() {
+  builderOpen = !builderOpen;
+  document.getElementById('builderPanel').classList.toggle('hidden', !builderOpen);
+  document.getElementById('builderToggleBtn').classList.toggle('active', builderOpen);
+}
+
+// ── PLAYLIST ─────────────────────────────────────────────────────────────────
+function refreshPlaylist() {
+  const scroll = document.getElementById('playlistScroll');
+  if (!playlist.length) {
+    scroll.innerHTML = '<div class="playlist-empty">Add videos from the left panel to build your playlist.</div>';
+    return;
+  }
+  scroll.innerHTML = '';
+  playlist.forEach((v, i) => scroll.appendChild(buildPlItem(v, i)));
+}
+
+function buildPlItem(v, i) {
+  const item = document.createElement('div');
+  item.className = 'pl-item' + (i === currentIdx ? ' playing' : '');
+  item.id = 'pl-' + i;
+  item.draggable = true;
+  item.dataset.idx = i;
+
+  item.addEventListener('dragstart', onDragStart);
+  item.addEventListener('dragover',  onDragOver);
+  item.addEventListener('dragleave', onDragLeave);
+  item.addEventListener('drop',      onDrop);
+  item.addEventListener('dragend',   onDragEnd);
+
+  item.innerHTML = `
+    <span class="pl-drag" title="Drag to reorder">⠿</span>
+    <span class="pl-num">${i+1}</span>
+    <img class="pl-thumb" src="https://img.youtube.com/vi/${esc(v.VideoId)}/mqdefault.jpg"
+      alt="" loading="lazy" onerror="this.style.display='none'" onclick="playAt(${i})">
+    <div class="pl-info" onclick="playAt(${i})">
+      <div class="pl-title" title="${esc(v.Title)}">${esc(v.Title)}</div>
+      <div class="pl-meta">${esc(v.Duration||'')} · ${esc(v.Type||'')}</div>
+    </div>
+    <div class="pl-controls">
+      <button class="pl-ctrl" onclick="moveUp(${i})" title="Move up">▲</button>
+      <button class="pl-ctrl" onclick="moveDown(${i})" title="Move down">▼</button>
+    </div>
+    <button class="pl-remove" onclick="removeFromPlaylist(${i})" title="Remove">✕</button>`;
+  return item;
+}
+
+function removeFromPlaylist(i) {
+  playlist.splice(i, 1);
+  if (currentIdx >= playlist.length) currentIdx = playlist.length - 1;
+  refreshPlaylist();
+  refreshBuilderState();
+}
+
+function clearPlaylist() {
+  if (!confirm('Clear the entire playlist?')) return;
+  playlist = [];
+  currentIdx = -1;
+  refreshPlaylist();
+  refreshBuilderState();
+  showPlayerEmpty();
+}
+
+function moveUp(i) {
+  if (i === 0) return;
+  [playlist[i-1], playlist[i]] = [playlist[i], playlist[i-1]];
+  if (currentIdx === i) currentIdx = i-1;
+  else if (currentIdx === i-1) currentIdx = i;
+  refreshPlaylist();
+}
+
+function moveDown(i) {
+  if (i >= playlist.length-1) return;
+  [playlist[i], playlist[i+1]] = [playlist[i+1], playlist[i]];
+  if (currentIdx === i) currentIdx = i+1;
+  else if (currentIdx === i+1) currentIdx = i;
+  refreshPlaylist();
+}
+
+// ── DRAG AND DROP ─────────────────────────────────────────────────────────────
+function onDragStart(e) {
+  dragSrcIdx = parseInt(this.dataset.idx);
+  this.classList.add('dragging');
+  e.dataTransfer.effectAllowed = 'move';
+}
+function onDragOver(e) {
+  e.preventDefault();
+  e.dataTransfer.dropEffect = 'move';
+  this.classList.add('drag-over');
+}
+function onDragLeave() { this.classList.remove('drag-over'); }
+function onDrop(e) {
+  e.preventDefault();
+  this.classList.remove('drag-over');
+  const destIdx = parseInt(this.dataset.idx);
+  if (dragSrcIdx === null || dragSrcIdx === destIdx) return;
+  const moved = playlist.splice(dragSrcIdx, 1)[0];
+  playlist.splice(destIdx, 0, moved);
+  // Adjust currentIdx
+  if (currentIdx === dragSrcIdx) currentIdx = destIdx;
+  else if (dragSrcIdx < currentIdx && destIdx >= currentIdx) currentIdx--;
+  else if (dragSrcIdx > currentIdx && destIdx <= currentIdx) currentIdx++;
+  refreshPlaylist();
+}
+function onDragEnd() { this.classList.remove('dragging'); dragSrcIdx = null; }
+
+// ── SAVE / LOAD PLAYLISTS ─────────────────────────────────────────────────────
+function getSaved() {
+  try { return JSON.parse(localStorage.getItem(PL_STORAGE_KEY) || '{}'); } catch(e) { return {}; }
+}
+
+function savePlaylist() {
+  const name = document.getElementById('playlistName').value.trim();
+  if (!name) { alert('Enter a playlist name first.'); return; }
+  if (!playlist.length) { alert('Playlist is empty.'); return; }
+  const saved = getSaved();
+  // Store only VideoIds — rebuild from allVideos on load
+  saved[name] = playlist.map(v => v.VideoId);
+  localStorage.setItem(PL_STORAGE_KEY, JSON.stringify(saved));
+  refreshSavedList(name);
+}
+
+function deletePlaylist() {
+  const name = document.getElementById('playlistName').value.trim()
+    || document.getElementById('savedSelect').value;
+  if (!name) { alert('No playlist selected.'); return; }
+  if (!confirm(`Delete "${name}"?`)) return;
+  const saved = getSaved();
+  delete saved[name];
+  localStorage.setItem(PL_STORAGE_KEY, JSON.stringify(saved));
+  document.getElementById('playlistName').value = '';
+  refreshSavedList();
+}
+
+function loadSelectedPlaylist() {
+  const name = document.getElementById('savedSelect').value;
+  if (!name) return;
+  const saved = getSaved();
+  const ids = saved[name];
+  if (!ids) return;
+  playlist = ids.map(id => allVideos.find(v => v.VideoId === id)).filter(Boolean);
+  currentIdx = -1;
+  document.getElementById('playlistName').value = name;
+  refreshPlaylist();
+  refreshBuilderState();
+  showPlayerEmpty();
+}
+
+function refreshSavedList(selectName) {
+  const sel = document.getElementById('savedSelect');
+  const saved = getSaved();
+  sel.innerHTML = '<option value="">— Load saved playlist —</option>';
+  Object.keys(saved).sort().forEach(name => {
+    const opt = document.createElement('option');
+    opt.value = name;
+    opt.textContent = `${name} (${saved[name].length} videos)`;
+    if (name === selectName) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+// ── PLAYER ────────────────────────────────────────────────────────────────────
+function playAt(i, autoplay = false) {
+  if (i < 0 || i >= playlist.length) return;
+  currentIdx = i;
+  const v = playlist[i];
+  refreshPlaylist();
+
+  // Scroll playlist item into view
+  const el = document.getElementById('pl-' + i);
+  if (el) el.scrollIntoView({behavior:'smooth', block:'nearest'});
+
+  // Load video
+  if (ytPlayer && typeof ytPlayer.loadVideoById === 'function') {
+    if (autoplay) ytPlayer.loadVideoById(v.VideoId);
+    else          ytPlayer.cueVideoById(v.VideoId);
+  }
+
+  // Update player info
+  document.getElementById('playerEmpty').style.display = 'none';
+  const info = document.getElementById('playerInfo');
+  info.style.display = 'block';
+  info.innerHTML = buildPlayerInfo(v, i);
+
+  const link = document.getElementById('ytLink');
+  link.href = v.URL || `https://youtu.be/${v.VideoId}`;
+  link.style.display = 'inline-flex';
+}
+
+function buildPlayerInfo(v, i) {
+  const date = v.Date ? new Date(v.Date).toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'}) : '—';
+  return `
+    <div class="now-playing">
+      <div class="np-eyebrow">
+        <div class="np-dot"></div>
+        <div class="np-label">Now Loaded</div>
+        <div class="np-pos">${i+1} of ${playlist.length}</div>
+      </div>
+      <div class="np-title">${esc(v.Title)}</div>
+      <div class="np-meta-grid">
+        <div class="np-meta">
+          <div class="np-meta-label">Views</div>
+          <div class="np-meta-val accent">${fmt(v.Views)}</div>
+        </div>
+        <div class="np-meta">
+          <div class="np-meta-label">Yesterday</div>
+          <div class="np-meta-val success">+${fmt(v.ViewsDelta||0)}</div>
+        </div>
+        <div class="np-meta">
+          <div class="np-meta-label">Duration</div>
+          <div class="np-meta-val">${esc(v.Duration||'—')}</div>
+        </div>
+        <div class="np-meta">
+          <div class="np-meta-label">Published</div>
+          <div class="np-meta-val" style="font-size:11px">${date}</div>
+        </div>
+      </div>
+      <div class="np-tags">
+        <span class="np-tag">${esc(v.Type||'')}</span>
+        ${v.Song ? `<span class="np-tag">🎵 ${esc(v.Song)}</span>` : ''}
+      </div>
+    </div>`;
+}
+
+function showPlayerEmpty() {
+  document.getElementById('playerEmpty').style.display = 'flex';
+  document.getElementById('playerInfo').style.display = 'none';
+  document.getElementById('ytLink').style.display = 'none';
+  if (ytPlayer && typeof ytPlayer.stopVideo === 'function') ytPlayer.stopVideo();
+}
+
+// ── LOOP ──────────────────────────────────────────────────────────────────────
+function toggleLoop() {
+  looping = !looping;
+  ['loopBtn','loopHeaderBtn'].forEach(id => {
+    const el = document.getElementById(id);
+    if (el) el.classList.toggle('active', looping);
+  });
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function fmt(n) { return Number(n||0).toLocaleString(); }
+function esc(s) {
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+function slugify(s) { return s.replace(/[^a-z0-9]/gi,'_').toLowerCase(); }
+
+boot();
+</script>
+</body>
+</html>
