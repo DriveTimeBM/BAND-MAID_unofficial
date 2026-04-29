@@ -45,6 +45,7 @@
                     "\\bdrum\\s*cam\\b",
                     "(guitar|bass|drum|vocal)\\s+cover\\b",
                     "MIDI",
+                    "drumcover",
                     "歌ってみた",
                     "弾いてみた",
                     "叩いてみた"
