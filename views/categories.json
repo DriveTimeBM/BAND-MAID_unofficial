@@ -17,7 +17,8 @@
                 { "field": "channelId", "type": "exact", "patterns": [
                     "UCvKUIZjMmlHJ9vjGJey0SBQ",
                     "UCXj2vn4DScTLfa2Dtw3f5HA",
-                    "UCR41xBLK6sk-1tItQmS2KWQ"
+                    "UCR41xBLK6sk-1tItQmS2KWQ",
+                    "UCYok5F7c2kHJP36zH9GgEng"
                   ] 
                 },
                 { "field": "channel", "type": "regex", "patterns": [
