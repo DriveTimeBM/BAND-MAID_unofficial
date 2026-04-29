@@ -16,7 +16,8 @@
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
                     "UCvKUIZjMmlHJ9vjGJey0SBQ",
-                    "UCXj2vn4DScTLfa2Dtw3f5HA"
+                    "UCXj2vn4DScTLfa2Dtw3f5HA",
+                    "UCR41xBLK6sk-1tItQmS2KWQ"
                   ] 
                 },
                 { "field": "channel", "type": "regex", "patterns": [
