@@ -768,12 +768,9 @@ function playAt(i) {
   const el=document.getElementById('pl-'+i);
   if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
 
-  // Force reload by clearing src first, then setting new track on next tick
+  // Update embed src directly — no need to clear first
   const embed=document.getElementById('spotifyEmbed');
-  embed.src='';
-  setTimeout(() => {
-    embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0`;
-  }, 50);
+  embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0`;
 
   // Show player info
   document.getElementById('playerEmpty').style.display='none';
