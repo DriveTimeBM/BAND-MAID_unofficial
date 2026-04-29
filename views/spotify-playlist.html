@@ -718,9 +718,10 @@ window.addEventListener('message', e => {
   let msg;
   try { msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
 
-  // Spotify sends two event types we care about:
-  // 1. "ready" — player is initialised
-  // 2. "playback_update" — position/duration/isPaused tick
+  // Log everything from Spotify to see the actual message structure
+  if (e.origin && e.origin.includes('spotify')) {
+    console.log('Spotify msg:', JSON.stringify(msg));
+  }
 
   if (msg.type === 'ready') {
     spotifyReady = true;
