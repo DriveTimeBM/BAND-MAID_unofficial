@@ -7,7 +7,8 @@
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": ["UCJToUvYrmkmTCR-bluEaQfA"] },
                 { "field": "channelId", "type": "exact", "patterns": ["UCM35rMMfPj1wj1nwe-DxSAg"] },
-                { "field": "channelId", "type": "exact", "patterns": ["UCHNhsC0VPItCMeAl11T3rAQ"] }
+                { "field": "channelId", "type": "exact", "patterns": ["UCHNhsC0VPItCMeAl11T3rAQ"] },
+                { "field": "channel",   "type": "regex", "patterns": ["BAND-MAID"] }
             ],
             "notes": "Official BAND-MAID YouTube channel"
         },
