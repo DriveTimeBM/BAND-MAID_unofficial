@@ -555,7 +555,6 @@ function removeFromPlaylist(i) {
 }
 
 function clearPlaylist() {
-  if (!confirm('Clear the entire playlist?')) return;
   playlist = [];
   currentIdx = -1;
   refreshPlaylist();
@@ -613,25 +612,39 @@ function getSaved() {
 
 function savePlaylist() {
   const name = document.getElementById('playlistName').value.trim();
-  if (!name) { alert('Enter a playlist name first.'); return; }
-  if (!playlist.length) { alert('Playlist is empty.'); return; }
+  if (!name) { showStatus('Enter a playlist name first.'); return; }
+  if (!playlist.length) { showStatus('Playlist is empty.'); return; }
   const saved = getSaved();
-  // Store only VideoIds — rebuild from allVideos on load
   saved[name] = playlist.map(v => v.VideoId);
   localStorage.setItem(PL_STORAGE_KEY, JSON.stringify(saved));
   refreshSavedList(name);
+  showStatus(`Saved "${name}"`);
 }
 
 function deletePlaylist() {
   const name = document.getElementById('playlistName').value.trim()
     || document.getElementById('savedSelect').value;
-  if (!name) { alert('No playlist selected.'); return; }
-  if (!confirm(`Delete "${name}"?`)) return;
+  if (!name) { showStatus('No playlist selected.'); return; }
   const saved = getSaved();
   delete saved[name];
   localStorage.setItem(PL_STORAGE_KEY, JSON.stringify(saved));
   document.getElementById('playlistName').value = '';
   refreshSavedList();
+  showStatus(`Deleted "${name}"`);
+}
+
+let statusTimer = null;
+function showStatus(msg) {
+  let el = document.getElementById('plStatus');
+  if (!el) {
+    el = document.createElement('div');
+    el.id = 'plStatus';
+    el.style.cssText = 'font-size:11px;color:var(--accent);padding:4px 0 0;text-align:center';
+    document.querySelector('.playlist-header').appendChild(el);
+  }
+  el.textContent = msg;
+  clearTimeout(statusTimer);
+  statusTimer = setTimeout(() => { el.textContent = ''; }, 3000);
 }
 
 function loadSelectedPlaylist() {
