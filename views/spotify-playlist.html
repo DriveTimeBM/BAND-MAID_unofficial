@@ -5,6 +5,7 @@
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" href="../logo.png">
 <title>BAND-MAID Unofficial · Spotify Playlist</title>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -210,6 +211,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .spotify-wrap iframe{
   width:100%;height:152px;border:none;border-radius:12px;display:block;
 }
+#embed-iframe{width:100%}
 
 .now-playing{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;flex-shrink:0}
 .np-eyebrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
@@ -345,7 +347,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="player-empty-text">Build a playlist and click a song to start playing.<br><br>Log into Spotify in your browser for full tracks.</div>
     </div>
     <div id="playerInfo" style="display:none">
-      <div class="spotify-wrap"><iframe id="spotifyEmbed" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
+      <div class="spotify-wrap"><div id="embed-iframe"></div></div>
       <div class="now-playing" id="nowPlaying"></div>
       <a class="spot-link" id="spotLink" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -707,76 +709,62 @@ function showStatus(msg) {
 // Spotify's embed communicates via postMessage — no OAuth needed.
 // We listen for playback_update events which include isPaused + position + duration.
 
-let spotifyReady  = false;
-let lastPosition  = 0;
-let lastDuration  = 0;
-let lastIsPaused  = true;
-let endGuard      = false;  // prevent double-advance on end
+// ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
+let embedController = null;
+let lastDuration    = 0;
+let endGuard        = false;
 
-window.addEventListener('message', e => {
-  if (!e.data) return;
-  let msg;
-  try { msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  const el = document.getElementById('embed-iframe');
+  const options = { uri: '', width: '100%', height: '152' };
+  IFrameAPI.createController(el, options, (controller) => {
+    embedController = controller;
+    controller.addListener('playback_update', e => {
+      const isPaused = e.data.isPaused;
+      const position = e.data.position ?? 0;
+      const duration = e.data.duration ?? 0;
 
-  if (msg.type === 'ready') {
-    spotifyReady = true;
-    endGuard = false;
-  }
-
-  if (msg.type === 'playback_update') {
-    const d = msg.payload || msg;
-    const isPaused  = d.isPaused;
-    const position  = d.position  ?? 0;
-    const duration  = d.duration  ?? 0;
-
-    // Track whether we were near the end before position resets
-    if (!isPaused && duration > 0) {
-      // Mark "near end" when within last 3 seconds
-      if (duration - position < 3000) {
-        lastPosition = position;
+      // Track near-end
+      if (!isPaused && duration > 0 && (duration - position) < 3000) {
         lastDuration = duration;
       }
-    }
-
-    // End-of-track: paused AND position reset to 0 AND we were near the end
-    if (isPaused && position === 0 && lastDuration > 0 && !endGuard) {
-      endGuard = true;
-      lastPosition = 0;
-      lastDuration = 0;
-      const next = currentIdx + 1;
-      if (next < playlist.length) {
-        setTimeout(() => playAt(next), 500); // small delay for iframe to settle
-      } else if (looping && playlist.length) {
-        setTimeout(() => playAt(0), 500);
+      // End: paused + position reset to 0 + we were near the end
+      if (isPaused && position === 0 && lastDuration > 0 && !endGuard) {
+        endGuard = true;
+        lastDuration = 0;
+        const next = currentIdx + 1;
+        if (next < playlist.length) playAt(next);
+        else if (looping && playlist.length) playAt(0);
       }
-    }
-
-    // Reset guard when actively playing again
-    if (!isPaused && position > 1000) {
-      endGuard = false;
-    }
-  }
-});
+      if (!isPaused && position > 1000) endGuard = false;
+    });
+  });
+};
 
 function playAt(i) {
   if(i<0||i>=playlist.length)return;
   currentIdx=i;
   const t=playlist[i];
-  endGuard = false;
+  endGuard=false;
 
   refreshPlaylist();
   const el=document.getElementById('pl-'+i);
   if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
 
-  // Update embed src directly — no need to clear first
-  const embed=document.getElementById('spotifyEmbed');
-  embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0&autoplay=1`;
+  // Use loadUri to switch tracks WITHOUT reloading the iframe
+  if (embedController) {
+    embedController.loadUri(`spotify:track:${t._id}`);
+  }
 
   // Show player info
   document.getElementById('playerEmpty').style.display='none';
   document.getElementById('playerInfo').style.display='block';
 
-  // Now playing
+  updateNowPlaying(t, i);
+  document.getElementById('spotLink').href=t.URL||`https://open.spotify.com/track/${t._id}`;
+}
+
+function updateNowPlaying(t, i) {
   const np=document.getElementById('nowPlaying');
   const date=t.ReleaseDate?t.ReleaseDate.substring(0,10):'—';
   np.innerHTML=`
@@ -805,16 +793,12 @@ function playAt(i) {
       ${t._duration?`<span class="np-tag">⏱ ${esc(t._duration)}</span>`:''}
       <span class="np-tag">📅 ${esc(date)}</span>
     </div>`;
-
-  document.getElementById('spotLink').href=t.URL||`https://open.spotify.com/track/${t._id}`;
 }
 
 function showPlayerEmpty() {
   document.getElementById('playerEmpty').style.display='flex';
   document.getElementById('playerInfo').style.display='none';
-  const embed=document.getElementById('spotifyEmbed');
-  if(embed)embed.src='';
-  endGuard=false;
+  endGuard=false; lastDuration=0;
 }
 
 function toggleLoop() {
