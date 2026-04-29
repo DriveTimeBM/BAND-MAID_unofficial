@@ -356,7 +356,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </a>
       <div class="login-note">
         <strong>Full tracks</strong> require being logged into Spotify in your browser.
-        Non-logged-in users hear 30-second previews.
+        Non-logged-in users hear 30-second previews. Auto-advance triggers when the current track finishes.
       </div>
     </div>
   </div>
@@ -703,16 +703,63 @@ function showStatus(msg) {
 }
 
 // ── PLAYER ────────────────────────────────────────────────────────────────────
+// ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
+// Spotify's embed communicates via postMessage — no OAuth needed.
+// We listen for playback_update events which include isPaused + position + duration.
+
+let spotifyReady  = false;
+let lastPosition  = 0;
+let lastDuration  = 0;
+let lastIsPaused  = true;
+let endGuard      = false;  // prevent double-advance on end
+
+window.addEventListener('message', e => {
+  if (!e.data) return;
+  let msg;
+  try { msg = typeof e.data === 'string' ? JSON.parse(e.data) : e.data; } catch { return; }
+
+  // Spotify sends two event types we care about:
+  // 1. "ready" — player is initialised
+  // 2. "playback_update" — position/duration/isPaused tick
+
+  if (msg.type === 'ready') {
+    spotifyReady = true;
+    endGuard = false;
+  }
+
+  if (msg.type === 'playback_update') {
+    const d = msg.payload || msg;
+    const isPaused  = d.isPaused  ?? d.is_paused;
+    const position  = d.position  ?? 0;   // ms
+    const duration  = d.duration  ?? 0;   // ms
+
+    lastIsPaused = isPaused;
+    lastPosition = position;
+    lastDuration = duration;
+
+    // Detect end: track is paused AND position is within 1s of duration AND duration > 0
+    if (isPaused && duration > 0 && (duration - position) < 1000 && !endGuard) {
+      endGuard = true;
+      const next = currentIdx + 1;
+      if (next < playlist.length) playAt(next);
+      else if (looping && playlist.length) playAt(0);
+    }
+    // Reset guard when a new track is playing
+    if (!isPaused) endGuard = false;
+  }
+});
+
 function playAt(i) {
   if(i<0||i>=playlist.length)return;
   currentIdx=i;
   const t=playlist[i];
+  endGuard = false;
 
   refreshPlaylist();
   const el=document.getElementById('pl-'+i);
   if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
 
-  // Update embed
+  // Update embed — reload src to trigger the new track
   const embed=document.getElementById('spotifyEmbed');
   embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0`;
 
@@ -753,28 +800,12 @@ function playAt(i) {
   document.getElementById('spotLink').href=t.URL||`https://open.spotify.com/track/${t._id}`;
 }
 
-// Auto-advance — Spotify embed doesn't fire JS events so we use a duration timer
-let autoAdvanceTimer = null;
-function scheduleAutoAdvance(t) {
-  clearTimeout(autoAdvanceTimer);
-  if (!t._duration) return;
-  const parts = t._duration.split(':').map(Number);
-  const secs = parts.length === 2 ? parts[0]*60+parts[1] : parts[0];
-  if (!secs) return;
-  // Add 3s buffer for the embed to catch up
-  autoAdvanceTimer = setTimeout(() => {
-    const next = currentIdx + 1;
-    if (next < playlist.length) playAt(next);
-    else if (looping && playlist.length) playAt(0);
-  }, (secs + 3) * 1000);
-}
-
 function showPlayerEmpty() {
-  clearTimeout(autoAdvanceTimer);
   document.getElementById('playerEmpty').style.display='flex';
   document.getElementById('playerInfo').style.display='none';
   const embed=document.getElementById('spotifyEmbed');
   if(embed)embed.src='';
+  endGuard=false;
 }
 
 function toggleLoop() {
