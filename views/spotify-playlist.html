@@ -345,7 +345,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="player-empty-text">Build a playlist and click a song to start playing.<br><br>Log into Spotify in your browser for full tracks.</div>
     </div>
     <div id="playerInfo" style="display:none">
-      <div class="spotify-wrap"><iframe id="spotifyEmbed" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture" loading="lazy"></iframe></div>
+      <div class="spotify-wrap"><iframe id="spotifyEmbed" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe></div>
       <div class="now-playing" id="nowPlaying"></div>
       <a class="spot-link" id="spotLink" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -770,7 +770,7 @@ function playAt(i) {
 
   // Update embed src directly — no need to clear first
   const embed=document.getElementById('spotifyEmbed');
-  embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0`;
+  embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0&autoplay=1`;
 
   // Show player info
   document.getElementById('playerEmpty').style.display='none';
