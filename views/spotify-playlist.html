@@ -357,8 +357,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         Open in Spotify
       </a>
       <div class="login-note">
-        <strong>Full tracks</strong> require being logged into Spotify in your browser.
-        Non-logged-in users hear 30-second previews. Auto-advance triggers when the current track finishes.
+        <strong>Full tracks</strong> require being logged into Spotify in your browser — otherwise you hear 30-second previews.
+        When a track ends, the next one is cued automatically — just press play to continue.
       </div>
     </div>
   </div>
@@ -724,28 +724,64 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
       const position = e.data.position ?? 0;
       const duration = e.data.duration ?? 0;
 
-      // Track near-end
       if (!isPaused && duration > 0 && (duration - position) < 3000) {
         lastDuration = duration;
       }
-      // End: paused + position reset to 0 + we were near the end
+      // End-of-track detected — cue up next and prompt user
       if (isPaused && position === 0 && lastDuration > 0 && !endGuard) {
         endGuard = true;
         lastDuration = 0;
-        const next = currentIdx + 1;
-        if (next < playlist.length) playAt(next);
-        else if (looping && playlist.length) playAt(0);
+        const next = currentIdx + 1 < playlist.length ? currentIdx + 1
+                   : looping ? 0 : -1;
+        if (next >= 0) cueNext(next);
       }
       if (!isPaused && position > 1000) endGuard = false;
     });
   });
 };
 
+function cueNext(i) {
+  // Load the next track into the player (paused) and show a prompt
+  currentIdx = i;
+  const t = playlist[i];
+  endGuard = false;
+
+  if (embedController) embedController.loadUri(`spotify:track:${t._id}`);
+  refreshPlaylist();
+  const el = document.getElementById('pl-' + i);
+  if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+  updateNowPlaying(t, i);
+  document.getElementById('spotLink').href = t.URL || `https://open.spotify.com/track/${t._id}`;
+
+  // Show next-track banner
+  showNextPrompt(t.Name);
+}
+
+function showNextPrompt(name) {
+  let banner = document.getElementById('nextPrompt');
+  if (!banner) {
+    banner = document.createElement('div');
+    banner.id = 'nextPrompt';
+    banner.style.cssText = `
+      position:sticky;top:0;z-index:50;
+      background:var(--spot);color:#000;
+      padding:10px 16px;font-size:13px;font-weight:600;
+      display:flex;align-items:center;gap:10px;cursor:pointer;
+      flex-shrink:0;`;
+    banner.onclick = () => { banner.remove(); };
+    document.getElementById('playerInfo').prepend(banner);
+  }
+  banner.innerHTML = `▶ Press play to start: <span style="font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1">${esc(name)}</span>`;
+}
+
 function playAt(i) {
   if(i<0||i>=playlist.length)return;
   currentIdx=i;
   const t=playlist[i];
   endGuard=false;
+
+  // Clear any next-track prompt
+  document.getElementById('nextPrompt')?.remove();
 
   refreshPlaylist();
   const el=document.getElementById('pl-'+i);
