@@ -125,6 +125,13 @@
     "icon": "🚀"
   },
   {
+    "id": "playlist",
+    "name": "Playlist *new*",
+    "file": "views/playlist.html",
+    "nav": "menu",
+    "icon": "🎵"
+  },
+  {
     "id": "milestones",
     "name": "Milestones",
     "file": "views/milestones.html",
