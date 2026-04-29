@@ -759,9 +759,12 @@ function playAt(i) {
   const el=document.getElementById('pl-'+i);
   if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
 
-  // Update embed — reload src to trigger the new track
+  // Force reload by clearing src first, then setting new track on next tick
   const embed=document.getElementById('spotifyEmbed');
-  embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0`;
+  embed.src='';
+  setTimeout(() => {
+    embed.src=`https://open.spotify.com/embed/track/${t._id}?utm_source=generator&theme=0`;
+  }, 50);
 
   // Show player info
   document.getElementById('playerEmpty').style.display='none';
