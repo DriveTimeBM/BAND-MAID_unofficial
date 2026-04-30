@@ -84,12 +84,15 @@
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
                     "UC2HQH01Et8x48Mb4MWap2Hg",
-                    "UCYZ1ZZi0kyL6nggbaVZEQKQ"
+                    "UCYZ1ZZi0kyL6nggbaVZEQKQ",
+                    "UC2bYqm4ctyvZPRzapqHy9lg"
                   ] 
                 },
                { "field": "title", "type": "regex", "patterns": [
-                    "isolated"
-                ]}
+                    "isolated",
+                    "\\bbacking\\s*track\\b"
+                  ]
+               }
             ],
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
         },
