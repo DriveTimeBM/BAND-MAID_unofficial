@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/RmFYjTJRrQM/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Shambles (Official Live Video) — Views: 655,766 | Yesterday: 697\nBAND-MAID / DICE, Different (Official Live Video) for J-LOD LIVE2 — Views: 1,479,043 | Yesterday: 376\nBAND-MAID / サヨナキドリ \"Sayonakidori\"  Acoustic Ver.  (Official Live Video) — Views: 916,855 | Yesterday: 356",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "secret My lips — Spotify: 1,800,393 | Played Live: 85\nDon\u0027t let me down — Spotify: 1,799,050 | Played Live: 122\nWhat is justice? — Spotify: 1,654,994 | Played Live: 22",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / DICE, Different (Official Live Video) for J-LOD LIVE2"
+                                              "text":  "What is justice?"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Shambles (Official Live Video)",
+                                              "text":  "Don\u0027t let me down"
+                                          },
+                                          {
+                                              "text":  "secret My lips",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / サヨナキドリ \"Sayonakidori\"  Acoustic Ver.  (Official Live Video)"
                                           }
                                       ]
                       }
