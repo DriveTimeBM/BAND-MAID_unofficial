@@ -97,6 +97,18 @@
   }
   #search-clear:hover { color: var(--text); }
 
+  #refresh-icon { display: inline-block; }
+  #refresh-btn.refreshing #refresh-icon {
+    animation: refresh-spin 0.8s linear infinite;
+  }
+  @keyframes refresh-spin {
+    to { transform: rotate(360deg); }
+  }
+  #refresh-btn:disabled {
+    opacity: 0.6;
+    cursor: wait;
+  }
+    
   .sort-btn, .filter-toggle {
     background: var(--bg2);
     color: var(--text);
@@ -443,6 +455,9 @@
   <button class="sort-btn" id="sort-btn" title="Toggle sort direction">
     <span id="sort-icon">↓</span> <span id="sort-label">Newest</span>
   </button>
+  <button class="sort-btn" id="refresh-btn" title="Reload videos.json from the feed">
+    <span id="refresh-icon">↻</span> <span id="refresh-label">Refresh</span>
+  </button>
 </div>
 
 <div class="layout">
@@ -554,8 +569,10 @@
 
   // ── Data load ──
   async function loadData() {
-    document.getElementById('list-container').innerHTML =
-      '<div class="loading-state"><div class="spinner"></div>Loading videos…</div>';
+    if (allVideos.length === 0) {
+      document.getElementById('list-container').innerHTML =
+        '<div class="loading-state"><div class="spinner"></div>Loading videos…</div>';
+    }
 
     try {
       const [videosRes, catsRes] = await Promise.all([
@@ -771,6 +788,18 @@
       searchTerm = '';
       applyFilters();
       searchEl.focus();
+    });
+
+    document.getElementById('refresh-btn').addEventListener('click', async () => {
+      const btn = document.getElementById('refresh-btn');
+      btn.disabled = true;
+      btn.classList.add('refreshing');
+      try {
+        await loadData();
+      } finally {
+        btn.disabled = false;
+        btn.classList.remove('refreshing');
+      }
     });
 
     document.getElementById('sort-btn').addEventListener('click', () => {
