@@ -19,7 +19,8 @@
                     "UCXj2vn4DScTLfa2Dtw3f5HA",
                     "UCR41xBLK6sk-1tItQmS2KWQ",
                     "UCYok5F7c2kHJP36zH9GgEng",
-                    "UCsBwg8OaxXyRb5UbpgsIiCg"
+                    "UCsBwg8OaxXyRb5UbpgsIiCg",
+                    "UCbwRrjUM3xncEAglgY-EHAw"
                   ] 
                 },
                 { "field": "channel", "type": "regex", "patterns": [
@@ -122,6 +123,19 @@
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
                     "\\bunbox\\w*\\b"
+                ]}
+            ]
+        },
+        {
+            "category": "Podcast",
+            "color": "#8a3a3a",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UCoGH2sqzaxLjcWpkzn83cZg"
+                  ] 
+                },
+                { "field": "title", "type": "regex", "patterns": [
+                    "podcast"
                 ]}
             ]
         },
