@@ -236,13 +236,34 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .spot-link:hover{text-decoration:underline}
 .spot-link svg{width:12px;height:12px}
 
-/* Note about login */
-.login-note{
-  margin:0 16px 16px;padding:8px 12px;
-  background:var(--spot-dim);border:1px solid var(--spot-border);border-radius:var(--radius);
-  font-size:11px;color:var(--text2);line-height:1.5;
+/* Play prompt banner — persistent, shown/hidden by JS state */
+.play-prompt{
+  display:none;  /* hidden by default */
+  align-items:center;gap:12px;
+  padding:14px 18px;
+  background:var(--spot);color:#000;
+  font-size:14px;font-weight:700;
+  flex-shrink:0;
+  /* Automation hook: visible when id="play-prompt" has display:flex */
 }
-.login-note strong{color:var(--spot)}
+.play-prompt.visible{display:flex}
+.play-prompt-icon{font-size:20px;flex-shrink:0;animation:bob 1s ease-in-out infinite alternate}
+@keyframes bob{from{transform:scale(1)}to{transform:scale(1.2)}}
+.play-prompt-text{flex:1;min-width:0}
+.play-prompt-title{font-size:13px;font-weight:700;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.play-prompt-sub{font-size:11px;font-weight:400;opacity:0.75;margin-top:2px}
+
+/* Limitation note */
+.limit-note{
+  margin:12px 16px;padding:10px 14px;
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  font-size:11px;color:var(--text2);line-height:1.6;
+}
+.limit-note strong{color:var(--text)}
+.limit-note code{
+  background:var(--bg);border:1px solid var(--border);border-radius:3px;
+  padding:1px 5px;font-size:10px;color:var(--spot);font-family:monospace;
+}
 
 .player-empty{
   flex:1;display:flex;flex-direction:column;align-items:center;
@@ -347,6 +368,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="player-empty-text">Build a playlist and click a song to start playing.<br><br>Log into Spotify in your browser for full tracks.</div>
     </div>
     <div id="playerInfo" style="display:none">
+      <!-- Play prompt — shown when waiting for user to press play.
+           Automation tools: look for id="play-prompt" with class "visible" -->
+      <div class="play-prompt" id="play-prompt" role="status" aria-live="polite"
+           data-state="waiting">
+        <div class="play-prompt-icon">▶</div>
+        <div class="play-prompt-text">
+          <div class="play-prompt-title" id="play-prompt-title">Press play to start</div>
+          <div class="play-prompt-sub">Click the play button in the Spotify player above</div>
+        </div>
+      </div>
       <div class="spotify-wrap"><div id="embed-iframe"></div></div>
       <div class="now-playing" id="nowPlaying"></div>
       <a class="spot-link" id="spotLink" href="#" target="_blank" rel="noopener">
@@ -356,9 +387,16 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         </svg>
         Open in Spotify
       </a>
-      <div class="login-note">
-        <strong>Full tracks</strong> require being logged into Spotify in your browser — otherwise you hear 30-second previews.
-        When a track ends, the next one is cued automatically — just press play to continue. [This is a Spotify limitation]
+      <div class="limit-note">
+        <strong>About Spotify playback</strong><br>
+        Full tracks require being <strong>logged into Spotify</strong> in your browser —
+        non-logged-in users hear 30-second previews.<br><br>
+        When a track ends, the next one is cued automatically and the green banner reappears.
+        Due to a browser security restriction (<code>isTrusted</code>), no script can
+        programmatically press play on your behalf — a real click is always required.
+        The green banner is designed to make this as obvious as possible, and is also
+        detectable by local automation tools (Puppeteer, Playwright, AutoHotkey) that
+        can simulate real input events.
       </div>
     </div>
   </div>
@@ -727,6 +765,8 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
       if (!isPaused && duration > 0 && (duration - position) < 3000) {
         lastDuration = duration;
       }
+      // Hide banner as soon as user presses play
+      if (!isPaused && position > 500) hidePrompt();
       // End-of-track detected — cue up next and prompt user
       if (isPaused && position === 0 && lastDuration > 0 && !endGuard) {
         endGuard = true;
@@ -740,8 +780,27 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
   });
 };
 
+// ── PLAY PROMPT BANNER ────────────────────────────────────────────────────────
+// Automation hook: banner has id="play-prompt", class "visible" when waiting,
+// data-state="waiting" | "playing" | "idle"
+
+function showPrompt(trackName) {
+  const el = document.getElementById('play-prompt');
+  const title = document.getElementById('play-prompt-title');
+  if (!el) return;
+  el.classList.add('visible');
+  el.dataset.state = 'waiting';
+  if (title) title.textContent = `Press play to start: ${trackName}`;
+}
+
+function hidePrompt() {
+  const el = document.getElementById('play-prompt');
+  if (!el) return;
+  el.classList.remove('visible');
+  el.dataset.state = 'playing';
+}
+
 function cueNext(i) {
-  // Load the next track into the player (paused) and show a prompt
   currentIdx = i;
   const t = playlist[i];
   endGuard = false;
@@ -752,26 +811,7 @@ function cueNext(i) {
   if (el) el.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
   updateNowPlaying(t, i);
   document.getElementById('spotLink').href = t.URL || `https://open.spotify.com/track/${t._id}`;
-
-  // Show next-track banner
-  showNextPrompt(t.Name);
-}
-
-function showNextPrompt(name) {
-  let banner = document.getElementById('nextPrompt');
-  if (!banner) {
-    banner = document.createElement('div');
-    banner.id = 'nextPrompt';
-    banner.style.cssText = `
-      position:sticky;top:0;z-index:50;
-      background:var(--spot);color:#000;
-      padding:10px 16px;font-size:13px;font-weight:600;
-      display:flex;align-items:center;gap:10px;cursor:pointer;
-      flex-shrink:0;`;
-    banner.onclick = () => { banner.remove(); };
-    document.getElementById('playerInfo').prepend(banner);
-  }
-  banner.innerHTML = `▶ Press play to start: <span style="font-weight:400;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;flex:1">${esc(name)}</span>`;
+  showPrompt(t.Name);
 }
 
 function playAt(i) {
@@ -780,24 +820,20 @@ function playAt(i) {
   const t=playlist[i];
   endGuard=false;
 
-  // Clear any next-track prompt
-  document.getElementById('nextPrompt')?.remove();
-
   refreshPlaylist();
   const el=document.getElementById('pl-'+i);
   if(el)el.scrollIntoView({behavior:'smooth',block:'nearest'});
 
-  // Use loadUri to switch tracks WITHOUT reloading the iframe
-  if (embedController) {
-    embedController.loadUri(`spotify:track:${t._id}`);
-  }
+  if (embedController) embedController.loadUri(`spotify:track:${t._id}`);
 
-  // Show player info
   document.getElementById('playerEmpty').style.display='none';
   document.getElementById('playerInfo').style.display='block';
 
   updateNowPlaying(t, i);
   document.getElementById('spotLink').href=t.URL||`https://open.spotify.com/track/${t._id}`;
+
+  // Show prompt — user must press play in the Spotify embed
+  showPrompt(t.Name);
 }
 
 function updateNowPlaying(t, i) {
@@ -834,6 +870,9 @@ function updateNowPlaying(t, i) {
 function showPlayerEmpty() {
   document.getElementById('playerEmpty').style.display='flex';
   document.getElementById('playerInfo').style.display='none';
+  hidePrompt();
+  const el = document.getElementById('play-prompt');
+  if (el) el.dataset.state = 'idle';
   endGuard=false; lastDuration=0;
 }
 
