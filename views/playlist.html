@@ -314,6 +314,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
     <div class="playlist-footer">
       <button class="loop-btn" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
+      <button class="loop-btn" onclick="shufflePlaylist()">⇄ Shuffle</button>
       <button class="clear-btn" onclick="clearPlaylist()">Clear all</button>
     </div>
   </div>
@@ -560,6 +561,22 @@ function clearPlaylist() {
   refreshPlaylist();
   refreshBuilderState();
   showPlayerEmpty();
+}
+
+function shufflePlaylist() {
+  if (playlist.length < 2) return;
+  // Remember which video is currently loaded
+  const playingId = currentIdx >= 0 ? playlist[currentIdx]?.VideoId : null;
+  // Fisher-Yates shuffle
+  for (let i = playlist.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+  }
+  // Re-find the playing video's new position
+  currentIdx = playingId
+    ? playlist.findIndex(v => v.VideoId === playingId)
+    : -1;
+  refreshPlaylist();
 }
 
 function moveUp(i) {
