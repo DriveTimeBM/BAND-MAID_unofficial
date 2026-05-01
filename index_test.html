@@ -315,17 +315,15 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 
 /* ── DESKTOP OVERRIDES (≥ 640px) ───────────────────────────────────────────── */
 @media (min-width: 640px) {
-  :root { --nav-h: 0px; } /* no bottom nav on desktop */
-
+  :root { --nav-h: 0px; }
   .app-body { bottom: 0; }
   .bottom-nav { display: none; }
   .side-nav { display: flex; }
-
-  /* On desktop the drawer is always the right-slide-in for menu items,
-     but we also expose them in the side nav under a "More" section */
-  .app-header .menu-btn { display: none; } /* hamburger hidden; menu shown in sidebar */
+  .app-header .menu-btn { display: none; }
   .view-title-header { display: none !important; }
   .app-name { display: block !important; }
+  /* URL bar text can be a bit smaller on desktop — more room */
+  .url-bar-link { font-size: 12px; }
 }
 
 /* Keep app-name visible on desktop, hide on narrow mobile to show view title */
@@ -355,7 +353,7 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 </div>
 
 <!-- APP BODY -->
-<div class="app-body">
+<div class="app-body" id="appBody">
 
   <!-- DESKTOP SIDE NAV -->
   <nav class="side-nav" id="sideNav"></nav>
@@ -555,6 +553,40 @@ function setLogo(el, icon, size) {
   el.innerHTML = iconHtml(icon, size);
 }
 
+// ── URL BAR ───────────────────────────────────────────────────────────────────
+function updateUrlBar(view) {
+  const bar  = document.getElementById('urlBar');
+  const link = document.getElementById('urlBarLink');
+  if (!bar || !link) return;
+
+  // Build the full URL — handle both relative paths and full URLs
+  let url = view.file || '';
+  if (url && !/^https?:\/\//i.test(url)) {
+    // Relative path — resolve against the app's base URL
+    const base = window.location.href.replace(/\/[^\/]*$/, '/');
+    url = base + url;
+  }
+
+  link.href        = url;
+  link.textContent = url;
+  bar.classList.add('visible');
+  document.getElementById('appBody').classList.add('url-visible');
+}
+
+function copyViewUrl() {
+  const link = document.getElementById('urlBarLink');
+  if (!link?.href) return;
+  navigator.clipboard.writeText(link.href).then(() => {
+    const btn = document.getElementById('urlCopyBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy URL';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
 // ── ACTIVATE VIEW ─────────────────────────────────────────────────────────────
 function activateView(id) {
   const view = views.find(v => v.id === id);
@@ -568,6 +600,7 @@ function activateView(id) {
 
   activeId = id;
   updateNavHighlight(id);
+  updateUrlBar(view);
 
   // Update mobile header title
   const titleEl = document.getElementById('viewTitleHeader');
