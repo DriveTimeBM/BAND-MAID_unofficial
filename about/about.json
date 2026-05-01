@@ -178,6 +178,15 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/playlist.png"
   },
   {
+    "id": "about-fancams",
+    "section": "Views",
+    "icon": "📳",
+    "title": "Fancams",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/fancams.json",
+    "body": "Create, play, and save playlists of nearly 4,000 BAND-MAID fancams. (Most, but not all, are fancams) Bypass YT playlist limitations.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/fancams.png"
+  },
+  {
     "id": "about-milestones",
     "section": "Views",
     "icon": "📍",

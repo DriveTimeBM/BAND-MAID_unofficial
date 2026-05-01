@@ -132,6 +132,13 @@
     "icon": "🎵"
   },
   {
+    "id": "fancams",
+    "name": "Fan Cams *new*",
+    "file": "views/fancams.html",
+    "nav": "menu",
+    "icon": "📳"
+  },
+  {
     "id": "milestones",
     "name": "Milestones",
     "file": "views/milestones.html",
