@@ -1,0 +1,422 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Spotify</title>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#999;--text3:#555;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --spot:#1db954;--spot-dim:rgba(29,185,84,0.1);--spot-border:rgba(29,185,84,0.3);
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:57px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:12px;padding:0 16px;
+}
+.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:22px;height:22px;object-fit:contain}
+.app-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
+.header-spacer{flex:1}
+.spot-badge{
+  display:flex;align-items:center;gap:6px;
+  background:var(--spot-dim);border:1px solid var(--spot-border);
+  border-radius:20px;padding:4px 12px;font-size:12px;font-weight:600;color:var(--spot);
+}
+.spot-badge svg{width:14px;height:14px;flex-shrink:0}
+
+/* ── BODY ── */
+.app-body{
+  position:fixed;top:var(--header-h);left:0;right:0;bottom:0;
+  display:grid;
+  grid-template-columns:1fr 340px;
+}
+
+/* ── EMBED PANEL (left) ── */
+.embed-panel{
+  display:flex;flex-direction:column;
+  background:var(--bg);overflow:hidden;
+}
+.embed-wrap{
+  flex:1;padding:16px;display:flex;flex-direction:column;gap:0;
+}
+#embed-container{
+  flex:1;border-radius:12px;overflow:hidden;min-height:0;
+}
+#embed-container iframe{
+  width:100%;height:100%;border:none;display:block;border-radius:12px;
+}
+
+/* ── INFO PANEL (right) ── */
+.info-panel{
+  background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;overflow-y:auto;
+}
+.info-section{padding:16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.section-label{
+  font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:10px;
+}
+
+/* Now playing */
+.now-playing-title{
+  font-size:16px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px;
+}
+.now-playing-sub{font-size:12px;color:var(--text2)}
+.now-playing-dot{
+  display:inline-block;width:7px;height:7px;border-radius:50%;
+  background:var(--spot);margin-right:6px;
+  animation:pulse 1.4s ease-in-out infinite;
+}
+.now-playing-dot.paused{animation:none;background:var(--text3)}
+@keyframes pulse{0%,100%{opacity:1}50%{opacity:0.4}}
+
+/* Progress */
+.progress-section{padding:14px 16px;border-bottom:1px solid var(--border);flex-shrink:0}
+.progress-bar-wrap{height:4px;background:var(--border);border-radius:2px;overflow:hidden;margin-bottom:6px}
+.progress-bar{height:100%;border-radius:2px;background:var(--spot);transition:width 0.25s linear;width:0%}
+.progress-times{display:flex;justify-content:space-between;font-size:10px;color:var(--text3);font-variant-numeric:tabular-nums}
+
+/* Stats */
+.stats-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.stat-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;text-align:center}
+.stat-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.stat-val{font-size:14px;font-weight:700;color:var(--text)}
+.stat-val.spot{color:var(--spot)}
+.stat-val.accent{color:var(--accent)}
+
+/* About */
+.about-text{font-size:12px;color:var(--text2);line-height:1.6}
+.about-text strong{color:var(--text)}
+.about-text code{
+  background:var(--bg3);border:1px solid var(--border);border-radius:3px;
+  padding:1px 5px;font-size:10px;color:var(--spot);font-family:monospace;
+}
+.open-link{
+  display:inline-flex;align-items:center;gap:5px;margin-top:10px;
+  color:var(--spot);font-size:12px;font-weight:600;text-decoration:none;
+}
+.open-link:hover{text-decoration:underline}
+.open-link svg{width:12px;height:12px}
+
+/* Loading */
+.loading-state{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;color:var(--text3);font-size:13px;text-align:center;padding:24px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--spot);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+
+/* Mobile */
+@media(max-width:680px){
+  .app-body{grid-template-columns:1fr;grid-template-rows:1fr auto}
+  .info-panel{max-height:220px;border-left:none;border-top:1px solid var(--border)}
+  .stats-grid{grid-template-columns:repeat(4,1fr)}
+  .about-section{display:none}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='🟢'"></div>
+  <div class="app-title">BAND-MAID on Spotify</div>
+  <div class="header-spacer"></div>
+  <div class="spot-badge">
+    <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+    Full Playlist
+  </div>
+</div>
+
+<div class="app-body">
+
+  <!-- EMBED PANEL -->
+  <div class="embed-panel">
+    <div class="embed-wrap">
+      <div id="embed-container">
+        <div class="loading-state">
+          <div class="spinner"></div>
+          <span>Loading Spotify player…</span>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- INFO PANEL -->
+  <div class="info-panel">
+
+    <!-- Now Playing -->
+    <div class="info-section">
+      <div class="section-label">Now Playing</div>
+      <div style="display:flex;align-items:center;gap:4px;margin-bottom:6px">
+        <span class="now-playing-dot paused" id="npDot"></span>
+        <span style="font-size:10px;color:var(--text3)" id="npStatus">Waiting for playback…</span>
+      </div>
+      <div class="now-playing-title" id="npTitle">—</div>
+      <div class="now-playing-sub" id="npSub"></div>
+    </div>
+
+    <!-- Progress -->
+    <div class="progress-section">
+      <div class="progress-bar-wrap">
+        <div class="progress-bar" id="progressBar"></div>
+      </div>
+      <div class="progress-times">
+        <span id="timePos">0:00</span>
+        <span id="timeDur">0:00</span>
+      </div>
+    </div>
+
+    <!-- Stats from our JSON -->
+    <div class="info-section" id="statsSection" style="display:none">
+      <div class="section-label">Track Stats</div>
+      <div class="stats-grid" id="statsGrid"></div>
+    </div>
+
+    <!-- About -->
+    <div class="info-section about-section">
+      <div class="section-label">About This Playlist</div>
+      <div class="about-text">
+        A complete public Spotify playlist of <strong>all BAND-MAID songs</strong>,
+        maintained by the BAND-MAID Unofficial app.<br><br>
+        Spotify handles playback, shuffle, and repeat natively —
+        just press play and enjoy. <strong>Full tracks</strong> require
+        being logged into Spotify in your browser;
+        non-logged-in users hear <code>30s</code> previews.<br><br>
+        Track stats (streams, rank) are sourced from the app's
+        daily-updated JSON data and matched by track name.
+      </div>
+      <a class="open-link" href="https://open.spotify.com/playlist/04wxyJCXV5AouZ3ADP1oP4" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Open in Spotify
+      </a>
+    </div>
+
+  </div><!-- /info-panel -->
+
+</div><!-- /app-body -->
+
+<script>
+const PLAYLIST_URI  = 'spotify:playlist:04wxyJCXV5AouZ3ADP1oP4';
+const SPOTIFY_JSON  = 'https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json';
+
+let embedController = null;
+let spotifyData     = {};   // name → track data, for stats lookup
+let progressTimer   = null;
+
+// ── LOAD SPOTIFY TRACK DATA FOR STATS ────────────────────────────────────────
+async function loadSpotifyData() {
+  try {
+    const res = await fetch(SPOTIFY_JSON);
+    if (!res.ok) return;
+    const tracks = await res.json();
+    (Array.isArray(tracks) ? tracks : []).forEach(t => {
+      if (t.Name) spotifyData[t.Name.toLowerCase()] = t;
+    });
+  } catch(e) {}
+}
+
+// ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  const el = document.getElementById('embed-container');
+  el.innerHTML = ''; // clear loading state
+
+  const options = {
+    uri:    PLAYLIST_URI,
+    width:  '100%',
+    height: '100%',
+  };
+
+  IFrameAPI.createController(el, options, (controller) => {
+    embedController = controller;
+
+    controller.addListener('ready', () => {
+      document.getElementById('npStatus').textContent = 'Ready — press play to start';
+    });
+
+    controller.addListener('playback_update', e => {
+      const d         = e.data;
+      const isPaused  = d.isPaused;
+      const position  = d.position  || 0;   // ms
+      const duration  = d.duration  || 0;   // ms
+
+      // Update dot
+      const dot = document.getElementById('npDot');
+      dot.classList.toggle('paused', isPaused);
+      document.getElementById('npStatus').textContent = isPaused ? 'Paused' : 'Playing';
+
+      // Progress bar
+      const pct = duration > 0 ? (position / duration * 100).toFixed(1) : 0;
+      document.getElementById('progressBar').style.width = pct + '%';
+      document.getElementById('timePos').textContent = msToTime(position);
+      document.getElementById('timeDur').textContent = msToTime(duration);
+    });
+
+    controller.addListener('track_change', e => {
+      const uri = e?.data?.uri || '';
+      updateNowPlaying(uri);
+    });
+  });
+};
+
+// ── NOW PLAYING ───────────────────────────────────────────────────────────────
+function updateNowPlaying(uri) {
+  // URI format: spotify:track:XXXX
+  // We don't have a direct name from the URI — we get it from playback_update's playingURI
+  // and cross-reference with our stats data when available.
+  // The embed itself shows the track name; we show stats in the side panel.
+  document.getElementById('npTitle').textContent = 'Loading…';
+  document.getElementById('npSub').textContent   = '';
+  document.getElementById('statsSection').style.display = 'none';
+}
+
+// Called when we know the track name from playback_update
+let lastUri = '';
+window.onSpotifyIframeApiReady; // already set above
+
+// Intercept playback_update for track name — Spotify sends playingURI
+// We need to listen more carefully
+function patchControllerForTrackName(controller) {
+  // Re-add listener that also grabs playingURI
+  controller.addListener('playback_update', e => {
+    const uri = e?.data?.playingURI || '';
+    if (uri && uri !== lastUri) {
+      lastUri = uri;
+      // Extract track ID and look up in our data
+      const trackId = uri.split(':').pop();
+      fetchTrackName(trackId);
+    }
+  });
+}
+
+async function fetchTrackName(trackId) {
+  // No auth needed for public track — use oEmbed
+  try {
+    const url = `https://open.spotify.com/oembed?url=https://open.spotify.com/track/${trackId}&format=json`;
+    const res = await fetch(url);
+    if (!res.ok) return;
+    const data = await res.json();
+    const title  = data.title || '';        // e.g. "Choose me - BAND-MAID"
+    const name   = title.split(' - ')[0].trim();
+    const artist = title.split(' - ').slice(1).join(' - ').trim() || 'BAND-MAID';
+
+    document.getElementById('npTitle').textContent = name;
+    document.getElementById('npSub').textContent   = artist;
+
+    // Look up stats
+    const stats = spotifyData[name.toLowerCase()];
+    if (stats) showStats(stats);
+    else document.getElementById('statsSection').style.display = 'none';
+  } catch(e) {
+    document.getElementById('npTitle').textContent = 'Now Playing';
+    document.getElementById('npSub').textContent   = 'BAND-MAID';
+  }
+}
+
+function showStats(t) {
+  const section = document.getElementById('statsSection');
+  const grid    = document.getElementById('statsGrid');
+  section.style.display = '';
+
+  const cards = [
+    { label: 'Streams',      val: fmt(t.Streams),      cls: 'spot'   },
+    { label: 'Spotify Rank', val: '#' + (t.SpotifyRank || '—'), cls: 'accent' },
+    { label: 'YT Rank',      val: '#' + (t.YTRank      || '—'), cls: ''       },
+    { label: 'YouTube Rank', val: t.YTRank ? '#' + t.YTRank : '—', cls: ''   },
+  ];
+
+  // Deduplicate — just show 3 clean stats
+  grid.innerHTML = `
+    <div class="stat-card">
+      <div class="stat-label">Streams</div>
+      <div class="stat-val spot">${fmt(t.Streams)}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Spotify Rank</div>
+      <div class="stat-val accent">#${t.SpotifyRank || '—'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">YT Rank</div>
+      <div class="stat-val">#${t.YTRank || '—'}</div>
+    </div>
+    <div class="stat-card">
+      <div class="stat-label">Year</div>
+      <div class="stat-val">${t.ReleaseDate ? t.ReleaseDate.substring(0,4) : '—'}</div>
+    </div>`;
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function msToTime(ms) {
+  const total = Math.floor(ms / 1000);
+  const m     = Math.floor(total / 60);
+  const s     = total % 60;
+  return m + ':' + String(s).padStart(2, '0');
+}
+
+function fmt(n) { return Number(n || 0).toLocaleString(); }
+
+// ── BOOT ──────────────────────────────────────────────────────────────────────
+// Patch controller once ready to add track name listener
+const origReady = window.onSpotifyIframeApiReady;
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  // Load our stats data in parallel
+  loadSpotifyData();
+  // Call original setup
+  IFrameAPI.createController(
+    (() => {
+      const el = document.getElementById('embed-container');
+      el.innerHTML = '';
+      return el;
+    })(),
+    { uri: PLAYLIST_URI, width: '100%', height: '100%' },
+    (controller) => {
+      embedController = controller;
+
+      controller.addListener('ready', () => {
+        document.getElementById('npStatus').textContent = 'Ready — press play to start';
+      });
+
+      controller.addListener('playback_update', e => {
+        const d        = e.data;
+        const isPaused = d.isPaused;
+        const position = d.position || 0;
+        const duration = d.duration || 0;
+        const uri      = d.playingURI || '';
+
+        // Dot + status
+        document.getElementById('npDot').classList.toggle('paused', isPaused);
+        document.getElementById('npStatus').textContent = isPaused ? 'Paused' : 'Playing';
+
+        // Progress
+        const pct = duration > 0 ? (position / duration * 100).toFixed(2) : 0;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('timePos').textContent = msToTime(position);
+        document.getElementById('timeDur').textContent = msToTime(duration);
+
+        // Track changed?
+        if (uri && uri !== lastUri) {
+          lastUri = uri;
+          const trackId = uri.split(':').pop();
+          fetchTrackName(trackId);
+        }
+      });
+    }
+  );
+};
+</script>
+</body>
+</html>
