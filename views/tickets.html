@@ -41,14 +41,14 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .group-collapsed .group-chevron{transform:rotate(-90deg)}
 
 /* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
+.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
 .deck-grid.no-group{margin:0}
 
 /* DECK CARD */
 .deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
 .deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
+.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:228px}
+.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:228px}
 .deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
 .deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
 .deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
@@ -77,8 +77,9 @@ body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14
 .detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
 .detail-field:last-child{border-bottom:none}
 .detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
+.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.7}
 .detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
+.detail-field-value br{display:block;content:'';margin-top:0.5em}
 .detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
 .detail-url-link:hover{text-decoration:underline}
 .detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
@@ -136,7 +137,8 @@ const SORT = {"field":"","dir":"asc"};
 const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Tickets";
 const LOGO_CHAR = "🎟️";
-const PREVIEW_COUNT = 5;
+const PREVIEW_COUNT = 999999;
+const ALLOW_EMPTY   = false;
 const PREVIEW_DATA = null;
 
 let RAW_DATA = [];
@@ -182,9 +184,22 @@ async function loadData(){
     const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
     const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
-    const parsed=await res.json();
+    let parsed;
+    try{
+      const text=await res.text();
+      parsed=text.trim()?JSON.parse(text):[];
+    }catch(e){
+      if(ALLOW_EMPTY){parsed=[];}
+      else throw new Error('Invalid JSON: '+e.message);
+    }
     RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
+    // If empty and ALLOW_EMPTY, skip cache and just render the friendly message
+    if(!RAW_DATA.length && ALLOW_EMPTY){
+      hideFetchState();
+      renderList();
+      return;
+    }
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
       try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
@@ -308,7 +323,9 @@ function renderList(scrollToGroup){
   container.innerHTML='';
 
   if(!currentData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    container.innerHTML=ALLOW_EMPTY
+      ? '<div style="padding:40px;text-align:center;color:var(--text3);font-size:15px">No items today</div>'
+      : '<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
     return;
   }
 
@@ -496,7 +513,9 @@ function showDetail(row){
     } else if(rtype==='datetime'){
       valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
     } else {
-      valueHtml=escHtml(String(val));
+      // If value contains HTML tags (e.g. <br>) render as HTML, otherwise escape as plain text
+      const strVal=String(val);
+      valueHtml=/<[a-z][^>]*>/i.test(strVal) ? strVal : escHtml(strVal);
     }
     html+=`<div class="detail-field">
       <div class="detail-field-label">${escHtml(name)}</div>

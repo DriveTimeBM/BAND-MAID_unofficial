@@ -137,7 +137,8 @@ const SORT = {"field":"","dir":"asc"};
 const GROUP = {"field":"","dir":"asc"};
 const VIEW_NAME = "Next Million";
 const LOGO_CHAR = "🎯";
-const PREVIEW_COUNT = 5;
+const PREVIEW_COUNT = 999999;
+const ALLOW_EMPTY   = false;
 const PREVIEW_DATA = null;
 
 let RAW_DATA = [];
@@ -183,9 +184,22 @@ async function loadData(){
     const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
     const res=await fetch(url,fetchOpts);
     if(!res.ok) throw new Error('HTTP '+res.status);
-    const parsed=await res.json();
+    let parsed;
+    try{
+      const text=await res.text();
+      parsed=text.trim()?JSON.parse(text):[];
+    }catch(e){
+      if(ALLOW_EMPTY){parsed=[];}
+      else throw new Error('Invalid JSON: '+e.message);
+    }
     RAW_DATA=normalizeToArray(parsed);
     currentData=RAW_DATA;
+    // If empty and ALLOW_EMPTY, skip cache and just render the friendly message
+    if(!RAW_DATA.length && ALLOW_EMPTY){
+      hideFetchState();
+      renderList();
+      return;
+    }
     // Store in cache (even for always-fresh — just won't be read next time)
     if(!ALWAYS_FRESH){
       try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
@@ -309,7 +323,9 @@ function renderList(scrollToGroup){
   container.innerHTML='';
 
   if(!currentData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+    container.innerHTML=ALLOW_EMPTY
+      ? '<div style="padding:40px;text-align:center;color:var(--text3);font-size:15px">No items today</div>'
+      : '<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
     return;
   }
 
