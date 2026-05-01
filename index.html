@@ -1,16 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-
-  <meta property="og:title" content="BAND-MAID Unofficial">
-  <meta property="og:description" content="Extensive BAND-MAID information. Song, Release, Event, Streaming information updated daily.">
-  <meta property="og:image" content="https://drivetimebm.github.io/BAND-MAID_unofficial/social-preview.png">
-  <meta property="og:url" content="https://drivetimebm.github.io/BAND-MAID_unofficial/">
-  <meta property="og:type" content="website">
-  
-  <meta name="twitter:card" content="summary_large_image">
-  <meta name="twitter:image" content="https://drivetimebm.github.io/BAND-MAID_unofficial/social-preview.png">
-
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <link rel="icon" type="image/png" href="logo.png">
@@ -46,6 +36,7 @@
   --sal: env(safe-area-inset-left,   0px);
 
   --header-h: 52px;
+  --url-bar-h: 30px;
   --nav-h:    96px;   /* bottom nav height (mobile) — larger for readability */
   --sidebar-w: 220px; /* desktop side nav width */
 }
@@ -99,13 +90,48 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 .menu-btn.open span:nth-child(3) { transform: translateY(-6.5px) rotate(-45deg); }
 .menu-btn span { transition: transform 0.2s, opacity 0.2s, background 0.15s; }
 
-/* ── LAYOUT CONTAINER ──────────────────────────────────────────────────────── */
+/* ── URL BAR ─────────────────────────────────────────────────────────────── */
+.url-bar {
+  position: fixed;
+  top: calc(var(--header-h) + var(--sat));
+  left: 0; right: 0; z-index: 150;
+  height: 30px;
+  background: var(--bg3);
+  border-bottom: 1px solid var(--border);
+  display: none; /* shown once a view is active */
+  align-items: center;
+  padding: 0 10px 0 12px;
+  gap: 8px;
+}
+.url-bar.visible { display: flex; }
+.url-bar-link {
+  flex: 1; min-width: 0;
+  font-size: 11px; color: var(--text3);
+  text-decoration: none; font-family: 'Consolas','Monaco',monospace;
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis;
+  transition: color 0.15s;
+}
+.url-bar-link:hover { color: var(--accent); }
+.url-copy-btn {
+  flex-shrink: 0;
+  background: none; border: 1px solid var(--border2);
+  border-radius: 4px; color: var(--text3);
+  font-size: 10px; font-weight: 600; font-family: var(--font);
+  padding: 2px 8px; cursor: pointer; transition: all 0.15s;
+  white-space: nowrap;
+}
+.url-copy-btn:hover { border-color: var(--accent); color: var(--accent); }
+.url-copy-btn.copied { border-color: var(--success); color: var(--success); }
 .app-body {
   position: fixed;
   top: calc(var(--header-h) + var(--sat));
   left: 0; right: 0;
   bottom: calc(var(--nav-h) + var(--sab));
   display: flex;
+  transition: top 0.15s;
+}
+.app-body.url-visible {
+  top: calc(var(--header-h) + var(--sat) + var(--url-bar-h));
 }
 
 /* ── DESKTOP SIDE NAV ──────────────────────────────────────────────────────── */
@@ -289,17 +315,15 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
 
 /* ── DESKTOP OVERRIDES (≥ 640px) ───────────────────────────────────────────── */
 @media (min-width: 640px) {
-  :root { --nav-h: 0px; } /* no bottom nav on desktop */
-
+  :root { --nav-h: 0px; }
   .app-body { bottom: 0; }
   .bottom-nav { display: none; }
   .side-nav { display: flex; }
-
-  /* On desktop the drawer is always the right-slide-in for menu items,
-     but we also expose them in the side nav under a "More" section */
-  .app-header .menu-btn { display: none; } /* hamburger hidden; menu shown in sidebar */
+  .app-header .menu-btn { display: none; }
   .view-title-header { display: none !important; }
   .app-name { display: block !important; }
+  /* URL bar text can be a bit smaller on desktop — more room */
+  .url-bar-link { font-size: 12px; }
 }
 
 /* Keep app-name visible on desktop, hide on narrow mobile to show view title */
@@ -322,8 +346,14 @@ html, body { height: 100%; overflow: hidden; background: var(--bg); color: var(-
   </button>
 </header>
 
+<!-- URL BAR -->
+<div class="url-bar" id="urlBar">
+  <a class="url-bar-link" id="urlBarLink" href="#" target="_blank" rel="noopener" title="Open this view directly in a new tab"></a>
+  <button class="url-copy-btn" id="urlCopyBtn" onclick="copyViewUrl()">Copy URL</button>
+</div>
+
 <!-- APP BODY -->
-<div class="app-body">
+<div class="app-body" id="appBody">
 
   <!-- DESKTOP SIDE NAV -->
   <nav class="side-nav" id="sideNav"></nav>
@@ -523,6 +553,40 @@ function setLogo(el, icon, size) {
   el.innerHTML = iconHtml(icon, size);
 }
 
+// ── URL BAR ───────────────────────────────────────────────────────────────────
+function updateUrlBar(view) {
+  const bar  = document.getElementById('urlBar');
+  const link = document.getElementById('urlBarLink');
+  if (!bar || !link) return;
+
+  // Build the full URL — handle both relative paths and full URLs
+  let url = view.file || '';
+  if (url && !/^https?:\/\//i.test(url)) {
+    // Relative path — resolve against the app's base URL
+    const base = window.location.href.replace(/\/[^\/]*$/, '/');
+    url = base + url;
+  }
+
+  link.href        = url;
+  link.textContent = url;
+  bar.classList.add('visible');
+  document.getElementById('appBody').classList.add('url-visible');
+}
+
+function copyViewUrl() {
+  const link = document.getElementById('urlBarLink');
+  if (!link?.href) return;
+  navigator.clipboard.writeText(link.href).then(() => {
+    const btn = document.getElementById('urlCopyBtn');
+    btn.textContent = 'Copied!';
+    btn.classList.add('copied');
+    setTimeout(() => {
+      btn.textContent = 'Copy URL';
+      btn.classList.remove('copied');
+    }, 2000);
+  });
+}
+
 // ── ACTIVATE VIEW ─────────────────────────────────────────────────────────────
 function activateView(id) {
   const view = views.find(v => v.id === id);
@@ -536,6 +600,7 @@ function activateView(id) {
 
   activeId = id;
   updateNavHighlight(id);
+  updateUrlBar(view);
 
   // Update mobile header title
   const titleEl = document.getElementById('viewTitleHeader');
@@ -558,9 +623,8 @@ function activateView(id) {
   const iframe = document.createElement('iframe');
   iframe.className = 'view-frame';
   iframe.title = view.name;
-  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-downloads allow-presentation');
-  iframe.setAttribute('allow', 'autoplay; encrypted-media; picture-in-picture; fullscreen; accelerometer; gyroscope');
-  iframe.setAttribute('allowfullscreen', '');
+  // Sandbox: allow scripts and same-origin so views work; allow-popups for external links
+  iframe.setAttribute('sandbox', 'allow-scripts allow-same-origin allow-popups allow-popups-to-escape-sandbox allow-forms allow-downloads');
   iframe.src = view.file;
   iframe.onload  = () => { hideLoading(); iframe.classList.add('active'); };
   iframe.onerror = () => { hideLoading(); showError(`Could not load: ${view.file}`); };
