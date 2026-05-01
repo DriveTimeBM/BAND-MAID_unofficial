@@ -188,14 +188,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <div class="info-section about-section">
       <div class="section-label">About This Playlist</div>
       <div class="about-text">
-        A complete public Spotify playlist of <strong>all BAND-MAID songs</strong>,
+        A public Spotify playlist of <strong>BAND-MAID songs</strong>
         maintained by the BAND-MAID Unofficial app.<br><br>
-        Spotify handles playback, shuffle, and repeat natively —
-        just press play and enjoy. <strong>Full tracks</strong> require
-        being logged into Spotify in your browser;
-        non-logged-in users hear <code>30s</code> previews.<br><br>
-        Track stats (streams, rank) are sourced from the app's
-        daily-updated JSON data and matched by track name.
+        <strong>Note:</strong> Spotify embeds are limited to
+        <code>100 tracks</code> — the full playlist has more songs
+        but only the first 100 are visible here. Open in Spotify
+        for the complete playlist.<br><br>
+        <strong>Shuffle &amp; Repeat</strong> controls require
+        <code>Spotify Premium</code>. Free users see a basic player.<br><br>
+        <strong>Full tracks</strong> require being logged into Spotify;
+        free users hear <code>30s</code> previews. Track stats
+        update as each song plays.
       </div>
       <a class="open-link" href="https://open.spotify.com/playlist/04wxyJCXV5AouZ3ADP1oP4" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -215,10 +218,10 @@ const PLAYLIST_URI  = 'spotify:playlist:04wxyJCXV5AouZ3ADP1oP4';
 const SPOTIFY_JSON  = 'https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json';
 
 let embedController = null;
-let spotifyData     = {};   // name → track data, for stats lookup
-let progressTimer   = null;
+let spotifyData     = {};
+let lastUri         = '';
 
-// ── LOAD SPOTIFY TRACK DATA FOR STATS ────────────────────────────────────────
+// ── LOAD STATS DATA ───────────────────────────────────────────────────────────
 async function loadSpotifyData() {
   try {
     const res = await fetch(SPOTIFY_JSON);
@@ -232,115 +235,81 @@ async function loadSpotifyData() {
 
 // ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
 window.onSpotifyIframeApiReady = (IFrameAPI) => {
-  const el = document.getElementById('embed-container');
-  el.innerHTML = ''; // clear loading state
+  loadSpotifyData();
 
-  const options = {
-    uri:    PLAYLIST_URI,
-    width:  '100%',
-    height: '100%',
-  };
+  const container = document.getElementById('embed-container');
+  container.innerHTML = ''; // clear loading spinner
 
-  IFrameAPI.createController(el, options, (controller) => {
-    embedController = controller;
+  IFrameAPI.createController(
+    container,
+    { uri: PLAYLIST_URI, width: '100%', height: '100%' },
+    (controller) => {
+      embedController = controller;
 
-    controller.addListener('ready', () => {
-      document.getElementById('npStatus').textContent = 'Ready — press play to start';
-    });
+      controller.addListener('ready', () => {
+        document.getElementById('npStatus').textContent = 'Ready — press play to start';
+      });
 
-    controller.addListener('playback_update', e => {
-      const d         = e.data;
-      const isPaused  = d.isPaused;
-      const position  = d.position  || 0;   // ms
-      const duration  = d.duration  || 0;   // ms
+      controller.addListener('playback_update', e => {
+        const d        = e.data;
+        const isPaused = d.isPaused;
+        const position = d.position || 0;
+        const duration = d.duration || 0;
+        const uri      = d.playingURI || '';
 
-      // Update dot
-      const dot = document.getElementById('npDot');
-      dot.classList.toggle('paused', isPaused);
-      document.getElementById('npStatus').textContent = isPaused ? 'Paused' : 'Playing';
+        // Dot + status
+        const dot = document.getElementById('npDot');
+        dot.classList.toggle('paused', isPaused);
+        document.getElementById('npStatus').textContent = isPaused ? 'Paused' : 'Playing';
 
-      // Progress bar
-      const pct = duration > 0 ? (position / duration * 100).toFixed(1) : 0;
-      document.getElementById('progressBar').style.width = pct + '%';
-      document.getElementById('timePos').textContent = msToTime(position);
-      document.getElementById('timeDur').textContent = msToTime(duration);
-    });
+        // Progress bar
+        const pct = duration > 0 ? (position / duration * 100).toFixed(2) : 0;
+        document.getElementById('progressBar').style.width = pct + '%';
+        document.getElementById('timePos').textContent = msToTime(position);
+        document.getElementById('timeDur').textContent = msToTime(duration);
 
-    controller.addListener('track_change', e => {
-      const uri = e?.data?.uri || '';
-      updateNowPlaying(uri);
-    });
-  });
+        // Track changed — fetch name and stats
+        if (uri && uri !== lastUri) {
+          lastUri = uri;
+          const trackId = uri.split(':').pop();
+          fetchTrackName(trackId);
+        }
+      });
+    }
+  );
 };
 
-// ── NOW PLAYING ───────────────────────────────────────────────────────────────
-function updateNowPlaying(uri) {
-  // URI format: spotify:track:XXXX
-  // We don't have a direct name from the URI — we get it from playback_update's playingURI
-  // and cross-reference with our stats data when available.
-  // The embed itself shows the track name; we show stats in the side panel.
+// ── TRACK NAME + STATS ────────────────────────────────────────────────────────
+async function fetchTrackName(trackId) {
   document.getElementById('npTitle').textContent = 'Loading…';
   document.getElementById('npSub').textContent   = '';
   document.getElementById('statsSection').style.display = 'none';
-}
 
-// Called when we know the track name from playback_update
-let lastUri = '';
-window.onSpotifyIframeApiReady; // already set above
-
-// Intercept playback_update for track name — Spotify sends playingURI
-// We need to listen more carefully
-function patchControllerForTrackName(controller) {
-  // Re-add listener that also grabs playingURI
-  controller.addListener('playback_update', e => {
-    const uri = e?.data?.playingURI || '';
-    if (uri && uri !== lastUri) {
-      lastUri = uri;
-      // Extract track ID and look up in our data
-      const trackId = uri.split(':').pop();
-      fetchTrackName(trackId);
-    }
-  });
-}
-
-async function fetchTrackName(trackId) {
-  // No auth needed for public track — use oEmbed
   try {
-    const url = `https://open.spotify.com/oembed?url=https://open.spotify.com/track/${trackId}&format=json`;
-    const res = await fetch(url);
-    if (!res.ok) return;
-    const data = await res.json();
-    const title  = data.title || '';        // e.g. "Choose me - BAND-MAID"
-    const name   = title.split(' - ')[0].trim();
-    const artist = title.split(' - ').slice(1).join(' - ').trim() || 'BAND-MAID';
+    const res = await fetch(
+      `https://open.spotify.com/oembed?url=https://open.spotify.com/track/${trackId}`
+    );
+    if (!res.ok) throw new Error('oEmbed failed');
+    const data  = await res.json();
+    const title = data.title || '';              // "Choose me - BAND-MAID"
+    const name  = title.split(' - ')[0].trim();
+    const artist= title.split(' - ').slice(1).join(' - ').trim() || 'BAND-MAID';
 
     document.getElementById('npTitle').textContent = name;
     document.getElementById('npSub').textContent   = artist;
 
-    // Look up stats
     const stats = spotifyData[name.toLowerCase()];
     if (stats) showStats(stats);
-    else document.getElementById('statsSection').style.display = 'none';
   } catch(e) {
     document.getElementById('npTitle').textContent = 'Now Playing';
     document.getElementById('npSub').textContent   = 'BAND-MAID';
   }
 }
 
+// ── STATS / UTILS ─────────────────────────────────────────────────────────────
 function showStats(t) {
-  const section = document.getElementById('statsSection');
-  const grid    = document.getElementById('statsGrid');
-  section.style.display = '';
-
-  const cards = [
-    { label: 'Streams',      val: fmt(t.Streams),      cls: 'spot'   },
-    { label: 'Spotify Rank', val: '#' + (t.SpotifyRank || '—'), cls: 'accent' },
-    { label: 'YT Rank',      val: '#' + (t.YTRank      || '—'), cls: ''       },
-    { label: 'YouTube Rank', val: t.YTRank ? '#' + t.YTRank : '—', cls: ''   },
-  ];
-
-  // Deduplicate — just show 3 clean stats
-  grid.innerHTML = `
+  document.getElementById('statsSection').style.display = '';
+  document.getElementById('statsGrid').innerHTML = `
     <div class="stat-card">
       <div class="stat-label">Streams</div>
       <div class="stat-val spot">${fmt(t.Streams)}</div>
@@ -359,64 +328,12 @@ function showStats(t) {
     </div>`;
 }
 
-// ── UTILS ─────────────────────────────────────────────────────────────────────
 function msToTime(ms) {
-  const total = Math.floor(ms / 1000);
-  const m     = Math.floor(total / 60);
-  const s     = total % 60;
-  return m + ':' + String(s).padStart(2, '0');
+  const s = Math.floor(ms / 1000);
+  return Math.floor(s / 60) + ':' + String(s % 60).padStart(2, '0');
 }
 
 function fmt(n) { return Number(n || 0).toLocaleString(); }
-
-// ── BOOT ──────────────────────────────────────────────────────────────────────
-// Patch controller once ready to add track name listener
-const origReady = window.onSpotifyIframeApiReady;
-window.onSpotifyIframeApiReady = (IFrameAPI) => {
-  // Load our stats data in parallel
-  loadSpotifyData();
-  // Call original setup
-  IFrameAPI.createController(
-    (() => {
-      const el = document.getElementById('embed-container');
-      el.innerHTML = '';
-      return el;
-    })(),
-    { uri: PLAYLIST_URI, width: '100%', height: '100%' },
-    (controller) => {
-      embedController = controller;
-
-      controller.addListener('ready', () => {
-        document.getElementById('npStatus').textContent = 'Ready — press play to start';
-      });
-
-      controller.addListener('playback_update', e => {
-        const d        = e.data;
-        const isPaused = d.isPaused;
-        const position = d.position || 0;
-        const duration = d.duration || 0;
-        const uri      = d.playingURI || '';
-
-        // Dot + status
-        document.getElementById('npDot').classList.toggle('paused', isPaused);
-        document.getElementById('npStatus').textContent = isPaused ? 'Paused' : 'Playing';
-
-        // Progress
-        const pct = duration > 0 ? (position / duration * 100).toFixed(2) : 0;
-        document.getElementById('progressBar').style.width = pct + '%';
-        document.getElementById('timePos').textContent = msToTime(position);
-        document.getElementById('timeDur').textContent = msToTime(duration);
-
-        // Track changed?
-        if (uri && uri !== lastUri) {
-          lastUri = uri;
-          const trackId = uri.split(':').pop();
-          fetchTrackName(trackId);
-        }
-      });
-    }
-  );
-};
 </script>
 </body>
 </html>
