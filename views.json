@@ -119,14 +119,14 @@
   },
   {
     "id": "push",
-    "name": "1 Million Push *new*",
+    "name": "1 Million Push",
     "file": "views/push.html",
     "nav": "menu",
     "icon": "🚀"
   },
   {
     "id": "playlist",
-    "name": "Playlist *new*",
+    "name": "Playlist",
     "file": "views/playlist.html",
     "nav": "menu",
     "icon": "🎵"
@@ -203,7 +203,7 @@
   },
   {
     "id": "mv",
-    "name": "MV map *new*",
+    "name": "MV map",
     "file": "views/mv.html",
     "nav": "menu",
     "icon": "🗾"
