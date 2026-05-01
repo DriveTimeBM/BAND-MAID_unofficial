@@ -196,9 +196,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         for the complete playlist.<br><br>
         <strong>Shuffle &amp; Repeat</strong> controls require
         <code>Spotify Premium</code>. Free users see a basic player.<br><br>
-        <strong>Full tracks</strong> require being logged into Spotify;
-        free users hear <code>30s</code> previews. Track stats
-        update as each song plays.
+        <strong>Full tracks</strong> are available when logged into
+        Spotify — both free and Premium.<br><br>
       </div>
       <a class="open-link" href="https://open.spotify.com/playlist/04wxyJCXV5AouZ3ADP1oP4" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -218,7 +217,8 @@ const PLAYLIST_URI  = 'spotify:playlist:04wxyJCXV5AouZ3ADP1oP4';
 const SPOTIFY_JSON  = 'https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json';
 
 let embedController = null;
-let spotifyData     = {};
+let spotifyById     = {};   // trackId → track data
+let spotifyByName   = {};   // name.toLowerCase() → track data
 let lastUri         = '';
 
 // ── LOAD STATS DATA ───────────────────────────────────────────────────────────
@@ -228,9 +228,17 @@ async function loadSpotifyData() {
     if (!res.ok) return;
     const tracks = await res.json();
     (Array.isArray(tracks) ? tracks : []).forEach(t => {
-      if (t.Name) spotifyData[t.Name.toLowerCase()] = t;
+      // Build ID lookup from URL field: https://open.spotify.com/track/XXXX
+      if (t.URL) {
+        const m = String(t.URL).match(/track\/([A-Za-z0-9]+)/);
+        if (m) spotifyById[m[1]] = t;
+      }
+      if (t.Name) spotifyByName[t.Name.toLowerCase()] = t;
     });
-  } catch(e) {}
+    console.log('[BM] Spotify data loaded:', Object.keys(spotifyById).length, 'tracks by ID');
+  } catch(e) {
+    console.warn('[BM] Failed to load Spotify data:', e.message);
+  }
 }
 
 // ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
@@ -268,42 +276,36 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
         document.getElementById('timePos').textContent = msToTime(position);
         document.getElementById('timeDur').textContent = msToTime(duration);
 
-        // Track changed — fetch name and stats
+        // Track changed — look up stats
         if (uri && uri !== lastUri) {
           lastUri = uri;
           const trackId = uri.split(':').pop();
-          fetchTrackName(trackId);
+          console.log('[BM] Track changed, ID:', trackId);
+          lookupTrack(trackId);
         }
       });
     }
   );
 };
 
-// ── TRACK NAME + STATS ────────────────────────────────────────────────────────
-async function fetchTrackName(trackId) {
-  document.getElementById('npTitle').textContent = 'Loading…';
-  document.getElementById('npSub').textContent   = '';
-  document.getElementById('statsSection').style.display = 'none';
-
-  try {
-    const res = await fetch(
-      `https://open.spotify.com/oembed?url=https://open.spotify.com/track/${trackId}`
-    );
-    if (!res.ok) throw new Error('oEmbed failed');
-    const data  = await res.json();
-    const title = data.title || '';              // "Choose me - BAND-MAID"
-    const name  = title.split(' - ')[0].trim();
-    const artist= title.split(' - ').slice(1).join(' - ').trim() || 'BAND-MAID';
-
-    document.getElementById('npTitle').textContent = name;
-    document.getElementById('npSub').textContent   = artist;
-
-    const stats = spotifyData[name.toLowerCase()];
-    if (stats) showStats(stats);
-  } catch(e) {
-    document.getElementById('npTitle').textContent = 'Now Playing';
+// ── TRACK LOOKUP ─────────────────────────────────────────────────────────────
+function lookupTrack(trackId) {
+  // Try direct ID match first (most reliable)
+  const byId = spotifyById[trackId];
+  if (byId) {
+    console.log('[BM] Track matched by ID:', byId.Name);
+    document.getElementById('npTitle').textContent = byId.Name || 'Now Playing';
     document.getElementById('npSub').textContent   = 'BAND-MAID';
+    showStats(byId);
+    return;
   }
+
+  // No match found — show minimal info
+  console.warn('[BM] No match for track ID:', trackId,
+    '| IDs loaded:', Object.keys(spotifyById).length);
+  document.getElementById('npTitle').textContent = 'Now Playing';
+  document.getElementById('npSub').textContent   = 'BAND-MAID';
+  document.getElementById('statsSection').style.display = 'none';
 }
 
 // ── STATS / UTILS ─────────────────────────────────────────────────────────────
