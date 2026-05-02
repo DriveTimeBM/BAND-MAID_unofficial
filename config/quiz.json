@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/YN9Mv3C0WE4/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany — Views: 50,198 | Yesterday: 43\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) — Views: 25,379 | Yesterday: 37\nBAND-MAID / Zen (Official Teaser Video)  KANAMI Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 87,069 | Yesterday: 27",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "I can\u0027t live without you. — Spotify: 3,337,584 | Played Live: 33\nAfter Life — Spotify: 3,187,554 | Played Live: 53\nREAL EXISTENCE — Spotify: 2,616,354 | Played Live: 242",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany",
+                                              "text":  "REAL EXISTENCE"
+                                          },
+                                          {
+                                              "text":  "I can\u0027t live without you.",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  KANAMI Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)"
+                                              "text":  "After Life"
                                           }
                                       ]
                       }
