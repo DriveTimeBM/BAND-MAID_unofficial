@@ -803,10 +803,12 @@ function showPrompt(trackName) {
   el.classList.add('visible');
   el.dataset.state = 'waiting';
   if (title) title.textContent = `Press play to start: ${trackName}`;
-  // Signal AHK via window title — works standalone or via parent postMessage
+  // Signal AHK via window title
   document.title = '[PLAY] BAND-MAID Spotify Playlist';
   try { window.top.document.title = '[PLAY] BAND-MAID Unofficial'; } catch(e) {}
   try { window.parent.postMessage({ type: 'bm_title', title: '[PLAY] BAND-MAID Unofficial' }, '*'); } catch(e) {}
+  // Re-focus the Spotify embed after title update (title change can steal focus)
+  focusPlayButton();
 }
 
 function hidePrompt() {
@@ -866,7 +868,6 @@ function cueNext(i) {
   updateNowPlaying(t, i);
   document.getElementById('spotLink').href = t.URL || `https://open.spotify.com/track/${t._id}`;
   showPrompt(t.Name);
-  focusPlayButton();
 }
 
 function playAt(i) {
@@ -889,7 +890,6 @@ function playAt(i) {
 
   // Show prompt — user must press play in the Spotify embed
   showPrompt(t.Name);
-  focusPlayButton();
 }
 
 function updateNowPlaying(t, i) {
