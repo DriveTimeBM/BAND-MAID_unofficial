@@ -803,6 +803,10 @@ function showPrompt(trackName) {
   el.classList.add('visible');
   el.dataset.state = 'waiting';
   if (title) title.textContent = `Press play to start: ${trackName}`;
+  // Signal AHK via window title — works standalone or via parent postMessage
+  document.title = '[PLAY] BAND-MAID Spotify Playlist';
+  try { window.top.document.title = '[PLAY] BAND-MAID Unofficial'; } catch(e) {}
+  try { window.parent.postMessage({ type: 'bm_title', title: '[PLAY] BAND-MAID Unofficial' }, '*'); } catch(e) {}
 }
 
 function hidePrompt() {
@@ -810,6 +814,9 @@ function hidePrompt() {
   if (!el) return;
   el.classList.remove('visible');
   el.dataset.state = 'playing';
+  document.title = 'BAND-MAID Spotify Playlist';
+  try { window.top.document.title = 'BAND-MAID Unofficial'; } catch(e) {}
+  try { window.parent.postMessage({ type: 'bm_title', title: 'BAND-MAID Unofficial' }, '*'); } catch(e) {}
 }
 
 // ── FOCUS PLAY BUTTON ────────────────────────────────────────────────────────
