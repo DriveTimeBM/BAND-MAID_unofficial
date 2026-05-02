@@ -818,16 +818,27 @@ function hidePrompt() {
 // focus to the iframe, Tab x1 + Enter should reach the play button.
 // This gives automation tools (AutoHotkey) a reliable keyboard path.
 function focusPlayButton() {
-  // Wait for embed to settle after loadUri before focusing
   setTimeout(() => {
     const wrap   = document.getElementById('embed-iframe');
     const iframe = wrap ? wrap.querySelector('iframe') : null;
     if (!iframe) return;
 
-    // Focus the iframe — keyboard Tab navigation starts here
+    // Clicking the iframe transfers focus *inside* it — once focus is
+    // inside the iframe, Tab cycles only within Spotify's own UI.
+    // We click the top-left corner (0,0 relative to iframe) which is
+    // outside any Spotify control, so it focuses the iframe without
+    // activating any button.
     iframe.focus({ preventScroll: true });
 
-    // Hint to Spotify embed to focus its play button
+    // Dispatch a trusted click at the iframe's top-left edge
+    // This nudges the browser to move focus inside the iframe document
+    iframe.dispatchEvent(new MouseEvent('click', {
+      bubbles: false, cancelable: true,
+      clientX: iframe.getBoundingClientRect().left + 4,
+      clientY: iframe.getBoundingClientRect().top  + 4,
+    }));
+
+    // Hint to Spotify to focus its play button
     try {
       iframe.contentWindow.postMessage(
         JSON.stringify({ type: 'set_focus' }), '*'
