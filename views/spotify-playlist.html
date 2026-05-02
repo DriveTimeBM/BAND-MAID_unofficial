@@ -302,8 +302,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='🎵'"></div>
   <div class="app-title">BAND-MAID Spotify Playlist</div>
   <div class="header-spacer"></div>
-  <button class="header-btn active" id="builderToggleBtn" onclick="toggleBuilder()">＋ Add Songs</button>
-  <button class="header-btn" id="loopHeaderBtn" onclick="toggleLoop()">⟳ Loop</button>
+  <button class="header-btn active" id="builderToggleBtn" tabindex="-1" onclick="toggleBuilder()">＋ Add Songs</button>
+  <button class="header-btn" id="loopHeaderBtn" tabindex="-1" onclick="toggleLoop()">⟳ Loop</button>
 </div>
 
 <!-- LOADING -->
@@ -318,17 +318,17 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <!-- BUILDER -->
   <div class="builder-panel" id="builderPanel">
     <div class="builder-toolbar">
-      <input type="text" class="search-input" id="builderSearch" placeholder="Search songs…" oninput="filterBuilder()">
+      <input type="text" class="search-input" tabindex="-1" id="builderSearch" placeholder="Search songs…" oninput="filterBuilder()">
       <div class="toolbar-row">
         <span style="font-size:11px;color:var(--text3)">Sort:</span>
-        <select class="sort-select" id="sortSelect" onchange="rebuildGroups()">
+        <select class="sort-select" tabindex="-1" id="sortSelect" onchange="rebuildGroups()">
           <option value="rank">Spotify Rank</option>
           <option value="streams">Streams</option>
           <option value="name">Name A–Z</option>
           <option value="date">Release Date</option>
         </select>
         <span style="font-size:11px;color:var(--text3);margin-left:4px">Group:</span>
-        <select class="sort-select" id="groupSelect" onchange="rebuildGroups()">
+        <select class="sort-select" tabindex="-1" id="groupSelect" onchange="rebuildGroups()">
           <option value="year">Year</option>
           <option value="album">Album</option>
           <option value="none">None</option>
@@ -342,12 +342,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <div class="playlist-panel">
     <div class="playlist-header">
       <div class="playlist-name-row">
-        <input type="text" class="playlist-name-input" id="playlistName" placeholder="Playlist name…">
-        <button class="pl-btn" onclick="savePlaylist()">Save</button>
-        <button class="pl-btn danger" onclick="deletePlaylist()">Del</button>
+        <input type="text" class="playlist-name-input" tabindex="-1" id="playlistName" placeholder="Playlist name…">
+        <button class="pl-btn" tabindex="-1" onclick="savePlaylist()">Save</button>
+        <button class="pl-btn danger" tabindex="-1" onclick="deletePlaylist()">Del</button>
       </div>
       <div class="saved-row">
-        <select class="saved-select" id="savedSelect" onchange="loadSelectedPlaylist()">
+        <select class="saved-select" tabindex="-1" id="savedSelect" onchange="loadSelectedPlaylist()">
           <option value="">— Load saved —</option>
         </select>
       </div>
@@ -357,9 +357,9 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       <div class="playlist-empty">Add songs from the left panel to build your playlist.</div>
     </div>
     <div class="playlist-footer">
-      <button class="loop-btn" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
-      <button class="loop-btn" onclick="shufflePlaylist()">⇄ Shuffle</button>
-      <button class="clear-btn" onclick="clearPlaylist()">Clear all</button>
+      <button class="loop-btn" tabindex="-1" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
+      <button class="loop-btn" tabindex="-1" onclick="shufflePlaylist()">⇄ Shuffle</button>
+      <button class="clear-btn" tabindex="-1" onclick="clearPlaylist()">Clear all</button>
     </div>
   </div>
 
@@ -382,7 +382,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </div>
       <div class="spotify-wrap"><div id="embed-iframe"></div></div>
       <div class="now-playing" id="nowPlaying"></div>
-      <a class="spot-link" id="spotLink" href="#" target="_blank" rel="noopener">
+      <a class="spot-link" tabindex="-1" id="spotLink" href="#" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
           <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
@@ -536,7 +536,7 @@ function buildBuilderRow(t) {
       <div class="builder-meta">${esc(t._album||t._year||'')}${t._duration?' · '+esc(t._duration):''}</div>
       <div class="builder-streams">🎵 ${fmt(t.Streams)} streams</div>
     </div>
-    <button class="add-btn" title="Add to playlist" onclick="event.stopPropagation();addToPlaylist('${t._id}')">+</button>`;
+    <button class="add-btn" tabindex="-1" title="Add to playlist" onclick="event.stopPropagation();addToPlaylist('${t._id}')">+</button>`;
   return row;
 }
 
@@ -631,10 +631,10 @@ function buildPlItem(t, i) {
       <div class="pl-meta">${esc(t._album||t._year||'')}${t._duration?' · '+esc(t._duration):''}</div>
     </div>
     <div class="pl-controls">
-      <button class="pl-ctrl" onclick="moveUp(${i})">▲</button>
-      <button class="pl-ctrl" onclick="moveDown(${i})">▼</button>
+      <button class="pl-ctrl" tabindex="-1" onclick="moveUp(${i})">▲</button>
+      <button class="pl-ctrl" tabindex="-1" onclick="moveDown(${i})">▼</button>
     </div>
-    <button class="pl-remove" onclick="removeFromPlaylist(${i})">✕</button>`;
+    <button class="pl-remove" tabindex="-1" onclick="removeFromPlaylist(${i})">✕</button>`;
   return item;
 }
 
