@@ -818,23 +818,22 @@ function hidePrompt() {
 // focus to the iframe, Tab x1 + Enter should reach the play button.
 // This gives automation tools (AutoHotkey) a reliable keyboard path.
 function focusPlayButton() {
-  // Small delay to let the embed settle after loadUri
+  // Wait for embed to settle after loadUri before focusing
   setTimeout(() => {
-    // Find the iframe that Spotify's API created inside #embed-iframe
-    const wrap  = document.getElementById('embed-iframe');
+    const wrap   = document.getElementById('embed-iframe');
     const iframe = wrap ? wrap.querySelector('iframe') : null;
     if (!iframe) return;
 
-    // Focus the iframe element itself — this gives it keyboard focus
+    // Focus the iframe — keyboard Tab navigation starts here
     iframe.focus({ preventScroll: true });
 
-    // Also try postMessage to ask Spotify to focus its play button
+    // Hint to Spotify embed to focus its play button
     try {
       iframe.contentWindow.postMessage(
         JSON.stringify({ type: 'set_focus' }), '*'
       );
     } catch(e) {}
-  }, 600);
+  }, 1000);
 }
 
 function cueNext(i) {
