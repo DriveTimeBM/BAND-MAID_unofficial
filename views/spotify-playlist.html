@@ -357,6 +357,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     </div>
     <div class="playlist-footer">
       <button class="loop-btn" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
+      <button class="loop-btn" onclick="shufflePlaylist()">⇄ Shuffle</button>
       <button class="clear-btn" onclick="clearPlaylist()">Clear all</button>
     </div>
   </div>
@@ -375,7 +376,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         <div class="play-prompt-icon">▶</div>
         <div class="play-prompt-text">
           <div class="play-prompt-title" id="play-prompt-title">Press play to start</div>
-          <div class="play-prompt-sub">Click the play button in the Spotify player above</div>
+          <div class="play-prompt-sub">Click ▶ in the Spotify player — or press <kbd style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.2);border-radius:3px;padding:1px 5px;font-size:10px">Tab</kbd> then <kbd style="background:rgba(0,0,0,0.3);border:1px solid rgba(255,255,255,0.2);border-radius:3px;padding:1px 5px;font-size:10px">Enter</kbd></div>
         </div>
       </div>
       <div class="spotify-wrap"><div id="embed-iframe"></div></div>
@@ -396,9 +397,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         programmatically press play on your behalf — a real click is always required.
         The green banner is designed to make this as obvious as possible, and is also
         detectable by local automation tools (Puppeteer, Playwright, AutoHotkey) that
-        can simulate real input events.<br><br>
-        This app does allow a free-tier Spotify user to play the exact songs they want in
-        the order they want which Spotify severely limits on their website. It also bypasses all ads (I think).
+        can simulate real input events.
       </div>
     </div>
   </div>
@@ -653,6 +652,17 @@ function clearPlaylist() {
   showPlayerEmpty();
 }
 
+function shufflePlaylist() {
+  if (playlist.length < 2) return;
+  const playingId = currentIdx >= 0 ? playlist[currentIdx]?._id : null;
+  for (let i = playlist.length - 1; i > 0; i--) {
+    const j = Math.floor(Math.random() * (i + 1));
+    [playlist[i], playlist[j]] = [playlist[j], playlist[i]];
+  }
+  currentIdx = playingId ? playlist.findIndex(t => t._id === playingId) : -1;
+  refreshPlaylist();
+}
+
 function moveUp(i) {
   if (i === 0) return;
   [playlist[i-1], playlist[i]] = [playlist[i], playlist[i-1]];
@@ -802,6 +812,31 @@ function hidePrompt() {
   el.dataset.state = 'playing';
 }
 
+// ── FOCUS PLAY BUTTON ────────────────────────────────────────────────────────
+// Strategy: focus the Spotify iframe element itself, then use postMessage
+// to request focus on the play button inside it. If the browser grants
+// focus to the iframe, Tab x1 + Enter should reach the play button.
+// This gives automation tools (AutoHotkey) a reliable keyboard path.
+function focusPlayButton() {
+  // Small delay to let the embed settle after loadUri
+  setTimeout(() => {
+    // Find the iframe that Spotify's API created inside #embed-iframe
+    const wrap  = document.getElementById('embed-iframe');
+    const iframe = wrap ? wrap.querySelector('iframe') : null;
+    if (!iframe) return;
+
+    // Focus the iframe element itself — this gives it keyboard focus
+    iframe.focus({ preventScroll: true });
+
+    // Also try postMessage to ask Spotify to focus its play button
+    try {
+      iframe.contentWindow.postMessage(
+        JSON.stringify({ type: 'set_focus' }), '*'
+      );
+    } catch(e) {}
+  }, 600);
+}
+
 function cueNext(i) {
   currentIdx = i;
   const t = playlist[i];
@@ -814,6 +849,7 @@ function cueNext(i) {
   updateNowPlaying(t, i);
   document.getElementById('spotLink').href = t.URL || `https://open.spotify.com/track/${t._id}`;
   showPrompt(t.Name);
+  focusPlayButton();
 }
 
 function playAt(i) {
@@ -836,6 +872,7 @@ function playAt(i) {
 
   // Show prompt — user must press play in the Spotify embed
   showPrompt(t.Name);
+  focusPlayButton();
 }
 
 function updateNowPlaying(t, i) {
