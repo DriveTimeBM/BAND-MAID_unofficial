@@ -211,7 +211,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .spotify-wrap iframe{
   width:100%;height:152px;border:none;border-radius:12px;display:block;
 }
-#embed-iframe{width:100%}
+/* ── TAB ORDER: only the Spotify embed iframe is reachable via Tab ── */
+#embed-iframe iframe { outline: none }
 
 .now-playing{background:var(--bg2);border-bottom:1px solid var(--border);padding:12px 16px;flex-shrink:0}
 .np-eyebrow{display:flex;align-items:center;gap:6px;margin-bottom:6px}
@@ -754,10 +755,35 @@ function showStatus(msg) {
   statusTimer=setTimeout(()=>{el.textContent=''},3000);
 }
 
-// ── PLAYER ────────────────────────────────────────────────────────────────────
-// ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
-// Spotify's embed communicates via postMessage — no OAuth needed.
-// We listen for playback_update events which include isPaused + position + duration.
+// ── TAB ORDER MANAGEMENT ─────────────────────────────────────────────────────
+// Remove every focusable element from the tab order except the Spotify embed.
+// This guarantees AHK's Tab presses stay inside the embed and can't wander.
+
+function lockTabToEmbed() {
+  document.querySelectorAll(
+    'a, button, input, select, textarea, [tabindex]:not(#embed-iframe iframe)'
+  ).forEach(el => el.setAttribute('tabindex', '-1'));
+
+  // Ensure Spotify iframe is tab-reachable
+  const iframe = document.querySelector('#embed-iframe iframe');
+  if (iframe) iframe.setAttribute('tabindex', '0');
+}
+
+// Watch for the Spotify iframe being created dynamically and keep it tabbable
+const embedObserver = new MutationObserver(() => {
+  const iframe = document.querySelector('#embed-iframe iframe');
+  if (iframe && iframe.getAttribute('tabindex') !== '0') {
+    iframe.setAttribute('tabindex', '0');
+  }
+});
+// Start observing once the embed container exists
+setTimeout(() => {
+  const container = document.getElementById('embed-iframe');
+  if (container) embedObserver.observe(container, { childList: true, subtree: true });
+  lockTabToEmbed();
+}, 100);
+// Re-run after data loads in case dynamic elements were added
+setTimeout(lockTabToEmbed, 3000);
 
 // ── SPOTIFY IFRAME API ────────────────────────────────────────────────────────
 let embedController = null;
@@ -769,6 +795,8 @@ window.onSpotifyIframeApiReady = (IFrameAPI) => {
   const options = { uri: '', width: '100%', height: '152' };
   IFrameAPI.createController(el, options, (controller) => {
     embedController = controller;
+    // Re-lock tab order now that Spotify has created its iframe
+    setTimeout(lockTabToEmbed, 500);
     controller.addListener('playback_update', e => {
       const isPaused = e.data.isPaused;
       const position = e.data.position ?? 0;
