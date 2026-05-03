@@ -335,7 +335,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         </select>
       </div>
     </div>
-    <div class="builder-scroll" id="builderScroll"></div>
+    <div class="builder-scroll" tabindex="-1" id="builderScroll"></div>
   </div>
 
   <!-- PLAYLIST -->
@@ -353,7 +353,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </div>
       <div class="pl-status" id="plStatus"></div>
     </div>
-    <div class="playlist-scroll" id="playlistScroll">
+    <div class="playlist-scroll" tabindex="-1" id="playlistScroll">
       <div class="playlist-empty">Add songs from the left panel to build your playlist.</div>
     </div>
     <div class="playlist-footer">
@@ -364,7 +364,7 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   </div>
 
   <!-- PLAYER -->
-  <div class="player-panel" id="playerPanel">
+  <div class="player-panel" tabindex="-1" id="playerPanel">
     <div class="player-empty" id="playerEmpty">
       <div class="player-empty-icon">🟢</div>
       <div class="player-empty-text">Build a playlist and click a song to start playing.<br><br>Log into Spotify in your browser for full tracks.</div>
@@ -534,7 +534,7 @@ function buildBuilderPanel() {
       <span class="year-chevron">▶</span>
       <span class="year-name">${esc(gKey)}</span>
       <span class="year-badge">${tracks.length}</span>
-      <button class="year-add-all" onclick="event.stopPropagation();addAllOfGroup('${slug}')">+ Add All</button>`;
+      <button class="year-add-all" tabindex="-1" onclick="event.stopPropagation();addAllOfGroup('${slug}')">+ Add All</button>`;
     hdr.onclick = () => group.classList.toggle('open');
 
     const items = document.createElement('div');
@@ -785,9 +785,17 @@ function showStatus(msg) {
 // This guarantees AHK's Tab presses stay inside the embed and can't wander.
 
 function lockTabToEmbed() {
+  // Disable tab on ALL focusable elements in this page except the Spotify iframe
   document.querySelectorAll(
-    'a, button, input, select, textarea, [tabindex]:not(#embed-iframe iframe)'
-  ).forEach(el => el.setAttribute('tabindex', '-1'));
+    'a, button, input, select, textarea, details, summary, ' +
+    '[tabindex]:not(#embed-iframe iframe), ' +
+    '[contenteditable], audio, video, ' +
+    '.builder-scroll, .playlist-scroll, .player-panel, .app-body'
+  ).forEach(el => {
+    if (!el.closest('#embed-iframe')) {
+      el.setAttribute('tabindex', '-1');
+    }
+  });
 
   // Ensure Spotify iframe is tab-reachable
   const iframe = document.querySelector('#embed-iframe iframe');
