@@ -171,7 +171,7 @@
   {
     "id": "about-playlist",
     "section": "Views",
-    "icon": "🚀",
+    "icon": "🎵",
     "title": "Playlist Builder",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
     "body": "Create, play, and save playlists of any BAND-MAID YouTube content. Bypass YT playlist limitations.",
@@ -185,6 +185,15 @@
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/fancams.json",
     "body": "Create, play, and save playlists of nearly 4,000 BAND-MAID fancams. (Most, but not all, are fancams) Bypass YT playlist limitations.",
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/fancams.png"
+  },
+  {
+    "id": "about-interviews",
+    "section": "Views",
+    "icon": "🎙️",
+    "title": "Interviews",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/interviews.json",
+    "body": "Create, play, and save playlists of over 500 BAND-MAID interviews. (Some are promotional appearances, etc) Bypass YT playlist limitations.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/interviews.png"
   },
   {
     "id": "about-milestones",

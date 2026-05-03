@@ -139,6 +139,13 @@
     "icon": "📳"
   },
   {
+    "id": "interviews",
+    "name": "Interviews *new*",
+    "file": "views/interviews.html",
+    "nav": "menu",
+    "icon": "🎙️"
+  },  
+  {
     "id": "milestones",
     "name": "Milestones",
     "file": "views/milestones.html",
