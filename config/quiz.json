@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "I can\u0027t live without you. — Spotify: 3,337,584 | Played Live: 33\nAfter Life — Spotify: 3,187,554 | Played Live: 53\nREAL EXISTENCE — Spotify: 2,616,354 | Played Live: 242",
+                          "image":  "https://img.youtube.com/vi/v-71TD1qFZM/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Dilly-Dally (Official Live Teaser 2) — Views: 77,552 | Yesterday: 354\nBAND-MAID / Present Perfect (Official Live Teaser 2) — Views: 49,898 | Yesterday: 54\nBAND-MAID / Present Perfect (Official Live Teaser 1) — Views: 546,406 | Yesterday: 15",
                           "choices":  [
                                           {
-                                              "text":  "REAL EXISTENCE"
-                                          },
-                                          {
-                                              "text":  "I can\u0027t live without you.",
+                                              "text":  "BAND-MAID / Dilly-Dally (Official Live Teaser 2)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "After Life"
+                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 2)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 1)"
                                           }
                                       ]
                       }
