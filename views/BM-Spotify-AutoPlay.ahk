@@ -35,10 +35,13 @@ CLICK_DELAY   := 2000
 ; Prevents re-triggering while the [PLAY] title is still set
 ; and Spotify hasn't started playing yet. Should be longer than
 ; the time between pressing Enter and Spotify updating the title.
-COOLDOWN_MS   := 6000
+COOLDOWN_MS   := 10000
 
 ; Number of Tab presses to reach Spotify play button
-TAB_COUNT     := 7
+TAB_COUNT     := 6
+
+; Delay between each Tab press (ms) — increase if tabs are skipping
+TAB_DELAY     := 50
 
 ; Delay before restoring the previously active window (ms)
 ; Give Spotify time to process Enter and start playing before
@@ -192,7 +195,7 @@ ClickPlay(hwnd) {
 
     Loop TAB_COUNT {
         Send("{Tab}")
-        Sleep(80)
+        Sleep(TAB_DELAY)
     }
     Sleep(200)
     Send("{Enter}")
