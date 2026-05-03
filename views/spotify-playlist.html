@@ -391,14 +391,39 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
       </a>
       <div class="limit-note">
         <strong>About Spotify playback</strong><br>
-        Full tracks require being <strong>logged into Spotify</strong> in your browser —
-        non-logged-in users hear 30-second previews.<br><br>
-        When a track ends, the next one is cued automatically and the green banner reappears.
-        Due to a browser security restriction (<code>isTrusted</code>), no script can
-        programmatically press play on your behalf — a real click is always required.
-        The green banner is designed to make this as obvious as possible, and is also
-        detectable by local automation tools (Puppeteer, Playwright, AutoHotkey) that
-        can simulate real input events.
+        Being <strong>logged into Spotify</strong> in your browser is required for full tracks.
+        Full tracks are confirmed to work in <strong>Edge</strong> and <strong>Chrome</strong>.
+        Other browsers may only play 30-second previews even when logged in, due to
+        how Spotify detects supported browsers in its embed.<br><br>
+
+        When a track ends, the next one is cued automatically and the green
+        <strong>▶ Press play</strong> banner reappears. Due to a browser security
+        restriction, no web script can press play on your behalf — a real click or
+        keypress is always required.<br><br>
+
+        <strong>AutoPlay script (Windows only)</strong><br>
+        An <strong>AutoHotkey v2</strong> script is available to handle this automatically.
+        It watches for the green banner and sends the keystrokes to start the next track,
+        then restores focus to whatever window you were using.<br><br>
+
+        <strong>To set up:</strong><br>
+        1. Install <a href="https://www.autohotkey.com/" target="_blank" rel="noopener" tabindex="-1" style="color:var(--spot)">AutoHotkey v2</a>
+           (free, Windows only)<br>
+        2. Download <a href="https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk"
+           target="_blank" rel="noopener" tabindex="-1" style="color:var(--spot)">BM-Spotify-AutoPlay.ahk</a><br>
+        3. Double-click the script — a tray icon appears<br>
+        4. <strong>Open this playlist view in its own browser window</strong>
+           (not just a tab among others) and make it the active tab<br>
+        5. Build your playlist, click play on the first track manually<br>
+        6. The script handles all subsequent tracks automatically<br><br>
+
+        <strong>Tips:</strong><br>
+        • The script detects the green banner via the browser window title — it must be
+          the <strong>active tab</strong> in its window, so consider opening this view
+          in a dedicated window<br>
+        • Right-click the tray icon to Pause/Resume or Exit<br>
+        • Tested on Edge — other browsers may need the <code>TAB_COUNT</code> value
+          adjusted in the script's configuration section
       </div>
     </div>
   </div>
