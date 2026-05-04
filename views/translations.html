@@ -237,6 +237,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
           <option value="">All publications</option>
         </select>
       </div>
+      <div class="filter-row">
+        <select class="filter-select" id="filterSong" onchange="filterList()">
+          <option value="">All songs</option>
+        </select>
+        <select class="filter-select" id="filterAlbum" onchange="filterList()">
+          <option value="">All albums</option>
+        </select>
+      </div>
       <div class="list-stats" id="listStats"></div>
     </div>
     <div class="list-scroll" id="listScroll"></div>
@@ -300,10 +308,14 @@ function populateFilters() {
   const types   = [...new Set(allArticles.map(a => a.Type).filter(Boolean))].sort();
   const members = [...new Set(allArticles.flatMap(a => a.Members||[]).filter(Boolean))].sort();
   const pubs    = [...new Set(allArticles.map(a => a.Publication).filter(Boolean))].sort();
+  const songs   = [...new Set(allArticles.flatMap(a => a.Songs||[]).filter(Boolean))].sort();
+  const albums  = [...new Set(allArticles.flatMap(a => a.Albums||[]).filter(v => v && v !== 'null'))].sort();
 
   fillSelect('filterType',   types,   'All types');
   fillSelect('filterMember', members, 'All members');
   fillSelect('filterPub',    pubs,    'All publications');
+  fillSelect('filterSong',   songs,   'All songs');
+  fillSelect('filterAlbum',  albums,  'All albums');
 }
 
 function fillSelect(id, options, placeholder) {
@@ -321,11 +333,15 @@ function filterList() {
   const type   = document.getElementById('filterType').value;
   const member = document.getElementById('filterMember').value;
   const pub    = document.getElementById('filterPub').value;
+  const song   = document.getElementById('filterSong').value;
+  const album  = document.getElementById('filterAlbum').value;
 
   filtered = allArticles.filter(a => {
     if (type   && a.Type !== type) return false;
     if (pub    && a.Publication !== pub) return false;
     if (member && !(a.Members||[]).includes(member)) return false;
+    if (song   && !(a.Songs||[]).includes(song)) return false;
+    if (album  && !(a.Albums||[]).includes(album)) return false;
     if (q) {
       const hay = [
         a.Title, a.OriginalTitle, a.Publication,
@@ -413,15 +429,24 @@ function renderReader(a) {
       ${members.length  ? `<span><strong>Members:</strong> ${members.map(esc).join(', ')}</span>` : ''}
       ${songs.length    ? `<span><strong>Songs:</strong> ${songs.map(esc).join(', ')}</span>` : ''}
     </div>
-    ${a.PublicationUrl ? `
+    ${(a.PublicationUrl || a.TranslationUrl) ? `
     <div class="article-h-links">
+      ${a.PublicationUrl ? `
       <a class="article-h-link" href="${esc(a.PublicationUrl)}" target="_blank" rel="noopener">
         <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
           <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
           <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
         </svg>
         Original article
-      </a>
+      </a>` : ''}
+      ${a.TranslationUrl ? `
+      <a class="article-h-link" href="${esc(a.TranslationUrl)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Translation source
+      </a>` : ''}
     </div>` : ''}`;
 
   panel.appendChild(hdr);
