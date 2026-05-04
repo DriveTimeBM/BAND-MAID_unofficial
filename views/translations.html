@@ -308,8 +308,12 @@ function populateFilters() {
   const types   = [...new Set(allArticles.map(a => a.Type).filter(Boolean))].sort();
   const members = [...new Set(allArticles.flatMap(a => a.Members||[]).filter(Boolean))].sort();
   const pubs    = [...new Set(allArticles.map(a => a.Publication).filter(Boolean))].sort();
-  const songs   = [...new Set(allArticles.flatMap(a => a.Songs||[]).filter(Boolean))].sort();
-  const albums  = [...new Set(allArticles.flatMap(a => a.Albums||[]).filter(v => v && v !== 'null'))].sort();
+
+  const validStr = v => v != null && v !== 'null' && String(v).trim() !== '';
+  const ciSort   = (a, b) => a.toLowerCase().localeCompare(b.toLowerCase());
+
+  const songs  = [...new Set(allArticles.flatMap(a => a.Songs||[]).filter(validStr))].sort(ciSort);
+  const albums = [...new Set(allArticles.flatMap(a => a.Albums||[]).filter(validStr))].sort(ciSort);
 
   fillSelect('filterType',   types,   'All types');
   fillSelect('filterMember', members, 'All members');
