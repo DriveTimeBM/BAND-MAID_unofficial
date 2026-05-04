@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/v-71TD1qFZM/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Dilly-Dally (Official Live Teaser 2) — Views: 77,552 | Yesterday: 354\nBAND-MAID / Present Perfect (Official Live Teaser 2) — Views: 49,898 | Yesterday: 54\nBAND-MAID / Present Perfect (Official Live Teaser 1) — Views: 546,406 | Yesterday: 15",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "H-G-K — Spotify: 1,588,993 | Played Live: 14\nDilemma — Spotify: 744,790 | Played Live: 13\nShow Them — Spotify: 2,650,585 | Played Live: 11",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Dilly-Dally (Official Live Teaser 2)",
+                                              "text":  "Dilemma"
+                                          },
+                                          {
+                                              "text":  "H-G-K",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 2)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 1)"
+                                              "text":  "Show Them"
                                           }
                                       ]
                       }
