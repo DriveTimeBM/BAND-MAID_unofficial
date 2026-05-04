@@ -1,0 +1,574 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Translations</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--bg4:#242424;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#aaa;--text3:#555;--text4:#333;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.1);--accent-border:rgba(200,169,110,0.25);
+  --red:#ef4444;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --serif:'Georgia','Times New Roman',serif;
+  --header-h:52px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.lang-toggle{
+  display:flex;gap:0;border:1px solid var(--border2);border-radius:6px;overflow:hidden;
+}
+.lang-btn{
+  padding:5px 12px;font-size:11px;font-weight:600;cursor:pointer;
+  background:var(--bg3);color:var(--text3);border:none;font-family:var(--font);
+  transition:all 0.15s;
+}
+.lang-btn.active{background:var(--accent);color:#0a0a0a}
+.lang-btn:hover:not(.active){color:var(--text2)}
+
+/* ── LAYOUT ── */
+.app-body{
+  position:fixed;top:var(--header-h);left:0;right:0;bottom:0;
+  display:grid;grid-template-columns:320px 1fr;
+}
+
+/* ══ LIST PANEL ══ */
+.list-panel{
+  background:var(--bg2);border-right:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
+}
+.list-toolbar{
+  padding:10px 12px;border-bottom:1px solid var(--border);
+  display:flex;flex-direction:column;gap:6px;flex-shrink:0;
+}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:7px 10px 7px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.filter-row{display:flex;gap:6px}
+.filter-select{
+  flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+}
+.filter-select:focus{border-color:var(--accent)}
+.filter-select option{background:var(--bg3)}
+.list-stats{font-size:10px;color:var(--text3)}
+
+.list-scroll{flex:1;overflow-y:auto}
+
+/* Article list item */
+.article-item{
+  padding:11px 14px;border-bottom:1px solid var(--border);
+  cursor:pointer;transition:background 0.1s;
+}
+.article-item:hover{background:var(--bg3)}
+.article-item.active{background:var(--accent-dim);border-left:3px solid var(--accent)}
+.article-item.active .article-title{color:var(--accent)}
+.article-title{font-size:12px;font-weight:600;color:var(--text);line-height:1.35;margin-bottom:4px}
+.article-meta{display:flex;flex-wrap:wrap;gap:4px 8px;align-items:center}
+.article-pub{font-size:10px;color:var(--text3)}
+.article-date{font-size:10px;color:var(--text3)}
+.article-tags{display:flex;gap:4px;flex-wrap:wrap;margin-top:4px}
+.tag{
+  font-size:9px;font-weight:700;padding:1px 6px;border-radius:20px;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text3);
+  white-space:nowrap;
+}
+.tag.member{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.tag.type{background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);color:#8b5cf6}
+
+/* ══ READER PANEL ══ */
+.reader-panel{
+  display:flex;flex-direction:column;background:var(--bg);overflow:hidden;
+}
+.reader-empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:12px;color:var(--text3);text-align:center;padding:32px;
+}
+.reader-empty-icon{font-size:48px;opacity:0.2}
+.reader-empty-text{font-size:13px;line-height:1.6;max-width:280px}
+
+/* Article header */
+.article-header{
+  padding:24px 32px 18px;border-bottom:1px solid var(--border);flex-shrink:0;
+  background:var(--bg2);
+}
+.article-type-badge{
+  display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.12em;
+  text-transform:uppercase;color:#8b5cf6;border:1px solid rgba(139,92,246,0.3);
+  border-radius:20px;padding:2px 8px;margin-bottom:10px;
+}
+.article-h-title{
+  font-size:20px;font-weight:700;color:var(--text);line-height:1.35;
+  margin-bottom:6px;font-family:var(--serif);
+}
+.article-h-original{
+  font-size:13px;color:var(--text3);margin-bottom:12px;
+}
+.article-h-meta{
+  display:flex;flex-wrap:wrap;gap:6px 16px;font-size:11px;color:var(--text3);
+  border-top:1px solid var(--border);padding-top:10px;margin-top:10px;
+}
+.article-h-meta span strong{color:var(--text2)}
+.article-h-links{display:flex;gap:8px;margin-top:6px}
+.article-h-link{
+  display:inline-flex;align-items:center;gap:4px;
+  font-size:11px;color:var(--accent);text-decoration:none;
+}
+.article-h-link:hover{text-decoration:underline}
+.article-h-link svg{width:11px;height:11px}
+
+/* Article body */
+.article-body{
+  flex:1;overflow-y:auto;padding:28px 32px 48px;
+}
+.article-body.jp{font-size:15px;line-height:1.9}
+.article-body.en{font-size:14px;line-height:1.85}
+
+/* Paragraph styles */
+.article-body p{margin-bottom:1em;color:var(--text2)}
+.article-body p:last-child{margin-bottom:0}
+
+/* Intro paragraphs (before first —) */
+.article-body p.intro{
+  color:var(--text);font-style:italic;
+  border-left:3px solid var(--accent);padding-left:14px;margin-bottom:1.2em;
+}
+/* Interviewer questions */
+.article-body p.q{
+  color:var(--text);font-weight:500;margin-top:1.4em;margin-bottom:0.4em;
+}
+.article-body p.q::before{
+  content:'Q ';color:var(--accent);font-weight:700;font-size:11px;
+  letter-spacing:0.1em;margin-right:2px;
+}
+/* Speaker responses */
+.article-body p.response{color:var(--text2);margin-bottom:0.6em;padding-left:8px}
+.speaker-name{
+  color:var(--accent);font-weight:700;margin-right:4px;font-size:13px;
+}
+/* Plain paragraphs */
+.article-body p.plain{color:var(--text2)}
+
+/* Spec block (guitar specs etc) */
+.spec-block{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:14px 16px;margin:16px 0;
+}
+.spec-block p{
+  font-size:12px;color:var(--text3);margin-bottom:2px;font-family:monospace;
+}
+.spec-block p strong{color:var(--text2)}
+
+/* Members listed in article */
+.article-members{
+  display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;
+}
+
+/* Loading */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);
+  z-index:500;display:flex;align-items:center;justify-content:center;
+  flex-direction:column;gap:14px;color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Mobile */
+@media(max-width:700px){
+  .app-body{grid-template-columns:1fr;grid-template-rows:auto 1fr}
+  .list-panel{max-height:40vh;border-right:none;border-bottom:1px solid var(--border)}
+  .article-header{padding:16px}
+  .article-body{padding:16px 16px 48px}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='📰'"></div>
+  <div class="app-title">BAND-MAID Translations</div>
+  <div class="header-spacer"></div>
+  <div class="lang-toggle">
+    <button class="lang-btn active" id="btnEn" onclick="setLang('en')">EN</button>
+    <button class="lang-btn" id="btnJp" onclick="setLang('jp')">JP</button>
+    <button class="lang-btn" id="btnBoth" onclick="setLang('both')">Both</button>
+  </div>
+</div>
+
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading translations…</span>
+</div>
+
+<div class="app-body" id="appBody">
+  <div class="list-panel">
+    <div class="list-toolbar">
+      <input type="text" class="search-input" id="searchInput"
+        placeholder="Search articles…" oninput="filterList()">
+      <div class="filter-row">
+        <select class="filter-select" id="filterType" onchange="filterList()">
+          <option value="">All types</option>
+        </select>
+        <select class="filter-select" id="filterMember" onchange="filterList()">
+          <option value="">All members</option>
+        </select>
+        <select class="filter-select" id="filterPub" onchange="filterList()">
+          <option value="">All publications</option>
+        </select>
+      </div>
+      <div class="list-stats" id="listStats"></div>
+    </div>
+    <div class="list-scroll" id="listScroll"></div>
+  </div>
+  <div class="reader-panel" id="readerPanel">
+    <div class="reader-empty">
+      <div class="reader-empty-icon">📖</div>
+      <div class="reader-empty-text">Select an article from the list to read it here.</div>
+    </div>
+  </div>
+</div>
+
+<script>
+const JSON_URL = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/translations.json';
+
+let allArticles  = [];
+let filtered     = [];
+let currentIdx   = -1;
+let currentLang  = 'en';
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(JSON_URL);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allArticles = await res.json();
+    if (!Array.isArray(allArticles)) allArticles = [allArticles];
+
+    // Parse dates
+    allArticles.forEach(a => {
+      a._pubMs  = parseDotNet(a.PublishDate);
+      a._xlatMs = parseDotNet(a.TranslationDate);
+    });
+
+    // Sort newest first
+    allArticles.sort((a, b) => (b._pubMs || 0) - (a._pubMs || 0));
+
+    populateFilters();
+    document.getElementById('stateOverlay').style.display = 'none';
+    filterList();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load translations</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
+  }
+}
+
+function parseDotNet(s) {
+  const m = String(s||'').match(/Date\((\d+)\)/);
+  return m ? parseInt(m[1]) : 0;
+}
+
+function formatDate(ms) {
+  if (!ms) return '';
+  return new Date(ms).toLocaleDateString(undefined, {year:'numeric',month:'short',day:'numeric'});
+}
+
+// ── FILTERS ───────────────────────────────────────────────────────────────────
+function populateFilters() {
+  const types   = [...new Set(allArticles.map(a => a.Type).filter(Boolean))].sort();
+  const members = [...new Set(allArticles.flatMap(a => a.Members||[]).filter(Boolean))].sort();
+  const pubs    = [...new Set(allArticles.map(a => a.Publication).filter(Boolean))].sort();
+
+  fillSelect('filterType',   types,   'All types');
+  fillSelect('filterMember', members, 'All members');
+  fillSelect('filterPub',    pubs,    'All publications');
+}
+
+function fillSelect(id, options, placeholder) {
+  const sel = document.getElementById(id);
+  sel.innerHTML = `<option value="">${placeholder}</option>`;
+  options.forEach(v => {
+    const opt = document.createElement('option');
+    opt.value = v; opt.textContent = v;
+    sel.appendChild(opt);
+  });
+}
+
+function filterList() {
+  const q      = document.getElementById('searchInput').value.toLowerCase().trim();
+  const type   = document.getElementById('filterType').value;
+  const member = document.getElementById('filterMember').value;
+  const pub    = document.getElementById('filterPub').value;
+
+  filtered = allArticles.filter(a => {
+    if (type   && a.Type !== type) return false;
+    if (pub    && a.Publication !== pub) return false;
+    if (member && !(a.Members||[]).includes(member)) return false;
+    if (q) {
+      const hay = [
+        a.Title, a.OriginalTitle, a.Publication,
+        a.Interviewer, a.Translator,
+        ...(a.Members||[]), ...(a.Songs||[]), ...(a.Albums||[]),
+        a.EnglishText
+      ].join(' ').toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+
+  document.getElementById('listStats').textContent =
+    `${filtered.length.toLocaleString()} of ${allArticles.length.toLocaleString()} articles`;
+
+  renderList();
+}
+
+// ── LIST ──────────────────────────────────────────────────────────────────────
+function renderList() {
+  const scroll = document.getElementById('listScroll');
+  scroll.innerHTML = '';
+
+  if (!filtered.length) {
+    scroll.innerHTML = '<div style="padding:24px;text-align:center;color:var(--text3);font-size:12px">No articles match your search.</div>';
+    return;
+  }
+
+  filtered.forEach((a, i) => {
+    const item = document.createElement('div');
+    item.className = 'article-item' + (i === currentIdx ? ' active' : '');
+    item.onclick   = () => openArticle(i);
+
+    const members  = (a.Members||[]).filter(Boolean);
+    const tags     = [
+      ...(members.map(m => `<span class="tag member">${esc(m)}</span>`)),
+      a.Type ? `<span class="tag type">${esc(a.Type)}</span>` : '',
+    ].join('');
+
+    item.innerHTML = `
+      <div class="article-title">${esc(a.Title || a.OriginalTitle || '—')}</div>
+      <div class="article-meta">
+        <span class="article-pub">${esc(a.Publication||'')}</span>
+        <span class="article-date">${formatDate(a._pubMs)}</span>
+      </div>
+      ${tags ? `<div class="article-tags">${tags}</div>` : ''}`;
+    scroll.appendChild(item);
+  });
+}
+
+// ── READER ────────────────────────────────────────────────────────────────────
+function openArticle(i) {
+  currentIdx = i;
+  const a = filtered[i];
+
+  // Highlight active in list
+  document.querySelectorAll('.article-item').forEach((el, idx) => {
+    el.classList.toggle('active', idx === i);
+  });
+
+  renderReader(a);
+}
+
+function renderReader(a) {
+  const panel = document.getElementById('readerPanel');
+  panel.innerHTML = '';
+
+  // Header
+  const hdr = document.createElement('div');
+  hdr.className = 'article-header';
+
+  const members = (a.Members||[]).filter(Boolean);
+  const songs   = (a.Songs||[]).filter(Boolean);
+
+  hdr.innerHTML = `
+    ${a.Type ? `<div class="article-type-badge">${esc(a.Type)}</div>` : ''}
+    <div class="article-h-title">${esc(a.Title||'—')}</div>
+    ${a.OriginalTitle ? `<div class="article-h-original">${esc(a.OriginalTitle)}</div>` : ''}
+    <div class="article-h-meta">
+      ${a.Publication   ? `<span><strong>Publication:</strong> ${esc(a.Publication)}</span>` : ''}
+      ${a._pubMs        ? `<span><strong>Date:</strong> ${formatDate(a._pubMs)}</span>` : ''}
+      ${a.Interviewer   ? `<span><strong>Interviewer:</strong> ${esc(a.Interviewer)}</span>` : ''}
+      ${a.Translator    ? `<span><strong>Translator:</strong> ${esc(a.Translator)}</span>` : ''}
+      ${a._xlatMs       ? `<span><strong>Translated:</strong> ${formatDate(a._xlatMs)}</span>` : ''}
+      ${members.length  ? `<span><strong>Members:</strong> ${members.map(esc).join(', ')}</span>` : ''}
+      ${songs.length    ? `<span><strong>Songs:</strong> ${songs.map(esc).join(', ')}</span>` : ''}
+    </div>
+    ${a.PublicationUrl ? `
+    <div class="article-h-links">
+      <a class="article-h-link" href="${esc(a.PublicationUrl)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Original article
+      </a>
+    </div>` : ''}`;
+
+  panel.appendChild(hdr);
+
+  // Body
+  const body = document.createElement('div');
+  body.className = 'article-body';
+  panel.appendChild(body);
+
+  renderBody(body, a);
+}
+
+function renderBody(container, a) {
+  const showEn   = currentLang === 'en'   || currentLang === 'both';
+  const showJp   = currentLang === 'jp'   || currentLang === 'both';
+  const hasJp    = a.OriginalText && a.OriginalText.trim();
+
+  if (showEn && a.EnglishText) {
+    if (currentLang === 'both' && hasJp) {
+      const label = document.createElement('div');
+      label.style.cssText = 'font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent);margin-bottom:12px;padding-bottom:8px;border-bottom:1px solid var(--border)';
+      label.textContent = 'English Translation';
+      container.appendChild(label);
+    }
+    container.classList.add('en');
+    renderText(container, a.EnglishText, 'en');
+  }
+
+  if (showJp && hasJp) {
+    if (currentLang === 'both') {
+      const divider = document.createElement('div');
+      divider.style.cssText = 'margin:32px 0 16px;padding-top:16px;border-top:2px solid var(--border);font-size:10px;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--accent)';
+      divider.textContent = 'Original Japanese';
+      container.appendChild(divider);
+    }
+    container.classList.add('jp');
+    renderText(container, a.OriginalText, 'jp');
+  }
+
+  if (!showEn && !hasJp && showJp) {
+    const msg = document.createElement('p');
+    msg.style.cssText = 'color:var(--text3);font-style:italic;margin-top:24px';
+    msg.textContent = 'No Japanese original text available for this article.';
+    container.appendChild(msg);
+  }
+}
+
+function renderText(container, rawText, lang) {
+  // Normalize line endings
+  const text = rawText.replace(/\r\n/g, '\n').replace(/\r/g, '\n');
+  const paras = text.split(/\n\n+/).map(p => p.trim()).filter(Boolean);
+
+  let inIntro = true;   // paragraphs before first — or Speaker:
+  let inSpecs = false;  // spec block at end of some articles
+
+  paras.forEach(para => {
+    // Detect spec block (lines like "Body:\n\nBody Construction: Solid body")
+    // Specs are typically label: value pairs on separate lines
+    const specLines = para.split('\n');
+    const looksLikeSpec = specLines.length >= 2 &&
+      specLines.filter(l => /^[A-Za-z\/\s]+:\s*.+$/.test(l.trim())).length >= 2;
+
+    if (looksLikeSpec && !para.startsWith('—') && !para.match(/^[A-Za-z]+:/)) {
+      inSpecs = true;
+    }
+
+    if (inSpecs) {
+      renderSpecBlock(container, para);
+      return;
+    }
+
+    // Interviewer question (starts with — or ── in JP)
+    if (para.match(/^[─—\-]{1,2}\s/)) {
+      inIntro = false;
+      const p = document.createElement('p');
+      p.className = 'q';
+      p.textContent = para.replace(/^[─—\-]{1,2}\s*/, '');
+      container.appendChild(p);
+      return;
+    }
+
+    // Speaker response: "Name: text" or "NAME：text"
+    const speakerMatch = para.match(/^([A-Za-z\u3000-\u9fff\uff00-\uffef\s]{1,20})[：:]\s(.+)/s);
+    if (speakerMatch && !para.startsWith('http') && speakerMatch[1].length < 20) {
+      inIntro = false;
+      const p = document.createElement('p');
+      p.className = 'response';
+      const nameSpan = document.createElement('span');
+      nameSpan.className = 'speaker-name';
+      nameSpan.textContent = speakerMatch[1] + ':';
+      p.appendChild(nameSpan);
+      p.appendChild(document.createTextNode(' ' + speakerMatch[2]));
+      container.appendChild(p);
+      return;
+    }
+
+    // Intro / plain paragraph
+    const p = document.createElement('p');
+    p.className = inIntro ? 'intro' : 'plain';
+    p.textContent = para;
+    container.appendChild(p);
+  });
+}
+
+function renderSpecBlock(container, para) {
+  const block = document.createElement('div');
+  block.className = 'spec-block';
+  const lines = para.split('\n');
+  lines.forEach(line => {
+    const p = document.createElement('p');
+    const colonIdx = line.indexOf(':');
+    if (colonIdx > 0 && colonIdx < 30) {
+      const strong = document.createElement('strong');
+      strong.textContent = line.substring(0, colonIdx + 1);
+      p.appendChild(strong);
+      p.appendChild(document.createTextNode(line.substring(colonIdx + 1)));
+    } else {
+      p.textContent = line;
+    }
+    block.appendChild(p);
+  });
+  container.appendChild(block);
+}
+
+// ── LANGUAGE TOGGLE ───────────────────────────────────────────────────────────
+function setLang(lang) {
+  currentLang = lang;
+  ['en','jp','both'].forEach(l => {
+    document.getElementById('btn' + l.charAt(0).toUpperCase() + l.slice(1))
+      ?.classList.toggle('active', l === lang);
+  });
+  if (currentIdx >= 0) {
+    const body = document.querySelector('.article-body');
+    if (body) {
+      body.innerHTML = '';
+      body.className = 'article-body';
+      renderBody(body, filtered[currentIdx]);
+    }
+  }
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function esc(s) {
+  return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+boot();
+</script>
+</body>
+</html>
