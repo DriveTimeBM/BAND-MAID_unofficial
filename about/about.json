@@ -196,6 +196,15 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/interviews.png"
   },
   {
+    "id": "about-translations",
+    "section": "Views",
+    "icon": "📖",
+    "title": "Translations",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/translations.json",
+    "body": "Search for and within translations by source, member, song, album and/or keyword.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/translations.png"
+  },
+  {
     "id": "about-milestones",
     "section": "Views",
     "icon": "📍",

@@ -133,18 +133,25 @@
   },
   {
     "id": "fancams",
-    "name": "Fan Cams *new*",
+    "name": "Fan Cams",
     "file": "views/fancams.html",
     "nav": "menu",
     "icon": "📳"
   },
   {
     "id": "interviews",
-    "name": "Interviews *new*",
+    "name": "Interviews",
     "file": "views/interviews.html",
     "nav": "menu",
     "icon": "🎙️"
   },  
+  {
+    "id": "translations",
+    "name": "Translations *new*",
+    "file": "views/translations.html",
+    "nav": "menu",
+    "icon": "📖"
+  },
   {
     "id": "milestones",
     "name": "Milestones",
