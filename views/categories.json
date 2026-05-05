@@ -35,7 +35,8 @@
                     "\\breact\\w*\\b",
                     "\\bhear\\w*\\b",
                     "\\blisten\\w*\\b",
-                    "react"
+                    "react",
+                    "REACCIÓN"
                   ]
                 }
             ],
