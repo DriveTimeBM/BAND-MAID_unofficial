@@ -36,7 +36,8 @@
                     "\\bhear\\w*\\b",
                     "\\blisten\\w*\\b",
                     "react",
-                    "REACCIÓN"
+                    "REACCIÓN",
+                    "Review"
                   ]
                 }
             ],
