@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "H-G-K — Spotify: 1,588,993 | Played Live: 14\nDilemma — Spotify: 744,790 | Played Live: 13\nShow Them — Spotify: 2,650,585 | Played Live: 11",
+                          "image":  "https://img.youtube.com/vi/vu2D3lzH7Y0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "What is justice? — Views: 1,099,572 | Yesterday: 1,953\nスリル — Views: 1,331,039 | Yesterday: 1,165\nZen — Views: 920,550 | Yesterday: 1,107",
                           "choices":  [
                                           {
-                                              "text":  "Dilemma"
+                                              "text":  "Zen"
                                           },
                                           {
-                                              "text":  "H-G-K",
+                                              "text":  "スリル"
+                                          },
+                                          {
+                                              "text":  "What is justice?",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Show Them"
                                           }
                                       ]
                       }
