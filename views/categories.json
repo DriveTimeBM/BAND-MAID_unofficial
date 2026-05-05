@@ -22,11 +22,13 @@
                     "UCsBwg8OaxXyRb5UbpgsIiCg",
                     "UCbwRrjUM3xncEAglgY-EHAw",
                     "UC-WWqxF7LPOssDbasMJyOJg",
-                    "UCElNNUiBC67ypav4q267isA"
+                    "UCElNNUiBC67ypav4q267isA",
+                    "UCMNI9VvZu0zy4xICGjBJAGQ"
                   ] 
                 },
                 { "field": "channel", "type": "regex", "patterns": [
-                    "react"
+                    "react",
+                    "REACCIÓN"
                   ]
                 },
                 { "field": "title", "type": "regex", "patterns": [
@@ -75,19 +77,15 @@
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
         },
         {
-            "category": "Rip",
+            "category": "News",
             "color": "#d06560",
             "rules": [
-                { "field": "channelId", "type": "exact", "patterns": [
-                    "UC8ZHI_MbdV67n-04_kNFtGA",
-                    "UCQMt91QkRr-Wcuh6tvUTRYQ",
-                    "UC73ztb_5-dSktncSSrnLxZg",
-                    "UCE40hmYnghI0UgYcO_FYr-g",
-                    "UCxBRex5MDuCgo1Zgzfw8SQQ"
+                { "field": "channel", "type": "regex", "patterns": [
+                    "\\bnews\\w*\\b"
                   ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
-                    "medium in summer"
+                    "\\bnews\\w*\\b"
                   ]
                 }
             ],
@@ -120,7 +118,8 @@
                     "\\bconcert\\s*report\\b",
                     "\\bshow\\s*report\\b",
                     "Impression",
-                    "(?i)\\bokyu-?ji\\b"
+                    "(?i)\\bokyu-?ji\\b",
+                    "recap"
                 ]}
             ]
         },
