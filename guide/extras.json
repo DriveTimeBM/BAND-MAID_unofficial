@@ -1,0 +1,90 @@
+{
+  "intro": "Optional tools and scripts that enhance the BAND-MAID Unofficial app or the broader BAND-MAID fan experience. These are not required to use the app.",
+  "tools": [
+    {
+      "id": "tampermonkey-prime",
+      "category": "TamperMonkey Scripts",
+      "name": "BAND-MAID Prime Video Describer",
+      "icon": "🎤",
+      "platform": "Windows / Mac / Linux",
+      "requires": "TamperMonkey browser extension",
+      "description": "Adds a floating translation panel while watching BAND-MAID Prime live shows. Translations appear in sync with the video via a draggable, resizable overlay. Panel position and size are saved between sessions.",
+      "tips": [
+        "Works with the BAND-MAID Prime Uliza video player",
+        "Panel can be dragged anywhere on screen and resized",
+        "Position is remembered between sessions via localStorage"
+      ],
+      "installUrl": null,
+      "downloadUrl": null,
+      "videoId": null
+    },
+    {
+      "id": "tampermonkey-fanclub",
+      "category": "TamperMonkey Scripts",
+      "name": "Fan Club Video Describer",
+      "icon": "🎥",
+      "platform": "Windows / Mac / Linux",
+      "requires": "TamperMonkey browser extension",
+      "description": "Adds a floating translation panel while watching OMEISYUSAMA-NO-KAI Fan Club videos. Uses the Vimeo postMessage API to sync translations with video playback progress.",
+      "tips": [
+        "Works with the Fan Club Vimeo player",
+        "Same draggable/resizable panel as the Prime script",
+        "Panel position persists between sessions"
+      ],
+      "installUrl": null,
+      "downloadUrl": null,
+      "videoId": null
+    },
+    {
+      "id": "tampermonkey-prime-playlist",
+      "category": "TamperMonkey Scripts",
+      "name": "BAND-MAID Prime Playlist Builder",
+      "icon": "📋",
+      "platform": "Windows / Mac / Linux",
+      "requires": "TamperMonkey browser extension",
+      "description": "Adds playlist building functionality to BAND-MAID Prime. Create named playlists, auto-advance between videos, and save playlists for later.",
+      "tips": [
+        "Playlists are saved locally in your browser",
+        "Auto-advance plays the next video in your playlist automatically"
+      ],
+      "installUrl": null,
+      "downloadUrl": null,
+      "videoId": null
+    },
+    {
+      "id": "tampermonkey-fanclub-playlist",
+      "category": "TamperMonkey Scripts",
+      "name": "Fan Club Playlist Builder",
+      "icon": "📋",
+      "platform": "Windows / Mac / Linux",
+      "requires": "TamperMonkey browser extension",
+      "description": "Adds playlist building functionality to the OMEISYUSAMA-NO-KAI Fan Club site. Build, save, and auto-advance through named playlists.",
+      "tips": [
+        "Separate saved playlists from the Prime playlist builder",
+        "Auto-advance works with the Fan Club Vimeo player"
+      ],
+      "installUrl": null,
+      "downloadUrl": null,
+      "videoId": null
+    },
+    {
+      "id": "ahk-spotify",
+      "category": "AutoHotkey Scripts",
+      "name": "Spotify Playlist AutoPlay",
+      "icon": "🎵",
+      "platform": "Windows only",
+      "requires": "AutoHotkey v2",
+      "description": "Automates the play button between tracks in the Spotify Playlist view. Watches for the green 'Press play' banner via the browser window title, then sends the keyboard sequence to start the next track automatically. Restores focus to your previous window after each track starts.",
+      "tips": [
+        "Requires AutoHotkey v2 — free download from autohotkey.com",
+        "No additional libraries needed",
+        "Run the Spotify Playlist view in its own dedicated browser window for best results",
+        "Tray icon shows current status — right-click to Pause or Exit",
+        "TAB_COUNT in the script may need adjustment for browsers other than Edge"
+      ],
+      "installUrl": "https://www.autohotkey.com/",
+      "downloadUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk",
+      "videoId": null
+    }
+  ]
+}

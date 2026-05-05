@@ -1,0 +1,626 @@
+{
+  "app": {
+    "name": "BAND-MAID Unofficial",
+    "description": "A comprehensive fan app for BAND-MAID data — songs, releases, events, streaming stats, videos, live sets, and more. All data is sourced from public JSON files maintained and updated automatically on a daily basis.",
+    "author": "DriveTimeBM",
+    "discordUrl": "https://discord.gg/tfpJ6xBWEN",
+    "discordName": "BAND-MAID Dashboard",
+    "sheetsUrl": "https://docs.google.com/spreadsheets/d/1fUGjjPOjFFWoh8TbHOfgB4L6N0GmZIfo2JrPghNZsZU/edit?usp=sharing",
+    "image": "https://drivetimebm.github.io/BAND-MAID_creations/logo/other/BM_circular_saw.png",
+    "videoId": null
+  },
+  "whatsNew": [
+    {
+      "date": "/Date(1746489600000)/",
+      "label": "May 2026",
+      "items": [
+        "Added Translations view — 300+ English translations of Japanese interviews and articles",
+        "Added Interviews playlist builder — 550+ BAND-MAID interview videos with playlist save/load",
+        "Added Fan Cams playlist builder — 4000+ fan cam videos grouped by year, event, or channel",
+        "Added User Guide and Fan Tools views",
+        "Spotify Playlist now includes AutoHotkey autoplay script for hands-free playback",
+        "Calendar now shows countdown timers on event detail cards",
+        "URL bar added to app shell — shows direct link to current view with copy button"
+      ]
+    },
+    {
+      "date": "/Date(1743811200000)/",
+      "label": "April 2026",
+      "items": [
+        "Added Push to One Million view — track BAND-MAID videos approaching 1M views",
+        "Added YouTube Playlist builder with save/load/shuffle/loop",
+        "Added Spotify Playlist builder with save/load/shuffle",
+        "Added Fan Cams playlist viewer",
+        "Calendar ticket links — Ticketmaster links matched to calendar events automatically"
+      ]
+    },
+    {
+      "date": "/Date(1741219200000)/",
+      "label": "March 2026",
+      "items": [
+        "Initial release of BAND-MAID Unofficial app",
+        "Core views: Songs, Releases, Videos, Spotify, Streaming, News, Calendar, Okyuji",
+        "App shell with mobile bottom nav and desktop sidebar",
+        "View generator tool for building custom views from JSON data"
+      ]
+    }
+  ],
+  "sections": [
+    {
+      "id": "live-events",
+      "label": "Live Events"
+    },
+    {
+      "id": "music",
+      "label": "Music"
+    },
+    {
+      "id": "video",
+      "label": "Video"
+    },
+    {
+      "id": "fan-content",
+      "label": "Fan Content"
+    },
+    {
+      "id": "data",
+      "label": "Data & Stats"
+    },
+    {
+      "id": "playlists",
+      "label": "Playlist Builders"
+    },
+    {
+      "id": "tools",
+      "label": "Developer Tools"
+    }
+  ],
+  "views": [
+    {
+      "id": "calendar",
+      "section": "live-events",
+      "updateFrequency": "As needed",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/calendar/calendar.json",
+      "description": "Upcoming BAND-MAID events and shows in a standard monthly calendar view. Events are color-coded and show local time alongside Japan Standard Time (JST). Overseas events with Ticketmaster listings include direct ticket purchase links.",
+      "tips": [
+        "Click the Upcoming button in the header to jump directly to the next event",
+        "Click any event to see full details including a live countdown timer, location, and ticket links",
+        "Ticket links only appear for overseas shows sold through Ticketmaster — Japan shows do not use Ticketmaster",
+        "Times shown as your local time and JST side by side",
+        "The calendar auto-navigates to the month of the next upcoming event on load"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "songs",
+      "section": "music",
+      "updateFrequency": "Weekly (Spotify streams)",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_songs/songs.json",
+      "description": "Complete catalog of all BAND-MAID songs with detailed metadata. Includes Spotify stream counts, member quotes about each song, album associations, release dates, duration, and links to listen. One of the most data-rich views in the app.",
+      "tips": [
+        "Use the search box to find songs by title, member, or album",
+        "Member quotes are displayed when available — not all songs have them",
+        "Spotify stream counts update weekly; not all songs are on Spotify",
+        "Filter by member to see which songs each member has commented on",
+        "Click any song card to see the full detail view including all quotes"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "releases",
+      "section": "music",
+      "updateFrequency": "As needed",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json",
+      "description": "Complete BAND-MAID discography including singles, albums, EPs, and live releases. Shows release dates, track listings, and catalog information.",
+      "tips": [
+        "Sorted by release date newest first by default",
+        "Includes digital-only releases not always listed elsewhere",
+        "Track listings are included where available"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "videos",
+      "section": "video",
+      "updateFrequency": "Daily (view counts)",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
+      "description": "All official BAND-MAID YouTube content with daily view count updates. Covers Official Music Videos, audio releases, live performances, shorts, and more. View count deltas show yesterday's views for each video.",
+      "tips": [
+        "Sort by views, view delta (yesterday), or date",
+        "Type filter lets you focus on Official Music Videos, Audio, Live, etc.",
+        "ViewsDelta column shows yesterday's view count — useful for tracking trending videos",
+        "Direct links open the video on YouTube"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "spotify",
+      "section": "music",
+      "updateFrequency": "Daily (rank), Weekly (streams)",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
+      "description": "All BAND-MAID songs available on Spotify, sorted by stream count. Shows Spotify rank, total streams, and YouTube rank for cross-platform comparison. Direct links to each song on Spotify.",
+      "tips": [
+        "Songs are updated on a rolling weekly basis — not all update on the same day",
+        "Spotify Rank is relative to other BAND-MAID songs, not global",
+        "Compare Spotify Rank vs YouTube Rank to see which platform favors which songs",
+        "Use the search to find a specific song quickly"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "stream",
+      "section": "music",
+      "updateFrequency": "Weekly",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
+      "description": "Links to BAND-MAID songs across multiple streaming platforms beyond Spotify, including Apple Music, YouTube Music, Amazon Music, and others. Stream counts included where available.",
+      "tips": [
+        "Not all songs are available on all platforms",
+        "Use this view to find songs on your preferred streaming service",
+        "Links open directly in the relevant streaming platform"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "okyuji",
+      "section": "live-events",
+      "updateFrequency": "After each live event",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
+      "description": "Complete record of every BAND-MAID live performance (Okyuji) with full setlists. Links to setlist.fm pages for each show. Filter by year, venue, or song to find specific performances.",
+      "tips": [
+        "Search by song name to find every show where that song was played",
+        "setlist.fm links let you add attended shows to your profile",
+        "Sorted newest first by default",
+        "Includes special events, overseas tours, and fan club shows"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "map",
+      "section": "live-events",
+      "updateFrequency": "After each live event",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/okyuji/okyuji.json",
+      "description": "Interactive Google Map showing all BAND-MAID live performance locations worldwide. Filter by year or region to see tour patterns. Each pin links to the setlist and Google Maps directions.",
+      "tips": [
+        "Zoom in to see clusters of shows in a city",
+        "Click a pin to see show details and setlist link",
+        "Useful for visualizing how BAND-MAID's touring has expanded internationally over the years"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "live",
+      "section": "video",
+      "updateFrequency": "As new content is added to BAND-MAID Prime",
+      "dataUrl": null,
+      "description": "All BAND-MAID Prime live show videos, organized with full setlist details and timestamps. Jump directly to a specific song without scrubbing through the full video. Requires a BAND-MAID Prime subscription to watch.",
+      "tips": [
+        "Click any song in the setlist to jump to that timestamp",
+        "Useful for rewatching a specific performance without searching through the full video",
+        "A TamperMonkey script is available in Fan Tools to add translation overlays while watching"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "browseprime",
+      "section": "video",
+      "updateFrequency": "As new content is added to BAND-MAID Prime",
+      "dataUrl": null,
+      "description": "All non-live BAND-MAID Prime content — documentaries, behind-the-scenes, member solo content, and more. Organized by category with tracklist details and timestamps where available.",
+      "tips": [
+        "Covers all Prime content that is NOT a live show — use Live Video for live performances",
+        "Tracklists and timestamps make it easy to find specific segments",
+        "A TamperMonkey script is available in Fan Tools to add translation overlays"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "browsefanclub",
+      "section": "video",
+      "updateFrequency": "As new content is added to Fan Club",
+      "dataUrl": null,
+      "description": "All OMEISYUSAMA-NO-KAI (Fan Club) video content, organized with tracklist details and timestamps. Browse member videos, special content, and exclusive fan club releases. Requires a Fan Club subscription.",
+      "tips": [
+        "Content is organized by category for easy browsing",
+        "Timestamps let you jump to specific segments",
+        "A TamperMonkey script is available in Fan Tools to add translation overlays while watching"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "gallery",
+      "section": "fan-content",
+      "updateFrequency": "As new galleries are published",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/fanclub/gallery.json",
+      "description": "Links to all OMEISYUSAMA-NO-KAI special photo galleries. Requires Fan Club membership to view the full images. Galleries are published periodically for special events.",
+      "tips": [
+        "Gallery links open directly on the Fan Club site",
+        "Fan Club membership required to view full images"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "news",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/news.json",
+      "description": "All BAND-MAID official news releases from bandmaid.tokyo, updated daily. Links to the full announcement on the official site.",
+      "tips": [
+        "Sorted newest first",
+        "Links open the original Japanese announcement on bandmaid.tokyo",
+        "Use search to find news about a specific topic or date"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "daily_photos",
+      "section": "fan-content",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/photos/daily_photos.json",
+      "description": "Random photos posted by BAND-MAID and individual members (Akane, Kanami, Miku, MISA, Saiki) updated daily. A random selection is shown each day from the full collection.",
+      "tips": [
+        "Filter by member to see photos from a specific member",
+        "A new selection is shown each day",
+        "Click any photo to see it full size"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "upcoming",
+      "section": "live-events",
+      "updateFrequency": "Every 10 minutes",
+      "dataUrl": "https://api.jsonbin.io/v3/b/69c7e8f95fdde574550a99d9/latest",
+      "description": "Live countdown clocks to the next two upcoming BAND-MAID events. When a YouTube video is within 24 hours of reaching a million views milestone, it is added to the countdown automatically.",
+      "tips": [
+        "Updates every 10 minutes automatically",
+        "Shows both event countdowns and YouTube milestone countdowns",
+        "Countdown clocks tick in real time"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "youtube",
+      "section": "video",
+      "updateFrequency": "Every 30 minutes",
+      "dataUrl": null,
+      "description": "Browse BAND-MAID-related content from across all of YouTube — fan reactions, covers, interviews, live reports, and more. New videos are discovered automatically every 30 minutes via the YouTube Data API. Not limited to the official channel.",
+      "tips": [
+        "Filter by category to focus on a specific type of content",
+        "Search by title or channel name",
+        "Preview videos inline without leaving the app",
+        "Newly discovered videos appear automatically — no manual curation needed"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "million",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million.json",
+      "description": "The next 4 BAND-MAID YouTube videos projected to reach a million view milestone, based on yesterday's view rate. Shows projected date and days remaining.",
+      "tips": [
+        "Projections are based on the previous day's view rate — a viral moment can dramatically change the projection",
+        "Stream the videos to help push them over the milestone!"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "milestones",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/milestones.json",
+      "description": "Streaming and social media milestones across YouTube, Spotify, and other platforms. Tracks when BAND-MAID hits significant round-number milestones in followers, views, and streams.",
+      "tips": [
+        "Updated daily",
+        "Covers YouTube, Spotify, and social platforms"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "anniversaries",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/anniversaries.json",
+      "description": "Upcoming anniversaries for song releases, member birthdays, live debuts, Okyuji dates, and YouTube video milestones. Always shows what's coming up in the next several weeks.",
+      "tips": [
+        "Great for knowing when to celebrate member birthdays on social media",
+        "Song release anniversaries are a good time to stream those tracks",
+        "Updated daily with current upcoming anniversaries"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "gifs",
+      "section": "fan-content",
+      "updateFrequency": "Periodically",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/gifs.json",
+      "description": "Collection of over 400 BAND-MAID GIFs, optimized for size and load speed. Browse by member or browse all.",
+      "tips": [
+        "GIFs are optimized for fast loading even on mobile",
+        "Filter by member to find GIFs of a specific member",
+        "Click any GIF to open it full size for easy saving or sharing"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "quiz",
+      "section": "fan-content",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/config/quiz.json",
+      "description": "BAND-MAID trivia quiz with questions about songs, videos, streaming stats, and history. A new set of questions is available daily. Questions are drawn from real app data so answers are always current.",
+      "tips": [
+        "Questions are generated from live data so the correct answer for 'most viewed video' reflects current stats",
+        "A new quiz is available each day",
+        "Explanations are shown after each answer"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "shop",
+      "section": "data",
+      "updateFrequency": "Weekly",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/shop.json",
+      "description": "All BAND-MAID merchandise from BAND-MAID ONLINE SHOP, Amped Japan, Pony Canyon (USA and Japan), and CDJapan. Aggregated from multiple stores in one place.",
+      "tips": [
+        "Covers multiple stores — compare availability across regions",
+        "Links open directly on the store's product page",
+        "Updated weekly — newly listed items appear automatically"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "top10",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/top10.json",
+      "description": "The 10 best-performing BAND-MAID YouTube videos for the previous day by view count. A quick daily snapshot of what's trending.",
+      "tips": [
+        "Updated each morning with yesterday's data",
+        "A useful indicator of what content is being shared or recommended by YouTube's algorithm that day"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "followers",
+      "section": "data",
+      "updateFrequency": "Weekly",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/followers.json",
+      "description": "Follower and subscriber counts across BAND-MAID's official social media accounts with direct links to each platform.",
+      "tips": [
+        "Links open the official account on each platform",
+        "Updated weekly",
+        "Covers YouTube, Spotify, Instagram, X, TikTok, and more"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "tickets",
+      "section": "live-events",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
+      "description": "All BAND-MAID events found via the Ticketmaster API, with direct purchase links. Only overseas shows appear here — Japanese shows are not sold through Ticketmaster. Multiple ticket types (General, VIP) are listed separately when available.",
+      "tips": [
+        "Japan shows will never appear here — they use a different ticketing system",
+        "VIP packages appear as separate entries from general admission",
+        "Updated daily — new events appear automatically as they're listed on Ticketmaster"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "locations",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
+      "description": "YouTube viewer location data for BAND-MAID's channel, showing 7-day and 28-day geographic breakdowns. Useful for seeing where the fanbase is growing.",
+      "tips": [
+        "Data comes directly from YouTube Analytics",
+        "Compare 7-day vs 28-day to spot recent growth trends in specific countries"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "rss",
+      "section": "data",
+      "updateFrequency": "Continuous",
+      "dataUrl": null,
+      "description": "RSS feed aggregating BAND-MAID mentions from Google Alerts, YouTube, Reddit, Bluesky, Mastodon, and other social platforms. A live stream of BAND-MAID activity across the web.",
+      "tips": [
+        "Good for catching news and fan activity as it happens",
+        "Covers multiple platforms in one feed",
+        "Click any item to open the original source"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "mv",
+      "section": "live-events",
+      "updateFrequency": "Periodically",
+      "dataUrl": null,
+      "description": "Interactive Google My Maps showing BAND-MAID Okyuji and Music Video filming locations. Created and maintained by @Simeon from Brazil.",
+      "tips": [
+        "Use the layer controls to show/hide different location types",
+        "Click any pin for details about that location",
+        "Covers both live performance venues and MV shooting locations worldwide"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "reports",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": null,
+      "description": "Dozens of detailed data reports looking at BAND-MAID statistics from different angles — streaming trends, YouTube performance, historical comparisons, and more. Reports are generated automatically from live data.",
+      "tips": [
+        "New reports are generated daily with current data",
+        "Reports are PDF format — use your browser's built-in PDF viewer",
+        "A good starting point for deep dives into BAND-MAID data"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "instagram",
+      "section": "fan-content",
+      "updateFrequency": "Static archive",
+      "dataUrl": null,
+      "description": "Searchable archive of translated Instagram posts from BAND-MAID and members, covering 2014-09-30 to 2025-09-11. Full-text search across all posts.",
+      "tips": [
+        "Use the date filter to narrow to a specific time period",
+        "Filter by member to see posts from a specific member",
+        "Full-text search works across all post content",
+        "This is a static archive — posts after September 2025 are not included"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "twitter",
+      "section": "fan-content",
+      "updateFrequency": "Static archive",
+      "dataUrl": null,
+      "description": "Searchable archive of translated tweets from BAND-MAID and members, covering 2013-07-19 to 2025-09-10. Over 52,000 records with full-text search.",
+      "tips": [
+        "With 52,000+ records, the search is the best way to find specific topics",
+        "Filter by member to see tweets from a specific member",
+        "Member color coding makes it easy to scan who said what",
+        "This is a static archive — tweets after September 2025 are not included"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "charts",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/charts.json",
+      "description": "Stream count graphs since detailed data collection began — YouTube view history since February 2025, Spotify streams since July 2025, and YouTube comment history since 2014. Visualizes growth trends over time.",
+      "tips": [
+        "Comment history going back to 2014 gives a long-term view of community growth",
+        "YouTube and Spotify graphs show day-by-day stream accumulation",
+        "Useful for identifying when specific events caused view spikes"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "links",
+      "section": "fan-content",
+      "updateFrequency": "Periodically",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/links.json",
+      "description": "Curated collection of useful BAND-MAID related links — official sites, fan resources, social media, and more.",
+      "tips": [
+        "A good starting point for new fans discovering BAND-MAID's online presence",
+        "Covers both official and fan-created resources"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "sorter",
+      "section": "fan-content",
+      "updateFrequency": "As new songs are released",
+      "dataUrl": null,
+      "description": "Rank all BAND-MAID songs through pairwise comparisons. Save your progress and resume later. Optionally submit your final ranking to be aggregated across the fanbase.",
+      "tips": [
+        "With 200+ songs, the sort takes time — save often using the Save button",
+        "You can resume a saved session at any time",
+        "Use keyboard shortcuts (arrow keys) to speed through comparisons",
+        "Submit your results to contribute to the fanbase aggregate ranking"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "feedback",
+      "section": "fan-content",
+      "updateFrequency": "N/A",
+      "dataUrl": null,
+      "description": "Anonymous feedback form for the BAND-MAID Unofficial app. Leave likes, dislikes, bug reports, feature ideas, or anything else. All feedback is read and appreciated.",
+      "tips": [
+        "Completely anonymous — no account required",
+        "Bug reports, feature requests, and general feedback all welcome",
+        "You can also reach the developer on the BAND-MAID Dashboard Discord server"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "push",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json",
+      "description": "YouTube playlist builder focused on BAND-MAID videos approaching 1 million views. Stream these videos to help push them over the milestone. Shows current view count, daily rate, and projected milestone date for each video.",
+      "tips": [
+        "Play these videos to help BAND-MAID reach more milestones",
+        "The progress bar shows how close each video is to 1M",
+        "Daily view rate and projected date update every 24 hours",
+        "Auto-advances to the next video when one ends"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "playlist",
+      "section": "playlists",
+      "updateFrequency": "Daily (video data)",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
+      "description": "Custom YouTube playlist builder for all official BAND-MAID videos. Group by type (Music Video, Audio, Live, etc.), add individual videos or entire groups at once, reorder by drag or arrows, save and load named playlists.",
+      "tips": [
+        "Add All adds every video in a group to your playlist at once",
+        "Drag the ⠿ handle to reorder, or use ▲▼ arrows",
+        "Shuffle randomizes the current playlist order — click multiple times for a different order",
+        "Saved playlists are stored in your browser — they persist between sessions",
+        "Auto-advances to the next video when one ends; Loop option repeats the playlist"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "fancams",
+      "section": "playlists",
+      "updateFrequency": "Periodically",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/fancams.json",
+      "description": "Custom playlist builder for 4000+ fan-filmed BAND-MAID concert videos. Group by Year, Year+Event, or Channel. Build playlists of your favorite shows or specific events.",
+      "tips": [
+        "Group by Year+Event to find all fan cams from a specific show",
+        "Group by Channel to build a playlist from your favorite fan cam creator",
+        "With 4000 videos, groups load lazily — expand a group to load its videos",
+        "Saved playlists use a separate storage key from the main playlist builder"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "interviews",
+      "section": "playlists",
+      "updateFrequency": "Periodically",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/interviews.json",
+      "description": "Custom playlist builder for 550+ BAND-MAID interview and miscellaneous YouTube videos. Group by Category, Channel, or Year. Build and save playlists of interviews with specific members or outlets.",
+      "tips": [
+        "Group by Category to separate interviews from other content types",
+        "Search within the builder to find interviews about a specific topic",
+        "Saved playlists persist between sessions"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "translations",
+      "section": "fan-content",
+      "updateFrequency": "As new translations are added",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/translations.json",
+      "description": "300+ English translations of Japanese BAND-MAID interviews, articles, and lyrics. Filter by member, publication, song, or album. Toggle between English translation, original Japanese, or both side by side.",
+      "tips": [
+        "Use the EN/JP/Both toggle to read the original Japanese alongside the translation",
+        "Filter by member to find all interviews featuring a specific member",
+        "Filter by song to find articles that mention a specific song",
+        "The translator's name and a link to the translation source are shown when available",
+        "Lyrics translations are included alongside interview articles"
+      ],
+      "videoId": null
+    },
+    {
+      "id": "spotify-playlist",
+      "section": "playlists",
+      "updateFrequency": "Daily (stream data)",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
+      "description": "Custom Spotify playlist builder for all BAND-MAID songs. Group by year or album, sort by Spotify rank or streams, save and load named playlists. Requires Spotify login in your browser for full tracks.",
+      "tips": [
+        "Being logged into Spotify in your browser is required for full tracks",
+        "Full tracks confirmed working in Edge and Chrome; other browsers may only play 30-second previews",
+        "When a track ends, the next is cued automatically — press play to continue",
+        "An AutoHotkey script is available in Fan Tools to automate the play button between tracks",
+        "Run this view in its own browser window (not just a tab) when using the AutoHotkey script"
+      ],
+      "videoId": null
+    }
+  ]
+}
