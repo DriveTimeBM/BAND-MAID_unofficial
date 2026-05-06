@@ -126,7 +126,7 @@
   },
   {
     "id": "playlist",
-    "name": "Playlist",
+    "name": "BAND-MAID Playlist",
     "file": "views/playlist.html",
     "nav": "menu",
     "icon": "🎵"
