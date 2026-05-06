@@ -609,6 +609,8 @@
       ],
       "videoId": null
     },
+    {
+      "id": "translations",
       "section": "fan-content",
       "updateFrequency": "As new translations are added",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/translations.json",
