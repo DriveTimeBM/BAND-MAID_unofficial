@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/vu2D3lzH7Y0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "What is justice? — Views: 1,099,572 | Yesterday: 1,953\nスリル — Views: 1,331,039 | Yesterday: 1,165\nZen — Views: 920,550 | Yesterday: 1,107",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Memorable — Spotify: 738,890 | Played Live: 52\nTIME — Spotify: 727,138 | Played Live: 50\nSo,What? — Spotify: 689,689 | Played Live: 0",
                           "choices":  [
                                           {
-                                              "text":  "Zen"
+                                              "text":  "TIME"
                                           },
                                           {
-                                              "text":  "スリル"
+                                              "text":  "So,What?"
                                           },
                                           {
-                                              "text":  "What is justice?",
+                                              "text":  "Memorable",
                                               "correct":  true
                                           }
                                       ]
