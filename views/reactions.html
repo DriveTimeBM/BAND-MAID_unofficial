@@ -68,9 +68,12 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .grp-select option{background:var(--bg3)}
 .builder-stats{font-size:10px;color:var(--text3);padding:2px 0}
 
-.builder-scroll{flex:1;overflow-y:auto}
-
-/* Group header */
+.builder-scroll{flex:1;overflow-y:auto;display:flex;flex-direction:column}
+.search-results{display:none;flex-direction:column;width:100%}
+.search-results.visible{display:flex}
+.builder-groups{display:flex;flex-direction:column;width:100%}
+.builder-groups.hidden{display:none}
+.no-results{padding:24px;text-align:center;color:var(--text3);font-size:12px}
 .type-group{border-bottom:1px solid var(--border)}
 .type-header{
   display:flex;align-items:center;gap:8px;padding:8px 12px;
@@ -278,16 +281,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         </select>
         <span style="font-size:11px;color:var(--text3);flex-shrink:0">Sort:</span>
         <select class="grp-select" id="sortSelect" onchange="rebuildGroups()">
-          <option value="date">Date (newest)</option>
-          <option value="views">Views</option>
+          <option value="date_desc">Date (newest first)</option>
+          <option value="date_asc">Date (oldest first)</option>
+          <option value="views">Views (most first)</option>
         </select>
       </div>
       <div class="builder-stats" id="builderStats"></div>
     </div>
-    <!-- Search results (shown during search) -->
-    <div class="search-results" id="searchResults"></div>
-    <!-- Grouped view (shown when not searching) -->
-    <div class="builder-groups" id="builderGroups"></div>
+    <!-- Single scrollable area — shows either search results or grouped view -->
+    <div class="builder-scroll" id="builderScroll">
+      <div class="search-results" id="searchResults"></div>
+      <div class="builder-groups" id="builderGroups"></div>
+    </div>
   </div>
 
   <!-- PLAYLIST -->
@@ -388,14 +393,15 @@ async function boot() {
     // Parse dates and build channel name map (use most recent name per channelId)
     // channelId → { name, date }
     const channelLatest = {};
-    allVideos = raw.map(v => {
-      const ms = parseDotNet(v.PublishDate);
-      // Track most recent name for this channel
-      if (!channelLatest[v.ChannelId] || ms > channelLatest[v.ChannelId].ms) {
-        channelLatest[v.ChannelId] = { name: v.ChannelName, ms };
-      }
-      return { ...v, _ms: ms, _year: new Date(ms).getFullYear() + '' };
-    });
+    allVideos = raw
+      .filter(v => v.PublishDate && String(v.PublishDate).includes('Date'))  // skip null/missing dates
+      .map(v => {
+        const ms = parseDotNet(v.PublishDate);
+        if (!channelLatest[v.ChannelId] || ms > channelLatest[v.ChannelId].ms) {
+          channelLatest[v.ChannelId] = { name: v.ChannelName, ms };
+        }
+        return { ...v, _ms: ms, _year: new Date(ms).getFullYear() + '' };
+      });
 
     // Build channelNames map
     Object.entries(channelLatest).forEach(([id, { name }]) => {
@@ -426,8 +432,9 @@ function rebuildGroups() {
 
   // Sort
   allVideos.sort((a, b) => {
-    if (sortBy === 'views') return (b.Views||0) - (a.Views||0);
-    return b._ms - a._ms; // date desc
+    if (sortBy === 'views')     return (b.Views||0) - (a.Views||0);
+    if (sortBy === 'date_asc')  return a._ms - b._ms;
+    return b._ms - a._ms; // date_desc default
   });
 
   // Group
@@ -599,15 +606,14 @@ function runSearch() {
   if (!q) {
     results_el.classList.remove('visible');
     results_el.innerHTML = '';
-    groups_el.style.display = '';
+    groups_el.classList.remove('hidden');
     return;
   }
 
-  groups_el.style.display = 'none';
+  groups_el.classList.add('hidden');
   results_el.classList.add('visible');
   results_el.innerHTML = '';
 
-  // Search against title and resolved channel name
   const hits = allVideos.filter(v =>
     v.VideoTitle.toLowerCase().includes(q) ||
     v._channelName.toLowerCase().includes(q)
@@ -618,15 +624,13 @@ function runSearch() {
     return;
   }
 
-  // Show first 200 results with a count header
   const cap = 200;
   const hdr = document.createElement('div');
   hdr.style.cssText = 'padding:6px 12px;font-size:10px;color:var(--text3);border-bottom:1px solid var(--border);flex-shrink:0';
   hdr.textContent = `${hits.length.toLocaleString()} results${hits.length > cap ? ` — showing first ${cap}` : ''}`;
   results_el.appendChild(hdr);
 
-  const shown = hits.slice(0, cap);
-  shown.forEach(v => results_el.appendChild(buildBuilderRow(v)));
+  hits.slice(0, cap).forEach(v => results_el.appendChild(buildBuilderRow(v)));
 }
 
 // ── PLAYLIST ─────────────────────────────────────────────────────────────────
