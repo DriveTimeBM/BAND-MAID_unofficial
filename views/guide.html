@@ -175,6 +175,14 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 }
 .demo-wrap iframe{width:100%;height:100%;border:none;display:block}
 
+/* Demo gif */
+.gif-wrap{
+  margin-top:12px;border-radius:var(--radius);overflow:hidden;
+  max-width:560px;background:var(--bg3);border:1px solid var(--border);
+  display:inline-block;
+}
+.gif-wrap img{display:block;width:100%;height:auto;border-radius:var(--radius)}
+
 /* Hidden by search */
 .view-card.search-hidden{display:none}
 
@@ -402,6 +410,13 @@ function buildViewCard(v) {
       </a>`;
   }
   bodyHtml += `</div>`;
+
+  // Demo gif — shown before video if both present
+  if (v.gifUrl) {
+    bodyHtml += `<div class="gif-wrap">
+      <img src="${esc(v.gifUrl)}" alt="Demo: ${esc(name)}" loading="lazy">
+    </div>`;
+  }
 
   // Demo video
   if (v.videoId) {

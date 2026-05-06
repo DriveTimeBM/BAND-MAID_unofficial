@@ -52,14 +52,25 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 
 .builder-toolbar{padding:10px 12px;border-bottom:1px solid var(--border);display:flex;flex-direction:column;gap:6px;flex-shrink:0}
 .toolbar-row{display:flex;gap:6px;align-items:center}
+.search-wrap{position:relative;flex:1}
 .search-input{
-  flex:1;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
-  color:var(--text);padding:6px 10px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 28px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
   background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%23555' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
   background-repeat:no-repeat;background-position:9px center;
 }
 .search-input:focus{border-color:var(--accent)}
 .search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:16px;height:16px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:10px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);line-height:1;
+  transition:background 0.15s;
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
 .grp-select{
   background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
   color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;flex:1;
@@ -271,8 +282,11 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
   <!-- BUILDER -->
   <div class="builder-panel" id="builderPanel">
     <div class="builder-toolbar">
-      <input type="text" class="search-input" id="builderSearch"
-        placeholder="Search title or channel…" oninput="onSearchInput()">
+      <div class="search-wrap">
+        <input type="text" class="search-input" id="builderSearch"
+          placeholder="Search title or channel…" oninput="onSearchInput()">
+        <button class="search-clear" id="searchClear" onclick="clearSearch()" title="Clear search">✕</button>
+      </div>
       <div class="toolbar-row">
         <span style="font-size:11px;color:var(--text3);flex-shrink:0">Group:</span>
         <select class="grp-select" id="groupSelect" onchange="rebuildGroups()">
@@ -598,8 +612,17 @@ function toggleBuilder() {
 
 // ── SEARCH — debounced, flat results ─────────────────────────────────────────
 function onSearchInput() {
+  const q = document.getElementById('builderSearch').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
   clearTimeout(searchTimer);
   searchTimer = setTimeout(runSearch, 250);
+}
+
+function clearSearch() {
+  document.getElementById('builderSearch').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  runSearch();
+  document.getElementById('builderSearch').focus();
 }
 
 function runSearch() {

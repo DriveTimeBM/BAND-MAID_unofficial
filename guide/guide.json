@@ -7,7 +7,8 @@
     "discordName": "BAND-MAID Dashboard",
     "sheetsUrl": "https://docs.google.com/spreadsheets/d/1fUGjjPOjFFWoh8TbHOfgB4L6N0GmZIfo2JrPghNZsZU/edit?usp=sharing",
     "image": "https://drivetimebm.github.io/BAND-MAID_creations/logo/other/BM_circular_saw.png",
-    "videoId": null
+    "gifUrl": null,
+      "videoId": null
   },
   "whatsNew": [
     {
@@ -90,6 +91,7 @@
         "Times shown as your local time and JST side by side",
         "The calendar auto-navigates to the month of the next upcoming event on load"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -105,6 +107,7 @@
         "Filter by member to see which songs each member has commented on",
         "Click any song card to see the full detail view including all quotes"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -118,6 +121,7 @@
         "Includes digital-only releases not always listed elsewhere",
         "Track listings are included where available"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -132,6 +136,7 @@
         "ViewsDelta column shows yesterday's view count — useful for tracking trending videos",
         "Direct links open the video on YouTube"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -146,6 +151,7 @@
         "Compare Spotify Rank vs YouTube Rank to see which platform favors which songs",
         "Use the search to find a specific song quickly"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -159,6 +165,7 @@
         "Use this view to find songs on your preferred streaming service",
         "Links open directly in the relevant streaming platform"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -173,6 +180,7 @@
         "Sorted newest first by default",
         "Includes special events, overseas tours, and fan club shows"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -186,6 +194,7 @@
         "Click a pin to see show details and setlist link",
         "Useful for visualizing how BAND-MAID's touring has expanded internationally over the years"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -199,6 +208,7 @@
         "Useful for rewatching a specific performance without searching through the full video",
         "A TamperMonkey script is available in Fan Tools to add translation overlays while watching"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -212,6 +222,7 @@
         "Tracklists and timestamps make it easy to find specific segments",
         "A TamperMonkey script is available in Fan Tools to add translation overlays"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -225,6 +236,7 @@
         "Timestamps let you jump to specific segments",
         "A TamperMonkey script is available in Fan Tools to add translation overlays while watching"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -237,6 +249,7 @@
         "Gallery links open directly on the Fan Club site",
         "Fan Club membership required to view full images"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -250,6 +263,7 @@
         "Links open the original Japanese announcement on bandmaid.tokyo",
         "Use search to find news about a specific topic or date"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -263,6 +277,7 @@
         "A new selection is shown each day",
         "Click any photo to see it full size"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -276,6 +291,7 @@
         "Shows both event countdowns and YouTube milestone countdowns",
         "Countdown clocks tick in real time"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -290,6 +306,7 @@
         "Preview videos inline without leaving the app",
         "Newly discovered videos appear automatically — no manual curation needed"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -302,6 +319,7 @@
         "Projections are based on the previous day's view rate — a viral moment can dramatically change the projection",
         "Stream the videos to help push them over the milestone!"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -314,6 +332,7 @@
         "Updated daily",
         "Covers YouTube, Spotify, and social platforms"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -327,6 +346,7 @@
         "Song release anniversaries are a good time to stream those tracks",
         "Updated daily with current upcoming anniversaries"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -340,6 +360,7 @@
         "Filter by member to find GIFs of a specific member",
         "Click any GIF to open it full size for easy saving or sharing"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -353,6 +374,7 @@
         "A new quiz is available each day",
         "Explanations are shown after each answer"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -366,6 +388,7 @@
         "Links open directly on the store's product page",
         "Updated weekly — newly listed items appear automatically"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -378,6 +401,7 @@
         "Updated each morning with yesterday's data",
         "A useful indicator of what content is being shared or recommended by YouTube's algorithm that day"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -391,6 +415,7 @@
         "Updated weekly",
         "Covers YouTube, Spotify, Instagram, X, TikTok, and more"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -404,6 +429,7 @@
         "VIP packages appear as separate entries from general admission",
         "Updated daily — new events appear automatically as they're listed on Ticketmaster"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -416,6 +442,7 @@
         "Data comes directly from YouTube Analytics",
         "Compare 7-day vs 28-day to spot recent growth trends in specific countries"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -429,6 +456,7 @@
         "Covers multiple platforms in one feed",
         "Click any item to open the original source"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -442,6 +470,7 @@
         "Click any pin for details about that location",
         "Covers both live performance venues and MV shooting locations worldwide"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -455,6 +484,7 @@
         "Reports are PDF format — use your browser's built-in PDF viewer",
         "A good starting point for deep dives into BAND-MAID data"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -469,6 +499,7 @@
         "Full-text search works across all post content",
         "This is a static archive — posts after September 2025 are not included"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -483,6 +514,7 @@
         "Member color coding makes it easy to scan who said what",
         "This is a static archive — tweets after September 2025 are not included"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -496,6 +528,7 @@
         "YouTube and Spotify graphs show day-by-day stream accumulation",
         "Useful for identifying when specific events caused view spikes"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -508,6 +541,7 @@
         "A good starting point for new fans discovering BAND-MAID's online presence",
         "Covers both official and fan-created resources"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -522,6 +556,7 @@
         "Use keyboard shortcuts (arrow keys) to speed through comparisons",
         "Submit your results to contribute to the fanbase aggregate ranking"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -535,6 +570,7 @@
         "Bug reports, feature requests, and general feedback all welcome",
         "You can also reach the developer on the BAND-MAID Dashboard Discord server"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -549,6 +585,7 @@
         "Daily view rate and projected date update every 24 hours",
         "Auto-advances to the next video when one ends"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -564,6 +601,7 @@
         "Saved playlists are stored in your browser — they persist between sessions",
         "Auto-advances to the next video when one ends; Loop option repeats the playlist"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -578,6 +616,7 @@
         "With 4000 videos, groups load lazily — expand a group to load its videos",
         "Saved playlists use a separate storage key from the main playlist builder"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -591,6 +630,7 @@
         "Search within the builder to find interviews about a specific topic",
         "Saved playlists persist between sessions"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -607,6 +647,7 @@
         "Large groups load 100 videos at a time — click Show More to load additional videos",
         "Saved playlists use a separate storage key from other playlist builders"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -622,6 +663,7 @@
         "The translator's name and a link to the translation source are shown when available",
         "Lyrics translations are included alongside interview articles"
       ],
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -637,6 +679,7 @@
         "An AutoHotkey script is available in Fan Tools to automate the play button between tracks",
         "Run this view in its own browser window (not just a tab) when using the AutoHotkey script"
       ],
+      "gifUrl": null,
       "videoId": null
     }
   ]
