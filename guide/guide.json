@@ -107,7 +107,7 @@
         "Filter by member to see which songs each member has commented on",
         "Click any song card to see the full detail view including all quotes"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/songs.gif",
       "videoId": null
     },
     {
@@ -121,7 +121,7 @@
         "Includes digital-only releases not always listed elsewhere",
         "Track listings are included where available"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/releases.gif",
       "videoId": null
     },
     {
@@ -136,7 +136,7 @@
         "ViewsDelta column shows yesterday's view count — useful for tracking trending videos",
         "Direct links open the video on YouTube"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/videos.gif",
       "videoId": null
     },
     {
@@ -151,7 +151,7 @@
         "Compare Spotify Rank vs YouTube Rank to see which platform favors which songs",
         "Use the search to find a specific song quickly"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/spotify.gif",
       "videoId": null
     },
     {
@@ -288,8 +288,7 @@
       "description": "Live countdown clocks to the next two upcoming BAND-MAID events. When a YouTube video is within 24 hours of reaching a million views milestone, it is added to the countdown automatically.",
       "tips": [
         "Updates every 10 minutes automatically",
-        "Shows both event countdowns and YouTube milestone countdowns",
-        "Countdown clocks tick in real time"
+        "Shows both event countdowns and YouTube milestone countdowns"
       ],
       "gifUrl": null,
       "videoId": null
@@ -314,9 +313,9 @@
       "section": "data",
       "updateFrequency": "Daily",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/million.json",
-      "description": "The next 4 BAND-MAID YouTube videos projected to reach a million view milestone, based on yesterday's view rate. Shows projected date and days remaining.",
+      "description": "The next 10 BAND-MAID YouTube videos projected to reach a million view milestone, based on yesterday's view rate. Shows projected date and days remaining.",
       "tips": [
-        "Projections are based on the previous day's view rate — a viral moment can dramatically change the projection",
+        "Projections are based on the previous day's view rate — video newness, and ads can dramatically change the projection",
         "Stream the videos to help push them over the milestone!"
       ],
       "gifUrl": null,
