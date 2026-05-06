@@ -281,8 +281,8 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
         </select>
         <span style="font-size:11px;color:var(--text3);flex-shrink:0">Sort:</span>
         <select class="grp-select" id="sortSelect" onchange="rebuildGroups()">
-          <option value="date_desc">Date (newest first)</option>
           <option value="date_asc">Date (oldest first)</option>
+          <option value="date_desc">Date (newest first)</option>
           <option value="views">Views (most first)</option>
         </select>
       </div>
@@ -456,6 +456,10 @@ function rebuildGroups() {
     `${allVideos.length.toLocaleString()} reaction videos · ${groupOrder.length.toLocaleString()} ${groupBy === 'channel' ? 'channels' : 'years'}`;
 
   buildBuilderGroups();
+
+  // If a search is active, re-run it against the newly sorted data
+  const q = document.getElementById('builderSearch').value.trim();
+  if (q) runSearch();
 }
 
 // ── BUILDER — lazy rendering ──────────────────────────────────────────────────
