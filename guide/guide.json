@@ -306,7 +306,7 @@
         "Preview videos inline without leaving the app",
         "Newly discovered videos appear automatically — no manual curation needed"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/youtube.gif",
       "videoId": null
     },
     {
@@ -456,7 +456,7 @@
         "Covers multiple platforms in one feed",
         "Click any item to open the original source"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/rss.gif",
       "videoId": null
     },
     {
@@ -601,7 +601,7 @@
         "Saved playlists are stored in your browser — they persist between sessions",
         "Auto-advances to the next video when one ends; Loop option repeats the playlist"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/playlist.gif",
       "videoId": null
     },
     {
@@ -616,7 +616,7 @@
         "With 4000 videos, groups load lazily — expand a group to load its videos",
         "Saved playlists use a separate storage key from the main playlist builder"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/fancams.gif",
       "videoId": null
     },
     {
