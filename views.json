@@ -144,7 +144,14 @@
     "file": "views/interviews.html",
     "nav": "menu",
     "icon": "🎙️"
-  },  
+  }, 
+  {
+    "id": "reactions",
+    "name": "Reactions Archive *new*",
+    "file": "views/reactions.html",
+    "nav": "menu",
+    "icon": "⚡"
+  }, 
   {
     "id": "translations",
     "name": "Translations *new*",
@@ -277,11 +284,5 @@
     "nav": "menu",
     "icon": "📢"
   },
-  {
-    "id": "about",
-    "name": "About",
-    "file": "views/about.html",
-    "nav": "menu",
-    "icon": "ℹ️"
-  }
+  { "id": "guide",  "name": "User Guide *new*",  "file": "views/guide.html",  "nav": "menu", "icon": "📖" }
 ]

@@ -14,6 +14,7 @@
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
       "items": [
+        "Added Reactions Archive — 26,000+ fan reaction videos with playlist builder, grouped by channel or year",
         "Added Translations view — 300+ English translations of Japanese interviews and articles",
         "Added Interviews playlist builder — 550+ BAND-MAID interview videos with playlist save/load",
         "Added Fan Cams playlist builder — 4000+ fan cam videos grouped by year, event, or channel",
@@ -593,7 +594,21 @@
       "videoId": null
     },
     {
-      "id": "translations",
+      "id": "reactions",
+      "section": "fan-content",
+      "updateFrequency": "Periodically",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/reactions.json",
+      "description": "Custom playlist builder for 26,000+ fan reaction videos to BAND-MAID content. Group by channel or year, search by video title or channel name, and build playlists of your favorite reactors. Channel names always reflect the most recent name used by that channel.",
+      "tips": [
+        "Search works across both video titles and channel names",
+        "Channel names are resolved to the most recent name — a channel that rebranded will show its current name across all its videos",
+        "Group by Year + sort by Date (oldest first) to follow reactions chronologically as BAND-MAID grew in popularity",
+        "Group by Channel to find all videos from a specific reactor",
+        "Large groups load 100 videos at a time — click Show More to load additional videos",
+        "Saved playlists use a separate storage key from other playlist builders"
+      ],
+      "videoId": null
+    },
       "section": "fan-content",
       "updateFrequency": "As new translations are added",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/translations.json",
