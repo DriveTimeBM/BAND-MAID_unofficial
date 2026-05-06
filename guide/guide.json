@@ -91,7 +91,7 @@
         "Times shown as your local time and JST side by side",
         "The calendar auto-navigates to the month of the next upcoming event on load"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/calendar.gif",
       "videoId": null
     },
     {
@@ -208,7 +208,7 @@
         "Useful for rewatching a specific performance without searching through the full video",
         "A TamperMonkey script is available in Fan Tools to add translation overlays while watching"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/prime.gif",
       "videoId": null
     },
     {
@@ -222,7 +222,7 @@
         "Tracklists and timestamps make it easy to find specific segments",
         "A TamperMonkey script is available in Fan Tools to add translation overlays"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/browseprime.gif",
       "videoId": null
     },
     {
@@ -236,7 +236,7 @@
         "Timestamps let you jump to specific segments",
         "A TamperMonkey script is available in Fan Tools to add translation overlays while watching"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/browsefanclub.gif",
       "videoId": null
     },
     {
