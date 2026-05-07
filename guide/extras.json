@@ -15,7 +15,7 @@
       ],
       "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaidprime.user.js",
       "downloadUrl": "https://www.tampermonkey.net/",
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/tampermonkey-prime.gif",
       "videoId": null
     },
     {
@@ -33,7 +33,7 @@
       ],
       "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaidfanclub.user.js",
       "downloadUrl": "https://www.tampermonkey.net/",
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/tampermonkey-fanclub.gif",
       "videoId": null
     },
     {
@@ -51,7 +51,7 @@
       ],
       "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaidprime-playlist.user.js",
       "downloadUrl": "https://www.tampermonkey.net",
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/tampermonkey-prime-playlist.gif",
       "videoId": null
     },
     {
@@ -69,7 +69,7 @@
       ],
       "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaid-fanclub-playlist.user.js",
       "downloadUrl": "https://www.tampermonkey.net",
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/tampermonkey-fanclub-playlist.gif",
       "videoId": null
     },
     {
