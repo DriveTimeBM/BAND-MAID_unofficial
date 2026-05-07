@@ -65,7 +65,7 @@
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
         },
         {
-            "category": "Tab",
+            "category": "Tab/Score",
             "color": "#a89cc4",
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": [
@@ -73,7 +73,8 @@
                   ] 
                 },
                { "field": "title", "type": "regex", "patterns": [
-                    "\\bTab\\w*\\b"
+                    "\\bTab\\w*\\b",
+                    "\\bsheet\\s*music\\b"
                 ]}
             ],
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
