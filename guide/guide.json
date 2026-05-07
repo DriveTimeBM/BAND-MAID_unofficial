@@ -157,7 +157,7 @@
     {
       "id": "stream",
       "section": "music",
-      "updateFrequency": "Weekly",
+      "updateFrequency": "As needed",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
       "description": "Links to BAND-MAID songs across multiple streaming platforms beyond Spotify, including Apple Music, LINE Music, Amazon Music, and TIDAL. Stream counts included where available.",
       "tips": [
@@ -635,9 +635,9 @@
     {
       "id": "reactions",
       "section": "fan-content",
-      "updateFrequency": "Periodically",
+      "updateFrequency": "Monthly",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/reactions.json",
-      "description": "Custom playlist builder for 26,000+ fan reaction videos to BAND-MAID content. Group by channel or year, search by video title or channel name, and build playlists of your favorite reactors. Channel names always reflect the most recent name used by that channel.",
+      "description": "Custom playlist builder for 26,000+ fan reaction videos to BAND-MAID content. Group by channel or year, search by video title or channel name, and build playlists of your favorite reactors. Channel names always reflect the most recent name used by that channel. Views updated monthly for older videos",
       "tips": [
         "Search works across both video titles and channel names",
         "Channel names are resolved to the most recent name — a channel that rebranded will show its current name across all its videos",
