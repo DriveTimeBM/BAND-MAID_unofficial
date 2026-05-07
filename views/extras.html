@@ -197,19 +197,26 @@ function buildToolCard(tool) {
   }
 
   html += `<div class="tool-actions">`;
-  if (tool.installUrl) {
-    html += `<a class="tool-btn" href="${esc(tool.installUrl)}" target="_blank" rel="noopener">
+  if (tool.downloadUrl) {
+    html += `<a class="tool-btn" href="${esc(tool.downloadUrl)}" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>
       Install Prerequisite
     </a>`;
   }
-  if (tool.downloadUrl) {
-    html += `<a class="tool-btn primary" href="${esc(tool.downloadUrl)}" target="_blank" rel="noopener">
+  if (tool.installUrl) {
+    html += `<a class="tool-btn primary" href="${esc(tool.installUrl)}" target="_blank" rel="noopener">
       <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
-      Download Script
+      Install Script
     </a>`;
   }
   html += `</div>`;
+
+  if (tool.gifUrl) {
+    html += `<div style="margin-top:14px;border-radius:8px;overflow:hidden;max-width:560px;background:var(--bg3);border:1px solid var(--border);display:inline-block">
+      <img src="${esc(tool.gifUrl)}" alt="Demo: ${esc(tool.name)}" loading="lazy"
+        style="display:block;width:100%;height:auto">
+    </div>`;
+  }
 
   if (tool.videoId) {
     html += `<div class="demo-wrap">

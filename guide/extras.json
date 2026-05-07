@@ -8,14 +8,14 @@
       "icon": "🎤",
       "platform": "Windows / Mac / Linux",
       "requires": "TamperMonkey browser extension",
-      "description": "Adds a floating translation panel while watching BAND-MAID Prime live shows. Translations appear in sync with the video via a draggable, resizable overlay. Panel position and size are saved between sessions.",
+      "description": "Adds clickable track lists while watching BAND-MAID Prime live shows along with previous/next navigation to easily watch a multi-part performance",
       "tips": [
         "Works with the BAND-MAID Prime Uliza video player",
-        "Panel can be dragged anywhere on screen and resized",
-        "Position is remembered between sessions via localStorage"
+        "Jump directly to the track you want to see"
       ],
-      "installUrl": null,
-      "downloadUrl": null,
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaidprime.user.js",
+      "downloadUrl": "https://www.tampermonkey.net/",
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -28,11 +28,12 @@
       "description": "Adds a floating translation panel while watching OMEISYUSAMA-NO-KAI Fan Club videos. Uses the Vimeo postMessage API to sync translations with video playback progress.",
       "tips": [
         "Works with the Fan Club Vimeo player",
-        "Same draggable/resizable panel as the Prime script",
-        "Panel position persists between sessions"
+        "Same navigation panel as the Prime script",
+        "Movable translation panel location persists between sessions"
       ],
-      "installUrl": null,
-      "downloadUrl": null,
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaidfanclub.user.js",
+      "downloadUrl": "https://www.tampermonkey.net/",
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -45,10 +46,12 @@
       "description": "Adds playlist building functionality to BAND-MAID Prime. Create named playlists, auto-advance between videos, and save playlists for later.",
       "tips": [
         "Playlists are saved locally in your browser",
-        "Auto-advance plays the next video in your playlist automatically"
+        "Auto-advance plays the next video in your playlist automatically",
+        "Can be run together with the video describer but it will probably be too much on the screen. You can disable and re-enable either at will with Tampermonkey."
       ],
-      "installUrl": null,
-      "downloadUrl": null,
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaidprime-playlist.user.js",
+      "downloadUrl": "https://www.tampermonkey.net",
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -61,10 +64,12 @@
       "description": "Adds playlist building functionality to the OMEISYUSAMA-NO-KAI Fan Club site. Build, save, and auto-advance through named playlists.",
       "tips": [
         "Separate saved playlists from the Prime playlist builder",
-        "Auto-advance works with the Fan Club Vimeo player"
+        "Auto-advance works with the Fan Club Vimeo player",
+        "Can be run together with the video describer but it will probably be too much on the screen. You can disable and re-enable either at will with Tampermonkey."
       ],
-      "installUrl": null,
-      "downloadUrl": null,
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_prime/scripts/bandmaid-fanclub-playlist.user.js",
+      "downloadUrl": "https://www.tampermonkey.net",
+      "gifUrl": null,
       "videoId": null
     },
     {
@@ -84,6 +89,7 @@
       ],
       "installUrl": "https://www.autohotkey.com/",
       "downloadUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk",
+      "gifUrl": null,
       "videoId": null
     }
   ]

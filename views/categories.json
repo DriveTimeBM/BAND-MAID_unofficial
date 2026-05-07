@@ -11,6 +11,21 @@
             "notes": "Official BAND-MAID YouTube channel"
         },
         {
+            "category": "Tab/Score",
+            "color": "#a89cc4",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UCJgjHK1zDcpm0hiSpMqkPGw"
+                  ] 
+                },
+               { "field": "title", "type": "regex", "patterns": [
+                    "\\bTab\\w*\\b",
+                    "\\bsheet\\s*music\\b"
+                ]}
+            ],
+            "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
+        },
+        {
             "category": "Reaction",
             "color": "#a8c4a0",
             "rules": [
@@ -60,21 +75,6 @@
                     "歌ってみた",
                     "弾いてみた",
                     "叩いてみた"
-                ]}
-            ],
-            "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
-        },
-        {
-            "category": "Tab/Score",
-            "color": "#a89cc4",
-            "rules": [
-                { "field": "channelId", "type": "exact", "patterns": [
-                    "UCJgjHK1zDcpm0hiSpMqkPGw"
-                  ] 
-                },
-               { "field": "title", "type": "regex", "patterns": [
-                    "\\bTab\\w*\\b",
-                    "\\bsheet\\s*music\\b"
                 ]}
             ],
             "notes": "Includes Japanese cover terms: utattemita (sang), hiitemita (played), tataitemita (drummed)"
