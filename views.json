@@ -147,14 +147,14 @@
   }, 
   {
     "id": "reactions",
-    "name": "Reactions Archive *new*",
+    "name": "Reactions Archive",
     "file": "views/reactions.html",
     "nav": "menu",
     "icon": "⚡"
   }, 
   {
     "id": "translations",
-    "name": "Translations *new*",
+    "name": "Translations",
     "file": "views/translations.html",
     "nav": "menu",
     "icon": "🈯🔤"
