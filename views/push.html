@@ -209,7 +209,7 @@ html,body{height:100%;background:var(--bg);color:var(--text);font-family:var(--f
 const JSON_URL = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/million_push.json';
 let videos   = [];
 let current  = 0;
-let looping  = false;
+let looping  = true;
 let ytPlayer = null;
 let ytApiReady = false;
 let pendingVideoId = null;  // load this once API is ready
@@ -287,7 +287,7 @@ function render() {
   lh.innerHTML = `
     <div class="list-header-row">
       <div class="list-title">🚀 Push to One Million</div>
-      <button class="loop-btn" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
+      <button class="loop-btn active" id="loopBtn" onclick="toggleLoop()">⟳ Loop</button>
     </div>
     <div class="list-count">${videos.length} videos · sorted by proximity to 1M</div>`;
   listCol.appendChild(lh);
