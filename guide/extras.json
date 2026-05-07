@@ -95,6 +95,7 @@
       "category": "AutoHotkey Scripts",
       "name": "Spotify Playlist AutoPlay",
       "icon": "🎵",
+      "iconFallback": "🎵",
       "platform": "Windows only",
       "requires": "AutoHotkey v2",
       "description": "Automates the play button between tracks in the Spotify Playlist view. Watches for the green 'Press play' banner via the browser window title, then sends the keyboard sequence to start the next track automatically. Restores focus to your previous window after each track starts.",
