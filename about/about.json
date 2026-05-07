@@ -198,7 +198,7 @@
   {
     "id": "about-translations",
     "section": "Views",
-    "icon": "📖",
+    "icon": "🈯🔤",
     "title": "Translations",
     "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/translations.json",
     "body": "Search for and within translations by source, member, song, album and/or keyword.",
