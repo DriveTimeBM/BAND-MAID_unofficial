@@ -284,5 +284,6 @@
     "nav": "menu",
     "icon": "📢"
   },
-  { "id": "guide",  "name": "User Guide *new*",  "file": "views/guide.html",  "nav": "menu", "icon": "📖" }
+  { "id": "guide",  "name": "User Guide",  "file": "views/guide.html",  "nav": "menu", "icon": "📖" },
+  { "id": "extras",  "name": "Extras *new*",  "file": "views/extras.html",  "nav": "menu", "icon": "🛠️" }
 ]

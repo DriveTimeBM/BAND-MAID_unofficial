@@ -99,6 +99,7 @@
       "requires": "AutoHotkey v2",
       "description": "Automates the play button between tracks in the Spotify Playlist view. Watches for the green 'Press play' banner via the browser window title, then sends the keyboard sequence to start the next track automatically. Restores focus to your previous window after each track starts.",
       "tips": [
+        "<a href=\"https://drivetimebm.github.io/BAND-MAID_unofficial/views/spotify-playlist.html\">Launch Spotify Playlist here.</a>",
         "Requires AutoHotkey v2 — free download from autohotkey.com",
         "No additional libraries needed",
         "Run the Spotify Playlist view in its own dedicated browser window for best results",
@@ -107,7 +108,7 @@
       ],
       "installUrl": "https://www.autohotkey.com/",
       "downloadUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk",
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/spotify-playlist.gif",
       "videoId": null
     }
   ]

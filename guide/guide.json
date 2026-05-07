@@ -672,6 +672,7 @@
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/all_spotify.json",
       "description": "Custom Spotify playlist builder for all BAND-MAID songs. Group by year or album, sort by Spotify rank or streams, save and load named playlists. Requires Spotify login in your browser for full tracks.",
       "tips": [
+        "Not in the app. Launch <a href=\"https://drivetimebm.github.io/BAND-MAID_unofficial/views/spotify-playlist.html\">here.</a>",
         "Being logged into Spotify in your browser is required for full tracks",
         "Full tracks confirmed working in Edge and Chrome; other browsers may only play 30-second previews",
         "When a track ends, the next is cued automatically — press play to continue",
