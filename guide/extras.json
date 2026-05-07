@@ -73,6 +73,24 @@
       "videoId": null
     },
     {
+      "id": "tampermonkey-yt",
+      "category": "TamperMonkey Scripts",
+      "name": "YouTube video finder",
+      "icon": "📋",
+      "platform": "Windows / Mac / Linux",
+      "requires": "TamperMonkey browser extension",
+      "description": "Adds search bar on the BAND-MAID channel to easily find all BAND-MAID official content.",
+      "tips": [
+        "Search song name shows ALL videos for that song (OMV, OLV, Audio, Shorts) with view counts*",
+        "All 338+ YouTube videos are included.",
+        "*Due to YT security restrictions the script should be re-installed occasionally to pick up new videos and view counts. The script is generated fresh each day but videos don't change often."
+      ],
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/bandmaidyoutube.user.js",
+      "downloadUrl": "https://www.tampermonkey.net",
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/tampermonkey-yt.gif",
+      "videoId": null
+    },
+    {
       "id": "ahk-spotify",
       "category": "AutoHotkey Scripts",
       "name": "Spotify Playlist AutoPlay",
