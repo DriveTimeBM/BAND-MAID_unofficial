@@ -249,7 +249,7 @@
         "Gallery links open directly on the Fan Club site",
         "Fan Club membership required to view full images"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/gallery.gif",
       "videoId": null
     },
     {
@@ -263,7 +263,7 @@
         "Links open the original Japanese announcement on bandmaid.tokyo",
         "Use search to find news about a specific topic or date"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/news.gif",
       "videoId": null
     },
     {
@@ -359,7 +359,7 @@
         "Filter by member to find GIFs of a specific member",
         "Click any GIF to open it full size for easy saving or sharing"
       ],
-      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/mv.gif",
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/gifs.gif",
       "videoId": null
     },
     {
@@ -428,7 +428,7 @@
         "VIP packages appear as separate entries from general admission",
         "Updated daily — new events appear automatically as they're listed on Ticketmaster"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/tickets.gif",
       "videoId": null
     },
     {
@@ -483,7 +483,7 @@
         "Reports are PDF format — use your browser's built-in PDF viewer",
         "A good starting point for deep dives into BAND-MAID data"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/reports.gif",
       "videoId": null
     },
     {
@@ -527,7 +527,7 @@
         "YouTube and Spotify graphs show day-by-day stream accumulation",
         "Useful for identifying when specific events caused view spikes"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/charts.gif",
       "videoId": null
     },
     {
