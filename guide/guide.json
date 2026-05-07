@@ -159,7 +159,7 @@
       "section": "music",
       "updateFrequency": "Weekly",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/streaming_links.json",
-      "description": "Links to BAND-MAID songs across multiple streaming platforms beyond Spotify, including Apple Music, YouTube Music, Amazon Music, and others. Stream counts included where available.",
+      "description": "Links to BAND-MAID songs across multiple streaming platforms beyond Spotify, including Apple Music, LINE Music, Amazon Music, and TIDAL. Stream counts included where available.",
       "tips": [
         "Not all songs are available on all platforms",
         "Use this view to find songs on your preferred streaming service",
@@ -414,7 +414,7 @@
         "Updated weekly",
         "Covers YouTube, Spotify, Instagram, X, TikTok, and more"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/followers.gif",
       "videoId": null
     },
     {
@@ -555,7 +555,7 @@
         "Use keyboard shortcuts (arrow keys) to speed through comparisons",
         "Submit your results to contribute to the fanbase aggregate ranking"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/sorter.gif",
       "videoId": null
     },
     {
@@ -569,7 +569,7 @@
         "Bug reports, feature requests, and general feedback all welcome",
         "You can also reach the developer on the BAND-MAID Dashboard Discord server"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/feedback.gif",
       "videoId": null
     },
     {
