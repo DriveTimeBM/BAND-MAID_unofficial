@@ -178,6 +178,15 @@
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/playlist.png"
   },
   {
+    "id": "about-mini-player",
+    "section": "Views",
+    "icon": "🎧",
+    "title": "Mini-Player (audio)",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/audio.json",
+    "body": "Mini audio player for 115+ BAND-MAID YouTube audio tracks. Click pop out button.",
+    "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/mini-player.png"
+  },
+  {
     "id": "about-fancams",
     "section": "Views",
     "icon": "📳",

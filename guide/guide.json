@@ -633,6 +633,19 @@
       "videoId": null
     },
     {
+      "id": "mini-player",
+      "section": "playlists",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/audio.json",
+      "description": "Mini audio player for 115+ BAND-MAID YouTube audio tracks. No configuration needed. <strong>Loop</strong> and <strong>Shuffle</strong> supported.",
+      "tips": [
+        "Click <i>pop out</i> button on far right to get mini-player",
+        "Use optional Windows Power Toys to make player <i>Always On Top</i>. (<strong>Win+Ctrl+T</strong>)"
+      ],
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/mini-player.gif",
+      "videoId": null
+    },
+    {
       "id": "reactions",
       "section": "video",
       "updateFrequency": "Monthly",

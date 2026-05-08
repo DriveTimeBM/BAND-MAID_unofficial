@@ -130,6 +130,13 @@
     "file": "views/playlist.html",
     "nav": "menu",
     "icon": "🎵"
+  },  
+  {
+    "id": "mini-player",
+    "name": "Mini-Player (audio) *new*",
+    "file": "views/audio-player.html",
+    "nav": "menu",
+    "icon": "🎧"
   },
   {
     "id": "fancams",
