@@ -15,6 +15,7 @@
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
       "items": [
+        "Added pop-out mini audio player. Contains all 115+ YouTube audio tracks. Shuffle, Loop, no YT login required.",
         "Added Reactions Archive — 26,000+ fan reaction videos with playlist builder, grouped by channel or year",
         "Added Translations view — 300+ English translations of Japanese interviews and articles",
         "Added Interviews playlist builder — 550+ BAND-MAID interview videos with playlist save/load",
@@ -637,7 +638,7 @@
       "section": "playlists",
       "updateFrequency": "Daily",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/audio.json",
-      "description": "Mini audio player for 115+ BAND-MAID YouTube audio tracks. No configuration needed. <strong>Loop</strong> and <strong>Shuffle</strong> supported.",
+      "description": "Mini audio player for 115+ BAND-MAID YouTube audio tracks. No configuration needed. Loop and Shuffle supported.",
       "tips": [
         "Click <i>pop out</i> button on far right to get mini-player",
         "Use optional Windows Power Toys to make player <i>Always On Top</i>. (<strong>Win+Ctrl+T</strong>)"
