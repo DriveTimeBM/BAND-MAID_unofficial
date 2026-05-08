@@ -474,6 +474,20 @@
       "videoId": null
     },
     {
+      "id": "okyujumvmap",
+      "section": "data",
+      "updateFrequency": "Periodically",
+      "dataUrl": null,
+      "description": "Google MyMaps Okyu-ji and MV Map created and maintained by @Simeon from Brazil.",
+      "tips": [
+        "Contains accurate locations of all okyuji",
+        "Contains accurate locations of MV shoot locations",
+        "Contains accurate locations of other BAND-MAID places of interest"
+      ],
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/okyujumvmap.gif",
+      "videoId": null
+    },
+    {
       "id": "reports",
       "section": "data",
       "updateFrequency": "Daily",
