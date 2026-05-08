@@ -100,9 +100,12 @@
       "requires": "AutoHotkey v2",
       "description": "Automates the play button between tracks in the Spotify Playlist view. Watches for the green 'Press play' banner via the browser window title, then sends the keyboard sequence to start the next track automatically. Restores focus to your previous window after each track starts.",
       "tips": [
+        "Since the add-on script to totally automate the player can get stuck occasionally, I won't add it directly to the app. The ability to bypass Spotify free-tier limits makes it worthwhile to tinker with so I'll make it available as an extra.",
         "<a href=\"https://drivetimebm.github.io/BAND-MAID_unofficial/views/spotify-playlist.html\">Launch Spotify Playlist here.</a>",
         "Requires AutoHotkey v2 to fully automate — free download from autohotkey.com",
         "No additional libraries needed",
+        "Allows free-tier Spotify accounts to bypass the track selection limits of the Spotify app",
+        "Unlimited ad-free playback with Loop and Shuffle",
         "Run the Spotify Playlist view in its own dedicated browser window for best results. (It <b>must</b> be the active tab)",
         "To launch the AHK script, double click the BM-Spotify-AutoPlay.ahk script (after installing AutoHotKey)",
         "Tray icon shows current status — right-click to Pause or Exit",

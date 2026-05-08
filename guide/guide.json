@@ -593,7 +593,7 @@
       "section": "playlists",
       "updateFrequency": "Daily (video data)",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
-      "description": "Custom YouTube playlist builder for all official BAND-MAID videos. Group by type (Music Video, Audio, Live, etc.), add individual videos or entire groups at once, reorder by drag or arrows, save and load named playlists.",
+      "description": "Custom YouTube playlist builder for all official BAND-MAID videos. Grouped by type (Music Video, Audio, Live, etc.), add individual videos or entire groups at once, reorder by drag or arrows, save and load named playlists.",
       "tips": [
         "Add All adds every video in a group to your playlist at once",
         "Drag the ⠿ handle to reorder, or use ▲▼ arrows",
