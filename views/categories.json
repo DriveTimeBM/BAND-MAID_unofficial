@@ -6,7 +6,7 @@
             "color": "#c8a96e",
             "rules": [
                 { "field": "channelId", "type": "exact", "patterns": ["UCJToUvYrmkmTCR-bluEaQfA","UCM35rMMfPj1wj1nwe-DxSAg","UCHNhsC0VPItCMeAl11T3rAQ"] },
-                { "field": "channel",   "type": "regex", "patterns": ["BAND-MAID"] }
+                { "field": "channel",   "type": "exact", "patterns": ["BAND-MAID"] }
             ],
             "notes": "Official BAND-MAID YouTube channel"
         },
