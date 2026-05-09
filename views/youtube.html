@@ -45,7 +45,7 @@
     display: flex;
     justify-content: space-between;
     align-items: baseline;
-    gap: 12px;
+    gap: 16px;
     flex-wrap: wrap;
     margin-bottom: 16px;
     padding-bottom: 10px;
@@ -56,6 +56,52 @@
     color: var(--text2);
   }
   .header-meta .count { color: var(--accent); font-weight: 600; }
+
+  /* ── ACTIVE FILTER PILLS ── */
+  .active-filters {
+    display: flex;
+    gap: 8px;
+    flex-wrap: wrap;
+    align-items: center;
+  }
+  .filter-pill {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    background: var(--bg2);
+    border: 1px solid var(--accent2);
+    border-radius: 999px;
+    padding: 4px 4px 4px 12px;
+    font-size: 12px;
+    color: var(--text);
+  }
+  .filter-pill-label {
+    font-size: 10px;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: var(--text2);
+  }
+  .filter-pill-value { color: var(--accent); font-weight: 500; }
+  .filter-pill-clear {
+    background: transparent;
+    border: none;
+    color: var(--text2);
+    width: 22px;
+    height: 22px;
+    border-radius: 50%;
+    cursor: pointer;
+    font-size: 14px;
+    line-height: 1;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 0;
+    transition: background 0.12s, color 0.12s;
+  }
+  .filter-pill-clear:hover {
+    background: var(--bg4);
+    color: var(--text);
+  }
 
   /* ── TOOLBAR ── */
   .toolbar {
@@ -108,7 +154,7 @@
     opacity: 0.6;
     cursor: wait;
   }
-    
+
   .sort-btn, .filter-toggle {
     background: var(--bg2);
     color: var(--text);
@@ -290,7 +336,20 @@
     color: var(--text2);
     flex-wrap: wrap;
   }
-  .video-meta .channel { color: var(--text); }
+  .video-meta .channel {
+    color: var(--text);
+    cursor: pointer;
+    border-bottom: 1px dotted transparent;
+    transition: color 0.12s, border-color 0.12s;
+  }
+  .video-meta .channel:hover {
+    color: var(--accent);
+    border-bottom-color: var(--accent2);
+  }
+  .video-meta .channel.active {
+    color: var(--accent);
+    border-bottom-color: var(--accent);
+  }
   .video-meta .separator { color: var(--text3); }
   .video-meta .time { color: var(--text2); }
   .video-meta .duration { color: var(--text3); font-variant-numeric: tabular-nums; }
@@ -444,6 +503,7 @@
       updated <span id="last-updated">—</span>
     </div>
   </div>
+  <div class="active-filters" id="active-filters"></div>
 </div>
 
 <div class="toolbar">
@@ -499,6 +559,7 @@
   let selectedCats = new Set(); // active category filter
   let sortDesc     = true;      // newest first
   let searchTerm   = '';
+  let channelFilter = null;     // when set, only show videos from this channel
   let renderedCount = 0;
   let expandedVideoId = null;
 
@@ -596,6 +657,11 @@
       allCatNames.add(categoryCfg.default_category.category);
       selectedCats = allCatNames;
 
+      // Clear channel filter if the channel no longer exists in the data
+      if (channelFilter && !allVideos.some(v => v.Channel.trim() === channelFilter)) {
+        channelFilter = null;
+      }
+
       renderSidebar();
       applyFilters();
 
@@ -651,11 +717,37 @@
     });
   }
 
+  // ── Active filter pills (channel) ──
+  function renderActiveFilters() {
+    const container = document.getElementById('active-filters');
+    const pills = [];
+
+    if (channelFilter) {
+      pills.push(`
+        <div class="filter-pill">
+          <span class="filter-pill-label">Channel</span>
+          <span class="filter-pill-value">${escapeHtml(channelFilter)}</span>
+          <button class="filter-pill-clear" data-clear="channel" title="Clear channel filter">×</button>
+        </div>
+      `);
+    }
+
+    container.innerHTML = pills.join('');
+
+    container.querySelectorAll('[data-clear="channel"]').forEach(btn => {
+      btn.addEventListener('click', () => {
+        channelFilter = null;
+        applyFilters();
+      });
+    });
+  }
+
   // ── Filter / search / sort ──
   function applyFilters() {
     const term = searchTerm.toLowerCase();
     filtered = allVideos.filter(v => {
       if (!selectedCats.has(v.categoryInfo.category)) return false;
+      if (channelFilter && v.Channel.trim() !== channelFilter) return false;
       if (term) {
         const hay = (v.Title + ' ' + v.Channel).toLowerCase();
         if (!hay.includes(term)) return false;
@@ -669,6 +761,7 @@
       return sortDesc ? db - da : da - db;
     });
 
+    renderActiveFilters();
     renderedCount = 0;
     document.getElementById('list-container').innerHTML = '';
     expandedVideoId = null;
@@ -702,6 +795,8 @@
     row.dataset.videoId = v.VideoId;
 
     const timeIso = v.PublishedAt || v.DiscoveredAt;
+    const channelName = v.Channel.trim();
+    const isActiveChannel = channelFilter === channelName;
 
     row.innerHTML = `
       <div class="thumb" data-full="${escapeHtml(v.Thumbnail.replace('hqdefault', 'maxresdefault'))}" data-fallback="${escapeHtml(v.Thumbnail)}">
@@ -710,7 +805,7 @@
       <div class="video-info">
         <div class="video-title">${highlight(v.Title, searchTerm)}</div>
         <div class="video-meta">
-          <span class="channel">${highlight(v.Channel.trim(), searchTerm)}</span>
+          <span class="channel ${isActiveChannel ? 'active' : ''}" data-channel="${escapeHtml(channelName)}" title="${isActiveChannel ? 'Click to clear channel filter' : 'Filter by this channel'}">${highlight(channelName, searchTerm)}</span>
           <span class="separator">❯</span>
           <span class="time" title="${escapeHtml(absoluteTime(timeIso))}">${escapeHtml(relativeTime(timeIso))}</span>
           ${v.Duration ? `<span class="separator">❯</span><span class="duration">${escapeHtml(v.Duration)}</span>` : ''}
@@ -729,6 +824,14 @@
     // Title click → toggle embedded player
     row.querySelector('.video-title').addEventListener('click', () => {
       toggleEmbed(row, v.VideoId);
+    });
+
+    // Channel click → toggle channel filter
+    row.querySelector('.channel').addEventListener('click', e => {
+      e.stopPropagation();
+      const channel = e.currentTarget.dataset.channel;
+      channelFilter = channelFilter === channel ? null : channel;
+      applyFilters();
     });
 
     return row;
@@ -831,7 +934,14 @@
     document.getElementById('lightbox').addEventListener('click', closeLightbox);
     document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
     document.addEventListener('keydown', e => {
-      if (e.key === 'Escape') closeLightbox();
+      if (e.key === 'Escape') {
+        if (document.getElementById('lightbox').classList.contains('active')) {
+          closeLightbox();
+        } else if (channelFilter) {
+          channelFilter = null;
+          applyFilters();
+        }
+      }
     });
   }
 
