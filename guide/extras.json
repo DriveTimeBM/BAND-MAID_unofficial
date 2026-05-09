@@ -112,8 +112,8 @@
         "TAB_COUNT in the script may need adjustment for browsers other than Edge",
         "Occasionally the Spotify embed <b>Play</b> button is <i>dead</i>. To fix, just select the next track manually and press play."
       ],
-      "installUrl": "https://www.autohotkey.com/",
-      "downloadUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk",
+      "downloadUrl": "https://www.autohotkey.com/",
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk",
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/spotify-playlist.gif",
       "videoId": null
     }

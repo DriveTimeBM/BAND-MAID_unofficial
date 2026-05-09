@@ -127,11 +127,12 @@
             ]
         },
         {
-            "category": "Mashup",
+            "category": "Mashup/Remix",
             "color": "#b4a4c4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
                     "\\bmashup\\b",
+                    "\\bremix\\b",
                     "\\bmixed\\s*video\\b"
                 ]}
             ]
