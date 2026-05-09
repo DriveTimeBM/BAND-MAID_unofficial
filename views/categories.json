@@ -131,10 +131,7 @@
             "color": "#b4a4c4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
-                    "\\binterview\\b",
-                    "\\bsit[-\\s]down\\b",
-                    "\\btalks?\\s+with\\b",
-                    "\\bQ\\s*&\\s*A\\b"
+                    "\\bmashup\\b"
                 ]}
             ]
         },
