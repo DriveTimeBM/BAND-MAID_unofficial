@@ -127,7 +127,7 @@
             ]
         },
         {
-            "category": "Interview",
+            "category": "Mashup",
             "color": "#b4a4c4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
