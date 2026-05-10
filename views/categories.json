@@ -155,7 +155,8 @@
                   ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
-                    "podcast"
+                    "podcast",
+                    "\\blive\\s*chat\\b"
                 ]}
             ]
         },
