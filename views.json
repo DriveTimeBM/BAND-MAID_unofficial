@@ -133,7 +133,7 @@
   },  
   {
     "id": "mini-player",
-    "name": "Mini-Player (audio) *new*",
+    "name": "Mini-Player (audio)",
     "file": "views/audio-player.html",
     "nav": "menu",
     "icon": "🎧"
@@ -292,5 +292,5 @@
     "icon": "📢"
   },
   { "id": "guide",  "name": "User Guide",  "file": "views/guide.html",  "nav": "menu", "icon": "📖" },
-  { "id": "extras",  "name": "Extras *new*",  "file": "views/extras.html",  "nav": "menu", "icon": "🛠️" }
+  { "id": "extras",  "name": "Extras",  "file": "views/extras.html",  "nav": "menu", "icon": "🛠️" }
 ]
