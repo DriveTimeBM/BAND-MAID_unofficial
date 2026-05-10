@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/kgIMz3ibHiU/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Zen (Official Teaser Video)  MISA Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 35,623 | Yesterday: 5\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI vs Dany  part 2 — Views: 15,029 | Yesterday: 5\nBAND-MAID / Protect You (Official Teaser Video) — Views: 59,354 | Yesterday: 5",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Manners — Spotify: 1,683,123 | Played Live: 43\nanemone — Spotify: 1,504,171 | Played Live: 43\nfrom now on — Spotify: 1,381,401 | Played Live: 72",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Protect You (Official Teaser Video)"
+                                              "text":  "anemone"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  MISA Ver.  MAPPAアニメ「全修。」オープニングテーマソング",
+                                              "text":  "from now on"
+                                          },
+                                          {
+                                              "text":  "Manners",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI vs Dany  part 2"
                                           }
                                       ]
                       }
