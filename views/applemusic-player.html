@@ -30,7 +30,7 @@
     margin: 0 auto;
     padding: 1rem;
   }
-  header {
+  header.topbar {
     display: flex;
     flex-wrap: wrap;
     align-items: center;
@@ -93,12 +93,14 @@
   }
   .layout {
     display: grid;
-    grid-template-columns: 1fr 400px;
+    grid-template-columns: 1fr 420px;
     gap: 1rem;
   }
   @media (max-width: 800px) {
     .layout { grid-template-columns: 1fr; }
   }
+
+  /* Player panel */
   .player-panel {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -109,29 +111,55 @@
     flex-direction: column;
   }
   .now-playing {
+    display: flex;
+    gap: 0.9rem;
     margin-bottom: 0.75rem;
     padding-bottom: 0.75rem;
     border-bottom: 1px solid var(--border);
   }
+  .np-cover {
+    width: 96px;
+    height: 96px;
+    border-radius: 8px;
+    background: var(--panel-2);
+    flex-shrink: 0;
+    overflow: hidden;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border);
+  }
+  .np-cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .np-cover .placeholder {
+    color: var(--text-dim);
+    font-size: 1.6rem;
+  }
+  .np-text { flex: 1; min-width: 0; }
   .now-playing .label {
     color: var(--text-dim);
-    font-size: 0.75rem;
+    font-size: 0.72rem;
     text-transform: uppercase;
     letter-spacing: 0.08em;
   }
   .now-playing .title {
-    font-size: 1.1rem;
-    margin-top: 0.25rem;
+    font-size: 1.15rem;
+    margin-top: 0.2rem;
     color: var(--accent);
+    overflow-wrap: anywhere;
   }
   .now-playing .album-line {
     color: var(--text-dim);
     font-size: 0.85rem;
-    margin-top: 0.15rem;
+    margin-top: 0.2rem;
   }
   .now-playing .alt {
     color: var(--text-dim);
-    font-size: 0.9rem;
+    font-size: 0.88rem;
     margin-top: 0.15rem;
     font-style: italic;
   }
@@ -160,6 +188,8 @@
     padding: 2rem 1rem;
     font-style: italic;
   }
+
+  /* Song list */
   .song-list {
     background: var(--panel);
     border: 1px solid var(--border);
@@ -167,7 +197,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    max-height: 75vh;
+    max-height: 78vh;
   }
   .list-header {
     padding: 0.6rem 0.9rem;
@@ -185,63 +215,90 @@
     padding: 0.2rem 0.5rem;
     font-size: 0.72rem;
   }
-  .list-scroll {
-    overflow-y: auto;
-    flex: 1;
-  }
-  .album-group {
-    border-bottom: 1px solid var(--border);
-  }
+  .list-scroll { overflow-y: auto; flex: 1; }
+  .album-group { border-bottom: 1px solid var(--border); }
   .album-group:last-child { border-bottom: none; }
   .album-header {
-    padding: 0.6rem 0.9rem;
+    padding: 0.55rem 0.75rem;
     background: var(--panel-2);
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.7rem;
     user-select: none;
     transition: background 0.1s;
   }
   .album-header:hover { background: #232323; }
-  .album-header .album-name {
+  .cover {
+    border-radius: 4px;
+    background: var(--panel);
+    overflow: hidden;
+    flex-shrink: 0;
+    border: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  .cover.album-size { width: 44px; height: 44px; }
+  .cover.song-size  { width: 32px; height: 32px; }
+  .cover img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    display: block;
+  }
+  .cover .placeholder {
+    color: var(--text-dim);
+    font-size: 0.9rem;
+  }
+  .album-info {
+    flex: 1;
+    min-width: 0;
+    display: flex;
+    flex-direction: column;
+    gap: 0.1rem;
+  }
+  .album-name {
     color: var(--accent);
     font-weight: 600;
     font-size: 0.92rem;
-    flex: 1;
     display: flex;
     align-items: center;
-    gap: 0.4rem;
+    gap: 0.35rem;
+    overflow-wrap: anywhere;
   }
-  .album-header .chev {
+  .chev {
     color: var(--text-dim);
     font-size: 0.75rem;
     transition: transform 0.15s;
     display: inline-block;
     width: 1em;
+    flex-shrink: 0;
   }
   .album-group.collapsed .chev { transform: rotate(-90deg); }
-  .album-header .count {
+  .album-count {
     color: var(--text-dim);
-    font-size: 0.72rem;
+    font-size: 0.7rem;
   }
   .album-group.collapsed .album-tracks { display: none; }
   .song-item {
-    padding: 0.5rem 0.9rem 0.5rem 1.8rem;
+    padding: 0.4rem 0.9rem 0.4rem 1.4rem;
     border-top: 1px solid var(--border);
     cursor: pointer;
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    gap: 0.5rem;
+    gap: 0.6rem;
     transition: background 0.1s;
   }
   .song-item:hover { background: var(--panel-2); }
   .song-item.active {
     background: rgba(200, 169, 110, 0.12);
     border-left: 3px solid var(--accent);
-    padding-left: calc(1.8rem - 3px);
+    padding-left: calc(1.4rem - 3px);
+  }
+  .song-text {
+    flex: 1;
+    min-width: 0;
   }
   .song-name {
     color: var(--text);
@@ -282,7 +339,7 @@
 </head>
 <body>
 <div class="app">
-  <header>
+  <header class="topbar">
     <h1>BAND-MAID Apple Music Player <span class="sub" id="trackCount"></span></h1>
     <div class="controls">
       <label for="countrySel">Country</label>
@@ -296,10 +353,13 @@
   <div class="layout">
     <div class="player-panel">
       <div class="now-playing">
-        <div class="label">Now Playing</div>
-        <div class="title" id="npTitle">— select a song —</div>
-        <div class="album-line" id="npAlbum"></div>
-        <div class="alt" id="npAlt"></div>
+        <div class="np-cover" id="npCover"><span class="placeholder">♪</span></div>
+        <div class="np-text">
+          <div class="label">Now Playing</div>
+          <div class="title" id="npTitle">— select a song —</div>
+          <div class="album-line" id="npAlbum"></div>
+          <div class="alt" id="npAlt"></div>
+        </div>
       </div>
       <div class="embed-wrap" id="embedWrap">
         <div class="empty">Pick a song from the list to start playing.<br><br>Apple Music previews play ~90 seconds.<br>Sign in to the Apple Music embed to play full tracks.</div>
@@ -418,6 +478,7 @@
   const searchInput = $('searchInput');
   const songList = $('songList');
   const embedWrap = $('embedWrap');
+  const npCover = $('npCover');
   const npTitle = $('npTitle');
   const npAlbum = $('npAlbum');
   const npAlt = $('npAlt');
@@ -444,6 +505,10 @@
     if (state.currentSong) playSong(state.currentSong);
   });
 
+  // Tally images per album to pick the most common one for the album header.
+  // This handles cases where some tracks have their own single covers — the
+  // album header still shows the canonical album art (i.e. the cover used by
+  // the most tracks on that album).
   function buildGroups() {
     const map = new Map();
     state.rawSongs.forEach(song => {
@@ -455,6 +520,8 @@
           name: hasAlbum ? song.Album : 'Singles',
           songs: [],
           sortId: hasAlbum ? null : Number.MAX_SAFE_INTEGER,
+          image: null,
+          _imageCounts: new Map(),
         });
       }
       const grp = map.get(key);
@@ -462,6 +529,22 @@
       if (grp.sortId === null && song.parsed && song.parsed.albumId) {
         grp.sortId = parseInt(song.parsed.albumId, 10);
       }
+      if (song.Image && song.Image.trim() !== '') {
+        const url = song.Image;
+        grp._imageCounts.set(url, (grp._imageCounts.get(url) || 0) + 1);
+      }
+    });
+
+    // Pick the most-common image for each group as the album cover
+    map.forEach(grp => {
+      if (grp._imageCounts.size > 0) {
+        let bestUrl = null, bestCount = -1;
+        grp._imageCounts.forEach((count, url) => {
+          if (count > bestCount) { bestCount = count; bestUrl = url; }
+        });
+        grp.image = bestUrl;
+      }
+      delete grp._imageCounts;
     });
 
     const groups = [...map.values()].sort((a, b) => {
@@ -483,6 +566,15 @@
     })[c]);
   }
 
+  // Build a cover element. sizeClass is 'album-size' or 'song-size'.
+  // Returns an HTML string. Uses onerror to swap to placeholder on load failure.
+  function coverHtml(imgUrl, sizeClass) {
+    if (imgUrl) {
+      return `<div class="cover ${sizeClass}"><img src="${escapeHtml(imgUrl)}" alt="" loading="lazy" onerror="this.parentNode.innerHTML='<span class=&quot;placeholder&quot;>♪</span>'"></div>`;
+    }
+    return `<div class="cover ${sizeClass}"><span class="placeholder">♪</span></div>`;
+  }
+
   function renderList() {
     const q = searchInput.value.trim().toLowerCase();
     const songMatches = s => {
@@ -499,7 +591,6 @@
     const flatFiltered = [];
 
     state.groups.forEach(group => {
-      // If album name matches query, include all its songs; otherwise filter by song.
       const albumNameMatches = q && group.name.toLowerCase().includes(q);
       const matching = albumNameMatches ? group.songs : group.songs.filter(songMatches);
       if (matching.length === 0) return;
@@ -515,8 +606,11 @@
       const headerEl = document.createElement('div');
       headerEl.className = 'album-header';
       headerEl.innerHTML = `
-        <span class="album-name"><span class="chev">▾</span>${escapeHtml(group.name)}</span>
-        <span class="count">${matching.length} ${matching.length === 1 ? 'track' : 'tracks'}</span>
+        ${coverHtml(group.image, 'album-size')}
+        <div class="album-info">
+          <div class="album-name"><span class="chev">▾</span>${escapeHtml(group.name)}</div>
+          <div class="album-count">${matching.length} ${matching.length === 1 ? 'track' : 'tracks'}</div>
+        </div>
       `;
       headerEl.addEventListener('click', () => {
         if (state.collapsed.has(group.key)) state.collapsed.delete(group.key);
@@ -533,24 +627,22 @@
         const isActive = state.currentSong === song;
         item.className = 'song-item' + (isActive ? ' active' : '');
         item.dataset.songId = song._id;
-        const left = document.createElement('div');
-        const nameEl = document.createElement('div');
-        nameEl.className = 'song-name';
-        nameEl.textContent = song.SongName;
-        left.appendChild(nameEl);
-        if (song.AltName) {
-          const altEl = document.createElement('div');
-          altEl.className = 'song-alt';
-          altEl.textContent = song.AltName;
-          left.appendChild(altEl);
-        }
-        const meta = document.createElement('div');
-        meta.className = 'song-meta';
-        meta.textContent = song.parsed
+
+        // Per-song cover: falls back to the album's cover if the song has no
+        // image of its own, then to placeholder.
+        const songImg = (song.Image && song.Image.trim() !== '') ? song.Image : group.image;
+        const metaText = song.parsed
           ? (song.parsed.kind === 'song' ? 'song' : (song.parsed.songId ? 'track' : 'album'))
           : '';
-        item.appendChild(left);
-        item.appendChild(meta);
+
+        item.innerHTML = `
+          ${coverHtml(songImg, 'song-size')}
+          <div class="song-text">
+            <div class="song-name">${escapeHtml(song.SongName)}</div>
+            ${song.AltName ? `<div class="song-alt">${escapeHtml(song.AltName)}</div>` : ''}
+          </div>
+          <div class="song-meta">${escapeHtml(metaText)}</div>
+        `;
         tracksEl.appendChild(item);
       });
       groupEl.appendChild(tracksEl);
@@ -586,6 +678,22 @@
     searchTimer = setTimeout(renderList, 120);
   });
 
+  function setNowPlayingCover(imgUrl) {
+    npCover.innerHTML = '';
+    if (imgUrl) {
+      const img = document.createElement('img');
+      img.alt = '';
+      img.loading = 'eager';
+      img.src = imgUrl;
+      img.onerror = () => {
+        npCover.innerHTML = '<span class="placeholder">♪</span>';
+      };
+      npCover.appendChild(img);
+    } else {
+      npCover.innerHTML = '<span class="placeholder">♪</span>';
+    }
+  }
+
   function playSong(song) {
     state.currentSong = song;
     const embedUrl = buildEmbedUrl(song.parsed, state.country);
@@ -604,9 +712,18 @@
     npTitle.textContent = song.SongName;
     npAlbum.textContent = song.Album ? `from ${song.Album}` : '(single)';
     npAlt.textContent = song.AltName || '';
+
+    // Now Playing cover: song's own Image, falling back to its album's image
+    let coverUrl = (song.Image && song.Image.trim() !== '') ? song.Image : null;
+    if (!coverUrl) {
+      const groupKey = song.Album && song.Album.trim() !== '' ? song.Album : SINGLES_KEY;
+      const grp = state.groups.find(g => g.key === groupKey);
+      coverUrl = grp ? grp.image : null;
+    }
+    setNowPlayingCover(coverUrl);
+
     openBtn.dataset.url = buildOpenUrl(song.parsed, state.country) || '';
 
-    // Auto-expand the album so the active row is visible
     const groupKey = song.Album && song.Album.trim() !== '' ? song.Album : SINGLES_KEY;
     if (state.collapsed.has(groupKey)) {
       state.collapsed.delete(groupKey);
