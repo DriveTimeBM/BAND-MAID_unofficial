@@ -8,12 +8,12 @@
   "allowEmpty": true,
   "logoChar": "📍",
   "fImage": "Image",
-  "fPrimary": "Item",
-  "fSecondary": "Milestone",
-  "fSummary": "",
+  "fPrimary": "Category",
+  "fSecondary": "Item",
+  "fSummary": "Milestone",
   "fUrl": "",
   "sortField": "",
   "sortDir": "asc",
-  "groupField": "Categoty",
+  "groupField": "Category",
   "groupDir": "desc"
 }
