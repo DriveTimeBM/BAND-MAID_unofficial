@@ -67,9 +67,7 @@
     font-size: 0.9rem;
     font-family: inherit;
   }
-  input[type="text"] {
-    min-width: 220px;
-  }
+  input[type="text"] { min-width: 220px; }
   select:focus, input:focus, button:focus {
     outline: none;
     border-color: var(--accent);
@@ -81,16 +79,6 @@
   button:hover {
     border-color: var(--accent);
     color: var(--accent);
-  }
-  button.primary {
-    background: var(--accent);
-    color: #0a0a0a;
-    border-color: var(--accent);
-    font-weight: 600;
-  }
-  button.primary:hover {
-    background: var(--accent-hover);
-    color: #0a0a0a;
   }
   button.active {
     background: var(--accent);
@@ -105,7 +93,7 @@
   }
   .layout {
     display: grid;
-    grid-template-columns: 1fr 360px;
+    grid-template-columns: 1fr 400px;
     gap: 1rem;
   }
   @media (max-width: 800px) {
@@ -136,10 +124,16 @@
     margin-top: 0.25rem;
     color: var(--accent);
   }
+  .now-playing .album-line {
+    color: var(--text-dim);
+    font-size: 0.85rem;
+    margin-top: 0.15rem;
+  }
   .now-playing .alt {
     color: var(--text-dim);
     font-size: 0.9rem;
     margin-top: 0.15rem;
+    font-style: italic;
   }
   .embed-wrap {
     flex: 1;
@@ -173,7 +167,7 @@
     overflow: hidden;
     display: flex;
     flex-direction: column;
-    max-height: 70vh;
+    max-height: 75vh;
   }
   .list-header {
     padding: 0.6rem 0.9rem;
@@ -184,14 +178,58 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    gap: 0.5rem;
+  }
+  .list-header .toggles { display: flex; gap: 0.3rem; }
+  .list-header button {
+    padding: 0.2rem 0.5rem;
+    font-size: 0.72rem;
   }
   .list-scroll {
     overflow-y: auto;
     flex: 1;
   }
-  .song-item {
-    padding: 0.55rem 0.9rem;
+  .album-group {
     border-bottom: 1px solid var(--border);
+  }
+  .album-group:last-child { border-bottom: none; }
+  .album-header {
+    padding: 0.6rem 0.9rem;
+    background: var(--panel-2);
+    cursor: pointer;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 0.5rem;
+    user-select: none;
+    transition: background 0.1s;
+  }
+  .album-header:hover { background: #232323; }
+  .album-header .album-name {
+    color: var(--accent);
+    font-weight: 600;
+    font-size: 0.92rem;
+    flex: 1;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+  }
+  .album-header .chev {
+    color: var(--text-dim);
+    font-size: 0.75rem;
+    transition: transform 0.15s;
+    display: inline-block;
+    width: 1em;
+  }
+  .album-group.collapsed .chev { transform: rotate(-90deg); }
+  .album-header .count {
+    color: var(--text-dim);
+    font-size: 0.72rem;
+  }
+  .album-group.collapsed .album-tracks { display: none; }
+  .song-item {
+    padding: 0.5rem 0.9rem 0.5rem 1.8rem;
+    border-top: 1px solid var(--border);
     cursor: pointer;
     display: flex;
     justify-content: space-between;
@@ -199,18 +237,15 @@
     gap: 0.5rem;
     transition: background 0.1s;
   }
-  .song-item:last-child { border-bottom: none; }
-  .song-item:hover {
-    background: var(--panel-2);
-  }
+  .song-item:hover { background: var(--panel-2); }
   .song-item.active {
     background: rgba(200, 169, 110, 0.12);
     border-left: 3px solid var(--accent);
-    padding-left: calc(0.9rem - 3px);
+    padding-left: calc(1.8rem - 3px);
   }
   .song-name {
     color: var(--text);
-    font-size: 0.92rem;
+    font-size: 0.9rem;
   }
   .song-item.active .song-name {
     color: var(--accent);
@@ -218,12 +253,13 @@
   }
   .song-alt {
     color: var(--text-dim);
-    font-size: 0.78rem;
+    font-size: 0.76rem;
     margin-top: 0.1rem;
+    font-style: italic;
   }
   .song-meta {
     color: var(--text-dim);
-    font-size: 0.7rem;
+    font-size: 0.68rem;
     flex-shrink: 0;
   }
   .footer {
@@ -238,21 +274,6 @@
     color: var(--accent);
     text-decoration: none;
   }
-  .badge {
-    display: inline-block;
-    font-size: 0.65rem;
-    background: var(--accent);
-    color: #0a0a0a;
-    padding: 0.1rem 0.4rem;
-    border-radius: 3px;
-    margin-left: 0.4rem;
-    font-weight: 600;
-  }
-  .scroll-hint {
-    color: var(--text-dim);
-    font-size: 0.7rem;
-  }
-  /* scrollbar */
   .list-scroll::-webkit-scrollbar { width: 8px; }
   .list-scroll::-webkit-scrollbar-track { background: var(--panel); }
   .list-scroll::-webkit-scrollbar-thumb { background: var(--border); border-radius: 4px; }
@@ -266,9 +287,9 @@
     <div class="controls">
       <label for="countrySel">Country</label>
       <select id="countrySel" title="Apple Music storefront"></select>
-      <input type="text" id="searchInput" placeholder="Search songs...">
-      <button id="shuffleBtn" title="Shuffle play">🔀 Shuffle</button>
-      <button id="modeBtn" title="Toggle auto-advance mode">↻ Sequential</button>
+      <input type="text" id="searchInput" placeholder="Search songs / albums...">
+      <button id="shuffleBtn" title="Play a random song">🔀 Shuffle</button>
+      <button id="modeBtn" title="Toggle next-track mode">↻ Sequential</button>
     </div>
   </header>
 
@@ -277,6 +298,7 @@
       <div class="now-playing">
         <div class="label">Now Playing</div>
         <div class="title" id="npTitle">— select a song —</div>
+        <div class="album-line" id="npAlbum"></div>
         <div class="alt" id="npAlt"></div>
       </div>
       <div class="embed-wrap" id="embedWrap">
@@ -292,7 +314,10 @@
     <div class="song-list">
       <div class="list-header">
         <span id="listHeader">All songs</span>
-        <span class="scroll-hint">Click to play</span>
+        <span class="toggles">
+          <button id="expandAllBtn" title="Expand all albums">Expand all</button>
+          <button id="collapseAllBtn" title="Collapse all albums">Collapse all</button>
+        </span>
       </div>
       <div class="list-scroll" id="songList"></div>
     </div>
@@ -300,7 +325,7 @@
 
   <div class="footer">
     Source: <a href="https://drivetimebm.github.io/BAND-MAID_gpt/songs/applemusic.json" target="_blank" rel="noopener">applemusic.json</a>
-    &nbsp;·&nbsp; Country preference saved locally.
+    &nbsp;·&nbsp; Country &amp; collapsed albums saved locally.
   </div>
 </div>
 
@@ -309,137 +334,92 @@
   'use strict';
 
   const JSON_URL = 'https://drivetimebm.github.io/BAND-MAID_gpt/songs/applemusic.json';
-  const LS_COUNTRY = 'bm_applemusic_country';
-  const LS_MODE    = 'bm_applemusic_mode'; // 'sequential' | 'shuffle-auto' | 'none'
+  const LS_COUNTRY   = 'bm_applemusic_country';
+  const LS_MODE      = 'bm_applemusic_mode';
+  const LS_COLLAPSED = 'bm_applemusic_collapsed_albums';
 
-  // Apple Music storefronts (common set, can be expanded)
   const COUNTRIES = [
-    ['us', 'United States'],
-    ['ca', 'Canada'],
-    ['jp', 'Japan'],
-    ['gb', 'United Kingdom'],
-    ['au', 'Australia'],
-    ['de', 'Germany'],
-    ['fr', 'France'],
-    ['it', 'Italy'],
-    ['es', 'Spain'],
-    ['nl', 'Netherlands'],
-    ['se', 'Sweden'],
-    ['no', 'Norway'],
-    ['dk', 'Denmark'],
-    ['fi', 'Finland'],
-    ['ie', 'Ireland'],
-    ['nz', 'New Zealand'],
-    ['mx', 'Mexico'],
-    ['br', 'Brazil'],
-    ['ar', 'Argentina'],
-    ['cl', 'Chile'],
-    ['pl', 'Poland'],
-    ['cz', 'Czech Republic'],
-    ['at', 'Austria'],
-    ['be', 'Belgium'],
-    ['ch', 'Switzerland'],
-    ['pt', 'Portugal'],
-    ['gr', 'Greece'],
-    ['tr', 'Turkey'],
-    ['ru', 'Russia'],
-    ['ua', 'Ukraine'],
-    ['kr', 'South Korea'],
-    ['tw', 'Taiwan'],
-    ['hk', 'Hong Kong'],
-    ['sg', 'Singapore'],
-    ['my', 'Malaysia'],
-    ['th', 'Thailand'],
-    ['ph', 'Philippines'],
-    ['id', 'Indonesia'],
-    ['vn', 'Vietnam'],
-    ['in', 'India'],
-    ['za', 'South Africa'],
-    ['ae', 'United Arab Emirates'],
-    ['sa', 'Saudi Arabia'],
-    ['il', 'Israel'],
+    ['us','United States'],['ca','Canada'],['jp','Japan'],['gb','United Kingdom'],
+    ['au','Australia'],['de','Germany'],['fr','France'],['it','Italy'],['es','Spain'],
+    ['nl','Netherlands'],['se','Sweden'],['no','Norway'],['dk','Denmark'],['fi','Finland'],
+    ['ie','Ireland'],['nz','New Zealand'],['mx','Mexico'],['br','Brazil'],['ar','Argentina'],
+    ['cl','Chile'],['pl','Poland'],['cz','Czech Republic'],['at','Austria'],['be','Belgium'],
+    ['ch','Switzerland'],['pt','Portugal'],['gr','Greece'],['tr','Turkey'],['ru','Russia'],
+    ['ua','Ukraine'],['kr','South Korea'],['tw','Taiwan'],['hk','Hong Kong'],['sg','Singapore'],
+    ['my','Malaysia'],['th','Thailand'],['ph','Philippines'],['id','Indonesia'],['vn','Vietnam'],
+    ['in','India'],['za','South Africa'],['ae','United Arab Emirates'],['sa','Saudi Arabia'],
+    ['il','Israel'],
   ];
 
-  // Map of common navigator.language codes to Apple storefronts
   function detectCountry() {
     const saved = localStorage.getItem(LS_COUNTRY);
     if (saved && COUNTRIES.some(c => c[0] === saved)) return saved;
-
     const lang = (navigator.language || 'en-US').toLowerCase();
     const region = lang.split('-')[1];
-    if (region) {
-      const code = region.toLowerCase();
-      if (COUNTRIES.some(c => c[0] === code)) return code;
-    }
-    // Fallback to language-only common mappings
+    if (region && COUNTRIES.some(c => c[0] === region.toLowerCase())) return region.toLowerCase();
     const langOnly = lang.split('-')[0];
-    const langMap = { ja: 'jp', ko: 'kr', de: 'de', fr: 'fr', es: 'es', it: 'it', pt: 'br', nl: 'nl', sv: 'se', no: 'no', da: 'dk', fi: 'fi', pl: 'pl', cs: 'cz', ru: 'ru', uk: 'ua', tr: 'tr', el: 'gr', he: 'il', ar: 'ae', zh: 'tw', th: 'th', vi: 'vn', id: 'id', ms: 'my' };
+    const langMap = { ja:'jp', ko:'kr', de:'de', fr:'fr', es:'es', it:'it', pt:'br', nl:'nl', sv:'se', no:'no', da:'dk', fi:'fi', pl:'pl', cs:'cz', ru:'ru', uk:'ua', tr:'tr', el:'gr', he:'il', ar:'ae', zh:'tw', th:'th', vi:'vn', id:'id', ms:'my' };
     if (langMap[langOnly]) return langMap[langOnly];
     return 'us';
   }
 
-  // Parse a music.apple.com URL into { albumId, songId, urlKind }
-  // Handles:
-  //   /<cc>/album/<slug>/<albumId>?i=<songId>      -> track within album
-  //   /<cc>/album/<slug>/<albumId>                 -> album (or first track)
-  //   /<cc>/song/<slug>/<songId>                   -> standalone song
   function parseAppleUrl(url) {
     try {
       const u = new URL(url);
-      const parts = u.pathname.split('/').filter(Boolean); // [cc, kind, slug, id]
+      const parts = u.pathname.split('/').filter(Boolean);
       const kind = parts[1];
       const lastId = parts[parts.length - 1];
       const songIdFromQuery = u.searchParams.get('i');
-
-      if (kind === 'song') {
-        return { kind: 'song', songId: lastId, albumId: null };
-      }
-      if (kind === 'album') {
-        return { kind: 'album', albumId: lastId, songId: songIdFromQuery || null };
-      }
+      if (kind === 'song') return { kind:'song', songId:lastId, albumId:null };
+      if (kind === 'album') return { kind:'album', albumId:lastId, songId:songIdFromQuery || null };
       return null;
     } catch { return null; }
   }
 
-  // Build embed.music.apple.com URL for current country
   function buildEmbedUrl(parsed, country) {
     if (!parsed) return null;
-    if (parsed.kind === 'song') {
-      return `https://embed.music.apple.com/${country}/song/${parsed.songId}`;
-    }
-    // album kind
+    if (parsed.kind === 'song') return `https://embed.music.apple.com/${country}/song/${parsed.songId}`;
     let url = `https://embed.music.apple.com/${country}/album/${parsed.albumId}`;
     if (parsed.songId) url += `?i=${parsed.songId}`;
     return url;
   }
-
-  // Build a normal music.apple.com URL for "Open in Apple Music"
   function buildOpenUrl(parsed, country) {
     if (!parsed) return null;
-    if (parsed.kind === 'song') {
-      return `https://music.apple.com/${country}/song/${parsed.songId}`;
-    }
+    if (parsed.kind === 'song') return `https://music.apple.com/${country}/song/${parsed.songId}`;
     let url = `https://music.apple.com/${country}/album/${parsed.albumId}`;
     if (parsed.songId) url += `?i=${parsed.songId}`;
     return url;
   }
 
-  // --- State ---
+  const SINGLES_KEY = '__SINGLES__';
+
   const state = {
-    songs: [],          // raw from JSON, each augmented with parsed
-    filtered: [],       // after search
+    rawSongs: [],
+    groups: [],
+    flatFiltered: [],
     country: detectCountry(),
-    currentIdx: -1,     // index into state.filtered
-    mode: localStorage.getItem(LS_MODE) || 'sequential', // 'sequential' | 'shuffle-auto' | 'none'
+    currentSong: null,
+    mode: localStorage.getItem(LS_MODE) || 'sequential',
+    collapsed: loadCollapsed(),
   };
 
-  // --- DOM refs ---
+  function loadCollapsed() {
+    try {
+      const raw = localStorage.getItem(LS_COLLAPSED);
+      return raw ? new Set(JSON.parse(raw)) : new Set();
+    } catch { return new Set(); }
+  }
+  function saveCollapsed() {
+    localStorage.setItem(LS_COLLAPSED, JSON.stringify([...state.collapsed]));
+  }
+
   const $ = id => document.getElementById(id);
   const countrySel = $('countrySel');
   const searchInput = $('searchInput');
   const songList = $('songList');
   const embedWrap = $('embedWrap');
   const npTitle = $('npTitle');
+  const npAlbum = $('npAlbum');
   const npAlt = $('npAlt');
   const trackCount = $('trackCount');
   const listHeader = $('listHeader');
@@ -448,8 +428,9 @@
   const prevBtn = $('prevBtn');
   const nextBtn = $('nextBtn');
   const openBtn = $('openBtn');
+  const expandAllBtn = $('expandAllBtn');
+  const collapseAllBtn = $('collapseAllBtn');
 
-  // --- Populate country dropdown ---
   COUNTRIES.forEach(([code, name]) => {
     const opt = document.createElement('option');
     opt.value = code;
@@ -457,101 +438,161 @@
     countrySel.appendChild(opt);
   });
   countrySel.value = state.country;
-
   countrySel.addEventListener('change', () => {
     state.country = countrySel.value;
     localStorage.setItem(LS_COUNTRY, state.country);
-    // Re-render current player with new storefront
-    if (state.currentIdx >= 0) playIndex(state.currentIdx);
+    if (state.currentSong) playSong(state.currentSong);
   });
 
-  // --- Render song list ---
+  function buildGroups() {
+    const map = new Map();
+    state.rawSongs.forEach(song => {
+      const hasAlbum = song.Album && song.Album.trim() !== '';
+      const key = hasAlbum ? song.Album : SINGLES_KEY;
+      if (!map.has(key)) {
+        map.set(key, {
+          key,
+          name: hasAlbum ? song.Album : 'Singles',
+          songs: [],
+          sortId: hasAlbum ? null : Number.MAX_SAFE_INTEGER,
+        });
+      }
+      const grp = map.get(key);
+      grp.songs.push(song);
+      if (grp.sortId === null && song.parsed && song.parsed.albumId) {
+        grp.sortId = parseInt(song.parsed.albumId, 10);
+      }
+    });
+
+    const groups = [...map.values()].sort((a, b) => {
+      const aId = a.sortId ?? Number.MAX_SAFE_INTEGER - 1;
+      const bId = b.sortId ?? Number.MAX_SAFE_INTEGER - 1;
+      if (aId !== bId) return aId - bId;
+      return a.name.localeCompare(b.name);
+    });
+
+    const collator = new Intl.Collator(undefined, { sensitivity: 'base', numeric: true });
+    groups.forEach(g => g.songs.sort((a, b) => collator.compare(a.SongName, b.SongName)));
+
+    state.groups = groups;
+  }
+
+  function escapeHtml(s) {
+    return String(s).replace(/[&<>"']/g, c => ({
+      '&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'
+    })[c]);
+  }
+
   function renderList() {
+    const q = searchInput.value.trim().toLowerCase();
+    const songMatches = s => {
+      if (!q) return true;
+      return s.SongName.toLowerCase().includes(q)
+          || (s.AltName && s.AltName.toLowerCase().includes(q))
+          || (s.Album && s.Album.toLowerCase().includes(q));
+    };
+
     songList.innerHTML = '';
-    if (state.filtered.length === 0) {
+    const frag = document.createDocumentFragment();
+    let visibleCount = 0;
+    let visibleAlbums = 0;
+    const flatFiltered = [];
+
+    state.groups.forEach(group => {
+      // If album name matches query, include all its songs; otherwise filter by song.
+      const albumNameMatches = q && group.name.toLowerCase().includes(q);
+      const matching = albumNameMatches ? group.songs : group.songs.filter(songMatches);
+      if (matching.length === 0) return;
+
+      visibleAlbums++;
+      visibleCount += matching.length;
+      flatFiltered.push(...matching);
+
+      const groupEl = document.createElement('div');
+      groupEl.className = 'album-group' + (state.collapsed.has(group.key) ? ' collapsed' : '');
+      groupEl.dataset.key = group.key;
+
+      const headerEl = document.createElement('div');
+      headerEl.className = 'album-header';
+      headerEl.innerHTML = `
+        <span class="album-name"><span class="chev">▾</span>${escapeHtml(group.name)}</span>
+        <span class="count">${matching.length} ${matching.length === 1 ? 'track' : 'tracks'}</span>
+      `;
+      headerEl.addEventListener('click', () => {
+        if (state.collapsed.has(group.key)) state.collapsed.delete(group.key);
+        else state.collapsed.add(group.key);
+        groupEl.classList.toggle('collapsed');
+        saveCollapsed();
+      });
+      groupEl.appendChild(headerEl);
+
+      const tracksEl = document.createElement('div');
+      tracksEl.className = 'album-tracks';
+      matching.forEach(song => {
+        const item = document.createElement('div');
+        const isActive = state.currentSong === song;
+        item.className = 'song-item' + (isActive ? ' active' : '');
+        item.dataset.songId = song._id;
+        const left = document.createElement('div');
+        const nameEl = document.createElement('div');
+        nameEl.className = 'song-name';
+        nameEl.textContent = song.SongName;
+        left.appendChild(nameEl);
+        if (song.AltName) {
+          const altEl = document.createElement('div');
+          altEl.className = 'song-alt';
+          altEl.textContent = song.AltName;
+          left.appendChild(altEl);
+        }
+        const meta = document.createElement('div');
+        meta.className = 'song-meta';
+        meta.textContent = song.parsed
+          ? (song.parsed.kind === 'song' ? 'song' : (song.parsed.songId ? 'track' : 'album'))
+          : '';
+        item.appendChild(left);
+        item.appendChild(meta);
+        tracksEl.appendChild(item);
+      });
+      groupEl.appendChild(tracksEl);
+      frag.appendChild(groupEl);
+    });
+
+    if (visibleCount === 0) {
       const div = document.createElement('div');
       div.className = 'empty';
       div.textContent = 'No matches.';
       songList.appendChild(div);
-      return;
+    } else {
+      songList.appendChild(frag);
     }
-    const frag = document.createDocumentFragment();
-    state.filtered.forEach((song, i) => {
-      const item = document.createElement('div');
-      item.className = 'song-item' + (i === state.currentIdx ? ' active' : '');
-      item.dataset.idx = i;
-      const left = document.createElement('div');
-      const nameEl = document.createElement('div');
-      nameEl.className = 'song-name';
-      nameEl.textContent = song.SongName;
-      left.appendChild(nameEl);
-      if (song.AltName) {
-        const altEl = document.createElement('div');
-        altEl.className = 'song-alt';
-        altEl.textContent = song.AltName;
-        left.appendChild(altEl);
-      }
-      const meta = document.createElement('div');
-      meta.className = 'song-meta';
-      meta.textContent = song.parsed ? (song.parsed.kind === 'song' ? 'song' : (song.parsed.songId ? 'track' : 'album')) : '';
-      item.appendChild(left);
-      item.appendChild(meta);
-      frag.appendChild(item);
-    });
-    songList.appendChild(frag);
-    listHeader.textContent = state.filtered.length === state.songs.length
-      ? `All songs (${state.songs.length})`
-      : `${state.filtered.length} of ${state.songs.length}`;
+
+    state.flatFiltered = flatFiltered;
+    listHeader.textContent = q
+      ? `${visibleCount} of ${state.rawSongs.length} tracks · ${visibleAlbums} albums`
+      : `${state.rawSongs.length} tracks · ${state.groups.length} albums`;
   }
 
-  // Event delegation for list clicks
   songList.addEventListener('click', e => {
     const item = e.target.closest('.song-item');
     if (!item) return;
-    const idx = parseInt(item.dataset.idx, 10);
-    if (!isNaN(idx)) playIndex(idx);
+    const id = item.dataset.songId;
+    const song = state.rawSongs.find(s => s._id === id);
+    if (song) playSong(song);
   });
 
-  // --- Search ---
   let searchTimer = null;
   searchInput.addEventListener('input', () => {
     clearTimeout(searchTimer);
-    searchTimer = setTimeout(applySearch, 120);
+    searchTimer = setTimeout(renderList, 120);
   });
 
-  function applySearch() {
-    const q = searchInput.value.trim().toLowerCase();
-    if (!q) {
-      state.filtered = state.songs.slice();
-    } else {
-      state.filtered = state.songs.filter(s =>
-        s.SongName.toLowerCase().includes(q) ||
-        (s.AltName && s.AltName.toLowerCase().includes(q))
-      );
-    }
-    // Reset selection if current song is filtered out
-    if (state.currentIdx >= 0) {
-      const currentSong = state._currentSong;
-      const newIdx = state.filtered.indexOf(currentSong);
-      state.currentIdx = newIdx; // may be -1
-    }
-    renderList();
-  }
-
-  // --- Play a specific index ---
-  function playIndex(idx) {
-    if (idx < 0 || idx >= state.filtered.length) return;
-    const song = state.filtered[idx];
-    state.currentIdx = idx;
-    state._currentSong = song;
-
+  function playSong(song) {
+    state.currentSong = song;
     const embedUrl = buildEmbedUrl(song.parsed, state.country);
     if (!embedUrl) {
       embedWrap.innerHTML = '<div class="empty">Can\'t parse this URL.</div>';
       return;
     }
-
-    // Replace iframe
     embedWrap.innerHTML = '';
     const iframe = document.createElement('iframe');
     iframe.allow = 'autoplay *; encrypted-media *; clipboard-write';
@@ -561,46 +602,55 @@
     embedWrap.appendChild(iframe);
 
     npTitle.textContent = song.SongName;
+    npAlbum.textContent = song.Album ? `from ${song.Album}` : '(single)';
     npAlt.textContent = song.AltName || '';
     openBtn.dataset.url = buildOpenUrl(song.parsed, state.country) || '';
-    renderList();
 
-    // Scroll active item into view
+    // Auto-expand the album so the active row is visible
+    const groupKey = song.Album && song.Album.trim() !== '' ? song.Album : SINGLES_KEY;
+    if (state.collapsed.has(groupKey)) {
+      state.collapsed.delete(groupKey);
+      saveCollapsed();
+    }
+
+    renderList();
     const active = songList.querySelector('.song-item.active');
     if (active) active.scrollIntoView({ block: 'nearest', behavior: 'smooth' });
   }
 
-  // --- Prev / Next / Shuffle ---
   function playNext() {
-    if (state.filtered.length === 0) return;
+    const list = state.flatFiltered;
+    if (list.length === 0) return;
     if (state.mode === 'shuffle-auto') {
       let next;
-      if (state.filtered.length === 1) { next = 0; }
+      if (list.length === 1) next = 0;
       else {
-        do { next = Math.floor(Math.random() * state.filtered.length); }
-        while (next === state.currentIdx);
+        do { next = Math.floor(Math.random() * list.length); }
+        while (list[next] === state.currentSong);
       }
-      playIndex(next);
+      playSong(list[next]);
     } else {
-      const next = (state.currentIdx + 1) % state.filtered.length;
-      playIndex(next);
+      const idx = list.indexOf(state.currentSong);
+      const nextIdx = idx < 0 ? 0 : (idx + 1) % list.length;
+      playSong(list[nextIdx]);
     }
   }
   function playPrev() {
-    if (state.filtered.length === 0) return;
-    const prev = (state.currentIdx - 1 + state.filtered.length) % state.filtered.length;
-    playIndex(prev);
+    const list = state.flatFiltered;
+    if (list.length === 0) return;
+    const idx = list.indexOf(state.currentSong);
+    const prevIdx = idx < 0 ? 0 : (idx - 1 + list.length) % list.length;
+    playSong(list[prevIdx]);
   }
   nextBtn.addEventListener('click', playNext);
   prevBtn.addEventListener('click', playPrev);
 
   shuffleBtn.addEventListener('click', () => {
-    if (state.filtered.length === 0) return;
-    const idx = Math.floor(Math.random() * state.filtered.length);
-    playIndex(idx);
+    const list = state.flatFiltered;
+    if (list.length === 0) return;
+    playSong(list[Math.floor(Math.random() * list.length)]);
   });
 
-  // Toggle auto-advance mode (visual only, since Apple's embed doesn't expose 'ended')
   function applyModeUi() {
     if (state.mode === 'shuffle-auto') {
       modeBtn.textContent = '🔀 Shuffle (next)';
@@ -622,19 +672,30 @@
     if (url) window.open(url, '_blank', 'noopener');
   });
 
-  // --- Load JSON ---
+  expandAllBtn.addEventListener('click', () => {
+    state.collapsed.clear();
+    saveCollapsed();
+    renderList();
+  });
+  collapseAllBtn.addEventListener('click', () => {
+    state.groups.forEach(g => state.collapsed.add(g.key));
+    saveCollapsed();
+    renderList();
+  });
+
   async function load() {
     try {
       const res = await fetch(JSON_URL, { cache: 'no-store' });
       if (!res.ok) throw new Error('HTTP ' + res.status);
       const data = await res.json();
-      state.songs = data.map(s => ({ ...s, parsed: parseAppleUrl(s.Url) }))
-                        .filter(s => s.parsed); // drop unparseable
-      state.filtered = state.songs.slice();
-      trackCount.textContent = `(${state.songs.length} tracks)`;
+      state.rawSongs = data
+        .map((s, i) => ({ ...s, parsed: parseAppleUrl(s.Url), _id: 's' + i }))
+        .filter(s => s.parsed);
+      trackCount.textContent = `(${state.rawSongs.length} tracks)`;
+      buildGroups();
       renderList();
     } catch (err) {
-      songList.innerHTML = `<div class="empty">Failed to load song list:<br>${err.message}</div>`;
+      songList.innerHTML = `<div class="empty">Failed to load song list:<br>${escapeHtml(err.message)}</div>`;
       console.error(err);
     }
   }
