@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/T7lS8NkIapQ/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "Letters to you — Views: 221,417 | Yesterday: 230\n本懐 — Views: 483,434 | Yesterday: 221\nDon\u0027t Apply The Brake — Views: 159,034 | Yesterday: 220",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "FREEZER — Spotify: 1,523,033 | Played Live: 39\nDifferent — Spotify: 7,246,451 | Played Live: 38\nSpirit!! — Spotify: 1,258,155 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "Don\u0027t Apply The Brake"
+                                              "text":  "Spirit!!"
                                           },
                                           {
-                                              "text":  "本懐"
+                                              "text":  "Different"
                                           },
                                           {
-                                              "text":  "Letters to you",
+                                              "text":  "FREEZER",
                                               "correct":  true
                                           }
                                       ]
