@@ -711,7 +711,7 @@
       "videoId": null
     },
     {
-      "id": "applemusic-playlist",
+      "id": "applemusic-player",
       "section": "playlists",
       "updateFrequency": "As needed",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/songs/applemusic.json",
