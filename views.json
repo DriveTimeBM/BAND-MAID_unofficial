@@ -8,10 +8,10 @@
   },
   {
     "id": "songs",
-    "name": "Songs",
+    "name": "Songs *improved*",
     "file": "views/songs.html",
     "nav": "main",
-    "icon": "📝"
+    "icon": "📝🟢"
   },
   {
     "id": "releases",
@@ -26,13 +26,6 @@
     "file": "views/videos.html",
     "nav": "main",
     "icon": "▶️"
-  },
-  {
-    "id": "spotify",
-    "name": "Spotify",
-    "file": "views/spotify.html",
-    "nav": "main",
-    "icon": "🟢"
   },
   {
     "id": "stream",

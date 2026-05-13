@@ -15,6 +15,7 @@
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
       "items": [
+        "Upgraded Videos and Songs views. New Songs view makes the former Spotify view obsolete.",
         "Added pop-out mini audio player. Contains all 115+ YouTube audio tracks. Shuffle, Loop, no YT login required.",
         "Added Reactions Archive — 26,000+ fan reaction videos with playlist builder, grouped by channel or year",
         "Added Translations view — 300+ English translations of Japanese interviews and articles",
@@ -106,7 +107,7 @@
         "Member quotes are displayed when available — not all songs have them",
         "Spotify stream counts update weekly; not all songs are on Spotify",
         "Filter by member to see which songs each member has commented on",
-        "Click any song card to see the full detail view including all quotes"
+        "Can jump to song on Spotify or play in the embedded player"
       ],
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/songs.gif",
       "videoId": null
@@ -135,7 +136,7 @@
         "Sort by views, view delta (yesterday), or date",
         "Type filter lets you focus on Official Music Videos, Audio, Live, etc.",
         "ViewsDelta column shows yesterday's view count — useful for tracking trending videos",
-        "Direct links open the video on YouTube"
+        "Direct links open the video on YouTube or play in the embedded player"
       ],
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/videos.gif",
       "videoId": null
