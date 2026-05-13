@@ -192,7 +192,34 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .detail-btn.primary:hover{opacity:0.85}
 .detail-btn svg{width:13px;height:13px;flex-shrink:0}
 
-/* Loading */
+.tb-icon-btn{
+  padding:5px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);font-family:var(--font);transition:all 0.15s;white-space:nowrap;flex-shrink:0;
+}
+.tb-icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Group heading collapse */
+.group-heading{cursor:pointer;user-select:none}
+.group-heading:hover{background:var(--bg3)}
+.group-chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.group-section.collapsed .group-chevron{transform:rotate(-90deg)}
+.group-section.collapsed .card-grid{display:none}
+.group-section.collapsed .show-more-row{display:none}
+
+/* Show more row */
+.show-more-row{
+  padding:8px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg);
+}
+.show-more-btn{
+  font-size:11px;font-weight:600;color:var(--accent);cursor:pointer;
+  background:none;border:1px solid var(--accent-border);border-radius:var(--radius);
+  padding:4px 12px;font-family:var(--font);transition:all 0.15s;
+}
+.show-more-btn:hover{background:var(--accent-dim)}
+.show-more-count{font-size:10px;color:var(--text3)}
 .state-overlay{
   position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
   display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
@@ -241,9 +268,10 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
     <option value="date_asc">Date (oldest)</option>
     <option value="duration">Duration</option>
   </select>
+  <div class="tb-divider"></div>
+  <button class="tb-icon-btn" onclick="collapseAll()">⊟ Collapse All</button>
+  <button class="tb-icon-btn" onclick="expandAll()">⊞ Expand All</button>
 </div>
-
-<div class="state-overlay" id="stateOverlay">
   <div class="spinner"></div>
   <span>Loading videos…</span>
 </div>
@@ -335,18 +363,49 @@ function renderAll() {
 
   order.forEach(gKey => {
     const videos = groups[gKey];
+    const slug   = 'grp-' + slugify(gKey);
+    const PREVIEW = 5;
 
+    // Wrapper section
+    const section = document.createElement('div');
+    section.className = 'group-section';
+    section.id = slug;
+
+    // Heading — click to collapse/expand
     const heading = document.createElement('div');
     heading.className = 'group-heading';
     heading.innerHTML = `
+      <span class="group-chevron">▶</span>
       <span class="group-name">${esc(gKey)}</span>
       <span class="group-count">${videos.length}</span>`;
-    main.appendChild(heading);
+    heading.onclick = () => section.classList.toggle('collapsed');
 
+    // Card grid — initially shows first PREVIEW cards
     const grid = document.createElement('div');
     grid.className = 'card-grid';
-    videos.forEach(v => grid.appendChild(buildCard(v)));
-    main.appendChild(grid);
+    videos.slice(0, PREVIEW).forEach(v => grid.appendChild(buildCard(v)));
+
+    section.appendChild(heading);
+    section.appendChild(grid);
+
+    // Show more row (only if more than PREVIEW)
+    if (videos.length > PREVIEW) {
+      const moreRow = document.createElement('div');
+      moreRow.className = 'show-more-row';
+      const remaining = videos.length - PREVIEW;
+      moreRow.innerHTML = `
+        <button class="show-more-btn">Show all</button>
+        <span class="show-more-count">${remaining} more</span>`;
+      moreRow.querySelector('.show-more-btn').onclick = (e) => {
+        e.stopPropagation();
+        // Add remaining cards
+        videos.slice(PREVIEW).forEach(v => grid.appendChild(buildCard(v)));
+        moreRow.remove();
+      };
+      section.appendChild(moreRow);
+    }
+
+    main.appendChild(section);
   });
 }
 
@@ -502,6 +561,15 @@ function parseDuration(s) {
 }
 function fmt(n) { return Number(n||0).toLocaleString(); }
 function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function collapseAll() {
+  document.querySelectorAll('.group-section').forEach(s => s.classList.add('collapsed'));
+}
+function expandAll() {
+  document.querySelectorAll('.group-section').forEach(s => s.classList.remove('collapsed'));
+}
+
+function slugify(s) { return String(s).replace(/[^a-z0-9]/gi,'_').toLowerCase(); }
 
 // Close detail on Escape
 document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
