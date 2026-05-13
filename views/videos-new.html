@@ -1,0 +1,512 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Videos</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--bg4:#242424;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#b8c8d8;--text3:#7a8a9a;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.08);
+  --success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;--toolbar-h:48px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.stat-pill{
+  font-size:11px;color:var(--text3);
+  background:var(--bg3);border:1px solid var(--border);border-radius:20px;
+  padding:3px 10px;white-space:nowrap;
+}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--toolbar-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 14px;
+  overflow-x:auto;
+}
+.toolbar::-webkit-scrollbar{display:none}
+.search-wrap{position:relative;flex:1;min-width:120px;max-width:280px}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 28px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237a8a9a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:9px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
+
+.tb-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.tb-select:focus{border-color:var(--accent)}
+.tb-select option{background:var(--bg3)}
+.tb-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.tb-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
+
+/* ── MAIN ── */
+.main{
+  position:fixed;
+  top:calc(var(--header-h) + var(--toolbar-h));
+  left:0;right:0;bottom:0;
+  overflow-y:auto;
+  padding:0 0 24px;
+  transition:right 0.3s ease;
+}
+.main.panel-open{right:420px}
+
+/* Group heading */
+.group-heading{
+  position:sticky;top:0;z-index:10;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:8px 16px;
+  display:flex;align-items:center;gap:10px;
+}
+.group-name{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
+.group-count{font-size:10px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:1px 7px}
+
+/* Card grid */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:1px;background:var(--border);
+  margin-bottom:0;
+}
+@media(max-width:500px){.card-grid{grid-template-columns:repeat(2,1fr)}}
+
+/* Video card */
+.video-card{
+  background:var(--bg);cursor:pointer;
+  transition:background 0.12s;
+  display:flex;flex-direction:column;
+}
+.video-card:hover{background:var(--bg3)}
+.video-card.active{background:var(--bg3);outline:2px solid var(--accent);outline-offset:-2px}
+.card-thumb-wrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--bg3)}
+.card-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s}
+.video-card:hover .card-thumb{transform:scale(1.03)}
+.card-duration{
+  position:absolute;bottom:4px;right:4px;
+  background:rgba(0,0,0,0.8);color:#fff;
+  font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;
+}
+.card-body{padding:8px 10px 10px;flex:1;display:flex;flex-direction:column;gap:3px}
+.card-title{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;flex-wrap:wrap;gap:3px 8px;margin-top:2px}
+.card-views{font-size:10px;color:var(--accent);font-weight:600}
+.card-delta{font-size:10px;color:var(--success)}
+.card-date{font-size:10px;color:var(--text3)}
+.card-song{font-size:10px;color:var(--text2);font-style:italic}
+
+/* Empty state */
+.empty-state{padding:60px 24px;text-align:center;color:var(--text3);font-size:13px}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{
+  position:fixed;top:var(--header-h);right:-420px;bottom:0;width:420px;
+  background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;
+  transition:right 0.3s ease;z-index:200;
+  overflow:hidden;
+}
+.detail-panel.open{right:0}
+
+.detail-close{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text3);font-size:14px;cursor:pointer;z-index:5;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.detail-close:hover{border-color:var(--accent);color:var(--accent)}
+
+.detail-player{background:#000;flex-shrink:0;position:relative}
+.detail-player-placeholder{
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.detail-thumb{width:100%;height:100%;object-fit:cover;display:block}
+.play-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.35);
+}
+.play-circle{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(0,0,0,0.7);border:2px solid rgba(255,255,255,0.8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:#fff;transition:transform 0.15s,background 0.15s;
+}
+.detail-player-placeholder:hover .play-circle{transform:scale(1.1);background:var(--accent)}
+.detail-player-placeholder:hover .play-circle{color:#0a0a0a}
+.detail-player iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+
+.detail-scroll{flex:1;overflow-y:auto;padding:16px}
+.detail-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:12px}
+.detail-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.detail-stat{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;text-align:center}
+.detail-stat-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.detail-stat-val{font-size:14px;font-weight:700;color:var(--text)}
+.detail-stat-val.accent{color:var(--accent)}
+.detail-stat-val.success{color:var(--success)}
+.detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.detail-tag{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text2)}
+.detail-tag.type{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap}
+.detail-btn{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 14px;border-radius:var(--radius);font-size:12px;font-weight:600;
+  text-decoration:none;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);transition:all 0.15s;cursor:pointer;font-family:var(--font);
+}
+.detail-btn:hover{border-color:var(--accent);color:var(--accent)}
+.detail-btn.primary{background:var(--red);color:#fff;border-color:var(--red)}
+.detail-btn.primary:hover{opacity:0.85}
+.detail-btn svg{width:13px;height:13px;flex-shrink:0}
+
+/* Loading */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Mobile: detail panel full-width overlay */
+@media(max-width:700px){
+  .detail-panel{width:100%;right:-100%}
+  .main.panel-open{right:0}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='▶'"></div>
+  <div class="app-title">BAND-MAID Videos</div>
+  <div class="header-spacer"></div>
+  <div class="stat-pill" id="statPill">Loading…</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Search videos…" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Group:</span>
+  <select class="tb-select" id="groupBy" onchange="renderAll()">
+    <option value="type">Type</option>
+    <option value="year">Year</option>
+    <option value="song">Song</option>
+  </select>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Sort:</span>
+  <select class="tb-select" id="sortBy" onchange="renderAll()">
+    <option value="views">Views</option>
+    <option value="delta">Views Yesterday</option>
+    <option value="date_desc">Date (newest)</option>
+    <option value="date_asc">Date (oldest)</option>
+    <option value="duration">Duration</option>
+  </select>
+</div>
+
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading videos…</span>
+</div>
+
+<div class="main" id="main"></div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-close" onclick="closeDetail()">✕</button>
+  <div class="detail-player" id="detailPlayer"></div>
+  <div class="detail-scroll" id="detailScroll"></div>
+</div>
+
+<script>
+const YT_JSON = 'https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json';
+
+let allVideos  = [];
+let filtered   = [];
+let activeId   = null;
+let searchTimer= null;
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(YT_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allVideos = await res.json();
+    if (!Array.isArray(allVideos)) allVideos = [allVideos];
+    // Pre-parse duration seconds for sorting
+    allVideos.forEach(v => {
+      v._durSec = parseDuration(v.Duration);
+      v._dateMs = v.Date ? new Date(v.Date).getTime() : 0;
+    });
+    document.getElementById('stateOverlay').style.display = 'none';
+    filtered = [...allVideos];
+    renderAll();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load videos</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
+  }
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderAll() {
+  const groupBy = document.getElementById('groupBy').value;
+  const sortBy  = document.getElementById('sortBy').value;
+
+  // Sort
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === 'views')     return (b.Views||0)  - (a.Views||0);
+    if (sortBy === 'delta')     return (b.ViewsDelta||0) - (a.ViewsDelta||0);
+    if (sortBy === 'date_desc') return b._dateMs - a._dateMs;
+    if (sortBy === 'date_asc')  return a._dateMs - b._dateMs;
+    if (sortBy === 'duration')  return b._durSec - a._durSec;
+    return 0;
+  });
+
+  // Group
+  const groups = {};
+  const order  = [];
+  sorted.forEach(v => {
+    let key;
+    if (groupBy === 'type') key = v.Type || 'Other';
+    else if (groupBy === 'year') key = v.Date ? new Date(v.Date).getFullYear() + '' : '?';
+    else key = v.Song || '—'; // song
+    if (!groups[key]) { groups[key] = []; order.push(key); }
+    groups[key].push(v);
+  });
+
+  // Sort group keys
+  if (groupBy === 'year') order.sort((a, b) => b.localeCompare(a));
+  else order.sort((a, b) => a.localeCompare(b));
+
+  // Update stat pill
+  const totalViews = filtered.reduce((s, v) => s + (v.Views||0), 0);
+  document.getElementById('statPill').textContent =
+    `${filtered.length} videos · ${fmt(totalViews)} total views`;
+
+  // Render
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  if (!sorted.length) {
+    main.innerHTML = '<div class="empty-state">No videos match your search.</div>';
+    return;
+  }
+
+  order.forEach(gKey => {
+    const videos = groups[gKey];
+
+    const heading = document.createElement('div');
+    heading.className = 'group-heading';
+    heading.innerHTML = `
+      <span class="group-name">${esc(gKey)}</span>
+      <span class="group-count">${videos.length}</span>`;
+    main.appendChild(heading);
+
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    videos.forEach(v => grid.appendChild(buildCard(v)));
+    main.appendChild(grid);
+  });
+}
+
+function buildCard(v) {
+  const card = document.createElement('div');
+  card.className = 'video-card' + (v.VideoId === activeId ? ' active' : '');
+  card.id = 'card-' + v.VideoId;
+  card.onclick = () => openDetail(v);
+
+  const date  = v.Date ? new Date(v.Date).getFullYear() : '';
+  const delta = v.ViewsDelta ? `+${fmt(v.ViewsDelta)}` : '';
+
+  card.innerHTML = `
+    <div class="card-thumb-wrap">
+      <img class="card-thumb" src="${esc(v.Image || `https://img.youtube.com/vi/${v.VideoId}/mqdefault.jpg`)}"
+        alt="" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${v.VideoId}/mqdefault.jpg'">
+      ${v.Duration ? `<div class="card-duration">${esc(v.Duration)}</div>` : ''}
+    </div>
+    <div class="card-body">
+      <div class="card-title" title="${esc(v.Title)}">${esc(v.Title)}</div>
+      <div class="card-meta">
+        <span class="card-views">👁 ${fmt(v.Views)}</span>
+        ${delta ? `<span class="card-delta">▲${delta}</span>` : ''}
+        ${date  ? `<span class="card-date">${date}</span>` : ''}
+        ${v.Song ? `<span class="card-song">🎵 ${esc(v.Song)}</span>` : ''}
+      </div>
+    </div>`;
+  return card;
+}
+
+// ── DETAIL PANEL ─────────────────────────────────────────────────────────────
+function openDetail(v) {
+  activeId = v.VideoId;
+
+  // Highlight active card
+  document.querySelectorAll('.video-card').forEach(el => {
+    el.classList.toggle('active', el.id === 'card-' + v.VideoId);
+  });
+
+  // Scroll card into view
+  document.getElementById('card-' + v.VideoId)
+    ?.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+  // Player — show thumbnail with play button; swap to iframe on click
+  const player = document.getElementById('detailPlayer');
+  showThumb(player, v);
+
+  // Info
+  const scroll = document.getElementById('detailScroll');
+  const date   = v.Date
+    ? new Date(v.Date).toLocaleDateString(undefined, {year:'numeric',month:'long',day:'numeric'})
+    : '—';
+
+  scroll.innerHTML = `
+    <div class="detail-title">${esc(v.Title)}</div>
+    <div class="detail-stats">
+      <div class="detail-stat">
+        <div class="detail-stat-label">Views</div>
+        <div class="detail-stat-val accent">${fmt(v.Views)}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Yesterday</div>
+        <div class="detail-stat-val success">+${fmt(v.ViewsDelta||0)}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Duration</div>
+        <div class="detail-stat-val">${esc(v.Duration||'—')}</div>
+      </div>
+    </div>
+    <div class="detail-tags">
+      <span class="detail-tag type">${esc(v.Type||'Video')}</span>
+      ${v.Song ? `<span class="detail-tag">🎵 ${esc(v.Song)}</span>` : ''}
+      <span class="detail-tag">📅 ${esc(date)}</span>
+    </div>
+    <div class="detail-actions">
+      <a class="detail-btn primary" href="${esc(v.URL)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Open on YouTube
+      </a>
+      <button class="detail-btn" onclick="loadPlayer('${v.VideoId}')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Play Here
+      </button>
+    </div>`;
+
+  // Open panel
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('main').classList.add('panel-open');
+}
+
+function showThumb(player, v) {
+  player.innerHTML = `
+    <div class="detail-player-placeholder" onclick="loadPlayer('${v.VideoId}')">
+      <img class="detail-thumb"
+        src="${esc(v.Image || `https://img.youtube.com/vi/${v.VideoId}/sddefault.jpg`)}"
+        alt="" onerror="this.src='https://img.youtube.com/vi/${v.VideoId}/hqdefault.jpg'">
+      <div class="play-overlay">
+        <div class="play-circle">▶</div>
+      </div>
+    </div>`;
+}
+
+function loadPlayer(videoId) {
+  const player = document.getElementById('detailPlayer');
+  player.innerHTML = `<iframe
+    src="https://www.youtube.com/embed/${esc(videoId)}?autoplay=1&rel=0&modestbranding=1"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+}
+
+function closeDetail() {
+  activeId = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('main').classList.remove('panel-open');
+  document.querySelectorAll('.video-card.active').forEach(el => el.classList.remove('active'));
+  // Stop video
+  document.getElementById('detailPlayer').innerHTML = '';
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function onSearch() {
+  const q = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const lq = q.toLowerCase().trim();
+    filtered = lq
+      ? allVideos.filter(v =>
+          (v.Title||'').toLowerCase().includes(lq) ||
+          (v.Type||'').toLowerCase().includes(lq)  ||
+          (v.Song||'').toLowerCase().includes(lq))
+      : [...allVideos];
+    renderAll();
+  }, 200);
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  filtered = [...allVideos];
+  renderAll();
+  document.getElementById('searchInput').focus();
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function parseDuration(s) {
+  if (!s) return 0;
+  const parts = s.split(':').map(Number);
+  return parts.length === 2 ? parts[0]*60+parts[1] : parts[0]*3600+parts[1]*60+(parts[2]||0);
+}
+function fmt(n) { return Number(n||0).toLocaleString(); }
+function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+// Close detail on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+
+boot();
+</script>
+</body>
+</html>
