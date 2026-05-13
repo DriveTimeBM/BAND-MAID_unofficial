@@ -116,6 +116,26 @@
       "installUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/views/BM-Spotify-AutoPlay.ahk",
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/spotify-playlist.gif",
       "videoId": null
+    },
+    {
+      "id": "ai-translate",
+      "category": "Translation",
+      "name": "BAND-MAID Unofficial GPT",
+      "icon": "🈯🔤",
+      "iconFallback": "🈯",
+      "platform": "All",
+      "requires": "none",
+      "description": "GPT that is aware of the specific vocabulary of the Japanese rock band BAND-MAID and should offer an improved translation model. It also has substantial knowledge of the band, members, and catalog.",
+      "tips": [
+        "GPT has been supplied with a glossary of BAND-MAID terms such as Master and Princesses, Okyuji, po, nicknames, etc. so it will translate accurately",
+        "GPT has been trained on nearly 20 extensive, major interviews with the band.",
+        "GPT is pre-programmed to assume the context of the queries will be BAND-MAID related and will answer as such.",
+        "Give as much context as possible. i.e. <i>Translate this tweet from Kanami</i> etc."
+      ],
+      "downloadUrl": null,
+      "installUrl": "https://chatgpt.com/g/g-68db200d63cc819190a84f2ff7cbf58f-unofficial-band-maid-gpt",
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/gpt.gif",
+      "videoId": null
     }
   ]
 }
