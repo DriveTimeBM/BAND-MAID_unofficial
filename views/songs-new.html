@@ -1,0 +1,708 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · Songs</title>
+<script src="https://open.spotify.com/embed/iframe-api/v1" async></script>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--bg4:#242424;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#b8c8d8;--text3:#7a8a9a;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --spot:#1db954;--spot-dim:rgba(29,185,84,0.1);--spot-border:rgba(29,185,84,0.3);
+  --red:#ef4444;
+  --success:#22c55e;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;--toolbar-h:48px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.stat-pill{font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--toolbar-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 14px;overflow-x:auto;
+}
+.toolbar::-webkit-scrollbar{display:none}
+.search-wrap{position:relative;flex:1;min-width:120px;max-width:260px}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 26px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237a8a9a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:9px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
+.tb-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.tb-select:focus{border-color:var(--accent)}
+.tb-select option{background:var(--bg3)}
+.tb-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.tb-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
+.tb-icon-btn{
+  padding:5px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);font-family:var(--font);transition:all 0.15s;white-space:nowrap;flex-shrink:0;
+}
+.tb-icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* ── MAIN ── */
+.main{
+  position:fixed;top:calc(var(--header-h) + var(--toolbar-h));left:0;right:0;bottom:0;
+  overflow-y:auto;transition:right 0.3s ease;
+}
+.main.panel-open{right:440px}
+
+/* Group */
+.group-section{border-bottom:1px solid var(--border)}
+.group-heading{
+  position:sticky;top:0;z-index:10;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:8px 16px;display:flex;align-items:center;gap:10px;
+  cursor:pointer;user-select:none;transition:background 0.12s;
+}
+.group-heading:hover{background:var(--bg3)}
+.group-chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.group-section.collapsed .group-chevron{transform:rotate(-90deg)}
+.group-section.collapsed .songs-list,.group-section.collapsed .show-more-row{display:none}
+.group-name{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.group-count{font-size:10px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:1px 7px;flex-shrink:0}
+
+/* Song list rows */
+.songs-list{display:flex;flex-direction:column}
+.song-row{
+  display:flex;align-items:center;gap:10px;padding:8px 16px;
+  border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;
+}
+.song-row:last-child{border-bottom:none}
+.song-row:hover{background:var(--bg3)}
+.song-row.active{background:var(--accent-dim);border-left:3px solid var(--accent)}
+.song-rank{font-size:10px;font-weight:700;color:var(--text3);min-width:28px;text-align:right;flex-shrink:0}
+.song-name{font-size:13px;font-weight:600;color:var(--text);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.song-row.active .song-name{color:var(--accent)}
+.song-alt{font-size:11px;color:var(--text3);margin-left:6px;flex-shrink:0}
+.song-badges{display:flex;gap:4px;flex-shrink:0}
+.song-badge{font-size:9px;padding:1px 5px;border-radius:3px;font-weight:700;flex-shrink:0}
+.song-badge.mv{background:rgba(239,68,68,0.15);color:var(--red);border:1px solid rgba(239,68,68,0.3)}
+.song-badge.live{background:rgba(139,92,246,0.15);color:#8b5cf6;border:1px solid rgba(139,92,246,0.3)}
+.song-badge.inst{background:var(--bg3);color:var(--text3);border:1px solid var(--border)}
+.song-badge.kobato{background:rgba(236,72,153,0.15);color:#ec4899;border:1px solid rgba(236,72,153,0.3)}
+.song-streams{font-size:11px;color:var(--spot);font-weight:600;flex-shrink:0;min-width:70px;text-align:right}
+.song-date{font-size:10px;color:var(--text3);flex-shrink:0;min-width:36px;text-align:right}
+
+/* Show more */
+.show-more-row{padding:8px 16px;display:flex;align-items:center;gap:10px}
+.show-more-btn{
+  font-size:11px;font-weight:600;color:var(--accent);cursor:pointer;
+  background:none;border:1px solid var(--accent-border);border-radius:var(--radius);
+  padding:4px 12px;font-family:var(--font);transition:all 0.15s;
+}
+.show-more-btn:hover{background:var(--accent-dim)}
+.show-more-count{font-size:10px;color:var(--text3)}
+
+/* Empty */
+.empty-state{padding:60px 24px;text-align:center;color:var(--text3);font-size:13px}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{
+  position:fixed;top:var(--header-h);right:-440px;bottom:0;width:440px;
+  background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;transition:right 0.3s ease;z-index:200;overflow:hidden;
+}
+.detail-panel.open{right:0}
+.detail-close{
+  position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text3);
+  font-size:14px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.detail-close:hover{border-color:var(--accent);color:var(--accent)}
+.detail-scroll{flex:1;overflow-y:auto;padding:16px 18px 32px}
+
+/* Detail content */
+.detail-song-name{font-size:20px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px;padding-right:36px}
+.detail-song-alt{font-size:13px;color:var(--text3);margin-bottom:14px}
+.detail-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.detail-stat{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center}
+.detail-stat-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.detail-stat-val{font-size:13px;font-weight:700;color:var(--text)}
+.detail-stat-val.spot{color:var(--spot)}
+.detail-stat-val.accent{color:var(--accent)}
+
+/* Detail sections */
+.detail-section{margin-bottom:16px}
+.detail-section-label{
+  font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  color:var(--text3);margin-bottom:6px;
+}
+.detail-section-content{font-size:12px;color:var(--text2);line-height:1.65}
+.detail-section-content p{margin-bottom:6px}
+.detail-section-content p:last-child{margin-bottom:0}
+
+/* Releases list */
+.releases-list{list-style:none;display:flex;flex-direction:column;gap:3px}
+.releases-list li{font-size:12px;color:var(--text2);padding-left:12px;position:relative}
+.releases-list li::before{content:'▸';position:absolute;left:0;color:var(--accent);font-size:10px;top:1px}
+
+/* Quotes */
+.quote-block{
+  background:var(--bg3);border-left:3px solid var(--accent);
+  border-radius:0 var(--radius) var(--radius) 0;
+  padding:10px 12px;margin-bottom:8px;
+  font-size:12px;color:var(--text2);line-height:1.65;font-style:italic;
+}
+.quote-speaker{font-size:10px;font-weight:700;color:var(--accent);font-style:normal;margin-top:5px}
+
+/* Flags row */
+.detail-flags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.detail-flag{
+  font-size:10px;font-weight:700;padding:3px 9px;border-radius:20px;
+  border:1px solid var(--border);color:var(--text3);background:var(--bg3);
+}
+.detail-flag.yes{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.detail-flag.kobato{background:rgba(236,72,153,0.1);border-color:rgba(236,72,153,0.3);color:#ec4899}
+.detail-flag.inst{background:rgba(139,92,246,0.1);border-color:rgba(139,92,246,0.3);color:#8b5cf6}
+
+/* Actions */
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.detail-btn{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 14px;border-radius:var(--radius);font-size:12px;font-weight:600;
+  text-decoration:none;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);transition:all 0.15s;cursor:pointer;font-family:var(--font);
+}
+.detail-btn:hover{border-color:var(--accent);color:var(--accent)}
+.detail-btn.spot{background:var(--spot-dim);border-color:var(--spot-border);color:var(--spot)}
+.detail-btn.spot:hover{background:rgba(29,185,84,0.2)}
+.detail-btn svg{width:13px;height:13px;flex-shrink:0}
+
+/* Spotify embed */
+.spotify-embed-wrap{margin-bottom:16px}
+.spotify-embed-wrap iframe{width:100%;border-radius:10px;border:none;display:block}
+
+/* Loading */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+@media(max-width:700px){
+  .detail-panel{width:100%;right:-100%}
+  .main.panel-open{right:0}
+  .detail-stats{grid-template-columns:1fr 1fr}
+}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='🎵'"></div>
+  <div class="app-title">BAND-MAID Songs</div>
+  <div class="header-spacer"></div>
+  <div class="stat-pill" id="statPill">Loading…</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Search songs…" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Group:</span>
+  <select class="tb-select" id="groupBy" onchange="renderAll()">
+    <option value="album">Album</option>
+    <option value="year">Year</option>
+    <option value="lyrics">Lyrics By</option>
+    <option value="none">None</option>
+  </select>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Sort:</span>
+  <select class="tb-select" id="sortBy" onchange="renderAll()">
+    <option value="streams">Spotify Streams</option>
+    <option value="name">Name A–Z</option>
+    <option value="date_asc">Release Date (oldest)</option>
+    <option value="date_desc">Release Date (newest)</option>
+  </select>
+  <div class="tb-divider"></div>
+  <button class="tb-icon-btn" onclick="collapseAll()">⊟ Collapse</button>
+  <button class="tb-icon-btn" onclick="expandAll()">⊞ Expand</button>
+</div>
+
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading songs…</span>
+</div>
+
+<div class="main" id="main"></div>
+
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-close" onclick="closeDetail()">✕</button>
+  <div class="detail-scroll" id="detailScroll"></div>
+</div>
+
+<script>
+const SONGS_JSON = 'https://drivetimebm.github.io/BAND-MAID_songs/songs.json';
+const PREVIEW    = 10;
+
+let allSongs   = [];
+let filtered   = [];
+let activeName = null;
+let searchTimer= null;
+let embedCtrl  = null;
+
+// ── SPOTIFY API ───────────────────────────────────────────────────────────────
+window.onSpotifyIframeApiReady = (IFrameAPI) => {
+  // Controller created on demand when user clicks embed
+};
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(SONGS_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allSongs = await res.json();
+    if (!Array.isArray(allSongs)) allSongs = [allSongs];
+    allSongs.forEach(s => {
+      s._dateMs = s.ReleaseDate ? new Date(s.ReleaseDate).getTime() : 0;
+      s._year   = s.ReleaseDate ? s.ReleaseDate.substring(0,4) : '?';
+    });
+    document.getElementById('stateOverlay').style.display = 'none';
+    filtered = [...allSongs];
+    renderAll();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load songs</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
+  }
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderAll() {
+  const groupBy = document.getElementById('groupBy').value;
+  const sortBy  = document.getElementById('sortBy').value;
+
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === 'streams')   return (b.SpotifyStreams||0) - (a.SpotifyStreams||0);
+    if (sortBy === 'name')      return (a.Name||'').localeCompare(b.Name||'');
+    if (sortBy === 'date_asc')  return a._dateMs - b._dateMs;
+    if (sortBy === 'date_desc') return b._dateMs - a._dateMs;
+    return 0;
+  });
+
+  // Group
+  const groups = {};
+  const order  = [];
+  sorted.forEach(s => {
+    let key;
+    if      (groupBy === 'album')  key = s.Album || 'Unknown Album';
+    else if (groupBy === 'year')   key = s._year;
+    else if (groupBy === 'lyrics') key = s.LyricsBy || 'Unknown';
+    else                           key = 'All Songs';
+    if (!groups[key]) { groups[key] = []; order.push(key); }
+    groups[key].push(s);
+  });
+
+  // Sort group keys
+  if (groupBy === 'year')   order.sort((a,b) => a.localeCompare(b));
+  else if (groupBy !== 'none') order.sort((a,b) => a.localeCompare(b));
+
+  // Stat pill
+  const totalStreams = filtered.reduce((t, s) => t + (s.SpotifyStreams||0), 0);
+  document.getElementById('statPill').textContent =
+    `${filtered.length} songs · ${fmt(totalStreams)} Spotify streams`;
+
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  if (!sorted.length) {
+    main.innerHTML = '<div class="empty-state">No songs match your search.</div>';
+    return;
+  }
+
+  let rank = 0;
+  order.forEach(gKey => {
+    const songs   = groups[gKey];
+    const slug    = 'grp-' + slugify(gKey);
+    const section = document.createElement('div');
+    section.className = 'group-section';
+    section.id = slug;
+
+    const heading = document.createElement('div');
+    heading.className = 'group-heading';
+    heading.innerHTML = `
+      <span class="group-chevron">▶</span>
+      <span class="group-name">${esc(gKey)}</span>
+      <span class="group-count">${songs.length}</span>`;
+    heading.onclick = () => section.classList.toggle('collapsed');
+
+    const list = document.createElement('div');
+    list.className = 'songs-list';
+
+    songs.slice(0, PREVIEW).forEach(s => {
+      rank++;
+      list.appendChild(buildRow(s, rank));
+    });
+
+    section.appendChild(heading);
+    section.appendChild(list);
+
+    if (songs.length > PREVIEW) {
+      const moreRow = document.createElement('div');
+      moreRow.className = 'show-more-row';
+      const remaining = songs.length - PREVIEW;
+      moreRow.innerHTML = `
+        <button class="show-more-btn">Show all</button>
+        <span class="show-more-count">${remaining} more</span>`;
+      moreRow.querySelector('.show-more-btn').onclick = (e) => {
+        e.stopPropagation();
+        songs.slice(PREVIEW).forEach(s => { rank++; list.appendChild(buildRow(s, rank)); });
+        moreRow.remove();
+      };
+      section.appendChild(moreRow);
+    }
+
+    main.appendChild(section);
+  });
+}
+
+function buildRow(s, rank) {
+  const row = document.createElement('div');
+  row.className = 'song-row' + (s.Name === activeName ? ' active' : '');
+  row.id = 'row-' + slugify(s.Name);
+  row.onclick = () => openDetail(s);
+
+  const year = s._year || '';
+  const streams = s.SpotifyStreams ? fmt(s.SpotifyStreams) : '—';
+
+  row.innerHTML = `
+    <span class="song-rank">${rank}</span>
+    <span class="song-name" title="${esc(s.Name)}">${esc(s.Name)}</span>
+    ${s.AlternativeName ? `<span class="song-alt">${esc(s.AlternativeName)}</span>` : ''}
+    <span class="song-badges">
+      ${s.HasMusicVideo === 'yes'   ? '<span class="song-badge mv">MV</span>'     : ''}
+      ${s.HasLiveVideo  === 'yes'   ? '<span class="song-badge live">Live</span>' : ''}
+      ${s.InstrumentalTrack === 'yes' ? '<span class="song-badge inst">Inst</span>' : ''}
+      ${s.KobatoLead === 'yes'      ? '<span class="song-badge kobato">Kobato</span>' : ''}
+    </span>
+    <span class="song-streams">🟢 ${streams}</span>
+    <span class="song-date">${year}</span>`;
+  return row;
+}
+
+// ── DETAIL PANEL ─────────────────────────────────────────────────────────────
+function openDetail(s) {
+  activeName = s.Name;
+  document.querySelectorAll('.song-row').forEach(el =>
+    el.classList.toggle('active', el.id === 'row-' + slugify(s.Name)));
+  document.getElementById('row-' + slugify(s.Name))
+    ?.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+  const scroll = document.getElementById('detailScroll');
+  scroll.innerHTML = '';
+
+  // Name
+  const nameEl = document.createElement('div');
+  nameEl.className = 'detail-song-name';
+  nameEl.textContent = s.Name;
+  scroll.appendChild(nameEl);
+
+  if (s.AlternativeName) {
+    const altEl = document.createElement('div');
+    altEl.className = 'detail-song-alt';
+    altEl.textContent = s.AlternativeName;
+    scroll.appendChild(altEl);
+  }
+
+  // Spotify embed placeholder (loaded on demand)
+  const spotifySection = buildSpotifySection(s);
+  scroll.appendChild(spotifySection);
+
+  // Stats
+  const stats = document.createElement('div');
+  stats.className = 'detail-stats';
+  stats.innerHTML = `
+    <div class="detail-stat">
+      <div class="detail-stat-label">Spotify Streams</div>
+      <div class="detail-stat-val spot">${fmt(s.SpotifyStreams)}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">Spotify Rank</div>
+      <div class="detail-stat-val accent">#${s.SpotifyStreamRank || '—'}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">Live Perf.</div>
+      <div class="detail-stat-val">${s.PlayedLiveCount || 0}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">YT Streams</div>
+      <div class="detail-stat-val">${fmt(s.YouTubeTotalStreams)}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">Deezer Rank</div>
+      <div class="detail-stat-val">${s.DeezerRank ? '#'+s.DeezerRank : '—'}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">Shazam Rank</div>
+      <div class="detail-stat-val">${s.ShazamRank ? '#'+s.ShazamRank : '—'}</div>
+    </div>`;
+  scroll.appendChild(stats);
+
+  // Flags
+  const flags = document.createElement('div');
+  flags.className = 'detail-flags';
+  const flagDefs = [
+    { key:'HasMusicVideo',    label:'Music Video',    cls:'yes'    },
+    { key:'HasLiveVideo',     label:'Live Video',     cls:'yes'    },
+    { key:'InstrumentalTrack',label:'Instrumental',   cls:'inst'   },
+    { key:'KobatoLead',       label:'Kobato Lead',    cls:'kobato' },
+    { key:'MaikoVersion',     label:'Maiko Version',  cls:'yes'    },
+  ];
+  flagDefs.forEach(f => {
+    if (s[f.key] === 'yes') {
+      const el = document.createElement('div');
+      el.className = `detail-flag ${f.cls}`;
+      el.textContent = f.label;
+      flags.appendChild(el);
+    }
+  });
+  if (flags.children.length) scroll.appendChild(flags);
+
+  // Meta fields
+  const metaFields = [
+    { label:'Album',          val: s.Album },
+    { label:'Release Date',   val: s.ReleaseDate ? new Date(s.ReleaseDate).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}) : null },
+    { label:'Duration',       val: s.Duration?.trim() },
+    { label:'Lyrics By',      val: s.LyricsBy },
+    { label:'Music By',       val: s.MusicBy },
+    { label:'Arrangement By', val: s.ArrangementBy },
+    { label:'First Live',     val: s.FirstLiveDate ? `${new Date(s.FirstLiveDate).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'})}${s.FirstLivePerf ? ' — '+s.FirstLivePerf : ''}` : null },
+    { label:'Media Tie-In',   val: s.MediaTieIn },
+  ];
+  metaFields.forEach(({ label, val }) => {
+    if (!val) return;
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    sec.innerHTML = `<div class="detail-section-label">${esc(label)}</div>
+      <div class="detail-section-content">${esc(val)}</div>`;
+    scroll.appendChild(sec);
+  });
+
+  // Releases On
+  if (s.ReleasesOn) {
+    const items = s.ReleasesOn.split('❯').map(x => x.trim()).filter(Boolean);
+    if (items.length) {
+      const sec = document.createElement('div');
+      sec.className = 'detail-section';
+      const label = document.createElement('div');
+      label.className = 'detail-section-label';
+      label.textContent = 'Appears On';
+      const ul = document.createElement('ul');
+      ul.className = 'releases-list';
+      items.forEach(item => {
+        const li = document.createElement('li');
+        li.textContent = item;
+        ul.appendChild(li);
+      });
+      sec.appendChild(label);
+      sec.appendChild(ul);
+      scroll.appendChild(sec);
+    }
+  }
+
+  // Notes
+  if (s.Notes) {
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    sec.innerHTML = `<div class="detail-section-label">Notes</div>
+      <div class="detail-section-content">${textToHtml(s.Notes)}</div>`;
+    scroll.appendChild(sec);
+  }
+
+  // Quotes
+  if (s.Quotes) {
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    const label = document.createElement('div');
+    label.className = 'detail-section-label';
+    label.textContent = 'Member Quotes';
+    sec.appendChild(label);
+    parseQuotes(s.Quotes).forEach(q => {
+      const block = document.createElement('div');
+      block.className = 'quote-block';
+      block.innerHTML = `${esc(q.text)}${q.speaker ? `<div class="quote-speaker">— ${esc(q.speaker)}</div>` : ''}`;
+      sec.appendChild(block);
+    });
+    scroll.appendChild(sec);
+  }
+
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('main').classList.add('panel-open');
+}
+
+function buildSpotifySection(s) {
+  const wrap = document.createElement('div');
+
+  // Extract Spotify track ID
+  const spotifyId = extractSpotifyId(s.SpotifyUrl || s.SpotifyTrackUrl || '');
+
+  const actions = document.createElement('div');
+  actions.className = 'detail-actions';
+
+  if (s.SpotifyUrl || s.SpotifyTrackUrl) {
+    const url = s.SpotifyUrl || s.SpotifyTrackUrl;
+    const linkBtn = document.createElement('a');
+    linkBtn.className = 'detail-btn spot';
+    linkBtn.href = url;
+    linkBtn.target = '_blank';
+    linkBtn.rel = 'noopener';
+    linkBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
+      Open on Spotify`;
+    actions.appendChild(linkBtn);
+  }
+
+  if (spotifyId) {
+    const embedBtn = document.createElement('button');
+    embedBtn.className = 'detail-btn';
+    embedBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor" width="13" height="13"><path d="M8 5v14l11-7z"/></svg> Play Here`;
+    embedBtn.onclick = () => {
+      actions.style.display = 'none';
+      const embedWrap = document.createElement('div');
+      embedWrap.className = 'spotify-embed-wrap';
+      embedWrap.innerHTML = `<iframe src="https://open.spotify.com/embed/track/${esc(spotifyId)}?utm_source=generator&theme=0"
+        height="152" allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"></iframe>`;
+      wrap.insertBefore(embedWrap, actions);
+    };
+    actions.appendChild(embedBtn);
+  }
+
+  if (actions.children.length) wrap.appendChild(actions);
+  return wrap;
+}
+
+function closeDetail() {
+  activeName = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('main').classList.remove('panel-open');
+  document.querySelectorAll('.song-row.active').forEach(el => el.classList.remove('active'));
+}
+
+// ── TEXT PROCESSING ───────────────────────────────────────────────────────────
+function textToHtml(text) {
+  if (!text) return '';
+  // Split on double newlines for paragraphs, single newlines become <br>
+  return text
+    .split(/\n\n+/)
+    .map(para => `<p>${esc(para.trim()).replace(/\n/g, '<br>')}</p>`)
+    .join('');
+}
+
+function parseQuotes(quotes) {
+  if (!quotes) return [];
+  // Quotes may be a string with multiple entries separated by member name patterns
+  // Pattern: "MemberName: quote text" or just blocks of text
+  const results = [];
+  // Split on lines that look like "Name: " at start
+  const lines = String(quotes).split('\n');
+  let current = { speaker:'', text:'' };
+  lines.forEach(line => {
+    const match = line.match(/^([A-Za-z\s,\[\]]+):\s+(.+)/);
+    if (match && match[1].length < 40) {
+      if (current.text.trim()) results.push({ ...current, text: current.text.trim() });
+      current = { speaker: match[1].trim(), text: match[2] };
+    } else {
+      current.text += (current.text ? '\n' : '') + line;
+    }
+  });
+  if (current.text.trim()) results.push({ ...current, text: current.text.trim() });
+  // If nothing parsed as speaker-attributed, treat whole thing as one quote
+  if (!results.length && String(quotes).trim()) {
+    results.push({ speaker:'', text: String(quotes).trim() });
+  }
+  return results;
+}
+
+function extractSpotifyId(url) {
+  if (!url) return '';
+  const m = String(url).match(/track\/([A-Za-z0-9]+)/);
+  return m ? m[1] : '';
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function onSearch() {
+  const q = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const lq = q.toLowerCase().trim();
+    filtered = lq
+      ? allSongs.filter(s =>
+          (s.Name||'').toLowerCase().includes(lq) ||
+          (s.AlternativeName||'').toLowerCase().includes(lq) ||
+          (s.Album||'').toLowerCase().includes(lq) ||
+          (s.LyricsBy||'').toLowerCase().includes(lq) ||
+          (s.Notes||'').toLowerCase().includes(lq) ||
+          (s.MediaTieIn||'').toLowerCase().includes(lq))
+      : [...allSongs];
+    renderAll();
+  }, 200);
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  filtered = [...allSongs];
+  renderAll();
+  document.getElementById('searchInput').focus();
+}
+
+// ── COLLAPSE / EXPAND ─────────────────────────────────────────────────────────
+function collapseAll() { document.querySelectorAll('.group-section').forEach(s => s.classList.add('collapsed')); }
+function expandAll()   { document.querySelectorAll('.group-section').forEach(s => s.classList.remove('collapsed')); }
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function fmt(n) { return Number(n||0).toLocaleString(); }
+function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function slugify(s) { return String(s||'').replace(/[^a-z0-9]/gi,'_').toLowerCase(); }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+
+boot();
+</script>
+</body>
+</html>
