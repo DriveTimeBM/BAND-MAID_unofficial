@@ -22,7 +22,7 @@
   },
   {
     "id": "videos",
-    "name": "Videos",
+    "name": "Videos *improved*",
     "file": "views/videos.html",
     "nav": "main",
     "icon": "▶️"

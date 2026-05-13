@@ -8,525 +8,575 @@
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
-  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;--bg4:#242424;
   --border:#2a2a2a;--border2:#3a3a3a;
-  --text:#f0f0f0;--text2:#999;--text3:#666;
-  --accent:#c8a96e;--accent2:#8b5cf6;
-  --danger:#ef4444;--success:#22c55e;
+  --text:#f0f0f0;--text2:#b8c8d8;--text3:#7a8a9a;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ef4444;--red-dim:rgba(239,68,68,0.08);
+  --success:#22c55e;
   --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;--toolbar-h:48px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
 
-/* APP HEADER */
-.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
-.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
-.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
-.back-btn:hover{border-color:var(--border2);color:var(--text)}
-.back-btn.visible{display:flex}
-.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.stat-pill{
+  font-size:11px;color:var(--text3);
+  background:var(--bg3);border:1px solid var(--border);border-radius:20px;
+  padding:3px 10px;white-space:nowrap;
+}
 
-/* SEARCH BAR */
-.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+/* ── TOOLBAR ── */
+.toolbar{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--toolbar-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 14px;
+  overflow-x:auto;
+}
+.toolbar::-webkit-scrollbar{display:none}
+.search-wrap{position:relative;flex:1;min-width:120px;max-width:280px}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 28px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237a8a9a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
 .search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:9px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
 
-/* GROUP HEADER */
-.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
-.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
-.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
-.group-collapsed .group-items{display:none}
-.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
-.group-collapsed .group-chevron{transform:rotate(-90deg)}
+.tb-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.tb-select:focus{border-color:var(--accent)}
+.tb-select option{background:var(--bg3)}
+.tb-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.tb-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
 
-/* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
-.deck-grid.no-group{margin:0}
+/* ── MAIN ── */
+.main{
+  position:fixed;
+  top:calc(var(--header-h) + var(--toolbar-h));
+  left:0;right:0;bottom:0;
+  overflow-y:auto;
+  padding:0 0 24px;
+  transition:right 0.3s ease;
+}
+.main.panel-open{right:420px}
 
-/* DECK CARD */
-.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
-.deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
-.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
-.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
-.deck-card-url{position:absolute;top:8px;right:8px}
-.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
-.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
-.ext-icon svg{width:11px;height:11px}
+/* Group heading */
+.group-heading{
+  position:sticky;top:0;z-index:10;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:8px 16px;
+  display:flex;align-items:center;gap:10px;
+}
+.group-name{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent)}
+.group-count{font-size:10px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:1px 7px}
 
-/* SHOW MORE */
-.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
-.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
-.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* Card grid */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(180px,1fr));
+  gap:1px;background:var(--border);
+  margin-bottom:0;
+}
+@media(max-width:500px){.card-grid{grid-template-columns:repeat(2,1fr)}}
 
-/* DETAIL VIEW */
-.detail-view{display:none;min-height:calc(100vh - 57px)}
-.detail-view.visible{display:block}
-.list-view{display:block}
-.list-view.hidden{display:none}
-.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
-.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
-.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
-.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
-.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
-.detail-fields{display:flex;flex-direction:column;gap:0}
-.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
-.detail-field:last-child{border-bottom:none}
-.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.7}
-.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
-.detail-field-value br{display:block;content:'';margin-top:0.5em}
-.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
-.detail-url-link:hover{text-decoration:underline}
-.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+/* Video card */
+.video-card{
+  background:var(--bg);cursor:pointer;
+  transition:background 0.12s;
+  display:flex;flex-direction:column;
+}
+.video-card:hover{background:var(--bg3)}
+.video-card.active{background:var(--bg3);outline:2px solid var(--accent);outline-offset:-2px}
+.card-thumb-wrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:var(--bg3)}
+.card-thumb{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s}
+.video-card:hover .card-thumb{transform:scale(1.03)}
+.card-duration{
+  position:absolute;bottom:4px;right:4px;
+  background:rgba(0,0,0,0.8);color:#fff;
+  font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;
+}
+.card-body{padding:8px 10px 10px;flex:1;display:flex;flex-direction:column;gap:3px}
+.card-title{font-size:11px;font-weight:600;color:var(--text);line-height:1.35;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;flex-wrap:wrap;gap:3px 8px;margin-top:2px}
+.card-views{font-size:10px;color:var(--accent);font-weight:600}
+.card-delta{font-size:10px;color:var(--success)}
+.card-date{font-size:10px;color:var(--text3)}
+.card-song{font-size:10px;color:var(--text2);font-style:italic}
 
-/* UTIL */
-.hidden{display:none}
+/* Empty state */
+.empty-state{padding:60px 24px;text-align:center;color:var(--text3);font-size:13px}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{
+  position:fixed;top:var(--header-h);right:-420px;bottom:0;width:420px;
+  background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;
+  transition:right 0.3s ease;z-index:200;
+  overflow:hidden;
+}
+.detail-panel.open{right:0}
+
+.detail-close{
+  position:absolute;top:12px;right:12px;
+  width:28px;height:28px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);
+  color:var(--text3);font-size:14px;cursor:pointer;z-index:5;
+  display:flex;align-items:center;justify-content:center;transition:all 0.15s;
+}
+.detail-close:hover{border-color:var(--accent);color:var(--accent)}
+
+.detail-player{background:#000;flex-shrink:0;position:relative}
+.detail-player-placeholder{
+  aspect-ratio:16/9;display:flex;align-items:center;justify-content:center;
+  cursor:pointer;position:relative;overflow:hidden;
+}
+.detail-thumb{width:100%;height:100%;object-fit:cover;display:block}
+.play-overlay{
+  position:absolute;inset:0;display:flex;align-items:center;justify-content:center;
+  background:rgba(0,0,0,0.35);
+}
+.play-circle{
+  width:52px;height:52px;border-radius:50%;
+  background:rgba(0,0,0,0.7);border:2px solid rgba(255,255,255,0.8);
+  display:flex;align-items:center;justify-content:center;
+  font-size:20px;color:#fff;transition:transform 0.15s,background 0.15s;
+}
+.detail-player-placeholder:hover .play-circle{transform:scale(1.1);background:var(--accent)}
+.detail-player-placeholder:hover .play-circle{color:#0a0a0a}
+.detail-player iframe{width:100%;aspect-ratio:16/9;border:none;display:block}
+
+.detail-scroll{flex:1;overflow-y:auto;padding:16px}
+.detail-title{font-size:14px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:12px}
+.detail-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
+.detail-stat{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px;text-align:center}
+.detail-stat-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.detail-stat-val{font-size:14px;font-weight:700;color:var(--text)}
+.detail-stat-val.accent{color:var(--accent)}
+.detail-stat-val.success{color:var(--success)}
+.detail-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:14px}
+.detail-tag{background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;font-size:11px;color:var(--text2)}
+.detail-tag.type{background:var(--accent-dim);border-color:var(--accent-border);color:var(--accent)}
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap}
+.detail-btn{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:6px;
+  padding:9px 14px;border-radius:var(--radius);font-size:12px;font-weight:600;
+  text-decoration:none;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);transition:all 0.15s;cursor:pointer;font-family:var(--font);
+}
+.detail-btn:hover{border-color:var(--accent);color:var(--accent)}
+.detail-btn.primary{background:var(--red);color:#fff;border-color:var(--red)}
+.detail-btn.primary:hover{opacity:0.85}
+.detail-btn svg{width:13px;height:13px;flex-shrink:0}
+
+.tb-icon-btn{
+  padding:5px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);font-family:var(--font);transition:all 0.15s;white-space:nowrap;flex-shrink:0;
+}
+.tb-icon-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Group heading collapse */
+.group-heading{cursor:pointer;user-select:none}
+.group-heading:hover{background:var(--bg3)}
+.group-chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.group-section.collapsed .group-chevron{transform:rotate(-90deg)}
+.group-section.collapsed .card-grid{display:none}
+.group-section.collapsed .show-more-row{display:none}
+
+/* Show more row */
+.show-more-row{
+  padding:8px 16px;border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;
+  background:var(--bg);
+}
+.show-more-btn{
+  font-size:11px;font-weight:600;color:var(--accent);cursor:pointer;
+  background:none;border:1px solid var(--accent-border);border-radius:var(--radius);
+  padding:4px 12px;font-family:var(--font);transition:all 0.15s;
+}
+.show-more-btn:hover{background:var(--accent-dim)}
+.show-more-count{font-size:10px;color:var(--text3)}
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+/* Mobile: detail panel full-width overlay */
+@media(max-width:700px){
+  .detail-panel{width:100%;right:-100%}
+  .main.panel-open{right:0}
+}
 </style>
 </head>
 <body>
 
-<!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">▶️</div>
-  <div>
-    <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">Videos</div>
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='▶'"></div>
+  <div class="app-title">BAND-MAID Videos</div>
+  <div class="header-spacer"></div>
+  <div class="stat-pill" id="statPill">Loading…</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Search videos…" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
-  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
-  <div class="record-count" id="recordCount"></div>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Group:</span>
+  <select class="tb-select" id="groupBy" onchange="renderAll()">
+    <option value="type">Type</option>
+    <option value="year">Year</option>
+    <option value="song">Song</option>
+  </select>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Sort:</span>
+  <select class="tb-select" id="sortBy" onchange="renderAll()">
+    <option value="views">Views</option>
+    <option value="delta">Views Yesterday</option>
+    <option value="date_desc">Date (newest)</option>
+    <option value="date_asc">Date (oldest)</option>
+    <option value="duration">Duration</option>
+  </select>
+  <div class="tb-divider"></div>
+  <button class="tb-icon-btn" onclick="collapseAll()">⊟ Collapse All</button>
+  <button class="tb-icon-btn" onclick="expandAll()">⊞ Expand All</button>
 </div>
 
-<!-- FETCH STATES -->
-<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
-  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-  <span>Loading Videos…</span>
-</div>
-<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
-  <div style="font-size:32px">⚠️</div>
-  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
-  <div id="fetchErrorMsg"></div>
-  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading videos…</span>
 </div>
 
-<!-- LIST VIEW -->
-<div id="listView" class="list-view" style="display:none">
-  <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search Videos…" id="searchInput" oninput="onSearch()">
-  </div>
-  <div id="mainContent"></div>
-</div>
+<div class="main" id="main"></div>
 
-<!-- DETAIL VIEW -->
-<div id="detailView" class="detail-view"></div>
+<!-- DETAIL PANEL -->
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-close" onclick="closeDetail()">✕</button>
+  <div class="detail-player" id="detailPlayer"></div>
+  <div class="detail-scroll" id="detailScroll"></div>
+</div>
 
 <script>
-const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json";
-const API_READ_KEY = "";
-const ALWAYS_FRESH = false;
-const CACHE_KEY = 'bmdata_' + "Videos".replace(/\s+/g,'_');
-const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
-const FIELDS = [{"name":"Title","type":"text"},{"name":"Date","type":"datetime"},{"name":"URL","type":"url"},{"name":"VideoId","type":"text"},{"name":"Song","type":"text"},{"name":"Views","type":"number"},{"name":"ViewsDelta","type":"number"},{"name":"Type","type":"text"},{"name":"Duration","type":"text"},{"name":"Image","type":"image"}];
-const DECK = {"image":"Image","primary":"Title","secondary":"Views","summary":"Date","url":"URL"};
-const SORT = {"field":"Views","dir":"desc"};
-const GROUP = {"field":"Type","dir":"asc"};
-const VIEW_NAME = "Videos";
-const LOGO_CHAR = "▶️";
-const PREVIEW_COUNT = 5;
-const PREVIEW_DATA = null;
+const YT_JSON = 'https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json';
 
-let RAW_DATA = [];
+let allVideos  = [];
+let filtered   = [];
+let activeId   = null;
+let searchTimer= null;
 
-// ── DATA LOADING ──────────────────────────────────────────────────────────────
-async function loadData(){
-  // Preview mode — data injected by generator at build time
-  if(PREVIEW_DATA){
-    RAW_DATA=PREVIEW_DATA;
-    currentData=RAW_DATA;
-    hideFetchState();
-    renderList();
-    return;
-  }
-
-  // No URL configured — nothing to fetch
-  if(!JSON_URL){
-    showFetchError('No JSON URL configured for this view.');
-    return;
-  }
-
-  // Always-fresh: skip cache entirely
-  if(!ALWAYS_FRESH){
-    try{
-      const cached=localStorage.getItem(CACHE_KEY);
-      if(cached){
-        const {ts,data}=JSON.parse(cached);
-        if(Date.now()-ts < CACHE_TTL){
-          RAW_DATA=data;
-          currentData=RAW_DATA;
-          hideFetchState();
-          renderList();
-          return;
-        }
-      }
-    }catch(e){}
-  }
-
-  // Fetch live
-  try{
-    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
-    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
-    const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
-    const res=await fetch(url,fetchOpts);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const parsed=await res.json();
-    RAW_DATA=normalizeToArray(parsed);
-    currentData=RAW_DATA;
-    // Store in cache (even for always-fresh — just won't be read next time)
-    if(!ALWAYS_FRESH){
-      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
-    }
-    hideFetchState();
-    renderList();
-  }catch(e){
-    showFetchError('Failed to load data: '+e.message);
-  }
-}
-
-function showFetchError(msg){
-  document.getElementById('fetchError').style.display='flex';
-  document.getElementById('fetchErrorMsg').textContent=msg;
-  document.getElementById('fetchLoading').style.display='none';
-}
-function hideFetchState(){
-  document.getElementById('fetchLoading').style.display='none';
-  document.getElementById('fetchError').style.display='none';
-  document.getElementById('listView').style.display='';
-}
-
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function normalizeToArray(parsed){
-  if(Array.isArray(parsed))return parsed;
-  if(parsed&&typeof parsed==='object'){
-    for(const key of ['record','data','items','results','values']){
-      if(Array.isArray(parsed[key]))return parsed[key];
-    }
-    if(Object.keys(parsed).length>0)return [parsed];
-  }
-  return [];
-}
-function fmtNumber(v){return parseInt(v,10).toLocaleString()}
-function isAllDigits(v){return /^\d+$/.test(String(v))}
-const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-function isDateTime(v){return ISO_DT_RE.test(String(v))}
-function fmtDateShort(v){
-  try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
-    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-  }catch(e){return String(v)}
-}
-function fmtDateFull(v){
-  try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
-    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
-  }catch(e){return String(v)}
-}
-function detectRuntime(fieldName,val){
-  const lc=fieldName.toLowerCase();
-  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
-  if(val!==null&&val!==undefined&&val!==''){
-    if(isDateTime(val))return 'datetime';
-    if(/^https?:\/\//i.test(String(val)))return 'url';
-    if(isAllDigits(val))return 'number';
-  }
-  return 'text';
-}
-function getType(f,val){
-  const meta=FIELDS.find(x=>x.name===f);
-  if(meta)return meta.type;
-  return detectRuntime(f,val);
-}
-function extIconSvg(){
-  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
-}
-
-// ── SORT / GROUP ──────────────────────────────────────────────────────────────
-function processData(data){
-  let d=[...data];
-  if(SORT.field){
-    d.sort((a,b)=>{
-      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
-      const an=isAllDigits(av);const bn=isAllDigits(bv);
-      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
-      return SORT.dir==='desc'?-cmp:cmp;
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(YT_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allVideos = await res.json();
+    if (!Array.isArray(allVideos)) allVideos = [allVideos];
+    // Pre-parse duration seconds for sorting
+    allVideos.forEach(v => {
+      v._durSec = parseDuration(v.Duration);
+      v._dateMs = v.Date ? new Date(v.Date).getTime() : 0;
     });
+    document.getElementById('stateOverlay').style.display = 'none';
+    filtered = [...allVideos];
+    renderAll();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load videos</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
   }
-  if(!GROUP.field) return [{group:null,items:d}];
-  const map=new Map();
-  d.forEach(row=>{
-    const g=String(row[GROUP.field]??'');
-    if(!map.has(g))map.set(g,[]);
-    map.get(g).push(row);
-  });
-  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
-  groups.sort((a,b)=>{
-    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
-    return GROUP.dir==='desc'?-cmp:cmp;
-  });
-  return groups;
 }
 
-// ── SEARCH ───────────────────────────────────────────────────────────────────
-let expandedGroups={};
-let showAllGroups={};
-let showAllFlat=false;
-let currentData=[];
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderAll() {
+  const groupBy = document.getElementById('groupBy').value;
+  const sortBy  = document.getElementById('sortBy').value;
 
-function onSearch(){
-  const q=document.getElementById('searchInput').value.toLowerCase().trim();
-  if(!q){currentData=RAW_DATA;}
-  else{
-    currentData=RAW_DATA.filter(row=>
-      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
-    );
-  }
-  showAllFlat=false;
-  showAllGroups={};
-  expandedGroups={};
-  renderList();
-}
+  // Sort
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === 'views')     return (b.Views||0)  - (a.Views||0);
+    if (sortBy === 'delta')     return (b.ViewsDelta||0) - (a.ViewsDelta||0);
+    if (sortBy === 'date_desc') return b._dateMs - a._dateMs;
+    if (sortBy === 'date_asc')  return a._dateMs - b._dateMs;
+    if (sortBy === 'duration')  return b._durSec - a._durSec;
+    return 0;
+  });
 
-// ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(scrollToGroup){
-  const groups=processData(currentData);
-  const total=currentData.length;
-  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
-  const container=document.getElementById('mainContent');
-  container.innerHTML='';
+  // Group
+  const groups = {};
+  const order  = [];
+  sorted.forEach(v => {
+    let key;
+    if (groupBy === 'type') key = v.Type || 'Other';
+    else if (groupBy === 'year') key = v.Date ? new Date(v.Date).getFullYear() + '' : '?';
+    else key = v.Song || '—'; // song
+    if (!groups[key]) { groups[key] = []; order.push(key); }
+    groups[key].push(v);
+  });
 
-  if(!currentData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+  // Sort group keys
+  if (groupBy === 'year') order.sort((a, b) => b.localeCompare(a));
+  else order.sort((a, b) => a.localeCompare(b));
+
+  // Update stat pill
+  const totalViews = filtered.reduce((s, v) => s + (v.Views||0), 0);
+  document.getElementById('statPill').textContent =
+    `${filtered.length} videos · ${fmt(totalViews)} total views`;
+
+  // Render
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  if (!sorted.length) {
+    main.innerHTML = '<div class="empty-state">No videos match your search.</div>';
     return;
   }
 
-  if(!GROUP.field){
-    const items=groups[0].items;
-    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
-    container.appendChild(renderDeckGrid(shown,null));
-    if(!showAllFlat&&items.length>PREVIEW_COUNT){
-      const more=document.createElement('div');
-      more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
-      container.appendChild(more);
+  order.forEach(gKey => {
+    const videos = groups[gKey];
+    const slug   = 'grp-' + slugify(gKey);
+    const PREVIEW = 5;
+
+    // Wrapper section
+    const section = document.createElement('div');
+    section.className = 'group-section';
+    section.id = slug;
+
+    // Heading — click to collapse/expand
+    const heading = document.createElement('div');
+    heading.className = 'group-heading';
+    heading.innerHTML = `
+      <span class="group-chevron">▶</span>
+      <span class="group-name">${esc(gKey)}</span>
+      <span class="group-count">${videos.length}</span>`;
+    heading.onclick = () => section.classList.toggle('collapsed');
+
+    // Card grid — initially shows first PREVIEW cards
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    videos.slice(0, PREVIEW).forEach(v => grid.appendChild(buildCard(v)));
+
+    section.appendChild(heading);
+    section.appendChild(grid);
+
+    // Show more row (only if more than PREVIEW)
+    if (videos.length > PREVIEW) {
+      const moreRow = document.createElement('div');
+      moreRow.className = 'show-more-row';
+      const remaining = videos.length - PREVIEW;
+      moreRow.innerHTML = `
+        <button class="show-more-btn">Show all</button>
+        <span class="show-more-count">${remaining} more</span>`;
+      moreRow.querySelector('.show-more-btn').onclick = (e) => {
+        e.stopPropagation();
+        // Add remaining cards
+        videos.slice(PREVIEW).forEach(v => grid.appendChild(buildCard(v)));
+        moreRow.remove();
+      };
+      section.appendChild(moreRow);
     }
-  } else {
-    groups.forEach(({group,items})=>{
-      const key=group??'';
-      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
-      const collapsed=!expandedGroups[key];
-      const showAll=!!showAllGroups[key];
 
-      const wrap=document.createElement('div');
-      wrap.className='group-block'+(collapsed?' group-collapsed':'');
-      wrap.dataset.groupKey=key;
-
-      const hdr=document.createElement('div');
-      hdr.className='group-header';
-      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
-      hdr.style.cursor='pointer';
-      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
-
-      const body=document.createElement('div');
-      body.className='group-items';
-      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
-      body.appendChild(renderDeckGrid(shown,group));
-
-      if(!showAll&&items.length>PREVIEW_COUNT){
-        const more=document.createElement('div');
-        more.className='show-more-row';
-        // Capture key in closure, scroll back to this group after re-render
-        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
-        more.querySelector('button').onclick=()=>{
-          showAllGroups[key]=true;
-          renderList(key);
-        };
-        body.appendChild(more);
-      }
-
-      wrap.appendChild(hdr);
-      wrap.appendChild(body);
-      container.appendChild(wrap);
-    });
-
-    // Scroll the expanded group back into view
-    if(scrollToGroup!==undefined){
-      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
-      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
-    }
-  }
-}
-
-function renderDeckGrid(items){
-  const grid=document.createElement('div');
-  grid.className='deck-grid';
-  items.forEach((row,i)=>{
-    grid.appendChild(renderDeckCard(row,i));
+    main.appendChild(section);
   });
-  return grid;
 }
 
-function renderDeckCard(row,idx){
-  const card=document.createElement('div');
-  card.className='deck-card';
-  card.onclick=()=>showDetail(row);
+function buildCard(v) {
+  const card = document.createElement('div');
+  card.className = 'video-card' + (v.VideoId === activeId ? ' active' : '');
+  card.id = 'card-' + v.VideoId;
+  card.onclick = () => openDetail(v);
 
-  // Image
-  if(DECK.image&&row[DECK.image]){
-    const img=document.createElement('img');
-    img.className='deck-card-img';
-    img.src=row[DECK.image];
-    img.alt='';
-    img.loading='lazy';
-    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
-    card.appendChild(img);
-  } else if(DECK.image){
-    card.appendChild(makePlaceholder());
-  }
+  const date  = v.Date ? new Date(v.Date).getFullYear() : '';
+  const delta = v.ViewsDelta ? `+${fmt(v.ViewsDelta)}` : '';
 
-  const body=document.createElement('div');
-  body.className='deck-card-body';
-
-  if(DECK.primary&&row[DECK.primary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-primary';
-    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
-    el.title=fmtVal(DECK.primary,row[DECK.primary]);
-    body.appendChild(el);
-  }
-  if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-secondary';
-    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
-    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
-    body.appendChild(el);
-  }
-  if(DECK.summary&&row[DECK.summary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-summary';
-    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
-    body.appendChild(el);
-  }
-  card.appendChild(body);
-
-  // URL icon overlay
-  if(DECK.url&&row[DECK.url]){
-    const a=document.createElement('a');
-    a.className='deck-card-url';
-    a.href=row[DECK.url];
-    a.target='_blank';
-    a.rel='noopener';
-    a.title='Open external link: '+row[DECK.url];
-    a.onclick=e=>{e.stopPropagation()};
-    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
-    card.appendChild(a);
-  }
-
+  card.innerHTML = `
+    <div class="card-thumb-wrap">
+      <img class="card-thumb" src="${esc(v.Image || `https://img.youtube.com/vi/${v.VideoId}/mqdefault.jpg`)}"
+        alt="" loading="lazy" onerror="this.src='https://img.youtube.com/vi/${v.VideoId}/mqdefault.jpg'">
+      ${v.Duration ? `<div class="card-duration">${esc(v.Duration)}</div>` : ''}
+    </div>
+    <div class="card-body">
+      <div class="card-title" title="${esc(v.Title)}">${esc(v.Title)}</div>
+      <div class="card-meta">
+        <span class="card-views">👁 ${fmt(v.Views)}</span>
+        ${delta ? `<span class="card-delta">▲${delta}</span>` : ''}
+        ${date  ? `<span class="card-date">${date}</span>` : ''}
+        ${v.Song ? `<span class="card-song">🎵 ${esc(v.Song)}</span>` : ''}
+      </div>
+    </div>`;
   return card;
 }
 
-function makePlaceholder(){
-  const el=document.createElement('div');
-  el.className='deck-card-img-placeholder';
-  el.textContent=LOGO_CHAR;
-  return el;
-}
+// ── DETAIL PANEL ─────────────────────────────────────────────────────────────
+function openDetail(v) {
+  activeId = v.VideoId;
 
-function fmtVal(field,val){
-  if(val===null||val===undefined)return '';
-  const t=getType(field,val);
-  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
-  if(t==='datetime')return fmtDateShort(val);
-  return String(val);
-}
-
-// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
-function showDetail(row){
-  document.getElementById('listView').classList.add('hidden');
-  const detail=document.getElementById('detailView');
-  detail.classList.add('visible');
-  document.getElementById('backBtn').classList.add('visible');
-  document.getElementById('viewLabel').textContent='Detail';
-  document.getElementById('recordCount').textContent='';
-
-  let html='';
-
-  // Hero image
-  if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
-  } else {
-    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
-  }
-
-  html+='<div class="detail-body">';
-
-  // Primary / secondary as title
-  if(DECK.primary&&row[DECK.primary]!==undefined){
-    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
-  }
-  if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
-  }
-
-  // All fields table
-  html+='<div class="detail-fields">';
-  FIELDS.forEach(({name,type})=>{
-    const val=row[name];
-    if(val===null||val===undefined||val==='')return;
-    const rtype=getType(name,val);
-    let valueHtml='';
-    if(rtype==='image'){
-      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
-    } else if(rtype==='url'){
-      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
-    } else if(rtype==='number'){
-      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
-    } else if(rtype==='datetime'){
-      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
-    } else {
-      // If value contains HTML tags (e.g. <br>) render as HTML, otherwise escape as plain text
-      const strVal=String(val);
-      valueHtml=/<[a-z][^>]*>/i.test(strVal) ? strVal : escHtml(strVal);
-    }
-    html+=`<div class="detail-field">
-      <div class="detail-field-label">${escHtml(name)}</div>
-      <div class="detail-field-value">${valueHtml}</div>
-    </div>`;
+  // Highlight active card
+  document.querySelectorAll('.video-card').forEach(el => {
+    el.classList.toggle('active', el.id === 'card-' + v.VideoId);
   });
-  html+='</div></div>';
 
-  detail.innerHTML=html;
-  window.scrollTo(0,0);
+  // Scroll card into view
+  document.getElementById('card-' + v.VideoId)
+    ?.scrollIntoView({ behavior:'smooth', block:'nearest' });
+
+  // Player — show thumbnail with play button; swap to iframe on click
+  const player = document.getElementById('detailPlayer');
+  showThumb(player, v);
+
+  // Info
+  const scroll = document.getElementById('detailScroll');
+  const date   = v.Date
+    ? new Date(v.Date).toLocaleDateString(undefined, {year:'numeric',month:'long',day:'numeric'})
+    : '—';
+
+  scroll.innerHTML = `
+    <div class="detail-title">${esc(v.Title)}</div>
+    <div class="detail-stats">
+      <div class="detail-stat">
+        <div class="detail-stat-label">Views</div>
+        <div class="detail-stat-val accent">${fmt(v.Views)}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Yesterday</div>
+        <div class="detail-stat-val success">+${fmt(v.ViewsDelta||0)}</div>
+      </div>
+      <div class="detail-stat">
+        <div class="detail-stat-label">Duration</div>
+        <div class="detail-stat-val">${esc(v.Duration||'—')}</div>
+      </div>
+    </div>
+    <div class="detail-tags">
+      <span class="detail-tag type">${esc(v.Type||'Video')}</span>
+      ${v.Song ? `<span class="detail-tag">🎵 ${esc(v.Song)}</span>` : ''}
+      <span class="detail-tag">📅 ${esc(date)}</span>
+    </div>
+    <div class="detail-actions">
+      <a class="detail-btn primary" href="${esc(v.URL)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Open on YouTube
+      </a>
+      <button class="detail-btn" onclick="loadPlayer('${v.VideoId}')">
+        <svg viewBox="0 0 24 24" fill="currentColor"><path d="M8 5v14l11-7z"/></svg>
+        Play Here
+      </button>
+    </div>`;
+
+  // Open panel
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('main').classList.add('panel-open');
 }
 
-function showList(){
-  document.getElementById('listView').classList.remove('hidden');
-  document.getElementById('detailView').classList.remove('visible');
-  document.getElementById('detailView').innerHTML='';
-  document.getElementById('backBtn').classList.remove('visible');
-  document.getElementById('viewLabel').textContent=VIEW_NAME;
-  renderList();
+function showThumb(player, v) {
+  player.innerHTML = `
+    <div class="detail-player-placeholder" onclick="loadPlayer('${v.VideoId}')">
+      <img class="detail-thumb"
+        src="${esc(v.Image || `https://img.youtube.com/vi/${v.VideoId}/sddefault.jpg`)}"
+        alt="" onerror="this.src='https://img.youtube.com/vi/${v.VideoId}/hqdefault.jpg'">
+      <div class="play-overlay">
+        <div class="play-circle">▶</div>
+      </div>
+    </div>`;
 }
 
-// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
-function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+function loadPlayer(videoId) {
+  const player = document.getElementById('detailPlayer');
+  player.innerHTML = `<iframe
+    src="https://www.youtube.com/embed/${esc(videoId)}?autoplay=1&rel=0&modestbranding=1"
+    allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+    allowfullscreen></iframe>`;
+}
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-loadData();
+function closeDetail() {
+  activeId = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('main').classList.remove('panel-open');
+  document.querySelectorAll('.video-card.active').forEach(el => el.classList.remove('active'));
+  // Stop video
+  document.getElementById('detailPlayer').innerHTML = '';
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function onSearch() {
+  const q = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const lq = q.toLowerCase().trim();
+    filtered = lq
+      ? allVideos.filter(v =>
+          (v.Title||'').toLowerCase().includes(lq) ||
+          (v.Type||'').toLowerCase().includes(lq)  ||
+          (v.Song||'').toLowerCase().includes(lq))
+      : [...allVideos];
+    renderAll();
+  }, 200);
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  filtered = [...allVideos];
+  renderAll();
+  document.getElementById('searchInput').focus();
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function parseDuration(s) {
+  if (!s) return 0;
+  const parts = s.split(':').map(Number);
+  return parts.length === 2 ? parts[0]*60+parts[1] : parts[0]*3600+parts[1]*60+(parts[2]||0);
+}
+function fmt(n) { return Number(n||0).toLocaleString(); }
+function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+function collapseAll() {
+  document.querySelectorAll('.group-section').forEach(s => s.classList.add('collapsed'));
+}
+function expandAll() {
+  document.querySelectorAll('.group-section').forEach(s => s.classList.remove('collapsed'));
+}
+
+function slugify(s) { return String(s).replace(/[^a-z0-9]/gi,'_').toLowerCase(); }
+
+// Close detail on Escape
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+
+boot();
 </script>
 </body>
 </html>
