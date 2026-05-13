@@ -167,6 +167,18 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .detail-section-content p{margin-bottom:6px}
 .detail-section-content p:last-child{margin-bottom:0}
 
+/* Interviewer questions in Notes/Quotes */
+.interview-q{
+  color:var(--text3);font-size:12px;font-style:normal;
+  padding-left:10px;border-left:2px solid var(--border2);
+  margin-bottom:4px !important;
+}
+.quote-question{
+  font-size:11px;color:var(--text3);
+  padding:4px 0 4px 10px;border-left:2px solid var(--border2);
+  margin-bottom:4px;
+}
+
 /* Releases list */
 .releases-list{list-style:none;display:flex;flex-direction:column;gap:3px}
 .releases-list li{font-size:12px;color:var(--text2);padding-left:12px;position:relative}
@@ -525,7 +537,7 @@ function openDetail(s) {
 
   // Releases On
   if (s.ReleasesOn) {
-    const items = s.ReleasesOn.split('❯').map(x => x.trim()).filter(Boolean);
+    const items = s.ReleasesOn.split('❯').map(x => x.trim().replace(/,\s*$/, '')).filter(Boolean);
     if (items.length) {
       const sec = document.createElement('div');
       sec.className = 'detail-section';
@@ -562,10 +574,15 @@ function openDetail(s) {
     label.className = 'detail-section-label';
     label.textContent = 'Member Quotes';
     sec.appendChild(label);
-    parseQuotes(s.Quotes).forEach(q => {
+    parseQuotes(s.Quotes).forEach(seg => {
       const block = document.createElement('div');
-      block.className = 'quote-block';
-      block.innerHTML = `${esc(q.text)}${q.speaker ? `<div class="quote-speaker">— ${esc(q.speaker)}</div>` : ''}`;
+      if (seg.type === 'question') {
+        block.className = 'quote-question';
+        block.textContent = seg.text;
+      } else {
+        block.className = 'quote-block';
+        block.innerHTML = `${esc(seg.text)}${seg.speaker ? `<div class="quote-speaker">— ${esc(seg.speaker)}</div>` : ''}`;
+      }
       sec.appendChild(block);
     });
     scroll.appendChild(sec);
@@ -577,18 +594,16 @@ function openDetail(s) {
 
 function buildSpotifySection(s) {
   const wrap = document.createElement('div');
-
-  // Extract Spotify track ID
-  const spotifyId = extractSpotifyId(s.SpotifyUrl || s.SpotifyTrackUrl || '');
+  const spotifyId = s.SpotifyId || '';
+  const spotifyUrl = spotifyId ? `https://open.spotify.com/track/${spotifyId}` : '';
 
   const actions = document.createElement('div');
   actions.className = 'detail-actions';
 
-  if (s.SpotifyUrl || s.SpotifyTrackUrl) {
-    const url = s.SpotifyUrl || s.SpotifyTrackUrl;
+  if (spotifyUrl) {
     const linkBtn = document.createElement('a');
     linkBtn.className = 'detail-btn spot';
-    linkBtn.href = url;
+    linkBtn.href = spotifyUrl;
     linkBtn.target = '_blank';
     linkBtn.rel = 'noopener';
     linkBtn.innerHTML = `<svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 0C5.4 0 0 5.4 0 12s5.4 12 12 12 12-5.4 12-12S18.66 0 12 0zm5.521 17.34c-.24.359-.66.48-1.021.24-2.82-1.74-6.36-2.101-10.561-1.141-.418.122-.779-.179-.899-.539-.12-.421.18-.78.54-.9 4.56-1.021 8.52-.6 11.64 1.32.42.18.479.659.301 1.02zm1.44-3.3c-.301.42-.841.6-1.262.3-3.239-1.98-8.159-2.58-11.939-1.38-.479.12-1.02-.12-1.14-.6-.12-.48.12-1.021.6-1.141C9.6 9.9 15 10.561 18.72 12.84c.361.181.54.78.241 1.2zm.12-3.36C15.24 8.4 8.82 8.16 5.16 9.301c-.6.179-1.2-.181-1.38-.721-.18-.601.18-1.2.72-1.381 4.26-1.26 11.28-1.02 15.721 1.621.539.3.719 1.02.419 1.56-.299.421-1.02.599-1.559.3z"/></svg>
@@ -623,44 +638,61 @@ function closeDetail() {
 }
 
 // ── TEXT PROCESSING ───────────────────────────────────────────────────────────
+// Shared line classifier: returns 'question' for interviewer lines, 'text' for responses
+function classifyLine(line) {
+  return /^(Q:|—|-{1,2})\s*/i.test(line.trim()) ? 'question' : 'text';
+}
+
 function textToHtml(text) {
   if (!text) return '';
-  // Split on double newlines for paragraphs, single newlines become <br>
-  return text
-    .split(/\n\n+/)
-    .map(para => `<p>${esc(para.trim()).replace(/\n/g, '<br>')}</p>`)
-    .join('');
+  const lines = text.split('\n');
+  let html = '';
+  lines.forEach(raw => {
+    const line = raw.trim();
+    if (!line) { html += ''; return; }
+    if (classifyLine(line) === 'question') {
+      const clean = line.replace(/^(Q:|—|-{1,2})\s*/i, '');
+      html += `<p class="interview-q">${esc(clean)}</p>`;
+    } else {
+      html += `<p>${esc(line)}</p>`;
+    }
+  });
+  return html;
 }
 
 function parseQuotes(quotes) {
   if (!quotes) return [];
-  // Quotes may be a string with multiple entries separated by member name patterns
-  // Pattern: "MemberName: quote text" or just blocks of text
-  const results = [];
-  // Split on lines that look like "Name: " at start
+  // Parse into segments: questions and speaker responses
+  // Returns array of { type:'question'|'response', speaker, text }
+  const segments = [];
   const lines = String(quotes).split('\n');
-  let current = { speaker:'', text:'' };
-  lines.forEach(line => {
-    const match = line.match(/^([A-Za-z\s,\[\]]+):\s+(.+)/);
-    if (match && match[1].length < 40) {
-      if (current.text.trim()) results.push({ ...current, text: current.text.trim() });
-      current = { speaker: match[1].trim(), text: match[2] };
+
+  lines.forEach(raw => {
+    const line = raw.trim();
+    if (!line) return;
+
+    if (classifyLine(line) === 'question') {
+      const clean = line.replace(/^(Q:|—|-{1,2})\s*/i, '');
+      segments.push({ type:'question', speaker:'', text: clean });
+      return;
+    }
+
+    // Speaker response: "Name: text" pattern
+    const match = line.match(/^([A-Za-z\s,\[\]]{2,35}):\s+(.+)/);
+    if (match) {
+      segments.push({ type:'response', speaker: match[1].trim(), text: match[2] });
     } else {
-      current.text += (current.text ? '\n' : '') + line;
+      // Plain continuation — append to last response or create new
+      const last = segments[segments.length - 1];
+      if (last && last.type === 'response') {
+        last.text += ' ' + line;
+      } else {
+        segments.push({ type:'response', speaker:'', text: line });
+      }
     }
   });
-  if (current.text.trim()) results.push({ ...current, text: current.text.trim() });
-  // If nothing parsed as speaker-attributed, treat whole thing as one quote
-  if (!results.length && String(quotes).trim()) {
-    results.push({ speaker:'', text: String(quotes).trim() });
-  }
-  return results;
-}
 
-function extractSpotifyId(url) {
-  if (!url) return '';
-  const m = String(url).match(/track\/([A-Za-z0-9]+)/);
-  return m ? m[1] : '';
+  return segments.length ? segments : [{ type:'response', speaker:'', text: String(quotes).trim() }];
 }
 
 // ── SEARCH ────────────────────────────────────────────────────────────────────
