@@ -148,8 +148,15 @@ html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);fon
 .detail-scroll{flex:1;overflow-y:auto;padding:16px 18px 32px}
 
 /* Detail content */
-.detail-song-name{font-size:20px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px;padding-right:36px}
-.detail-song-alt{font-size:13px;color:var(--text3);margin-bottom:14px}
+.detail-song-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:14px}
+.detail-album-art{
+  width:72px;height:72px;flex-shrink:0;border-radius:6px;
+  object-fit:cover;background:var(--bg3);border:1px solid var(--border);
+  display:block;
+}
+.detail-song-text{flex:1;min-width:0;padding-right:36px}
+.detail-song-name{font-size:18px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px}
+.detail-song-alt{font-size:12px;color:var(--text3)}
 .detail-stats{display:grid;grid-template-columns:1fr 1fr 1fr;gap:8px;margin-bottom:14px}
 .detail-stat{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center}
 .detail-stat-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
@@ -342,7 +349,7 @@ function renderAll() {
   const order  = [];
   sorted.forEach(s => {
     let key;
-    if      (groupBy === 'album')  key = s.Album || 'Unknown Album';
+    if      (groupBy === 'album')  key = s.Album || 'None';
     else if (groupBy === 'year')   key = s._year;
     else if (groupBy === 'lyrics') key = s.LyricsBy || 'Unknown';
     else                           key = 'All Songs';
@@ -448,18 +455,27 @@ function openDetail(s) {
   const scroll = document.getElementById('detailScroll');
   scroll.innerHTML = '';
 
-  // Name
-  const nameEl = document.createElement('div');
-  nameEl.className = 'detail-song-name';
-  nameEl.textContent = s.Name;
-  scroll.appendChild(nameEl);
+  // Header: album art + song name + alt name
+  const header = document.createElement('div');
+  header.className = 'detail-song-header';
 
-  if (s.AlternativeName) {
-    const altEl = document.createElement('div');
-    altEl.className = 'detail-song-alt';
-    altEl.textContent = s.AlternativeName;
-    scroll.appendChild(altEl);
+  if (s.AlbumCoverUrl) {
+    const img = document.createElement('img');
+    img.className = 'detail-album-art';
+    img.src = s.AlbumCoverUrl;
+    img.alt = s.Album || '';
+    img.onerror = function(){ this.style.display = 'none'; };
+    header.appendChild(img);
   }
+
+  const textWrap = document.createElement('div');
+  textWrap.className = 'detail-song-text';
+  textWrap.innerHTML = `
+    <div class="detail-song-name">${esc(s.Name)}</div>
+    ${s.AlternativeName ? `<div class="detail-song-alt">${esc(s.AlternativeName)}</div>` : ''}
+    ${s.Album ? `<div class="detail-song-alt" style="margin-top:3px;color:var(--text3)">${esc(s.Album)}</div>` : ''}`;
+  header.appendChild(textWrap);
+  scroll.appendChild(header);
 
   // Spotify embed placeholder (loaded on demand)
   const spotifySection = buildSpotifySection(s);
