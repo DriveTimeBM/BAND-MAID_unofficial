@@ -518,19 +518,19 @@ function closeDetail() {
 // Splits on boundaries that look like a track number starting a new segment.
 function parseTracks(str) {
   if (!str) return [];
-  // Split on the pattern: optional whitespace, number(s), optional dot/colon/dash, space
-  // Use lookahead so the separator is kept with the next token
-  const parts = str
-    .split(/(?=\s*\d{1,2}\s*[.:\-]\s)/)
-    .map(s => s.trim())
-    .filter(Boolean);
-
-  return parts.map(part => {
-    // Strip leading track number prefix: "01. " "1. " "1 : " "1: " "1- "
-    const clean = part.replace(/^\d{1,2}\s*[.:\-]\s*/, '').trim();
-    const num   = (part.match(/^(\d{1,2})/) || [])[1];
-    return { num: num ? String(parseInt(num, 10)) : '', title: clean };
-  }).filter(t => t.title);
+  // Match patterns like: "01. Title" "1. Title" "1: Title" "1 : Title" "1- Title"
+  // The track number is 1-2 digits followed by optional whitespace then . : or -
+  const re = /(\d{1,2})\s*[.:\-]\s+([^]+?)(?=\s+\d{1,2}\s*[.:\-]\s+|$)/g;
+  const tracks = [];
+  let match;
+  while ((match = re.exec(str)) !== null) {
+    const num   = String(parseInt(match[1], 10));
+    const title = match[2].trim();
+    if (title) tracks.push({ num, title });
+  }
+  // Fallback: couldn't parse, return as single entry
+  if (!tracks.length) return [{ num: '', title: str.trim() }];
+  return tracks;
 }
 
 function buildTrackBlock(str) {
