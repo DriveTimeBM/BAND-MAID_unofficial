@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/sAt4wANOaqA/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / without holding back (Official Live Teaser 1) — Views: 71,447 | Yesterday: 79\nBAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 70,656 | Yesterday: 15\nBAND-MAID / SUPER SUNSHINE (Official Live Teaser 1) — Views: 33,778 | Yesterday: 345",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Sukurimingu [Screaming] (すくりーみんぐ) — Spotify: 1,199,399 | Played Live: 0\nTake me higher!! — Spotify: 1,111,473 | Played Live: 59\nBeauty and the beast — Spotify: 1,037,320 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 1)"
+                                              "text":  "Take me higher!!"
                                           },
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 1)",
+                                              "text":  "Sukurimingu [Screaming] (すくりーみんぐ)",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Beauty and the beast"
                                           }
                                       ]
                       }
