@@ -10,508 +10,589 @@
 :root{
   --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
   --border:#2a2a2a;--border2:#3a3a3a;
-  --text:#f0f0f0;--text2:#999;--text3:#666;
-  --accent:#c8a96e;--accent2:#8b5cf6;
-  --danger:#ef4444;--success:#22c55e;
+  --text:#f0f0f0;--text2:#b8c8d8;--text3:#7a8a9a;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ef4444;
   --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;--toolbar-h:48px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
 
-/* APP HEADER */
-.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
-.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
-.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
-.back-btn:hover{border-color:var(--border2);color:var(--text)}
-.back-btn.visible{display:flex}
-.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.stat-pill{font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
 
-/* SEARCH BAR */
-.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+/* ── TOOLBAR ── */
+.toolbar{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--toolbar-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 14px;overflow-x:auto;
+}
+.toolbar::-webkit-scrollbar{display:none}
+.search-wrap{position:relative;flex:1;min-width:100px;max-width:240px}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 26px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237a8a9a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
 .search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:9px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
+.tb-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.tb-select:focus{border-color:var(--accent)}
+.tb-select option{background:var(--bg3)}
+.tb-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.tb-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
+.tb-icon-btn{
+  padding:5px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;
+  cursor:pointer;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);font-family:var(--font);transition:all 0.15s;white-space:nowrap;flex-shrink:0;
+}
+.tb-icon-btn:hover{border-color:var(--accent);color:var(--accent)}
 
-/* GROUP HEADER */
-.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
-.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
-.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
-.group-collapsed .group-items{display:none}
-.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
-.group-collapsed .group-chevron{transform:rotate(-90deg)}
+/* ── MAIN ── */
+.main{
+  position:fixed;top:calc(var(--header-h) + var(--toolbar-h));left:0;right:0;bottom:0;
+  overflow-y:auto;transition:right 0.3s ease;
+}
+.main.panel-open{right:420px}
 
-/* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(140px,1fr));gap:1px;background:var(--border)}
-.deck-grid.no-group{margin:0}
+/* Group */
+.group-section{border-bottom:1px solid var(--border)}
+.group-heading{
+  position:sticky;top:0;z-index:10;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:8px 16px;display:flex;align-items:center;gap:10px;
+  cursor:pointer;user-select:none;transition:background 0.12s;
+}
+.group-heading:hover{background:var(--bg3)}
+.group-chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.group-section.collapsed .group-chevron{transform:rotate(-90deg)}
+.group-section.collapsed .card-grid{display:none}
+.group-name{font-size:11px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--accent);flex:1;min-width:0;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.group-count{font-size:10px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:1px 7px;flex-shrink:0}
 
-/* DECK CARD */
-.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
-.deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:160px}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:160px}
-.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
-.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
-.deck-card-url{position:absolute;top:8px;right:8px}
-.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
-.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
-.ext-icon svg{width:11px;height:11px}
+/* Card grid */
+.card-grid{
+  display:grid;
+  grid-template-columns:repeat(auto-fill,minmax(160px,1fr));
+  gap:1px;background:var(--border);
+}
 
-/* SHOW MORE */
-.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
-.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
-.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* Release card */
+.release-card{
+  background:var(--bg);cursor:pointer;display:flex;flex-direction:column;
+  transition:background 0.12s;
+}
+.release-card:hover{background:var(--bg3)}
+.release-card.active{background:var(--bg3);outline:2px solid var(--accent);outline-offset:-2px}
+.card-art-wrap{position:relative;aspect-ratio:1/1;overflow:hidden;background:var(--bg3)}
+.card-art{width:100%;height:100%;object-fit:cover;display:block;transition:transform 0.2s}
+.release-card:hover .card-art{transform:scale(1.04)}
+.card-art-placeholder{width:100%;height:100%;display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.2}
+.card-media-badge{
+  position:absolute;bottom:4px;right:4px;
+  background:rgba(0,0,0,0.8);color:#fff;
+  font-size:9px;font-weight:700;padding:2px 6px;border-radius:3px;
+}
+.card-body{padding:8px 10px 10px;flex:1;display:flex;flex-direction:column;gap:2px}
+.card-name{font-size:11px;font-weight:700;color:var(--text);line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-desc{font-size:10px;color:var(--text2);line-height:1.3;
+  display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
+.card-meta{display:flex;gap:6px;align-items:center;margin-top:3px;flex-wrap:wrap}
+.card-type{font-size:9px;font-weight:700;padding:1px 5px;border-radius:3px;
+  background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent)}
+.card-date{font-size:10px;color:var(--text3)}
 
-/* DETAIL VIEW */
-.detail-view{display:none;min-height:calc(100vh - 57px)}
-.detail-view.visible{display:block}
-.list-view{display:block}
-.list-view.hidden{display:none}
-.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
-.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
-.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
-.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
-.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
-.detail-fields{display:flex;flex-direction:column;gap:0}
-.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
-.detail-field:last-child{border-bottom:none}
-.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.5}
-.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
-.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
-.detail-url-link:hover{text-decoration:underline}
-.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+/* Empty */
+.empty-state{padding:60px 24px;text-align:center;color:var(--text3);font-size:13px}
 
-/* UTIL */
-.hidden{display:none}
+/* ── DETAIL PANEL ── */
+.detail-panel{
+  position:fixed;top:var(--header-h);right:-420px;bottom:0;width:420px;
+  background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;transition:right 0.3s ease;z-index:200;overflow:hidden;
+}
+.detail-panel.open{right:0}
+.detail-close{
+  position:absolute;top:12px;right:12px;width:28px;height:28px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text3);
+  font-size:14px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.detail-close:hover{border-color:var(--accent);color:var(--accent)}
+.detail-scroll{flex:1;overflow-y:auto;padding:18px 18px 32px}
+
+/* Detail art header */
+.detail-art-header{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.detail-art{
+  width:90px;height:90px;flex-shrink:0;border-radius:8px;
+  object-fit:cover;background:var(--bg3);border:1px solid var(--border);display:block;
+}
+.detail-art-placeholder{
+  width:90px;height:90px;flex-shrink:0;border-radius:8px;
+  background:var(--bg3);border:1px solid var(--border);
+  display:flex;align-items:center;justify-content:center;font-size:32px;opacity:0.3;
+}
+.detail-title-wrap{flex:1;min-width:0;padding-right:36px}
+.detail-name{font-size:17px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px}
+.detail-work{font-size:12px;color:var(--text3);margin-bottom:4px}
+.detail-type-badge{
+  display:inline-block;font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;
+  padding:2px 8px;border-radius:20px;
+  background:var(--accent-dim);border:1px solid var(--accent-border);color:var(--accent);
+}
+
+/* Detail meta grid */
+.detail-meta-grid{
+  display:grid;grid-template-columns:1fr 1fr;gap:8px;margin-bottom:16px;
+}
+.detail-meta-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+.detail-meta-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.detail-meta-val{font-size:12px;font-weight:600;color:var(--text);line-height:1.35}
+
+/* Detail sections */
+.detail-section{margin-bottom:14px}
+.detail-section-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.detail-section-content{font-size:12px;color:var(--text2);line-height:1.65}
+.bonus-block{
+  background:var(--bg3);border:1px solid var(--border);border-radius:6px;
+  padding:10px 12px;font-size:12px;color:var(--text2);line-height:1.6;
+}
+.bonus-track{padding:3px 0;border-bottom:1px solid var(--border)}
+.bonus-track:last-child{border-bottom:none}
+
+/* Action button */
+.detail-actions{margin-bottom:16px}
+.detail-btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:7px;width:100%;
+  padding:10px 16px;border-radius:var(--radius);font-size:13px;font-weight:600;
+  text-decoration:none;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);transition:all 0.15s;
+}
+.detail-btn:hover{border-color:var(--accent);color:var(--accent)}
+.detail-btn.primary{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
+.detail-btn.primary:hover{opacity:0.85}
+.detail-btn.prime{background:rgba(200,169,110,0.08);border-color:var(--accent-border);color:var(--accent)}
+.detail-btn svg{width:14px;height:14px;flex-shrink:0}
+
+/* Loading */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+@media(max-width:700px){
+  .detail-panel{width:100%;right:-100%}
+  .main.panel-open{right:0}
+}
 </style>
 </head>
 <body>
 
-<!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">💿</div>
-  <div>
-    <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">Releases</div>
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='💿'"></div>
+  <div class="app-title">BAND-MAID Releases</div>
+  <div class="header-spacer"></div>
+  <div class="stat-pill" id="statPill">Loading…</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Search releases…" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
-  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
-  <div class="record-count" id="recordCount"></div>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Group:</span>
+  <select class="tb-select" id="groupBy" onchange="renderAll()">
+    <option value="media">Media</option>
+    <option value="work">Work</option>
+    <option value="type">Type</option>
+    <option value="year">Year</option>
+  </select>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Sort:</span>
+  <select class="tb-select" id="sortBy" onchange="renderAll()">
+    <option value="date_asc">Release Date (oldest)</option>
+    <option value="date_desc">Release Date (newest)</option>
+    <option value="name">Name A–Z</option>
+  </select>
+  <div class="tb-divider"></div>
+  <button class="tb-icon-btn" onclick="collapseAll()">⊟ Collapse</button>
+  <button class="tb-icon-btn" onclick="expandAll()">⊞ Expand</button>
 </div>
 
-<!-- FETCH STATES -->
-<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
-  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-  <span>Loading Releases…</span>
-</div>
-<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
-  <div style="font-size:32px">⚠️</div>
-  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
-  <div id="fetchErrorMsg"></div>
-  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading releases…</span>
 </div>
 
-<!-- LIST VIEW -->
-<div id="listView" class="list-view" style="display:none">
-  <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search Releases…" id="searchInput" oninput="onSearch()">
-  </div>
-  <div id="mainContent"></div>
-</div>
+<div class="main" id="main"></div>
 
-<!-- DETAIL VIEW -->
-<div id="detailView" class="detail-view"></div>
+<div class="detail-panel" id="detailPanel">
+  <button class="detail-close" onclick="closeDetail()">✕</button>
+  <div class="detail-scroll" id="detailScroll"></div>
+</div>
 
 <script>
-const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json";
-const ALWAYS_FRESH = false;
-const CACHE_KEY = 'bmdata_' + "Releases".replace(/\s+/g,'_');
-const CACHE_TTL = 24 * 60 * 60 * 1000; // 24 hours in ms
-const FIELDS = [{"name":"Name","type":"text"},{"name":"Work","type":"text"},{"name":"Type","type":"text"},{"name":"URL","type":"url"},{"name":"Description","type":"text"},{"name":"Media","type":"text"},{"name":"BonusMedia","type":"text"},{"name":"BonusDesc","type":"text"},{"name":"Publisher","type":"text"},{"name":"ReleaseDate","type":"datetime"},{"name":"AlbumCoverURL","type":"image"}];
-const DECK = {"image":"AlbumCoverURL","primary":"Name","secondary":"Type","summary":"ReleaseDate","url":"URL"};
-const SORT = {"field":"ReleaseDate","dir":"asc"};
-const GROUP = {"field":"Media","dir":"asc"};
-const VIEW_NAME = "Releases";
-const LOGO_CHAR = "💿";
-const PREVIEW_COUNT = 5;
-const PREVIEW_DATA = null;
+const REL_JSON = 'https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json';
+const PRIME_HOST = 'bandmaid.fan';  // detect Prime URLs
 
-let RAW_DATA = [];
+let allReleases = [];
+let filtered    = [];
+let activeKey   = null;
+let searchTimer = null;
 
-// ── DATA LOADING ──────────────────────────────────────────────────────────────
-async function loadData(){
-  // Preview mode — data injected by generator at build time
-  if(PREVIEW_DATA){
-    RAW_DATA=PREVIEW_DATA;
-    currentData=RAW_DATA;
-    hideFetchState();
-    renderList();
-    return;
-  }
-
-  // No URL configured — nothing to fetch
-  if(!JSON_URL){
-    showFetchError('No JSON URL configured for this view.');
-    return;
-  }
-
-  // Always-fresh: skip cache entirely
-  if(!ALWAYS_FRESH){
-    try{
-      const cached=localStorage.getItem(CACHE_KEY);
-      if(cached){
-        const {ts,data}=JSON.parse(cached);
-        if(Date.now()-ts < CACHE_TTL){
-          RAW_DATA=data;
-          currentData=RAW_DATA;
-          hideFetchState();
-          renderList();
-          return;
-        }
-      }
-    }catch(e){}
-  }
-
-  // Fetch live
-  try{
-    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
-    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
-    const res=await fetch(url);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    const parsed=await res.json();
-    RAW_DATA=Array.isArray(parsed)?parsed:(parsed.data||parsed.items||Object.values(parsed)[0]||[]);
-    currentData=RAW_DATA;
-    // Store in cache (even for always-fresh — just won't be read next time)
-    if(!ALWAYS_FRESH){
-      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
-    }
-    hideFetchState();
-    renderList();
-  }catch(e){
-    showFetchError('Failed to load data: '+e.message);
-  }
-}
-
-function showFetchError(msg){
-  document.getElementById('fetchError').style.display='flex';
-  document.getElementById('fetchErrorMsg').textContent=msg;
-  document.getElementById('fetchLoading').style.display='none';
-}
-function hideFetchState(){
-  document.getElementById('fetchLoading').style.display='none';
-  document.getElementById('fetchError').style.display='none';
-  document.getElementById('listView').style.display='';
-}
-
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function fmtNumber(v){return parseInt(v,10).toLocaleString()}
-function isAllDigits(v){return /^\d+$/.test(String(v))}
-const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-function isDateTime(v){return ISO_DT_RE.test(String(v))}
-function fmtDateShort(v){
-  try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
-    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-  }catch(e){return String(v)}
-}
-function fmtDateFull(v){
-  try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
-    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
-  }catch(e){return String(v)}
-}
-function detectRuntime(fieldName,val){
-  const lc=fieldName.toLowerCase();
-  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
-  if(val!==null&&val!==undefined&&val!==''){
-    if(isDateTime(val))return 'datetime';
-    if(/^https?:\/\//i.test(String(val)))return 'url';
-    if(isAllDigits(val))return 'number';
-  }
-  return 'text';
-}
-function getType(f,val){
-  const meta=FIELDS.find(x=>x.name===f);
-  if(meta)return meta.type;
-  return detectRuntime(f,val);
-}
-function extIconSvg(){
-  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
-}
-
-// ── SORT / GROUP ──────────────────────────────────────────────────────────────
-function processData(data){
-  let d=[...data];
-  if(SORT.field){
-    d.sort((a,b)=>{
-      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
-      const an=isAllDigits(av);const bn=isAllDigits(bv);
-      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
-      return SORT.dir==='desc'?-cmp:cmp;
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(REL_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allReleases = await res.json();
+    if (!Array.isArray(allReleases)) allReleases = [allReleases];
+    allReleases.forEach(r => {
+      r._dateMs = r.ReleaseDate ? new Date(r.ReleaseDate).getTime() : 0;
+      r._year   = r.ReleaseDate ? r.ReleaseDate.substring(0, 4) : '?';
+      r._key    = (r.Name + r.ReleaseDate + r.Media).replace(/\s/g, '_');
     });
+    document.getElementById('stateOverlay').style.display = 'none';
+    filtered = [...allReleases];
+    renderAll();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load releases</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
   }
-  if(!GROUP.field) return [{group:null,items:d}];
-  const map=new Map();
-  d.forEach(row=>{
-    const g=String(row[GROUP.field]??'');
-    if(!map.has(g))map.set(g,[]);
-    map.get(g).push(row);
-  });
-  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
-  groups.sort((a,b)=>{
-    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
-    return GROUP.dir==='desc'?-cmp:cmp;
-  });
-  return groups;
 }
 
-// ── SEARCH ───────────────────────────────────────────────────────────────────
-let expandedGroups={};
-let showAllGroups={};
-let showAllFlat=false;
-let currentData=[];
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function renderAll() {
+  const groupBy = document.getElementById('groupBy').value;
+  const sortBy  = document.getElementById('sortBy').value;
 
-function onSearch(){
-  const q=document.getElementById('searchInput').value.toLowerCase().trim();
-  if(!q){currentData=RAW_DATA;}
-  else{
-    currentData=RAW_DATA.filter(row=>
-      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
-    );
-  }
-  showAllFlat=false;
-  showAllGroups={};
-  expandedGroups={};
-  renderList();
-}
+  const sorted = [...filtered].sort((a, b) => {
+    if (sortBy === 'date_asc')  return a._dateMs - b._dateMs;
+    if (sortBy === 'date_desc') return b._dateMs - a._dateMs;
+    if (sortBy === 'name')      return (a.Name||'').localeCompare(b.Name||'');
+    return a._dateMs - b._dateMs;
+  });
 
-// ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(scrollToGroup){
-  const groups=processData(currentData);
-  const total=currentData.length;
-  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
-  const container=document.getElementById('mainContent');
-  container.innerHTML='';
+  const groups = {};
+  const order  = [];
+  sorted.forEach(r => {
+    let key;
+    if      (groupBy === 'work')  key = r.Work  || r.Name || '—';
+    else if (groupBy === 'type')  key = r.Type  || 'Other';
+    else if (groupBy === 'year')  key = r._year;
+    else                          key = r.Media || 'Other'; // media default
+    if (!groups[key]) { groups[key] = []; order.push(key); }
+    groups[key].push(r);
+  });
 
-  if(!currentData.length){
-    container.innerHTML='<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+  // Sort group keys
+  if (groupBy === 'year') order.sort((a, b) => a.localeCompare(b));
+  else                    order.sort((a, b) => a.localeCompare(b));
+
+  document.getElementById('statPill').textContent =
+    `${filtered.length} release${filtered.length !== 1 ? 's' : ''} · ${order.length} groups`;
+
+  const main = document.getElementById('main');
+  main.innerHTML = '';
+
+  if (!sorted.length) {
+    main.innerHTML = '<div class="empty-state">No releases match your search.</div>';
     return;
   }
 
-  if(!GROUP.field){
-    const items=groups[0].items;
-    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
-    container.appendChild(renderDeckGrid(shown,null));
-    if(!showAllFlat&&items.length>PREVIEW_COUNT){
-      const more=document.createElement('div');
-      more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
-      container.appendChild(more);
-    }
-  } else {
-    groups.forEach(({group,items})=>{
-      const key=group??'';
-      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
-      const collapsed=!expandedGroups[key];
-      const showAll=!!showAllGroups[key];
+  order.forEach(gKey => {
+    const releases = groups[gKey];
+    const section  = document.createElement('div');
+    section.className = 'group-section';
 
-      const wrap=document.createElement('div');
-      wrap.className='group-block'+(collapsed?' group-collapsed':'');
-      wrap.dataset.groupKey=key;
+    const heading = document.createElement('div');
+    heading.className = 'group-heading';
+    heading.innerHTML = `
+      <span class="group-chevron">▶</span>
+      <span class="group-name">${esc(gKey)}</span>
+      <span class="group-count">${releases.length}</span>`;
+    heading.onclick = () => section.classList.toggle('collapsed');
 
-      const hdr=document.createElement('div');
-      hdr.className='group-header';
-      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
-      hdr.style.cursor='pointer';
-      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
+    const grid = document.createElement('div');
+    grid.className = 'card-grid';
+    releases.forEach(r => grid.appendChild(buildCard(r)));
 
-      const body=document.createElement('div');
-      body.className='group-items';
-      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
-      body.appendChild(renderDeckGrid(shown,group));
-
-      if(!showAll&&items.length>PREVIEW_COUNT){
-        const more=document.createElement('div');
-        more.className='show-more-row';
-        // Capture key in closure, scroll back to this group after re-render
-        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
-        more.querySelector('button').onclick=()=>{
-          showAllGroups[key]=true;
-          renderList(key);
-        };
-        body.appendChild(more);
-      }
-
-      wrap.appendChild(hdr);
-      wrap.appendChild(body);
-      container.appendChild(wrap);
-    });
-
-    // Scroll the expanded group back into view
-    if(scrollToGroup!==undefined){
-      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
-      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
-    }
-  }
-}
-
-function renderDeckGrid(items){
-  const grid=document.createElement('div');
-  grid.className='deck-grid';
-  items.forEach((row,i)=>{
-    grid.appendChild(renderDeckCard(row,i));
+    section.appendChild(heading);
+    section.appendChild(grid);
+    main.appendChild(section);
   });
-  return grid;
 }
 
-function renderDeckCard(row,idx){
-  const card=document.createElement('div');
-  card.className='deck-card';
-  card.onclick=()=>showDetail(row);
+// ── CARD ─────────────────────────────────────────────────────────────────────
+function buildCard(r) {
+  const card = document.createElement('div');
+  card.className = 'release-card' + (r._key === activeKey ? ' active' : '');
+  card.id = 'card-' + slugify(r._key);
+  card.onclick = () => openDetail(r);
 
-  // Image
-  if(DECK.image&&row[DECK.image]){
-    const img=document.createElement('img');
-    img.className='deck-card-img';
-    img.src=row[DECK.image];
-    img.alt='';
-    img.loading='lazy';
-    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
-    card.appendChild(img);
-  } else if(DECK.image){
-    card.appendChild(makePlaceholder());
-  }
+  const dateStr = r._year;
+  const hasCover = r.AlbumCoverURL && r.AlbumCoverURL.trim();
 
-  const body=document.createElement('div');
-  body.className='deck-card-body';
-
-  if(DECK.primary&&row[DECK.primary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-primary';
-    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
-    el.title=fmtVal(DECK.primary,row[DECK.primary]);
-    body.appendChild(el);
-  }
-  if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-secondary';
-    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
-    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
-    body.appendChild(el);
-  }
-  if(DECK.summary&&row[DECK.summary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-summary';
-    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
-    body.appendChild(el);
-  }
-  card.appendChild(body);
-
-  // URL icon overlay
-  if(DECK.url&&row[DECK.url]){
-    const a=document.createElement('a');
-    a.className='deck-card-url';
-    a.href=row[DECK.url];
-    a.target='_blank';
-    a.rel='noopener';
-    a.title='Open external link: '+row[DECK.url];
-    a.onclick=e=>{e.stopPropagation()};
-    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
-    card.appendChild(a);
-  }
-
+  card.innerHTML = `
+    <div class="card-art-wrap">
+      ${hasCover
+        ? `<img class="card-art" src="${esc(r.AlbumCoverURL)}" alt="${esc(r.Name)}" loading="lazy"
+             onerror="this.style.display='none';this.nextElementSibling.style.display='flex'">`
+        : ''}
+      <div class="card-art-placeholder" style="${hasCover ? 'display:none' : ''}">💿</div>
+      ${r.Media ? `<div class="card-media-badge">${esc(r.Media)}</div>` : ''}
+    </div>
+    <div class="card-body">
+      <div class="card-name" title="${esc(r.Name)}">${esc(r.Name)}</div>
+      ${r.Description ? `<div class="card-desc">${esc(r.Description)}</div>` : ''}
+      <div class="card-meta">
+        ${r.Type ? `<span class="card-type">${esc(r.Type)}</span>` : ''}
+        <span class="card-date">${dateStr}</span>
+      </div>
+    </div>`;
   return card;
 }
 
-function makePlaceholder(){
-  const el=document.createElement('div');
-  el.className='deck-card-img-placeholder';
-  el.textContent=LOGO_CHAR;
-  return el;
-}
+// ── DETAIL ────────────────────────────────────────────────────────────────────
+function openDetail(r) {
+  activeKey = r._key;
+  document.querySelectorAll('.release-card').forEach(el =>
+    el.classList.toggle('active', el.id === 'card-' + slugify(r._key)));
+  document.getElementById('card-' + slugify(r._key))
+    ?.scrollIntoView({ behavior:'smooth', block:'nearest' });
 
-function fmtVal(field,val){
-  if(val===null||val===undefined)return '';
-  const t=getType(field,val);
-  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
-  if(t==='datetime')return fmtDateShort(val);
-  return String(val);
-}
+  const scroll = document.getElementById('detailScroll');
+  scroll.innerHTML = '';
 
-// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
-function showDetail(row){
-  document.getElementById('listView').classList.add('hidden');
-  const detail=document.getElementById('detailView');
-  detail.classList.add('visible');
-  document.getElementById('backBtn').classList.add('visible');
-  document.getElementById('viewLabel').textContent='Detail';
-  document.getElementById('recordCount').textContent='';
+  // Art + title header
+  const header = document.createElement('div');
+  header.className = 'detail-art-header';
 
-  let html='';
-
-  // Hero image
-  if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
+  if (r.AlbumCoverURL) {
+    const img = document.createElement('img');
+    img.className = 'detail-art';
+    img.src = r.AlbumCoverURL;
+    img.alt = r.Name;
+    img.onerror = function() {
+      this.style.display = 'none';
+      const ph = document.createElement('div');
+      ph.className = 'detail-art-placeholder';
+      ph.textContent = '💿';
+      header.insertBefore(ph, this.nextSibling);
+    };
+    header.appendChild(img);
   } else {
-    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
+    const ph = document.createElement('div');
+    ph.className = 'detail-art-placeholder';
+    ph.textContent = '💿';
+    header.appendChild(ph);
   }
 
-  html+='<div class="detail-body">';
+  const titleWrap = document.createElement('div');
+  titleWrap.className = 'detail-title-wrap';
+  titleWrap.innerHTML = `
+    <div class="detail-name">${esc(r.Name)}</div>
+    ${r.Work && r.Work !== r.Name ? `<div class="detail-work">${esc(r.Work)}</div>` : ''}
+    ${r.Type ? `<span class="detail-type-badge">${esc(r.Type)}</span>` : ''}`;
+  header.appendChild(titleWrap);
+  scroll.appendChild(header);
 
-  // Primary / secondary as title
-  if(DECK.primary&&row[DECK.primary]!==undefined){
-    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
-  }
-  if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
+  // Action button
+  if (r.URL) {
+    const isPrime = /bandmaidprime/i.test(r.URL);
+    const actions = document.createElement('div');
+    actions.className = 'detail-actions';
+    actions.innerHTML = `
+      <a class="detail-btn ${isPrime ? 'prime' : 'primary'}"
+         href="${esc(r.URL)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        ${isPrime ? 'View on Prime' : 'Buy'}
+      </a>`;
+    scroll.appendChild(actions);
   }
 
-  // All fields table
-  html+='<div class="detail-fields">';
-  FIELDS.forEach(({name,type})=>{
-    const val=row[name];
-    if(val===null||val===undefined||val==='')return;
-    const rtype=getType(name,val);
-    let valueHtml='';
-    if(rtype==='image'){
-      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
-    } else if(rtype==='url'){
-      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
-    } else if(rtype==='number'){
-      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
-    } else if(rtype==='datetime'){
-      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
-    } else {
-      valueHtml=escHtml(String(val));
-    }
-    html+=`<div class="detail-field">
-      <div class="detail-field-label">${escHtml(name)}</div>
-      <div class="detail-field-value">${valueHtml}</div>
-    </div>`;
+  // Meta grid
+  const metaItems = [
+    { label:'Release Date', val: r.ReleaseDate ? new Date(r.ReleaseDate).toLocaleDateString(undefined,{year:'numeric',month:'long',day:'numeric'}) : null },
+    { label:'Publisher',    val: r.Publisher },
+    { label:'Media',        val: r.Media },
+    { label:'Bonus Media',  val: r.BonusMedia },
+  ].filter(m => m.val);
+
+  if (metaItems.length) {
+    const grid = document.createElement('div');
+    grid.className = 'detail-meta-grid';
+    metaItems.forEach(m => {
+      grid.innerHTML += `
+        <div class="detail-meta-card">
+          <div class="detail-meta-label">${esc(m.label)}</div>
+          <div class="detail-meta-val">${esc(m.val)}</div>
+        </div>`;
+    });
+    scroll.appendChild(grid);
+  }
+
+  // Description
+  if (r.Description) {
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    sec.innerHTML = `<div class="detail-section-label">Description</div>
+      <div class="detail-section-content">${esc(r.Description)}</div>`;
+    scroll.appendChild(sec);
+  }
+
+  // TrackList
+  if (r.TrackList) {
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    const label = document.createElement('div');
+    label.className = 'detail-section-label';
+    label.textContent = 'Track List';
+    sec.appendChild(label);
+    sec.appendChild(buildTrackBlock(r.TrackList));
+    scroll.appendChild(sec);
+  }
+
+  // Bonus content
+  if (r.BonusDesc) {
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    const label = document.createElement('div');
+    label.className = 'detail-section-label';
+    label.textContent = 'Bonus Content';
+    sec.appendChild(label);
+    sec.appendChild(buildTrackBlock(r.BonusDesc));
+    scroll.appendChild(sec);
+  }
+
+  document.getElementById('detailPanel').classList.add('open');
+  document.getElementById('main').classList.add('panel-open');
+}
+
+function closeDetail() {
+  activeKey = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  document.getElementById('main').classList.remove('panel-open');
+  document.querySelectorAll('.release-card.active').forEach(el => el.classList.remove('active'));
+}
+
+// ── TRACK PARSING ─────────────────────────────────────────────────────────────
+// Splits a track string into individual tracks regardless of format:
+//   "01. Title"  "1. Title"  "1 : Title"  "1: Title"  "1- Title"
+// Splits on boundaries that look like a track number starting a new segment.
+function parseTracks(str) {
+  if (!str) return [];
+  // Match patterns like: "01. Title" "1. Title" "1: Title" "1 : Title" "1- Title"
+  // The track number is 1-2 digits followed by optional whitespace then . : or -
+  const re = /(\d{1,2})\s*[.:\-]\s+([^]+?)(?=\s+\d{1,2}\s*[.:\-]\s+|$)/g;
+  const tracks = [];
+  let match;
+  while ((match = re.exec(str)) !== null) {
+    const num   = String(parseInt(match[1], 10));
+    const title = match[2].trim();
+    if (title) tracks.push({ num, title });
+  }
+  // Fallback: couldn't parse, return as single entry
+  if (!tracks.length) return [{ num: '', title: str.trim() }];
+  return tracks;
+}
+
+function buildTrackBlock(str) {
+  const tracks = parseTracks(str);
+  const block  = document.createElement('div');
+  block.className = 'bonus-block';
+
+  if (!tracks.length) {
+    block.textContent = str;
+    return block;
+  }
+
+  tracks.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'bonus-track';
+    row.innerHTML = t.num
+      ? `<span style="color:var(--text3);min-width:22px;display:inline-block;font-size:10px">${esc(t.num)}.</span> ${esc(t.title)}`
+      : esc(t.title);
+    block.appendChild(row);
   });
-  html+='</div></div>';
-
-  detail.innerHTML=html;
-  window.scrollTo(0,0);
+  return block;
 }
 
-function showList(){
-  document.getElementById('listView').classList.remove('hidden');
-  document.getElementById('detailView').classList.remove('visible');
-  document.getElementById('detailView').innerHTML='';
-  document.getElementById('backBtn').classList.remove('visible');
-  document.getElementById('viewLabel').textContent=VIEW_NAME;
-  renderList();
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function onSearch() {
+  const q = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(() => {
+    const lq = q.toLowerCase().trim();
+    filtered = lq
+      ? allReleases.filter(r =>
+          (r.Name||'').toLowerCase().includes(lq)        ||
+          (r.Work||'').toLowerCase().includes(lq)        ||
+          (r.Type||'').toLowerCase().includes(lq)        ||
+          (r.Media||'').toLowerCase().includes(lq)       ||
+          (r.Description||'').toLowerCase().includes(lq) ||
+          (r.TrackList||'').toLowerCase().includes(lq)   ||
+          (r.Publisher||'').toLowerCase().includes(lq))
+      : [...allReleases];
+    renderAll();
+  }, 200);
 }
 
-// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
-function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  filtered = [...allReleases];
+  renderAll();
+  document.getElementById('searchInput').focus();
+}
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-loadData();
+// ── COLLAPSE / EXPAND ─────────────────────────────────────────────────────────
+function collapseAll() { document.querySelectorAll('.group-section').forEach(s => s.classList.add('collapsed')); }
+function expandAll()   { document.querySelectorAll('.group-section').forEach(s => s.classList.remove('collapsed')); }
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function slugify(s) { return String(s||'').replace(/[^a-z0-9]/gi,'_').toLowerCase(); }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+boot();
 </script>
 </body>
 </html>

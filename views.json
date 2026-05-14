@@ -15,7 +15,7 @@
   },
   {
     "id": "releases",
-    "name": "Releases",
+    "name": "Releases *improved*",
     "file": "views/releases.html",
     "nav": "main",
     "icon": "💿"
