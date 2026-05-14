@@ -15,7 +15,7 @@
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
       "items": [
-        "Upgraded Videos and Songs views. New Songs view makes the former Spotify view obsolete.",
+        "Upgraded Videos, Songs, and Releases views. New Songs view makes the former Spotify view obsolete.",
         "Added pop-out mini audio player. Contains all 115+ YouTube audio tracks. Shuffle, Loop, no YT login required.",
         "Added Reactions Archive — 26,000+ fan reaction videos with playlist builder, grouped by channel or year",
         "Added Translations view — 300+ English translations of Japanese interviews and articles",
@@ -119,7 +119,7 @@
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/releases/releases.json",
       "description": "Complete BAND-MAID discography including singles, albums, EPs, and live releases. Shows release dates, track listings, and catalog information.",
       "tips": [
-        "Sorted by release date newest first by default",
+        "Various filter and sort options",
         "Includes digital-only releases not always listed elsewhere",
         "Track listings are included where available"
       ],
