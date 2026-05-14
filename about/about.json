@@ -281,7 +281,7 @@
     "section": "Views",
     "icon": "🎟️",
     "title": "Tickets",
-    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
+    "jsonUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ticketapp.json",
     "body": "All BAND-MAID events found with the Ticketmaster API with links to purchase. This will only show overseas shows. Updated daily",
     "image": "https://drivetimebm.github.io/BAND-MAID_unofficial/images/tickets.png"
   },

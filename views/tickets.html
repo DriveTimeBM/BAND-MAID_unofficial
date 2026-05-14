@@ -10,539 +10,602 @@
 :root{
   --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
   --border:#2a2a2a;--border2:#3a3a3a;
-  --text:#f0f0f0;--text2:#999;--text3:#666;
-  --accent:#c8a96e;--accent2:#8b5cf6;
-  --danger:#ef4444;--success:#22c55e;
+  --text:#f0f0f0;--text2:#b8c8d8;--text3:#7a8a9a;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ef4444;--green:#22c55e;
   --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;--toolbar-h:48px;
 }
-body{background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px;min-height:100vh}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
 
-/* APP HEADER */
-.app-header{background:var(--bg2);border-bottom:1px solid var(--border);padding:10px 16px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:100}
-.app-logo{width:34px;height:34px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;font-size:17px;flex-shrink:0}
-.app-nav-title{font-size:15px;font-weight:600;letter-spacing:0.04em}
-.view-label{font-size:11px;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:1px}
-.back-btn{margin-left:auto;background:var(--bg3);border:1px solid var(--border);color:var(--text2);padding:5px 12px;border-radius:var(--radius);font-size:12px;cursor:pointer;display:none;align-items:center;gap:6px}
-.back-btn:hover{border-color:var(--border2);color:var(--text)}
-.back-btn.visible{display:flex}
-.record-count{margin-left:auto;font-size:11px;color:var(--text3);display:flex;align-items:center;gap:4px}
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.stat-pill{font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
 
-/* SEARCH BAR */
-.search-bar{padding:10px 16px;background:var(--bg2);border-bottom:1px solid var(--border)}
-.search-input{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);padding:7px 12px 7px 34px;font-size:13px;outline:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='14' height='14' viewBox='0 0 24 24' fill='none' stroke='%23666' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");background-repeat:no-repeat;background-position:10px center;font-family:var(--font)}
+/* ── TOOLBAR ── */
+.toolbar{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--toolbar-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 14px;overflow-x:auto;
+}
+.toolbar::-webkit-scrollbar{display:none}
+.search-wrap{position:relative;flex:1;min-width:100px;max-width:240px}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 26px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237a8a9a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
 .search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:9px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
+.tb-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.tb-select:focus{border-color:var(--accent)}
+.tb-select option{background:var(--bg3)}
+.tb-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.tb-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
 
-/* GROUP HEADER */
-.group-header{padding:10px 16px 6px;display:flex;align-items:center;gap:10px;position:sticky;top:57px;background:var(--bg);z-index:10;border-bottom:1px solid var(--border)}
-.group-name{font-size:12px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent)}
-.group-count{background:rgba(200,169,110,0.12);border:1px solid rgba(200,169,110,0.3);border-radius:20px;padding:1px 8px;font-size:11px;color:var(--accent)}
-.group-collapsed .group-items{display:none}
-.group-chevron{color:var(--text3);font-size:11px;margin-left:auto;cursor:pointer;transition:transform 0.2s}
-.group-collapsed .group-chevron{transform:rotate(-90deg)}
+/* ── LAYOUT ── */
+.app-body{
+  position:fixed;top:calc(var(--header-h) + var(--toolbar-h));left:0;right:0;bottom:0;
+  display:flex;
+}
 
-/* DECK GRID */
-.deck-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:1px;background:var(--border)}
-.deck-grid.no-group{margin:0}
+/* ── EVENT LIST ── */
+.event-list{
+  width:360px;flex-shrink:0;background:var(--bg2);border-right:1px solid var(--border);
+  overflow-y:auto;display:flex;flex-direction:column;
+}
 
-/* DECK CARD */
-.deck-card{background:var(--bg2);cursor:pointer;transition:background 0.15s;overflow:hidden;display:flex;flex-direction:column;position:relative}
-.deck-card:hover{background:var(--bg3)}
-.deck-card-img{width:100%;aspect-ratio:1;object-fit:cover;background:var(--bg3);display:block;max-height:228px}
-.deck-card-img-placeholder{width:100%;aspect-ratio:1;background:var(--bg3);display:flex;align-items:center;justify-content:center;color:var(--text3);font-size:28px;max-height:228px}
-.deck-card-body{padding:10px 12px;flex:1;display:flex;flex-direction:column;gap:3px}
-.deck-card-primary{font-size:13px;font-weight:600;color:var(--text);line-height:1.3;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden}
-.deck-card-secondary{font-size:12px;color:var(--text2);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
-.deck-card-summary{font-size:12px;color:var(--accent);margin-top:2px}
-.deck-card-url{position:absolute;top:8px;right:8px}
-.ext-icon{width:22px;height:22px;background:rgba(0,0,0,0.65);border:1px solid var(--border2);border-radius:4px;display:flex;align-items:center;justify-content:center;cursor:pointer;text-decoration:none;font-size:11px;color:var(--text2)}
-.ext-icon:hover{border-color:var(--accent);color:var(--accent)}
-.ext-icon svg{width:11px;height:11px}
+/* Tour group */
+.tour-group{border-bottom:1px solid var(--border)}
+.tour-header{
+  position:sticky;top:0;z-index:5;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  padding:8px 14px;display:flex;align-items:center;gap:8px;
+  cursor:pointer;user-select:none;transition:background 0.12s;
+}
+.tour-header:hover{background:var(--bg3)}
+.tour-chevron{font-size:10px;color:var(--text3);transition:transform 0.2s;flex-shrink:0}
+.tour-group.collapsed .tour-chevron{transform:rotate(-90deg)}
+.tour-group.collapsed .tour-events{display:none}
+.tour-name{font-size:11px;font-weight:700;color:var(--accent);flex:1;min-width:0;
+  white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.tour-count{font-size:10px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:1px 7px;flex-shrink:0}
+.tour-events{display:flex;flex-direction:column}
 
-/* SHOW MORE */
-.show-more-row{padding:12px 16px;text-align:center;border-top:1px solid var(--border)}
-.show-more-btn{background:transparent;border:1px solid var(--border2);color:var(--text2);padding:7px 20px;border-radius:var(--radius);font-size:12px;cursor:pointer;font-family:var(--font)}
-.show-more-btn:hover{border-color:var(--accent);color:var(--accent)}
+/* Event card */
+.event-card{
+  display:flex;gap:10px;padding:10px 14px;
+  border-bottom:1px solid var(--border);cursor:pointer;transition:background 0.1s;
+}
+.event-card:last-child{border-bottom:none}
+.event-card:hover{background:var(--bg3)}
+.event-card.active{background:var(--accent-dim);border-left:3px solid var(--accent)}
+.event-date-col{flex-shrink:0;text-align:center;width:44px}
+.event-day{font-size:20px;font-weight:700;color:var(--text);line-height:1}
+.event-month{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--accent);margin-top:2px}
+.event-year{font-size:9px;color:var(--text3)}
+.event-info{flex:1;min-width:0}
+.event-venue{font-size:12px;font-weight:600;color:var(--text);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.event-city{font-size:11px;color:var(--text2);margin-top:1px}
+.event-flag{font-size:13px;margin-right:4px}
+.event-time{font-size:10px;color:var(--text3);margin-top:2px}
+.event-tag{
+  font-size:9px;font-weight:700;padding:1px 6px;border-radius:3px;
+  background:rgba(139,92,246,0.12);border:1px solid rgba(139,92,246,0.3);color:#8b5cf6;
+  margin-top:3px;display:inline-block;
+}
+.event-card.active .event-venue{color:var(--accent)}
 
-/* DETAIL VIEW */
-.detail-view{display:none;min-height:calc(100vh - 57px)}
-.detail-view.visible{display:block}
-.list-view{display:block}
-.list-view.hidden{display:none}
-.detail-hero{width:100%;max-height:340px;object-fit:cover;display:block;background:var(--bg3)}
-.detail-hero-placeholder{height:160px;background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:48px;color:var(--text3)}
-.detail-body{padding:20px 16px;max-width:680px;margin:0 auto}
-.detail-primary{font-size:22px;font-weight:700;letter-spacing:-0.01em;margin-bottom:6px;line-height:1.25}
-.detail-secondary{font-size:15px;color:var(--text2);margin-bottom:20px}
-.detail-fields{display:flex;flex-direction:column;gap:0}
-.detail-field{display:grid;grid-template-columns:140px 1fr;gap:12px;padding:11px 0;border-bottom:1px solid var(--border)}
-.detail-field:last-child{border-bottom:none}
-.detail-field-label{font-size:11px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;color:var(--text3);padding-top:1px}
-.detail-field-value{font-size:13px;color:var(--text);word-break:break-word;line-height:1.7}
-.detail-field-value.number{font-variant-numeric:tabular-nums;color:var(--accent)}
-.detail-field-value br{display:block;content:'';margin-top:0.5em}
-.detail-url-link{color:var(--accent2);text-decoration:none;word-break:break-all;display:flex;align-items:flex-start;gap:6px}
-.detail-url-link:hover{text-decoration:underline}
-.detail-url-link svg{flex-shrink:0;margin-top:2px;width:12px;height:12px}
+/* ── DETAIL PANEL ── */
+.detail-panel{
+  flex:1;display:flex;flex-direction:column;background:var(--bg);overflow:hidden;
+}
 
-/* UTIL */
-.hidden{display:none}
+/* Map */
+.map-wrap{
+  flex-shrink:0;background:var(--bg3);position:relative;
+  height:260px;overflow:hidden;
+}
+.map-iframe{width:100%;height:100%;border:none;display:block}
+.map-link{
+  position:absolute;bottom:10px;right:10px;
+  display:inline-flex;align-items:center;gap:5px;
+  background:rgba(10,10,10,0.85);border:1px solid var(--border2);border-radius:6px;
+  color:var(--text2);font-size:11px;font-weight:600;padding:5px 10px;
+  text-decoration:none;transition:all 0.15s;z-index:2;
+}
+.map-link:hover{border-color:var(--accent);color:var(--accent)}
+.map-link svg{width:12px;height:12px}
+
+/* Detail scroll */
+.detail-scroll{flex:1;overflow-y:auto;padding:18px 20px 40px}
+.detail-empty{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:14px;padding:40px 24px;text-align:center;
+  color:var(--text3);
+}
+.detail-empty-icon{font-size:48px;opacity:0.2}
+.detail-empty-text{font-size:13px;line-height:1.7;max-width:280px}
+
+/* Detail header */
+.detail-tour{font-size:10px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.detail-name{font-size:18px;font-weight:700;color:var(--text);line-height:1.3;margin-bottom:4px}
+.detail-location{font-size:13px;color:var(--text2);margin-bottom:14px}
+
+/* Stats grid */
+.detail-stats{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;margin-bottom:16px}
+.detail-stat{background:var(--bg2);border:1px solid var(--border);border-radius:6px;padding:8px;text-align:center}
+.detail-stat-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.detail-stat-val{font-size:13px;font-weight:700;color:var(--text)}
+.detail-stat-val.accent{color:var(--accent)}
+.detail-stat-val.countdown{font-size:11px}
+
+/* Countdown */
+.countdown-wrap{
+  background:var(--bg2);border:1px solid var(--border);border-radius:var(--radius);
+  padding:12px 14px;margin-bottom:16px;display:flex;align-items:center;gap:10px;
+}
+.countdown-label{font-size:11px;color:var(--text3);flex-shrink:0}
+.countdown-value{font-size:20px;font-weight:700;color:var(--accent);letter-spacing:0.05em}
+.countdown-done{color:var(--green)}
+
+/* Actions */
+.detail-actions{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:16px}
+.detail-btn{
+  flex:1;min-width:120px;display:inline-flex;align-items:center;justify-content:center;gap:7px;
+  padding:9px 14px;border-radius:var(--radius);font-size:12px;font-weight:600;
+  text-decoration:none;border:1px solid var(--border2);background:var(--bg2);
+  color:var(--text2);transition:all 0.15s;
+}
+.detail-btn:hover{border-color:var(--accent);color:var(--accent)}
+.detail-btn.primary{background:var(--accent);color:#0a0a0a;border-color:var(--accent)}
+.detail-btn.primary:hover{opacity:0.85}
+.detail-btn svg{width:13px;height:13px;flex-shrink:0}
+
+/* Event image */
+.event-image{
+  width:100%;border-radius:var(--radius);border:1px solid var(--border);
+  display:block;object-fit:cover;max-height:200px;margin-bottom:14px;
+}
+
+/* Seat map */
+.seat-map-wrap{margin-bottom:14px}
+.seat-map-label{font-size:9px;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.seat-map-img{width:100%;border-radius:6px;border:1px solid var(--border);display:block;cursor:zoom-in}
+
+/* Meta fields */
+.meta-field{display:flex;gap:8px;padding:6px 0;border-bottom:1px solid var(--border);font-size:12px}
+.meta-field:last-child{border-bottom:none}
+.meta-label{color:var(--text3);min-width:90px;flex-shrink:0}
+.meta-value{color:var(--text2);flex:1}
+
+/* No data state */
+.no-data-panel{
+  flex:1;display:flex;flex-direction:column;align-items:center;
+  justify-content:center;gap:16px;text-align:center;padding:40px 24px;
+}
+.no-data-icon{font-size:56px;opacity:0.2}
+.no-data-title{font-size:16px;font-weight:700;color:var(--text)}
+.no-data-text{font-size:13px;color:var(--text3);line-height:1.7;max-width:320px}
+
+/* Loading */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+
+@media(max-width:700px){
+  .app-body{flex-direction:column}
+  .event-list{width:100%;flex:1;min-height:0}
+  .detail-panel{border-top:1px solid var(--border)}
+  .map-wrap{height:180px}
+}
 </style>
 </head>
 <body>
 
-<!-- APP HEADER -->
 <div class="app-header">
-  <div class="app-logo">🎟️</div>
-  <div>
-    <div class="app-nav-title">BAND-MAID Unofficial</div>
-    <div class="view-label" id="viewLabel">Tickets</div>
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='🎟'"></div>
+  <div class="app-title">BAND-MAID Tickets</div>
+  <div class="header-spacer"></div>
+  <div class="stat-pill" id="statPill">Loading…</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Search city, venue, tour…" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
   </div>
-  <button class="back-btn" id="backBtn" onclick="showList()">&#8592; Back</button>
-  <div class="record-count" id="recordCount"></div>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Show:</span>
+  <select class="tb-select" id="filterType" onchange="renderList()">
+    <option value="all">All tickets</option>
+    <option value="standard">Standard only</option>
+    <option value="vip">VIP only</option>
+  </select>
 </div>
 
-<!-- FETCH STATES -->
-<div id="fetchLoading" style="position:fixed;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;background:var(--bg);color:var(--text3);font-size:13px;z-index:50">
-  <div style="width:30px;height:30px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite"></div>
-  <span>Loading Tickets…</span>
-</div>
-<div id="fetchError" style="position:fixed;inset:0;display:none;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:var(--bg);color:var(--text3);font-size:13px;text-align:center;padding:24px;z-index:50">
-  <div style="font-size:32px">⚠️</div>
-  <div style="font-size:15px;color:var(--text2)">Could not load data</div>
-  <div id="fetchErrorMsg"></div>
-  <button onclick="loadData()" style="margin-top:8px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)">Retry</button>
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading ticket data…</span>
 </div>
 
-<!-- LIST VIEW -->
-<div id="listView" class="list-view" style="display:none">
-  <div class="search-bar">
-    <input class="search-input" type="search" placeholder="Search Tickets…" id="searchInput" oninput="onSearch()">
+<div class="app-body" id="appBody">
+  <div class="event-list" id="eventList"></div>
+  <div class="detail-panel" id="detailPanel">
+    <div class="detail-empty">
+      <div class="detail-empty-icon">📍</div>
+      <div class="detail-empty-text">Select an event to see details, map, and ticket links.</div>
+    </div>
   </div>
-  <div id="mainContent"></div>
 </div>
-
-<!-- DETAIL VIEW -->
-<div id="detailView" class="detail-view"></div>
 
 <script>
-const JSON_URL = "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json";
-const API_READ_KEY = "";
-const ALWAYS_FRESH = false;
-const CACHE_KEY = 'bmdata_' + "Tickets".replace(/\s+/g,'_');
-const CACHE_TTL = 4 * 60 * 60 * 1000; // 4 hours in ms
-const FIELDS = [{"name":"Event","type":"text"},{"name":"Venue","type":"text"},{"name":"URL","type":"url"},{"name":"Image","type":"image"}];
-const DECK = {"image":"Image","primary":"Event","secondary":"Venue","summary":null,"url":"URL"};
-const SORT = {"field":"","dir":"asc"};
-const GROUP = {"field":"","dir":"asc"};
-const VIEW_NAME = "Tickets";
-const LOGO_CHAR = "🎟️";
-const PREVIEW_COUNT = 999999;
-const ALLOW_EMPTY   = false;
-const PREVIEW_DATA = null;
+const TK_JSON = 'https://drivetimebm.github.io/BAND-MAID_gpt/misc/ticketapp.json';
 
-let RAW_DATA = [];
+let allEvents  = [];
+let filtered   = [];
+let activeKey  = null;
+let searchTimer= null;
+let cdTimer    = null;
 
-// ── DATA LOADING ──────────────────────────────────────────────────────────────
-async function loadData(){
-  // Preview mode — data injected by generator at build time
-  if(PREVIEW_DATA){
-    RAW_DATA=PREVIEW_DATA;
-    currentData=RAW_DATA;
-    hideFetchState();
-    renderList();
-    return;
-  }
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(TK_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allEvents = await res.json();
+    if (!Array.isArray(allEvents)) allEvents = [allEvents];
 
-  // No URL configured — nothing to fetch
-  if(!JSON_URL){
-    showFetchError('No JSON URL configured for this view.');
-    return;
-  }
-
-  // Always-fresh: skip cache entirely
-  if(!ALWAYS_FRESH){
-    try{
-      const cached=localStorage.getItem(CACHE_KEY);
-      if(cached){
-        const {ts,data}=JSON.parse(cached);
-        if(Date.now()-ts < CACHE_TTL){
-          RAW_DATA=data;
-          currentData=RAW_DATA;
-          hideFetchState();
-          renderList();
-          return;
-        }
-      }
-    }catch(e){}
-  }
-
-  // Fetch live
-  try{
-    // Cache-bust for always-fresh so GitHub/CDN doesn't serve stale
-    const url=ALWAYS_FRESH ? JSON_URL+'?_='+Date.now() : JSON_URL;
-    const fetchOpts=API_READ_KEY ? {headers:{'X-Access-Key':API_READ_KEY}} : {};
-    const res=await fetch(url,fetchOpts);
-    if(!res.ok) throw new Error('HTTP '+res.status);
-    let parsed;
-    try{
-      const text=await res.text();
-      parsed=text.trim()?JSON.parse(text):[];
-    }catch(e){
-      if(ALLOW_EMPTY){parsed=[];}
-      else throw new Error('Invalid JSON: '+e.message);
-    }
-    RAW_DATA=normalizeToArray(parsed);
-    currentData=RAW_DATA;
-    // If empty and ALLOW_EMPTY, skip cache and just render the friendly message
-    if(!RAW_DATA.length && ALLOW_EMPTY){
-      hideFetchState();
-      renderList();
-      return;
-    }
-    // Store in cache (even for always-fresh — just won't be read next time)
-    if(!ALWAYS_FRESH){
-      try{localStorage.setItem(CACHE_KEY,JSON.stringify({ts:Date.now(),data:RAW_DATA}));}catch(e){}
-    }
-    hideFetchState();
-    renderList();
-  }catch(e){
-    showFetchError('Failed to load data: '+e.message);
-  }
-}
-
-function showFetchError(msg){
-  document.getElementById('fetchError').style.display='flex';
-  document.getElementById('fetchErrorMsg').textContent=msg;
-  document.getElementById('fetchLoading').style.display='none';
-}
-function hideFetchState(){
-  document.getElementById('fetchLoading').style.display='none';
-  document.getElementById('fetchError').style.display='none';
-  document.getElementById('listView').style.display='';
-}
-
-// ── HELPERS ──────────────────────────────────────────────────────────────────
-function normalizeToArray(parsed){
-  if(Array.isArray(parsed))return parsed;
-  if(parsed&&typeof parsed==='object'){
-    for(const key of ['record','data','items','results','values']){
-      if(Array.isArray(parsed[key]))return parsed[key];
-    }
-    if(Object.keys(parsed).length>0)return [parsed];
-  }
-  return [];
-}
-function fmtNumber(v){return parseInt(v,10).toLocaleString()}
-function isAllDigits(v){return /^\d+$/.test(String(v))}
-const ISO_DT_RE=/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}:\d{2}/;
-function isDateTime(v){return ISO_DT_RE.test(String(v))}
-function fmtDateShort(v){
-  try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
-    return d.toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'});
-  }catch(e){return String(v)}
-}
-function fmtDateFull(v){
-  try{
-    const d=new Date(String(v).includes('Z')||String(v).match(/[+-]\d{2}:\d{2}$/)?v:v+'Z');
-    return d.toLocaleString(undefined,{year:'numeric',month:'long',day:'numeric',hour:'numeric',minute:'2-digit',timeZoneName:'short'});
-  }catch(e){return String(v)}
-}
-function detectRuntime(fieldName,val){
-  const lc=fieldName.toLowerCase();
-  if(lc.includes('image')||lc.includes('img')||lc.includes('photo')||lc.includes('picture')||lc.includes('thumbnail')||lc.includes('cover')||lc.includes('artwork'))return 'image';
-  if(val!==null&&val!==undefined&&val!==''){
-    if(isDateTime(val))return 'datetime';
-    if(/^https?:\/\//i.test(String(val)))return 'url';
-    if(isAllDigits(val))return 'number';
-  }
-  return 'text';
-}
-function getType(f,val){
-  const meta=FIELDS.find(x=>x.name===f);
-  if(meta)return meta.type;
-  return detectRuntime(f,val);
-}
-function extIconSvg(){
-  return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" xmlns="http://www.w3.org/2000/svg"><path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/><polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/></svg>`;
-}
-
-// ── SORT / GROUP ──────────────────────────────────────────────────────────────
-function processData(data){
-  let d=[...data];
-  if(SORT.field){
-    d.sort((a,b)=>{
-      const av=a[SORT.field]??'';const bv=b[SORT.field]??'';
-      const an=isAllDigits(av);const bn=isAllDigits(bv);
-      let cmp=an&&bn?Number(av)-Number(bv):String(av).localeCompare(String(bv),undefined,{numeric:true});
-      return SORT.dir==='desc'?-cmp:cmp;
+    allEvents.forEach(e => {
+      e._ms    = parseDotNet(e.DateTime);
+      e._isVip = /vip/i.test(e.Tour);
+      e._key   = e.VenueId + '_' + e._ms + '_' + (e._isVip ? 'vip' : 'std');
     });
-  }
-  if(!GROUP.field) return [{group:null,items:d}];
-  const map=new Map();
-  d.forEach(row=>{
-    const g=String(row[GROUP.field]??'');
-    if(!map.has(g))map.set(g,[]);
-    map.get(g).push(row);
-  });
-  let groups=[...map.entries()].map(([g,items])=>({group:g,items}));
-  groups.sort((a,b)=>{
-    const cmp=String(a.group).localeCompare(String(b.group),undefined,{numeric:true});
-    return GROUP.dir==='desc'?-cmp:cmp;
-  });
-  return groups;
-}
 
-// ── SEARCH ───────────────────────────────────────────────────────────────────
-let expandedGroups={};
-let showAllGroups={};
-let showAllFlat=false;
-let currentData=[];
+    // Sort by date ascending
+    allEvents.sort((a, b) => a._ms - b._ms);
 
-function onSearch(){
-  const q=document.getElementById('searchInput').value.toLowerCase().trim();
-  if(!q){currentData=RAW_DATA;}
-  else{
-    currentData=RAW_DATA.filter(row=>
-      Object.values(row).some(v=>v!==null&&String(v).toLowerCase().includes(q))
-    );
+    document.getElementById('stateOverlay').style.display = 'none';
+    filtered = [...allEvents];
+    renderList();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load ticket data</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
   }
-  showAllFlat=false;
-  showAllGroups={};
-  expandedGroups={};
-  renderList();
 }
 
 // ── RENDER LIST ───────────────────────────────────────────────────────────────
-function renderList(scrollToGroup){
-  const groups=processData(currentData);
-  const total=currentData.length;
-  document.getElementById('recordCount').textContent=`${total.toLocaleString()} record${total!==1?'s':''}`;
-  const container=document.getElementById('mainContent');
-  container.innerHTML='';
+function renderList() {
+  const typeFilter = document.getElementById('filterType').value;
+  const q = document.getElementById('searchInput').value.toLowerCase().trim();
 
-  if(!currentData.length){
-    container.innerHTML=ALLOW_EMPTY
-      ? '<div style="padding:40px;text-align:center;color:var(--text3);font-size:15px">No items today</div>'
-      : '<div style="padding:40px;text-align:center;color:var(--text3)">No records found</div>';
+  let list = allEvents.filter(e => {
+    if (typeFilter === 'vip'      && !e._isVip) return false;
+    if (typeFilter === 'standard' &&  e._isVip) return false;
+    if (q) {
+      return (e.City||'').toLowerCase().includes(q) ||
+             (e.Country||'').toLowerCase().includes(q) ||
+             (e.Venue||'').toLowerCase().includes(q)  ||
+             (e.Tour||'').toLowerCase().includes(q);
+    }
+    return true;
+  });
+
+  filtered = list;
+
+  // Update stat pill
+  const upcoming = list.filter(e => e._ms > Date.now()).length;
+  document.getElementById('statPill').textContent =
+    list.length
+      ? `${list.length} ticket listing${list.length !== 1 ? 's' : ''} · ${upcoming} upcoming`
+      : 'No listings';
+
+  const el = document.getElementById('eventList');
+  el.innerHTML = '';
+
+  if (!list.length) {
+    el.innerHTML = `
+      <div class="no-data-panel">
+        <div class="no-data-icon">🎟</div>
+        <div class="no-data-title">No upcoming shows</div>
+        <div class="no-data-text">
+          ${q || typeFilter !== 'all'
+            ? 'No events match your current filters.'
+            : 'There are no BAND-MAID events currently listed on Ticketmaster. Check back later — new shows are added automatically when they go on sale.'}
+        </div>
+      </div>`;
     return;
   }
 
-  if(!GROUP.field){
-    const items=groups[0].items;
-    const shown=showAllFlat?items:items.slice(0,PREVIEW_COUNT);
-    container.appendChild(renderDeckGrid(shown,null));
-    if(!showAllFlat&&items.length>PREVIEW_COUNT){
-      const more=document.createElement('div');
-      more.className='show-more-row';
-      more.innerHTML=`<button class="show-more-btn" onclick="showAllFlat=true;renderList()">Show all ${items.length.toLocaleString()} records ↓</button>`;
-      container.appendChild(more);
-    }
-  } else {
-    groups.forEach(({group,items})=>{
-      const key=group??'';
-      if(expandedGroups[key]===undefined) expandedGroups[key]=true;
-      const collapsed=!expandedGroups[key];
-      const showAll=!!showAllGroups[key];
-
-      const wrap=document.createElement('div');
-      wrap.className='group-block'+(collapsed?' group-collapsed':'');
-      wrap.dataset.groupKey=key;
-
-      const hdr=document.createElement('div');
-      hdr.className='group-header';
-      hdr.innerHTML=`<span class="group-name">${escHtml(group??'(blank)')}</span><span class="group-count">${items.length.toLocaleString()}</span><span class="group-chevron">▾</span>`;
-      hdr.style.cursor='pointer';
-      hdr.onclick=()=>{expandedGroups[key]=!expandedGroups[key];renderList();};
-
-      const body=document.createElement('div');
-      body.className='group-items';
-      const shown=showAll?items:items.slice(0,PREVIEW_COUNT);
-      body.appendChild(renderDeckGrid(shown,group));
-
-      if(!showAll&&items.length>PREVIEW_COUNT){
-        const more=document.createElement('div');
-        more.className='show-more-row';
-        // Capture key in closure, scroll back to this group after re-render
-        more.innerHTML=`<button class="show-more-btn">Show all ${items.length.toLocaleString()} ↓</button>`;
-        more.querySelector('button').onclick=()=>{
-          showAllGroups[key]=true;
-          renderList(key);
-        };
-        body.appendChild(more);
-      }
-
-      wrap.appendChild(hdr);
-      wrap.appendChild(body);
-      container.appendChild(wrap);
-    });
-
-    // Scroll the expanded group back into view
-    if(scrollToGroup!==undefined){
-      const target=container.querySelector(`[data-group-key="${CSS.escape(String(scrollToGroup))}"] .group-header`);
-      if(target) target.scrollIntoView({block:'start',behavior:'smooth'});
-    }
-  }
-}
-
-function renderDeckGrid(items){
-  const grid=document.createElement('div');
-  grid.className='deck-grid';
-  items.forEach((row,i)=>{
-    grid.appendChild(renderDeckCard(row,i));
+  // Group by tour
+  const tours = {};
+  const tourOrder = [];
+  list.forEach(e => {
+    const key = cleanTourName(e.Tour);
+    if (!tours[key]) { tours[key] = []; tourOrder.push(key); }
+    tours[key].push(e);
   });
-  return grid;
+
+  tourOrder.forEach(tourKey => {
+    const events  = tours[tourKey];
+    const group   = document.createElement('div');
+    group.className = 'tour-group';
+
+    const hdr = document.createElement('div');
+    hdr.className = 'tour-header';
+    hdr.innerHTML = `
+      <span class="tour-chevron">▶</span>
+      <span class="tour-name">${esc(tourKey)}</span>
+      <span class="tour-count">${events.length}</span>`;
+    hdr.onclick = () => group.classList.toggle('collapsed');
+
+    const eventsEl = document.createElement('div');
+    eventsEl.className = 'tour-events';
+    events.forEach(e => eventsEl.appendChild(buildEventCard(e)));
+
+    group.appendChild(hdr);
+    group.appendChild(eventsEl);
+    el.appendChild(group);
+  });
 }
 
-function renderDeckCard(row,idx){
-  const card=document.createElement('div');
-  card.className='deck-card';
-  card.onclick=()=>showDetail(row);
+function cleanTourName(tour) {
+  // Strip VIP suffix for grouping under main tour name
+  return (tour || '').replace(/\s*\|\s*VIP Package.*$/i, '').trim();
+}
 
-  // Image
-  if(DECK.image&&row[DECK.image]){
-    const img=document.createElement('img');
-    img.className='deck-card-img';
-    img.src=row[DECK.image];
-    img.alt='';
-    img.loading='lazy';
-    img.onerror=function(){this.parentNode.replaceChild(makePlaceholder(),this)};
-    card.appendChild(img);
-  } else if(DECK.image){
-    card.appendChild(makePlaceholder());
-  }
+function buildEventCard(e) {
+  const card = document.createElement('div');
+  card.className = 'event-card' + (e._key === activeKey ? ' active' : '');
+  card.id = 'ev-' + slugify(e._key);
+  card.onclick = () => openDetail(e);
 
-  const body=document.createElement('div');
-  body.className='deck-card-body';
+  const date  = e.LocalDate ? new Date(e.LocalDate + 'T00:00:00') : new Date(e._ms);
+  const day   = date.getDate();
+  const month = date.toLocaleString('en', { month: 'short' }).toUpperCase();
+  const year  = date.getFullYear();
+  const time  = e.LocalTime || '';
 
-  if(DECK.primary&&row[DECK.primary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-primary';
-    el.textContent=fmtVal(DECK.primary,row[DECK.primary]);
-    el.title=fmtVal(DECK.primary,row[DECK.primary]);
-    body.appendChild(el);
-  }
-  if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-secondary';
-    el.textContent=fmtVal(DECK.secondary,row[DECK.secondary]);
-    el.title=fmtVal(DECK.secondary,row[DECK.secondary]);
-    body.appendChild(el);
-  }
-  if(DECK.summary&&row[DECK.summary]!==undefined){
-    const el=document.createElement('div');
-    el.className='deck-card-summary';
-    el.textContent=fmtVal(DECK.summary,row[DECK.summary]);
-    body.appendChild(el);
-  }
-  card.appendChild(body);
-
-  // URL icon overlay
-  if(DECK.url&&row[DECK.url]){
-    const a=document.createElement('a');
-    a.className='deck-card-url';
-    a.href=row[DECK.url];
-    a.target='_blank';
-    a.rel='noopener';
-    a.title='Open external link: '+row[DECK.url];
-    a.onclick=e=>{e.stopPropagation()};
-    a.innerHTML=`<span class="ext-icon">${extIconSvg()}</span>`;
-    card.appendChild(a);
-  }
-
+  card.innerHTML = `
+    <div class="event-date-col">
+      <div class="event-day">${day}</div>
+      <div class="event-month">${month}</div>
+      <div class="event-year">${year}</div>
+    </div>
+    <div class="event-info">
+      <div class="event-venue">${esc(e.Venue)}</div>
+      <div class="event-city">
+        <span class="event-flag">${e.Flag||''}</span>${esc(e.City)}, ${esc(e.Country)}
+      </div>
+      ${time ? `<div class="event-time">🕗 ${esc(time)}</div>` : ''}
+      ${e._isVip ? '<div class="event-tag">VIP</div>' : ''}
+    </div>`;
   return card;
 }
 
-function makePlaceholder(){
-  const el=document.createElement('div');
-  el.className='deck-card-img-placeholder';
-  el.textContent=LOGO_CHAR;
-  return el;
-}
+// ── DETAIL ────────────────────────────────────────────────────────────────────
+function openDetail(e) {
+  activeKey = e._key;
+  document.querySelectorAll('.event-card').forEach(el =>
+    el.classList.toggle('active', el.id === 'ev-' + slugify(e._key)));
+  document.getElementById('ev-' + slugify(e._key))
+    ?.scrollIntoView({ behavior:'smooth', block:'nearest' });
 
-function fmtVal(field,val){
-  if(val===null||val===undefined)return '';
-  const t=getType(field,val);
-  if(t==='number'&&isAllDigits(val))return fmtNumber(val);
-  if(t==='datetime')return fmtDateShort(val);
-  return String(val);
-}
+  clearInterval(cdTimer);
+  const panel = document.getElementById('detailPanel');
+  panel.innerHTML = '';
 
-// ── DETAIL VIEW ───────────────────────────────────────────────────────────────
-function showDetail(row){
-  document.getElementById('listView').classList.add('hidden');
-  const detail=document.getElementById('detailView');
-  detail.classList.add('visible');
-  document.getElementById('backBtn').classList.add('visible');
-  document.getElementById('viewLabel').textContent='Detail';
-  document.getElementById('recordCount').textContent='';
+  // Map
+  if (e.Latitude && e.Longitude) {
+    const mapWrap = document.createElement('div');
+    mapWrap.className = 'map-wrap';
 
-  let html='';
+    // Use OpenStreetMap embed — no API key needed
+    const lat = parseFloat(e.Latitude);
+    const lng = parseFloat(e.Longitude);
+    const zoom = 15;
+    const bbox = `${lng-0.01},${lat-0.007},${lng+0.01},${lat+0.007}`;
+    const marker = `${lat},${lng}`;
 
-  // Hero image
-  if(DECK.image&&row[DECK.image]){
-    html+=`<img class="detail-hero" src="${escAttr(row[DECK.image])}" alt="" onerror="this.outerHTML='<div class=\'detail-hero-placeholder\'>'+escHtml(LOGO_CHAR)+'</div>'">`;
-  } else {
-    html+=`<div class="detail-hero-placeholder">${escHtml(LOGO_CHAR)}</div>`;
+    mapWrap.innerHTML = `
+      <iframe class="map-iframe"
+        src="https://www.openstreetmap.org/export/embed.html?bbox=${bbox}&layer=mapnik&marker=${marker}"
+        title="Map of ${esc(e.Venue)}"></iframe>
+      <a class="map-link" href="${esc(e.MapUrl)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        Google Maps
+      </a>`;
+    panel.appendChild(mapWrap);
   }
 
-  html+='<div class="detail-body">';
+  // Scrollable info
+  const scroll = document.createElement('div');
+  scroll.className = 'detail-scroll';
+  panel.appendChild(scroll);
 
-  // Primary / secondary as title
-  if(DECK.primary&&row[DECK.primary]!==undefined){
-    html+=`<div class="detail-primary">${escHtml(fmtVal(DECK.primary,row[DECK.primary]))}</div>`;
-  }
-  if(DECK.secondary&&row[DECK.secondary]!==undefined){
-    html+=`<div class="detail-secondary">${escHtml(fmtVal(DECK.secondary,row[DECK.secondary]))}</div>`;
-  }
+  // Tour + name
+  const tourName = cleanTourName(e.Tour);
+  const isPast   = e._ms < Date.now();
 
-  // All fields table
-  html+='<div class="detail-fields">';
-  FIELDS.forEach(({name,type})=>{
-    const val=row[name];
-    if(val===null||val===undefined||val==='')return;
-    const rtype=getType(name,val);
-    let valueHtml='';
-    if(rtype==='image'){
-      valueHtml=`<img src="${escAttr(String(val))}" style="max-width:100%;max-height:200px;border-radius:4px;object-fit:cover" alt="">`;
-    } else if(rtype==='url'){
-      valueHtml=`<a class="detail-url-link" href="${escAttr(String(val))}" target="_blank" rel="noopener">${extIconSvg()}<span>${escHtml(String(val))}</span></a>`;
-    } else if(rtype==='number'){
-      valueHtml=`<span class="number">${fmtNumber(val)}</span>`;
-    } else if(rtype==='datetime'){
-      valueHtml=`<span style="color:var(--text)" title="${escAttr(String(val))}">${escHtml(fmtDateFull(val))}</span>`;
-    } else {
-      // If value contains HTML tags (e.g. <br>) render as HTML, otherwise escape as plain text
-      const strVal=String(val);
-      valueHtml=/<[a-z][^>]*>/i.test(strVal) ? strVal : escHtml(strVal);
-    }
-    html+=`<div class="detail-field">
-      <div class="detail-field-label">${escHtml(name)}</div>
-      <div class="detail-field-value">${valueHtml}</div>
+  scroll.innerHTML += `
+    <div class="detail-tour">${esc(tourName)}</div>
+    <div class="detail-name">${esc(e.Venue)}</div>
+    <div class="detail-location">
+      ${e.Flag||''} ${esc(e.City)}, ${esc(e.Country)}
+      ${e.Address ? ` · ${esc(e.Address)}` : ''}
     </div>`;
-  });
-  html+='</div></div>';
 
-  detail.innerHTML=html;
-  window.scrollTo(0,0);
+  // Countdown
+  const cdWrap = document.createElement('div');
+  cdWrap.className = 'countdown-wrap';
+  scroll.appendChild(cdWrap);
+  updateCountdown(cdWrap, e._ms);
+  if (!isPast) cdTimer = setInterval(() => updateCountdown(cdWrap, e._ms), 1000);
+
+  // Stats
+  const localDate = e.LocalDate
+    ? new Date(e.LocalDate + 'T00:00:00').toLocaleDateString(undefined, {weekday:'long',year:'numeric',month:'long',day:'numeric'})
+    : '—';
+  const statsEl = document.createElement('div');
+  statsEl.className = 'detail-stats';
+  statsEl.innerHTML = `
+    <div class="detail-stat">
+      <div class="detail-stat-label">Date</div>
+      <div class="detail-stat-val accent" style="font-size:11px">${esc(localDate)}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">Time</div>
+      <div class="detail-stat-val">${esc(e.LocalTime || '—')}</div>
+    </div>
+    <div class="detail-stat">
+      <div class="detail-stat-label">Type</div>
+      <div class="detail-stat-val">${e._isVip ? '🌟 VIP' : '🎟 General'}</div>
+    </div>`;
+  scroll.appendChild(statsEl);
+
+  // Action buttons
+  const actions = document.createElement('div');
+  actions.className = 'detail-actions';
+  if (e.EventUrl) {
+    actions.innerHTML += `
+      <a class="detail-btn primary" href="${esc(e.EventUrl)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+          <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+        </svg>
+        ${isPast ? 'View Event' : 'Buy Tickets'}
+      </a>`;
+  }
+  if (e.TMUrl) {
+    actions.innerHTML += `
+      <a class="detail-btn" href="${esc(e.TMUrl)}" target="_blank" rel="noopener">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+          <circle cx="12" cy="12" r="10"/><polyline points="12 6 12 12 16 14"/>
+        </svg>
+        Venue Info
+      </a>`;
+  }
+  scroll.appendChild(actions);
+
+  // Event image
+  if (e.Image) {
+    const img = document.createElement('img');
+    img.className = 'event-image';
+    img.src = e.Image;
+    img.alt = e.Venue;
+    img.onerror = () => img.remove();
+    scroll.appendChild(img);
+  }
+
+  // Meta
+  const metaRows = [
+    { label:'Promoter',  val: e.Promoters },
+    { label:'Venue URL', val: e.TMUrl, link: true },
+  ].filter(m => m.val);
+
+  if (metaRows.length) {
+    const metaEl = document.createElement('div');
+    metaEl.style.marginBottom = '14px';
+    metaRows.forEach(m => {
+      metaEl.innerHTML += `
+        <div class="meta-field">
+          <span class="meta-label">${esc(m.label)}</span>
+          <span class="meta-value">${m.link ? `<a href="${esc(m.val)}" target="_blank" rel="noopener" style="color:var(--accent)">${esc(m.val)}</a>` : esc(m.val)}</span>
+        </div>`;
+    });
+    scroll.appendChild(metaEl);
+  }
+
+  // Seat map
+  if (e.SeatMapUrl) {
+    const smWrap = document.createElement('div');
+    smWrap.className = 'seat-map-wrap';
+    smWrap.innerHTML = `
+      <div class="seat-map-label">Seat Map</div>
+      <img class="seat-map-img" src="${esc(e.SeatMapUrl)}" alt="Seat map"
+        onclick="window.open('${esc(e.SeatMapUrl)}','_blank')"
+        onerror="this.parentElement.remove()">`;
+    scroll.appendChild(smWrap);
+  }
 }
 
-function showList(){
-  document.getElementById('listView').classList.remove('hidden');
-  document.getElementById('detailView').classList.remove('visible');
-  document.getElementById('detailView').innerHTML='';
-  document.getElementById('backBtn').classList.remove('visible');
-  document.getElementById('viewLabel').textContent=VIEW_NAME;
+function updateCountdown(el, targetMs) {
+  const diff = targetMs - Date.now();
+  if (diff <= 0) {
+    el.innerHTML = `
+      <span class="countdown-label">Show status:</span>
+      <span class="countdown-value countdown-done">Show has passed ✓</span>`;
+    clearInterval(cdTimer);
+    return;
+  }
+  const d = Math.floor(diff / 86400000);
+  const h = Math.floor((diff % 86400000) / 3600000);
+  const m = Math.floor((diff % 3600000) / 60000);
+  const s = Math.floor((diff % 60000) / 1000);
+  el.innerHTML = `
+    <span class="countdown-label">Countdown:</span>
+    <span class="countdown-value">${d}d ${pad(h)}h ${pad(m)}m ${pad(s)}s</span>`;
+}
+
+// ── SEARCH ────────────────────────────────────────────────────────────────────
+function onSearch() {
+  const q = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(renderList, 200);
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
   renderList();
+  document.getElementById('searchInput').focus();
 }
 
-// ── ESCAPE HELPERS ────────────────────────────────────────────────────────────
-function escHtml(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;')}
-function escAttr(s){return String(s).replace(/"/g,'&quot;')}
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function parseDotNet(s) {
+  const m = String(s||'').match(/Date\((\d+)\)/);
+  return m ? parseInt(m[1]) : 0;
+}
+function pad(n) { return String(n).padStart(2, '0'); }
+function esc(s) { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+function slugify(s) { return String(s||'').replace(/[^a-z0-9]/gi,'_').toLowerCase(); }
 
-// ── INIT ──────────────────────────────────────────────────────────────────────
-loadData();
+boot();
 </script>
 </body>
 </html>
