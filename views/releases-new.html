@@ -432,7 +432,7 @@ function openDetail(r) {
 
   // Action button
   if (r.URL) {
-    const isPrime = /bandmaid\.fan|bandmaid-prime/i.test(r.URL);
+    const isPrime = /bandmaidprime/i.test(r.URL);
     const actions = document.createElement('div');
     actions.className = 'detail-actions';
     actions.innerHTML = `
@@ -442,7 +442,7 @@ function openDetail(r) {
           <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
           <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
         </svg>
-        ${isPrime ? 'Watch on BAND-MAID Prime' : 'Buy / View on Store'}
+        ${isPrime ? 'View on Prime' : 'Buy'}
       </a>`;
     scroll.appendChild(actions);
   }
@@ -477,6 +477,18 @@ function openDetail(r) {
     scroll.appendChild(sec);
   }
 
+  // TrackList
+  if (r.TrackList) {
+    const sec = document.createElement('div');
+    sec.className = 'detail-section';
+    const label = document.createElement('div');
+    label.className = 'detail-section-label';
+    label.textContent = 'Track List';
+    sec.appendChild(label);
+    sec.appendChild(buildTrackBlock(r.TrackList));
+    scroll.appendChild(sec);
+  }
+
   // Bonus content
   if (r.BonusDesc) {
     const sec = document.createElement('div');
@@ -485,26 +497,7 @@ function openDetail(r) {
     label.className = 'detail-section-label';
     label.textContent = 'Bonus Content';
     sec.appendChild(label);
-
-    // Split on numbered tracks or newlines
-    const lines = r.BonusDesc
-      .split(/(?=\d{2}\.)|\n/)
-      .map(l => l.trim())
-      .filter(Boolean);
-
-    const block = document.createElement('div');
-    block.className = 'bonus-block';
-    if (lines.length > 1) {
-      lines.forEach(line => {
-        const row = document.createElement('div');
-        row.className = 'bonus-track';
-        row.textContent = line;
-        block.appendChild(row);
-      });
-    } else {
-      block.textContent = r.BonusDesc;
-    }
-    sec.appendChild(block);
+    sec.appendChild(buildTrackBlock(r.BonusDesc));
     scroll.appendChild(sec);
   }
 
@@ -517,6 +510,48 @@ function closeDetail() {
   document.getElementById('detailPanel').classList.remove('open');
   document.getElementById('main').classList.remove('panel-open');
   document.querySelectorAll('.release-card.active').forEach(el => el.classList.remove('active'));
+}
+
+// ── TRACK PARSING ─────────────────────────────────────────────────────────────
+// Splits a track string into individual tracks regardless of format:
+//   "01. Title"  "1. Title"  "1 : Title"  "1: Title"  "1- Title"
+// Splits on boundaries that look like a track number starting a new segment.
+function parseTracks(str) {
+  if (!str) return [];
+  // Split on the pattern: optional whitespace, number(s), optional dot/colon/dash, space
+  // Use lookahead so the separator is kept with the next token
+  const parts = str
+    .split(/(?=\s*\d{1,2}\s*[.:\-]\s)/)
+    .map(s => s.trim())
+    .filter(Boolean);
+
+  return parts.map(part => {
+    // Strip leading track number prefix: "01. " "1. " "1 : " "1: " "1- "
+    const clean = part.replace(/^\d{1,2}\s*[.:\-]\s*/, '').trim();
+    const num   = (part.match(/^(\d{1,2})/) || [])[1];
+    return { num: num ? String(parseInt(num, 10)) : '', title: clean };
+  }).filter(t => t.title);
+}
+
+function buildTrackBlock(str) {
+  const tracks = parseTracks(str);
+  const block  = document.createElement('div');
+  block.className = 'bonus-block';
+
+  if (!tracks.length) {
+    block.textContent = str;
+    return block;
+  }
+
+  tracks.forEach(t => {
+    const row = document.createElement('div');
+    row.className = 'bonus-track';
+    row.innerHTML = t.num
+      ? `<span style="color:var(--text3);min-width:22px;display:inline-block;font-size:10px">${esc(t.num)}.</span> ${esc(t.title)}`
+      : esc(t.title);
+    block.appendChild(row);
+  });
+  return block;
 }
 
 // ── SEARCH ────────────────────────────────────────────────────────────────────
@@ -533,6 +568,7 @@ function onSearch() {
           (r.Type||'').toLowerCase().includes(lq)        ||
           (r.Media||'').toLowerCase().includes(lq)       ||
           (r.Description||'').toLowerCase().includes(lq) ||
+          (r.TrackList||'').toLowerCase().includes(lq)   ||
           (r.Publisher||'').toLowerCase().includes(lq))
       : [...allReleases];
     renderAll();
