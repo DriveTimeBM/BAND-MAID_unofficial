@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Sukurimingu [Screaming] (すくりーみんぐ) — Spotify: 1,199,399 | Played Live: 0\nTake me higher!! — Spotify: 1,111,473 | Played Live: 59\nBeauty and the beast — Spotify: 1,037,320 | Played Live: 36",
+                          "image":  "https://img.youtube.com/vi/bOjubutSnXo/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Ready to Rock (Official Teaser Video MIKU KOBATO ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 156,865 | Yesterday: 28\nBAND-MAID / Ready to Rock (Official Teaser Video AKANE ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 146,273 | Yesterday: 23\nBAND-MAID / What is justice? (Official Teaser Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 97,750 | Yesterday: 12",
                           "choices":  [
                                           {
-                                              "text":  "Take me higher!!"
+                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video AKANE ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
                                           },
                                           {
-                                              "text":  "Sukurimingu [Screaming] (すくりーみんぐ)",
+                                              "text":  "BAND-MAID / What is justice? (Official Teaser Video) TVアニメ「桃源暗鬼」エンディング主題歌"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video MIKU KOBATO ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Beauty and the beast"
                                           }
                                       ]
                       }
