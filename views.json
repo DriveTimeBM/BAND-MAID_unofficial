@@ -8,21 +8,21 @@
   },
   {
     "id": "songs",
-    "name": "Songs *improved*",
+    "name": "Songs",
     "file": "views/songs.html",
     "nav": "main",
     "icon": "📝🟢"
   },
   {
     "id": "releases",
-    "name": "Releases *improved*",
+    "name": "Releases",
     "file": "views/releases.html",
     "nav": "main",
     "icon": "💿"
   },
   {
     "id": "videos",
-    "name": "Videos *improved*",
+    "name": "Videos",
     "file": "views/videos.html",
     "nav": "main",
     "icon": "▶️"

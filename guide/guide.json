@@ -423,7 +423,7 @@
       "id": "tickets",
       "section": "live-events",
       "updateFrequency": "Daily",
-      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/tickets.json",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ticketapp.json",
       "description": "All BAND-MAID events found via the Ticketmaster API, with direct purchase links. Only overseas shows appear here — Japanese shows are not sold through Ticketmaster. Multiple ticket types (General, VIP) are listed separately when available.",
       "tips": [
         "Japan shows will never appear here — they use a different ticketing system",
