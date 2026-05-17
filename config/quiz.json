@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "glory — Spotify: 3,857,700 | Played Live: 117\nendless Story — Spotify: 1,611,348 | Played Live: 114\nScreaming — Spotify: 1,881,885 | Played Live: 92",
+                          "image":  "https://img.youtube.com/vi/pKFBa8urc60/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "Carry on living — Views: 124,044 | Yesterday: 1\nThe Dragon Cries — Views: 116,757 | Yesterday: 77\nUnleash!!!!! — Views: 113,646 | Yesterday: 39",
                           "choices":  [
                                           {
-                                              "text":  "Screaming"
+                                              "text":  "Unleash!!!!!"
                                           },
                                           {
-                                              "text":  "glory",
+                                              "text":  "Carry on living",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "endless Story"
+                                              "text":  "The Dragon Cries"
                                           }
                                       ]
                       }
