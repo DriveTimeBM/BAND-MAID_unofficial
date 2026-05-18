@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/pKFBa8urc60/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "Carry on living — Views: 124,044 | Yesterday: 1\nThe Dragon Cries — Views: 116,757 | Yesterday: 77\nUnleash!!!!! — Views: 113,646 | Yesterday: 39",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Moratorium (モラトリアム) — Spotify: 1,903,558 | Played Live: 115\nCROSS — Spotify: 1,901,564 | Played Live: 55\nFREEDOM — Spotify: 1,790,256 | Played Live: 260",
                           "choices":  [
                                           {
-                                              "text":  "Unleash!!!!!"
+                                              "text":  "FREEDOM"
                                           },
                                           {
-                                              "text":  "Carry on living",
+                                              "text":  "CROSS"
+                                          },
+                                          {
+                                              "text":  "Moratorium (モラトリアム)",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "The Dragon Cries"
                                           }
                                       ]
                       }
