@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/_iU7a_GnZXo/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "YOLO (instrumental) — Views: 24,394 | Yesterday: 19\nDaydreaming — Views: 43,965 | Yesterday: 17\nstart over — Views: 32,127 | Yesterday: 17",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Knockin\u0027 on your heart — Spotify: 698,318 | Played Live: 55\nTIME — Spotify: 729,003 | Played Live: 50\nBlooming — Spotify: 4,172,584 | Played Live: 44",
                           "choices":  [
                                           {
-                                              "text":  "YOLO (instrumental)",
+                                              "text":  "TIME"
+                                          },
+                                          {
+                                              "text":  "Blooming"
+                                          },
+                                          {
+                                              "text":  "Knockin\u0027 on your heart",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "start over"
-                                          },
-                                          {
-                                              "text":  "Daydreaming"
                                           }
                                       ]
                       }
