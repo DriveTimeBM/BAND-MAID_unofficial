@@ -136,6 +136,26 @@
       "installUrl": "https://chatgpt.com/g/g-68db200d63cc819190a84f2ff7cbf58f-unofficial-band-maid-gpt",
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/gpt.gif",
       "videoId": null
+    },
+    {
+      "id": "font",
+      "category": "Fonts",
+      "name": "BAND-MAID Font",
+      "icon": "🔤",
+      "iconFallback": "🔤",
+      "platform": "All",
+      "requires": "none",
+      "description": "BAND-MAID Truetype font",
+      "tips": [
+        "Double-click the TTF file to install.",
+        "Uppercase and lowercase letters are the same except for M, A, and T.",
+        "^ maps to the bow logo and ~ maps to a -po- glyph.",
+        "Give as much context as possible. i.e. <i>Translate this tweet from Kanami</i> etc."
+      ],
+      "downloadUrl": null,
+      "installUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/fonts/BAND-MAID.ttf",
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/font.gif",
+      "videoId": null
     }
   ]
 }
