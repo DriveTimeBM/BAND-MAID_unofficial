@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Knockin\u0027 on your heart — Spotify: 698,318 | Played Live: 55\nTIME — Spotify: 729,003 | Played Live: 50\nBlooming — Spotify: 4,172,584 | Played Live: 44",
+                          "image":  "https://img.youtube.com/vi/lBkdxHmvyAA/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Ready to Rock (Official Live Video ver. 3 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 124,977 | Yesterday: 12\nBAND-MAID / Dilly-Dally (Official Live Teaser 1) — Views: 100,856 | Yesterday: 222\nBAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 70,791 | Yesterday: 15",
                           "choices":  [
                                           {
-                                              "text":  "TIME"
+                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌"
                                           },
                                           {
-                                              "text":  "Blooming"
-                                          },
-                                          {
-                                              "text":  "Knockin\u0027 on your heart",
+                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video ver. 3 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Dilly-Dally (Official Live Teaser 1)"
                                           }
                                       ]
                       }

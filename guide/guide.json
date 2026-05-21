@@ -15,13 +15,14 @@
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
       "items": [
+        "Added BAND-MAID font to Extras",
         "Upgraded Videos, Songs, and Releases views. New Songs view makes the former Spotify view obsolete.",
         "Added pop-out mini audio player. Contains all 115+ YouTube audio tracks. Shuffle, Loop, no YT login required.",
         "Added Reactions Archive — 26,000+ fan reaction videos with playlist builder, grouped by channel or year",
         "Added Translations view — 300+ English translations of Japanese interviews and articles",
         "Added Interviews playlist builder — 550+ BAND-MAID interview videos with playlist save/load",
         "Added Fan Cams playlist builder — 4000+ fan cam videos grouped by year, event, or channel",
-        "Added User Guide and Fan Tools views",
+        "Added User Guide and Extras views",
         "Spotify Playlist now includes AutoHotkey autoplay script for hands-free playback",
         "Calendar now shows countdown timers on event detail cards",
         "URL bar added to app shell — shows direct link to current view with copy button"
