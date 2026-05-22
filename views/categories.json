@@ -5,7 +5,7 @@
             "category": "Official",
             "color": "#c8a96e",
             "rules": [
-                { "field": "channelId", "type": "exact", "patterns": ["UCJToUvYrmkmTCR-bluEaQfA","UCM35rMMfPj1wj1nwe-DxSAg","UCHNhsC0VPItCMeAl11T3rAQ"] },
+                { "field": "channelId", "type": "exact", "patterns": ["UCJToUvYrmkmTCR-bluEaQfA","UCM35rMMfPj1wj1nwe-DxSAg","UCHNhsC0VPItCMeAl11T3rAQ","UCo5Kp09Mk-uETAHh12QmXqA"] },
                 { "field": "channel",   "type": "exact", "patterns": ["BAND-MAID"] }
             ],
             "notes": "Official BAND-MAID YouTube channel"
