@@ -145,12 +145,13 @@
       "iconFallback": "🔤",
       "platform": "All",
       "requires": "none",
-      "description": "BAND-MAID Truetype font",
+      "description": "BAND-MAID Truetype font (updated)",
       "tips": [
         "Double-click the TTF file to install.",
-        "Uppercase and lowercase letters are the same except for M, A, and T.",
+        "Uppercase and lowercase letters are the same except for a, b, k, l, m, o, q, t, w, y.",
         "^ maps to the bow logo and ~ maps to a -po- glyph.",
-        "Can be used in documents or web pages. The main title of the BAND-MAID Unofficial app now uses this font."
+        "Can be used in documents or web pages. The main title of the BAND-MAID Unofficial app now uses this font.",
+        "<a href=\"https://drivetimebm.github.io/BAND-MAID_unofficial/fonts/BAND-MAID_original.ttf\">Original version is here.</a>"
       ],
       "downloadUrl": null,
       "installUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/fonts/BAND-MAID.ttf",
