@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "DICE — Spotify: 6,151,291 | Played Live: 152\nDon\u0027t you tell ME — Spotify: 3,881,872 | Played Live: 164\nReady to Rock — Spotify: 3,505,867 | Played Live: 33",
+                          "image":  "https://img.youtube.com/vi/XDu4B75zz18/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) AKANE vs Pau part 2 — Views: 16,332 | Yesterday: 2\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI vs Dany  part 2 — Views: 15,067 | Yesterday: 4\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) SAIKI — Views: 10,154 | Yesterday: 0",
                           "choices":  [
                                           {
-                                              "text":  "Ready to Rock"
-                                          },
-                                          {
-                                              "text":  "DICE",
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) AKANE vs Pau part 2",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Don\u0027t you tell ME"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) SAIKI"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI vs Dany  part 2"
                                           }
                                       ]
                       }
