@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Sukurimingu [Screaming] (すくりーみんぐ) — Spotify: 1,201,288 | Played Live: 0\nWonderland — Spotify: 1,111,146 | Played Live: 37\nHoney (ハニー) — Spotify: 1,009,614 | Played Live: 1",
+                          "image":  "https://img.youtube.com/vi/Zuj_-z5-06w/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Before Yesterday  (Official Music Video) — Views: 3,450,531 | Yesterday: 267\nBAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video) — Views: 2,191,922 | Yesterday: 183\nBAND-MAID / Memorable (Official Music Video) — Views: 972,596 | Yesterday: 145",
                           "choices":  [
                                           {
-                                              "text":  "Wonderland"
-                                          },
-                                          {
-                                              "text":  "Honey (ハニー)"
-                                          },
-                                          {
-                                              "text":  "Sukurimingu [Screaming] (すくりーみんぐ)",
+                                              "text":  "BAND-MAID / Before Yesterday  (Official Music Video)",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Memorable (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video)"
                                           }
                                       ]
                       }
