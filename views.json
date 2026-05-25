@@ -90,13 +90,6 @@
     "icon": "📸"
   },
   {
-    "id": "upcoming",
-    "name": "Upcoming",
-    "file": "views/upcoming.html",
-    "nav": "menu",
-    "icon": "⏳"
-  },
-  {
     "id": "youtube",
     "name": "YouTube",
     "file": "views/youtube.html",

@@ -15,6 +15,7 @@
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
       "items": [
+        "Removed Upcoming View. All calendar events have a countdown timer so it was redundant and the JSON was less reliable and a bit slow to load.",
         "Added BAND-MAID font to Extras",
         "Upgraded Videos, Songs, and Releases views. New Songs view makes the former Spotify view obsolete.",
         "Added pop-out mini audio player. Contains all 115+ YouTube audio tracks. Shuffle, Loop, no YT login required.",
@@ -281,19 +282,6 @@
         "Click any photo to see it full size"
       ],
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/daily_photos.gif",
-      "videoId": null
-    },
-    {
-      "id": "upcoming",
-      "section": "live-events",
-      "updateFrequency": "Every 10 minutes",
-      "dataUrl": "https://api.jsonbin.io/v3/b/69c7e8f95fdde574550a99d9/latest",
-      "description": "Live countdown clocks to the next two upcoming BAND-MAID events. When a YouTube video is within 24 hours of reaching a million views milestone, it is added to the countdown automatically.",
-      "tips": [
-        "Updates every 10 minutes automatically",
-        "Shows both event countdowns and YouTube milestone countdowns"
-      ],
-      "gifUrl": null,
       "videoId": null
     },
     {
