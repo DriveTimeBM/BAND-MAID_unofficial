@@ -184,7 +184,8 @@
             "color": "#9cb4d4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
-                    "Legendado"
+                    "Legendado",
+                    "\\blyric\\w*\\b"
                 ]}
             ]
         }        
