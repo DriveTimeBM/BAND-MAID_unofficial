@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Big Dad — Spotify: 733,995 | Played Live: 9\nMirage — Spotify: 707,600 | Played Live: 31\nSo,What? — Spotify: 692,421 | Played Live: 0",
+                          "image":  "https://img.youtube.com/vi/rR_28uWOICY/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 2) — Views: 17,454 | Yesterday: 180\nBAND-MAID / SUPER SUNSHINE (Official Live Teaser 1) — Views: 39,069 | Yesterday: 173\nBAND-MAID / Ready to Rock (Official Live Video #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 381,259 | Yesterday: 28",
                           "choices":  [
                                           {
-                                              "text":  "Big Dad",
+                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 2)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "So,What?"
+                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
                                           },
                                           {
-                                              "text":  "Mirage"
+                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 1)"
                                           }
                                       ]
                       }
