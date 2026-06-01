@@ -4,19 +4,19 @@
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/e_bEf1C0spY/sddefault.jpg",
+                          "image":  "https://img.youtube.com/vi/yQn4IMr56zY/sddefault.jpg",
                           "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / influencer (Official Music Video) — Views: 2,532,736 | Yesterday: 475\nBAND-MAID / After Life (Official Music Video) — Views: 3,085,737 | Yesterday: 396\nBAND-MAIKO / secret MAIKO lips (Official Music Video) — Views: 4,738,746 | Yesterday: 320",
+                          "explanation":  "BAND-MAID / CROSS (Official Live Video) — Views: 1,014,993 | Yesterday: 195\nBAND-MAID / NO GOD (Official Live Video) — Views: 634,633 | Yesterday: 185\nBAND-MAID / カタルシス \"Catharsis\"  Acoustic Ver.  (Official Live Video) — Views: 770,645 | Yesterday: 166",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / After Life (Official Music Video)"
+                                              "text":  "BAND-MAID / カタルシス \"Catharsis\"  Acoustic Ver.  (Official Live Video)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / influencer (Official Music Video)",
+                                              "text":  "BAND-MAID / CROSS (Official Live Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAIKO / secret MAIKO lips (Official Music Video)"
+                                              "text":  "BAND-MAID / NO GOD (Official Live Video)"
                                           }
                                       ]
                       }
