@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/yQn4IMr56zY/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / CROSS (Official Live Video) — Views: 1,014,993 | Yesterday: 195\nBAND-MAID / NO GOD (Official Live Video) — Views: 634,633 | Yesterday: 185\nBAND-MAID / カタルシス \"Catharsis\"  Acoustic Ver.  (Official Live Video) — Views: 770,645 | Yesterday: 166",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "HONKAI (本懐) — Spotify: 856,406 | Played Live: 11\nYoake Mae (夜明け前) — Spotify: 847,905 | Played Live: 40\nEverGreen — Spotify: 841,726 | Played Live: 17",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / カタルシス \"Catharsis\"  Acoustic Ver.  (Official Live Video)"
+                                              "text":  "EverGreen"
                                           },
                                           {
-                                              "text":  "BAND-MAID / CROSS (Official Live Video)",
+                                              "text":  "Yoake Mae (夜明け前)"
+                                          },
+                                          {
+                                              "text":  "HONKAI (本懐)",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / NO GOD (Official Live Video)"
                                           }
                                       ]
                       }
