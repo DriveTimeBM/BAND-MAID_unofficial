@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "HONKAI (本懐) — Spotify: 856,406 | Played Live: 11\nYoake Mae (夜明け前) — Spotify: 847,905 | Played Live: 40\nEverGreen — Spotify: 841,726 | Played Live: 17",
+                          "image":  "https://img.youtube.com/vi/vu2D3lzH7Y0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "What is justice? — Views: 1,170,807 | Yesterday: 2,612\nREAL EXISTENCE — Views: 830,410 | Yesterday: 548\nDifferent — Views: 827,184 | Yesterday: 615",
                           "choices":  [
                                           {
-                                              "text":  "EverGreen"
-                                          },
-                                          {
-                                              "text":  "Yoake Mae (夜明け前)"
-                                          },
-                                          {
-                                              "text":  "HONKAI (本懐)",
+                                              "text":  "What is justice?",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "REAL EXISTENCE"
+                                          },
+                                          {
+                                              "text":  "Different"
                                           }
                                       ]
                       }
