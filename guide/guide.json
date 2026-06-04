@@ -11,6 +11,13 @@
       "videoId": null
   },
   "whatsNew": [
+        {
+      "date": "/Date(1780272000000)/",
+      "label": "May 2026",
+      "items": [
+        "Added new YouTube Locations view with rolling 7 and 28-day periods."
+      ]
+    },
     {
       "date": "/Date(1746489600000)/",
       "label": "May 2026",
@@ -427,12 +434,13 @@
       "section": "data",
       "updateFrequency": "Daily",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
-      "description": "YouTube viewer location data for BAND-MAID's channel, showing 7-day and 28-day geographic breakdowns. Useful for seeing where the fanbase is growing.",
+      "description": "YouTube viewer location data for BAND-MAID's channel, showing 7-day and 28-day geographic breakdowns since April 2026. Useful for seeing where the fanbase is growing.",
       "tips": [
-        "Data comes directly from YouTube Analytics",
-        "Compare 7-day vs 28-day to spot recent growth trends in specific countries"
+        "Data gathered daily from  YouTube Analytics",
+        "Rolling 7-day and 28-day are relative to the current day",
+        "Any detected advertisements from MAIDIT and/or Pony Canyon are indicated for countries affected to help judge impact"
       ],
-      "gifUrl": null,
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/locations.gif",
       "videoId": null
     },
     {
