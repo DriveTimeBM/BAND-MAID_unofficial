@@ -166,7 +166,9 @@
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
                     "\\bdraw\\w*\\b",
-                    "\\bpaint\\w*\\b"
+                    "\\bpaint\\w*\\b",
+                    "\\bfan\\s*art\\b",
+                    "\\bAI\\s*animation\\b"
                 ]}
             ]
         },
@@ -184,6 +186,12 @@
                     "session",
                     "\\bomajinai\\w*\\b",
                     "\\bfancam\\w*\\b",
+                    "\\bBerlin\\w*\\b",
+                    "\\bFrankfurt\\w*\\b",
+                    "\\bMunich\\w*\\b",
+                    "\\bParis\\w*\\b",
+                    "\\bLondon\\w*\\b",
+                    "\\bDownload\\w*\\b",
                     "\\bfan\\s*cam\\b"
                 ]}
             ]
