@@ -181,7 +181,7 @@
                   ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
-                    "session"
+                    "session",
                     "\\bomajinai\\w*\\b",
                     "\\bfancam\\w*\\b",
                     "\\bfan\\s*cam\\b"
