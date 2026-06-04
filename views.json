@@ -210,8 +210,8 @@
   },
   {
     "id": "locations",
-    "name": "Locations (YouTube)",
-    "file": "views/locations.html",
+    "name": "Locations *improved*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_locations/views_visualizer.html",
     "nav": "menu",
     "icon": "🌏"
   },
