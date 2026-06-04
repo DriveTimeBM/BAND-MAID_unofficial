@@ -171,11 +171,20 @@
             ]
         },
         {
-            "category": "Live",
+            "category": "Live/Fancam",
             "color": "#7ba87a",
             "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UCg2zpn3-XtqWM9hxhMNPpiQ",
+                    "UC-mDtRf2e_vHVwIy1K-33Wg",
+                    "UCjOV03Wp55rWkRud1Z7NNyQ"
+                  ] 
+                },
                 { "field": "title", "type": "regex", "patterns": [
                     "session"
+                    "\\bomajinai\\w*\\b",
+                    "\\bfancam\\w*\\b",
+                    "\\bfan\\s*cam\\b"
                 ]}
             ]
         },
