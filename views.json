@@ -210,7 +210,7 @@
   },
   {
     "id": "locations",
-    "name": "Locations *improved*",
+    "name": "Locations",
     "file": "https://drivetimebm.github.io/BAND-MAID_locations/views_visualizer.html",
     "nav": "menu",
     "icon": "🌏"
@@ -250,6 +250,13 @@
     "nav": "menu",
     "icon": "🐦"
   },
+  {
+    "id": "wikipedia",
+    "name": "Wikipedia *new*",
+    "file": "https://drivetimebm.github.io/BAND-MAID_wikipedia/index.html",
+    "nav": "menu",
+    "icon": "Ⓦ"
+  },  
   {
     "id": "okyujumvmap",
     "name": "Okyu-ji and MV Map",
