@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Big Dad — Spotify: 734,615 | Played Live: 9\nTIME — Spotify: 730,870 | Played Live: 50\nPrice of Pride — Spotify: 696,316 | Played Live: 15",
+                          "image":  "https://img.youtube.com/vi/RmFYjTJRrQM/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Shambles (Official Live Video) — Views: 677,632 | Yesterday: 630\nBAND-MAID / Present Perfect (Official Live Video) — Views: 576,758 | Yesterday: 437\nBAND-MAID / Unleash!!!!! (Official Live Video) — Views: 508,904 | Yesterday: 253",
                           "choices":  [
                                           {
-                                              "text":  "Price of Pride"
+                                              "text":  "BAND-MAID / Present Perfect (Official Live Video)"
                                           },
                                           {
-                                              "text":  "TIME"
-                                          },
-                                          {
-                                              "text":  "Big Dad",
+                                              "text":  "BAND-MAID / Shambles (Official Live Video)",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Unleash!!!!! (Official Live Video)"
                                           }
                                       ]
                       }
