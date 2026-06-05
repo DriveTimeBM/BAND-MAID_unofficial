@@ -15,6 +15,7 @@
       "date": "/Date(1780272000000)/",
       "label": "May 2026",
       "items": [
+        "Added new Wikipedia view to view pageview stats across languages.",
         "Added new YouTube Locations view with rolling 7 and 28-day periods."
       ]
     },
@@ -434,13 +435,27 @@
       "section": "data",
       "updateFrequency": "Daily",
       "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/misc/ytlocation.json",
-      "description": "YouTube viewer location data for BAND-MAID's channel, showing 7-day and 28-day geographic breakdowns since April 2026. Useful for seeing where the fanbase is growing.",
+      "description": "YouTube viewer of location data for BAND-MAID's channel, showing 7-day and 28-day geographic breakdowns since April 2026. Useful for seeing where the fanbase is growing.",
       "tips": [
         "Data gathered daily from  YouTube Analytics",
         "Rolling 7-day and 28-day are relative to the current day",
         "Any detected advertisements from MAIDIT and/or Pony Canyon are indicated for countries affected to help judge impact"
       ],
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/locations.gif",
+      "videoId": null
+    },
+    {
+      "id": "wikipedia",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_wikipedia/wikipedia.json",
+      "description": "Wikipedia viewer of page view data for BAND-MAID's 30+ pages",
+      "tips": [
+        "Data comes directly from Wikimedia REST API",
+        "Wikipedia page views are a useful proxy for general interest and can be influenced by news, releases, or viral content",
+        "Jump directly to the Wikipedia page from the view"
+      ],
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/wikipdedia.gif",
       "videoId": null
     },
     {
