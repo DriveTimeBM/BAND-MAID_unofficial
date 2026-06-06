@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/RmFYjTJRrQM/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Shambles (Official Live Video) — Views: 677,632 | Yesterday: 630\nBAND-MAID / Present Perfect (Official Live Video) — Views: 576,758 | Yesterday: 437\nBAND-MAID / Unleash!!!!! (Official Live Video) — Views: 508,904 | Yesterday: 253",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "SUPER SUNSHINE — Spotify: 271,267 | Played Live: 12\nHibana (火花) — Spotify: 1,188,812 | Played Live: 10\nGo easy — Spotify: 199,025 | Played Live: 9",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Present Perfect (Official Live Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Shambles (Official Live Video)",
+                                              "text":  "SUPER SUNSHINE",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Unleash!!!!! (Official Live Video)"
+                                              "text":  "Go easy"
+                                          },
+                                          {
+                                              "text":  "Hibana (火花)"
                                           }
                                       ]
                       }
