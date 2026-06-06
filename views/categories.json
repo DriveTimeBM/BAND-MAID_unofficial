@@ -191,7 +191,12 @@
                     "\\bFrankfurt\\w*\\b",
                     "\\bMunich\\w*\\b",
                     "\\bParis\\w*\\b",
+                    "\\bColumbia\\w*\\b",
+                    "\\bBatschkapp\\w*\\b",
+                    "\\bTECHNIKUM\\w*\\b",
+                    "\\bBATACLAN\\w*\\b",
                     "\\bLondon\\w*\\b",
+                    "\\bBrixton\\w*\\b",
                     "\\bDownload\\w*\\b",
                     "\\bfan\\s*cam\\b"
                 ]}
