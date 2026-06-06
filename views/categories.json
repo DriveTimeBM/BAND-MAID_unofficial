@@ -142,7 +142,8 @@
             "color": "#a4b4c4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
-                    "\\bunbox\\w*\\b"
+                    "\\bunbox\\w*\\b",
+                    "\\bunpacking\\w*\\b"
                 ]}
             ]
         },
