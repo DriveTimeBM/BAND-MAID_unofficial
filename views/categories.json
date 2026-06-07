@@ -88,7 +88,8 @@
                   ] 
                 },
                 { "field": "title", "type": "regex", "patterns": [
-                    "\\bnews\\w*\\b"
+                    "\\bnews\\w*\\b",
+                    "\\bmost\\s*watched\\b"
                   ]
                 }
             ],
@@ -119,6 +120,7 @@
                 { "field": "title", "type": "regex", "patterns": [
                     "\\blive\\s*report\\b",
                     "\\bconcert\\s*report\\b",
+                    "\\bpost\\s*show\\b",
                     "\\bshow\\s*report\\b",
                     "Impression",
                     "(?i)\\bokyu-?ji\\b",
@@ -207,6 +209,7 @@
             "color": "#9cb4d4",
             "rules": [
                 { "field": "title", "type": "regex", "patterns": [
+                    "Romaji",
                     "Legendado",
                     "\\blyric\\w*\\b"
                 ]}
