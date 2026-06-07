@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "SUPER SUNSHINE — Spotify: 271,267 | Played Live: 12\nHibana (火花) — Spotify: 1,188,812 | Played Live: 10\nGo easy — Spotify: 199,025 | Played Live: 9",
+                          "image":  "https://img.youtube.com/vi/1Vuca7V-5Ec/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / secret My lips (Official Music Video) — Views: 3,542,997 | Yesterday: 411\nBAND-MAID / Warning! (Official Music Video) — Views: 2,696,170 | Yesterday: 330\nBAND-MAID / from now on (Official Music Video) — Views: 2,221,819 | Yesterday: 726",
                           "choices":  [
                                           {
-                                              "text":  "SUPER SUNSHINE",
+                                              "text":  "BAND-MAID / from now on (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Warning! (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / secret My lips (Official Music Video)",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Go easy"
-                                          },
-                                          {
-                                              "text":  "Hibana (火花)"
                                           }
                                       ]
                       }
