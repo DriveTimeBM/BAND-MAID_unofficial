@@ -211,6 +211,15 @@
                     "\\blyric\\w*\\b"
                 ]}
             ]
+        },        
+        {
+            "category": "Interview",
+            "color": "#ffffff",
+            "rules": [
+                { "field": "title", "type": "regex", "patterns": [
+                    "\\binterview\\w*\\b"
+                ]}
+            ]
         }        
     ],
     "default_category": {
