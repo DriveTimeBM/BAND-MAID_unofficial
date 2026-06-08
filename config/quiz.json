@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/1Vuca7V-5Ec/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / secret My lips (Official Music Video) — Views: 3,542,997 | Yesterday: 411\nBAND-MAID / Warning! (Official Music Video) — Views: 2,696,170 | Yesterday: 330\nBAND-MAID / from now on (Official Music Video) — Views: 2,221,819 | Yesterday: 726",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Unleash!!!!! — Spotify: 3,542,195 | Played Live: 101\nsecret My lips — Spotify: 1,817,930 | Played Live: 85\nHATE? — Spotify: 1,967,433 | Played Live: 78",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / from now on (Official Music Video)"
+                                              "text":  "secret My lips"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Warning! (Official Music Video)"
+                                              "text":  "HATE?"
                                           },
                                           {
-                                              "text":  "BAND-MAID / secret My lips (Official Music Video)",
+                                              "text":  "Unleash!!!!!",
                                               "correct":  true
                                           }
                                       ]
