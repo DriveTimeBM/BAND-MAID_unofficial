@@ -1,7 +1,7 @@
 ﻿{
     "id":  "1404984552161673448",
     "name":  "BAND-MAID Dashboard",
-    "instant_invite":  "https://discord.com/invite/eQfStPSB",
+    "instant_invite":  "https://discord.com/invite/tGp4VaQv",
     "channels":  [
 
                  ],
@@ -35,14 +35,6 @@
                     },
                     {
                         "id":  "3",
-                        "username":  "BUFFER",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/RXQC_guPGtaMIG4nbNpPZNdOSDtovC2kK148a5-N8PM/3EW_DJJwn2tDCArw2mkSS6RV6F3YxBx8BTWaOcxIesuMpoRHNzKUm8iBla-0jZTCK6qhLpGHF1nvpFJEgu8"
-                    },
-                    {
-                        "id":  "4",
                         "username":  "CrunchBar",
                         "discriminator":  "0000",
                         "avatar":  null,
@@ -50,12 +42,20 @@
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/GSzgXp-woGlttubMJ2zTC3jUAEkoFabQwh3HkHkpgDE/Sq_WdQg363hdwS_I2ncAu1By8DpLkW6Zc-O1fhMJt3tHRFPuoeV86HEn2Elc3fUbJA1vnXx5vuuHsqz9cDNbrkuHQWT1Z6NYpIQTS97hHe9-tq3qFTTUpqiV8uwYKrU7heVyw30yk2xlfQ"
                     },
                     {
-                        "id":  "5",
+                        "id":  "4",
                         "username":  "DriveTime",
                         "discriminator":  "0000",
                         "avatar":  null,
                         "status":  "online",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/iRWYUExgExFxqAzxBBFOxErda_xxFPQFgw0-bDfMozg/DUtrzZNSGrkl7XP-IuvbpnEQQ1-ZOnZW4CuKCPd6ASQm_9H-DLYbHIGtKjUHX8Axz1lB0yxEe1hrghLr7R0nNVDG0Y2Wi-DTLV8NND1qG4-xEiMzqse2URpWQ5NRBCWrOIO7qXB1EWJImg"
+                    },
+                    {
+                        "id":  "5",
+                        "username":  "Falagar",
+                        "discriminator":  "0000",
+                        "avatar":  null,
+                        "status":  "idle",
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/79xHmF7kRB-ScCSa0PwKNvnYYjNt2g75vjQ6GuENs7g/er9w3eZmKiyrzb5smDucwBrsvfFWiEO6Up3p6lk_DPHkcFNXYqkvuyZJbHYpLHjUhaOTveCxaDSsC9W6cztXi3HD1PnHhpMXw9ySJpq9QEeGS1PZPPb428Dfuh6vf9Fmb8tlymM2jGUJfw"
                     },
                     {
                         "id":  "6",
@@ -91,19 +91,19 @@
                     },
                     {
                         "id":  "10",
-                        "username":  "Ohrenje",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "idle",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/OZaOCXbb3aHlxRnNzBQlahoTFa1RazrygJdTXUzSrKs/QlPHfKTB3eog17b-MlVFSkZfg0T1s2EngG1mMxdk7BKhH0f7pd4xDO2jN-3p-txsIjRpMhDYBeGkDbN0fcXv-XxOe56tM1qUPmgGRkDgU2npcgwydhl8OsjJNFAB1GphuuefXy_ff2_y6g"
-                    },
-                    {
-                        "id":  "11",
                         "username":  "Oto",
                         "discriminator":  "0000",
                         "avatar":  null,
                         "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/RjHRmU-4Uz0YqAI1vWke89kJaRwx5k_ogcRI2tD21vY/bIkFm-A9vNcUBcvqSR_LIT0VKocPlR2pQ5695ajhCoHeHhNNdNgofXKZKoek34vbnuqXGeUlau7TSxp4UWcqp4nn1q4s6sKAsWqXvA9qZkVil6d_TzPkNqTzafJNU_TohCSarHnTJzASTg"
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/KitZKkj_wYVOc_vLRdFk8qnHCfsCeoLfNPTWWN8I62w/aQSDD6zkJuZk4Vt_1bTHHdw_W_Aib6kTAkRHiYpsk0bF1GXiOe5DpETEKixfo5SJW0yFQllxMOMQlb9pgSl7iEeCp-Vlm8EuvuL2qP5ZFFvYOcZs6AxHbz-n78gZKRsZ_HrW71rtLKpJyg"
+                    },
+                    {
+                        "id":  "11",
+                        "username":  "Roger Chance",
+                        "discriminator":  "0000",
+                        "avatar":  null,
+                        "status":  "online",
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/WhBa4y_-mn42jEu1xoHbu5xNdn2snCtgFwmMGFJq4x8/eRXA2e-BDGvdbdbGeyLpzWo3v5TbRD0mBOcrtMg3NiEaAsgDKeqUduHw9T8WHPaUYKbuqZS7FSyYJD4z22k25Df7n6UE_ybBI4iE-5YBl_YjJhhnpqqmn7LE_0Bu_cFWCDBmXaL_6HV-oDI"
                     },
                     {
                         "id":  "12",
@@ -112,15 +112,7 @@
                         "avatar":  null,
                         "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/yg4WYSRXv8cqpVyYl6DKJiFA031L1o7JseCV3_7zGlc/ZBTeXTPujsnDXoiDkDoGJSgQP96m19CccHGLjneYkQOhebPpy4RdwPvfAANF-FmDAKsVhuFmy77rUDyvoO0"
-                    },
-                    {
-                        "id":  "13",
-                        "username":  "Zakson85",
-                        "discriminator":  "0000",
-                        "avatar":  null,
-                        "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/uQOO6XNNPDOwvN1cEb-SVsKeyZFv5bvbkhrbCHxD9p8/ILc9BwtDtryHBGJsZsgajLLqcyQ8KyJmouqA9aEhOqp2KKoSJtMx6Vo2Fld6Y27p-WzH93GRlLCsLfIcEqJ9sTjgnyd8sXol6dJ_pFeoM21YRS1wlIRBsTyLlLqzikaBFoXV-Q-BFHpRCA"
                     }
                 ],
-    "presence_count":  14
+    "presence_count":  13
 }

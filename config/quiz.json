@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Unleash!!!!! — Spotify: 3,542,195 | Played Live: 101\nsecret My lips — Spotify: 1,817,930 | Played Live: 85\nHATE? — Spotify: 1,967,433 | Played Live: 78",
+                          "image":  "https://img.youtube.com/vi/D0Lj5un6Ul0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) — Views: 25,926 | Yesterday: 0\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) — Views: 25,630 | Yesterday: 8\n2024.09.25 Release / BAND-MAID New Album \"Epic Narratives\" (Official Teaser Video) — Views: 24,301 | Yesterday: 4",
                           "choices":  [
                                           {
-                                              "text":  "secret My lips"
+                                              "text":  "2024.09.25 Release / BAND-MAID New Album \"Epic Narratives\" (Official Teaser Video)"
                                           },
                                           {
-                                              "text":  "HATE?"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)"
                                           },
                                           {
-                                              "text":  "Unleash!!!!!",
+                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video)",
                                               "correct":  true
                                           }
                                       ]
