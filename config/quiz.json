@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/D0Lj5un6Ul0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) — Views: 25,926 | Yesterday: 0\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) — Views: 25,630 | Yesterday: 8\n2024.09.25 Release / BAND-MAID New Album \"Epic Narratives\" (Official Teaser Video) — Views: 24,301 | Yesterday: 4",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "SUPER SUNSHINE — Spotify: 278,108 | Played Live: 13\nSION — Spotify: 218,769 | Played Live: 4\nYOLO (instrumental) — Spotify: 184,406 | Played Live: 0",
                           "choices":  [
                                           {
-                                              "text":  "2024.09.25 Release / BAND-MAID New Album \"Epic Narratives\" (Official Teaser Video)"
+                                              "text":  "YOLO (instrumental)"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)"
+                                              "text":  "SION"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video)",
+                                              "text":  "SUPER SUNSHINE",
                                               "correct":  true
                                           }
                                       ]
