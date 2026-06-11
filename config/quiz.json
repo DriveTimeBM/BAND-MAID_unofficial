@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "SUPER SUNSHINE — Spotify: 278,108 | Played Live: 13\nSION — Spotify: 218,769 | Played Live: 4\nYOLO (instrumental) — Spotify: 184,406 | Played Live: 0",
+                          "image":  "https://img.youtube.com/vi/uHBnf1pXC2E/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "The Dragon Cries — Views: 118,383 | Yesterday: 74\nCorallium — Views: 165,439 | Yesterday: 58\nYOLOSIOSU — Views: 84,379 | Yesterday: 57",
                           "choices":  [
                                           {
-                                              "text":  "YOLO (instrumental)"
-                                          },
-                                          {
-                                              "text":  "SION"
-                                          },
-                                          {
-                                              "text":  "SUPER SUNSHINE",
+                                              "text":  "The Dragon Cries",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Corallium"
+                                          },
+                                          {
+                                              "text":  "YOLOSIOSU"
                                           }
                                       ]
                       }
