@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/uHBnf1pXC2E/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "The Dragon Cries — Views: 118,383 | Yesterday: 74\nCorallium — Views: 165,439 | Yesterday: 58\nYOLOSIOSU — Views: 84,379 | Yesterday: 57",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Awkward — Spotify: 818,887 | Played Live: 34\nGiovanni — Spotify: 792,637 | Played Live: 6\nCatharsis (カタルシス) — Spotify: 787,023 | Played Live: 18",
                           "choices":  [
                                           {
-                                              "text":  "The Dragon Cries",
+                                              "text":  "Awkward",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Corallium"
+                                              "text":  "Catharsis (カタルシス)"
                                           },
                                           {
-                                              "text":  "YOLOSIOSU"
+                                              "text":  "Giovanni"
                                           }
                                       ]
                       }
