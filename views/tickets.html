@@ -282,8 +282,9 @@ async function boot() {
   try {
     const res = await fetch(TK_JSON);
     if (!res.ok) throw new Error('HTTP ' + res.status);
-    allEvents = await res.json();
-    if (!Array.isArray(allEvents)) allEvents = [allEvents];
+    const text = (await res.text()).trim();
+    allEvents = text ? JSON.parse(text) : [];
+    if (!Array.isArray(allEvents)) allEvents = allEvents ? [allEvents] : [];
 
     allEvents.forEach(e => {
       e._ms    = parseDotNet(e.DateTime);
