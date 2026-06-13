@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Awkward — Spotify: 818,887 | Played Live: 34\nGiovanni — Spotify: 792,637 | Played Live: 6\nCatharsis (カタルシス) — Spotify: 787,023 | Played Live: 18",
+                          "image":  "https://img.youtube.com/vi/2MOvCkCqz_U/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / After Life (Official Music Video) — Views: 3,091,320 | Yesterday: 421\nBAND-MAID / influencer (Official Music Video) — Views: 2,539,727 | Yesterday: 546\nBAND-MAID / 輪廻  \"RINNE\" (Official Music Video) — Views: 2,293,351 | Yesterday: 248",
                           "choices":  [
                                           {
-                                              "text":  "Awkward",
+                                              "text":  "BAND-MAID / 輪廻  \"RINNE\" (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / After Life (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Catharsis (カタルシス)"
-                                          },
-                                          {
-                                              "text":  "Giovanni"
+                                              "text":  "BAND-MAID / influencer (Official Music Video)"
                                           }
                                       ]
                       }
