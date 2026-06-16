@@ -138,7 +138,8 @@
                     "\\bshow\\s*report\\b",
                     "Impression",
                     "(?i)\\bokyu-?ji\\b",
-                    "recap"
+                    "recap",
+                    "vlog"
                 ]}
             ]
         },
