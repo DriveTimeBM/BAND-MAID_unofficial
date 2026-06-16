@@ -11,6 +11,35 @@
             "notes": "Official BAND-MAID YouTube channel"
         },
         {
+            "category": "Live/Fancam",
+            "color": "#7ba87a",
+            "rules": [
+                { "field": "channelId", "type": "exact", "patterns": [
+                    "UCg2zpn3-XtqWM9hxhMNPpiQ",
+                    "UC-mDtRf2e_vHVwIy1K-33Wg",
+                    "UCjOV03Wp55rWkRud1Z7NNyQ"
+                  ] 
+                },
+                { "field": "title", "type": "regex", "patterns": [
+                    "session",
+                    "\\bomajinai\\w*\\b",
+                    "\\bfancam\\w*\\b",
+                    "\\bBerlin\\w*\\b",
+                    "\\bFrankfurt\\w*\\b",
+                    "\\bMunich\\w*\\b",
+                    "\\bParis\\w*\\b",
+                    "\\bColumbia\\w*\\b",
+                    "\\bBatschkapp\\w*\\b",
+                    "\\bTECHNIKUM\\w*\\b",
+                    "\\bBATACLAN\\w*\\b",
+                    "\\bLondon\\w*\\b",
+                    "\\bBrixton\\w*\\b",
+                    "\\bDownload\\w*\\b",
+                    "\\bfan\\s*cam\\b"
+                ]}
+            ]
+        },
+        {
             "category": "Reaction",
             "color": "#a8c4a0",
             "rules": [
@@ -42,35 +71,6 @@
                 }
             ],
             "notes": "Matches react/reacts/reacting/reaction/reactions, hear/hears/hearing/heard, listen/listens/listening/listened"
-        },
-        {
-            "category": "Live/Fancam",
-            "color": "#7ba87a",
-            "rules": [
-                { "field": "channelId", "type": "exact", "patterns": [
-                    "UCg2zpn3-XtqWM9hxhMNPpiQ",
-                    "UC-mDtRf2e_vHVwIy1K-33Wg",
-                    "UCjOV03Wp55rWkRud1Z7NNyQ"
-                  ] 
-                },
-                { "field": "title", "type": "regex", "patterns": [
-                    "session",
-                    "\\bomajinai\\w*\\b",
-                    "\\bfancam\\w*\\b",
-                    "\\bBerlin\\w*\\b",
-                    "\\bFrankfurt\\w*\\b",
-                    "\\bMunich\\w*\\b",
-                    "\\bParis\\w*\\b",
-                    "\\bColumbia\\w*\\b",
-                    "\\bBatschkapp\\w*\\b",
-                    "\\bTECHNIKUM\\w*\\b",
-                    "\\bBATACLAN\\w*\\b",
-                    "\\bLondon\\w*\\b",
-                    "\\bBrixton\\w*\\b",
-                    "\\bDownload\\w*\\b",
-                    "\\bfan\\s*cam\\b"
-                ]}
-            ]
         },
         {
             "category": "Cover",
