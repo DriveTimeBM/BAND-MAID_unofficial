@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/-qQnKILR5u0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / REAL EXISTENCE (Official Live Video) — Views: 1,836,533 | Yesterday: 218\nBAND-MAID / Manners, BLACK HOLE (Official Live Video) for J-LOD LIVE2 — Views: 1,582,339 | Yesterday: 153\nBAND-MAID / Puzzle (Official Live Video) — Views: 1,240,300 | Yesterday: 335",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Spirit!! — Spotify: 1,267,260 | Played Live: 36\nSukurimingu [Screaming] (すくりーみんぐ) — Spotify: 1,207,213 | Played Live: 0\nCarry on living — Spotify: 1,197,323 | Played Live: 69",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / REAL EXISTENCE (Official Live Video)",
+                                              "text":  "Carry on living"
+                                          },
+                                          {
+                                              "text":  "Spirit!!",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Puzzle (Official Live Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Manners, BLACK HOLE (Official Live Video) for J-LOD LIVE2"
+                                              "text":  "Sukurimingu [Screaming] (すくりーみんぐ)"
                                           }
                                       ]
                       }
