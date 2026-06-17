@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Spirit!! — Spotify: 1,267,260 | Played Live: 36\nSukurimingu [Screaming] (すくりーみんぐ) — Spotify: 1,207,213 | Played Live: 0\nCarry on living — Spotify: 1,197,323 | Played Live: 69",
+                          "image":  "https://img.youtube.com/vi/LwbXcAY0lhU/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング — Views: 730,494 | Yesterday: 1,292\nBAND-MAID / DOMINATION  (Official Live Video) — Views: 5,024,281 | Yesterday: 866\nBAND-MAID / FREEDOM (Official Live Video) — Views: 4,048,894 | Yesterday: 775",
                           "choices":  [
                                           {
-                                              "text":  "Carry on living"
+                                              "text":  "BAND-MAID / DOMINATION  (Official Live Video)"
                                           },
                                           {
-                                              "text":  "Spirit!!",
+                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Sukurimingu [Screaming] (すくりーみんぐ)"
+                                              "text":  "BAND-MAID / FREEDOM (Official Live Video)"
                                           }
                                       ]
                       }
