@@ -121,6 +121,7 @@
                 },
                { "field": "title", "type": "regex", "patterns": [
                     "isolated",
+                    "karaoke",
                     "\\bbacking\\s*track\\b"
                   ]
                }
