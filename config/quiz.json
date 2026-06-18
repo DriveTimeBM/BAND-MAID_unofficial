@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/LwbXcAY0lhU/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング — Views: 730,494 | Yesterday: 1,292\nBAND-MAID / DOMINATION  (Official Live Video) — Views: 5,024,281 | Yesterday: 866\nBAND-MAID / FREEDOM (Official Live Video) — Views: 4,048,894 | Yesterday: 775",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "CROSS — Spotify: 1,915,299 | Played Live: 55\nKnockin\u0027 on your heart — Spotify: 701,030 | Played Live: 55\nmatchless GUM — Spotify: 599,906 | Played Live: 53",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / DOMINATION  (Official Live Video)"
+                                              "text":  "Knockin\u0027 on your heart"
                                           },
                                           {
-                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング",
+                                              "text":  "CROSS",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / FREEDOM (Official Live Video)"
+                                              "text":  "matchless GUM"
                                           }
                                       ]
                       }
