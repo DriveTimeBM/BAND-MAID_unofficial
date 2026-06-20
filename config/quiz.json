@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/N5uWg7wPvZA/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  AKANE vs Pau — Views: 59,309 | Yesterday: 23\nBAND-MAID / Ready to Rock (Official Teaser Video MIKU KOBATO ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 157,551 | Yesterday: 18\nBAND-MAID / Zen (Official Teaser Video)  AKANE Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 42,437 | Yesterday: 14",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Balance — Spotify: 788,231 | Played Live: 10\nDilemma — Spotify: 752,046 | Played Live: 13\nMemorable — Spotify: 750,592 | Played Live: 52",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  AKANE Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
+                                              "text":  "Memorable"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  AKANE vs Pau",
+                                              "text":  "Balance",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video MIKU KOBATO ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "Dilemma"
                                           }
                                       ]
                       }
