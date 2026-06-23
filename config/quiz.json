@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "FREEDOM — Spotify: 1,803,793 | Played Live: 260\nREAL EXISTENCE — Spotify: 2,651,513 | Played Live: 242\nDOMINATION — Spotify: 8,432,476 | Played Live: 222",
+                          "image":  "https://img.youtube.com/vi/5_S4s8jZQ-A/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / endless Story (Official Music Video) — Views: 1,996,009 | Yesterday: 241\nBAND-MAID / Bestie (Official Music Video) — Views: 1,241,689 | Yesterday: 230\nBAND-MAID / start over (Official Music Video) — Views: 2,344,645 | Yesterday: 111",
                           "choices":  [
                                           {
-                                              "text":  "REAL EXISTENCE"
+                                              "text":  "BAND-MAID / start over (Official Music Video)"
                                           },
                                           {
-                                              "text":  "DOMINATION"
+                                              "text":  "BAND-MAID / Bestie (Official Music Video)"
                                           },
                                           {
-                                              "text":  "FREEDOM",
+                                              "text":  "BAND-MAID / endless Story (Official Music Video)",
                                               "correct":  true
                                           }
                                       ]
