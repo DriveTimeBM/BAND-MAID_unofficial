@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/5_S4s8jZQ-A/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / endless Story (Official Music Video) — Views: 1,996,009 | Yesterday: 241\nBAND-MAID / Bestie (Official Music Video) — Views: 1,241,689 | Yesterday: 230\nBAND-MAID / start over (Official Music Video) — Views: 2,344,645 | Yesterday: 111",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Catharsis (カタルシス) — Spotify: 789,866 | Played Live: 18\nShake That!! — Spotify: 766,244 | Played Live: 58\nBig Dad — Spotify: 735,840 | Played Live: 9",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / start over (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Bestie (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / endless Story (Official Music Video)",
+                                              "text":  "Catharsis (カタルシス)",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Big Dad"
+                                          },
+                                          {
+                                              "text":  "Shake That!!"
                                           }
                                       ]
                       }
