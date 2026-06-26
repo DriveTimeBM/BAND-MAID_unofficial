@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/S5QhaOJtyEc/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / \"ENERGETIC\" Official Teaser Video 3 — Views: 15,117 | Yesterday: 10,668\nBAND-MAID / ENERGETIC (Official Teaser Video) — Views: 46,723 | Yesterday: 454\nBAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 110,911 | Yesterday: 98",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "KEY — Spotify: 835,128 | Played Live: 8\nThe Dragon Cries — Spotify: 819,994 | Played Live: 12\nGiovanni — Spotify: 794,126 | Played Live: 6",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video)"
+                                              "text":  "The Dragon Cries"
                                           },
                                           {
-                                              "text":  "BAND-MAID / \"ENERGETIC\" Official Teaser Video 3",
+                                              "text":  "Giovanni"
+                                          },
+                                          {
+                                              "text":  "KEY",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
                                           }
                                       ]
                       }
