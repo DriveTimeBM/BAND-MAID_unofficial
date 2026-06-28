@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/3kMIh0_Wkpk/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 3,294,849 | Yesterday: 2,535\nBAND-MAID / Bubble (Official Music Video) — Views: 3,163,812 | Yesterday: 257\nBAND-MAID / After Life (Official Music Video) — Views: 3,096,712 | Yesterday: 440",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Hibana (火花) — Spotify: 1,193,043 | Played Live: 10\nhide-and-seek — Spotify: 1,085,135 | Played Live: 22\nHoney (ハニー) — Spotify: 1,015,723 | Played Live: 1",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Bubble (Official Music Video)"
+                                              "text":  "Honey (ハニー)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌",
+                                              "text":  "Hibana (火花)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / After Life (Official Music Video)"
+                                              "text":  "hide-and-seek"
                                           }
                                       ]
                       }
