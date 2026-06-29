@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1">
 <link rel="icon" type="image/png" href="../logo.png">
-<title>BAND-MAID Unofficial · YT Metrics</title>
+<title>BAND-MAID Unofficial · YouTube Metrics</title>
 <style>
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
@@ -200,7 +200,7 @@ td.bar-cell{min-width:80px}
 
 <div class="app-header">
   <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='📊'"></div>
-  <div class="app-title">YT Metrics</div>
+  <div class="app-title">YouTube Metrics</div>
   <div class="header-spacer"></div>
   <div class="stat-pill" id="statPill">Loading…</div>
 </div>
@@ -213,7 +213,7 @@ td.bar-cell{min-width:80px}
   </div>
   <div class="tb-divider"></div>
   <span class="tb-label">Type:</span>
-  <select class="tb-select" id="typeFilter" onchange="render()">
+  <select class="tb-select" id="typeFilter" onchange="applyFilters()">
     <option value="">All types</option>
   </select>
   <div class="tb-divider"></div>
