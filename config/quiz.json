@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Hibana (火花) — Spotify: 1,193,043 | Played Live: 10\nhide-and-seek — Spotify: 1,085,135 | Played Live: 22\nHoney (ハニー) — Spotify: 1,015,723 | Played Live: 1",
+                          "image":  "https://img.youtube.com/vi/oZWc7jk4GNs/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "Play — Views: 243,219 | Yesterday: 5\nDilemma — Views: 231,282 | Yesterday: 141\nTAMAYA! — Views: 218,284 | Yesterday: 134",
                           "choices":  [
                                           {
-                                              "text":  "Honey (ハニー)"
+                                              "text":  "Dilemma"
                                           },
                                           {
-                                              "text":  "Hibana (火花)",
+                                              "text":  "TAMAYA!"
+                                          },
+                                          {
+                                              "text":  "Play",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "hide-and-seek"
                                           }
                                       ]
                       }
