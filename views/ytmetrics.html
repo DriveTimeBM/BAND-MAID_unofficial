@@ -1,0 +1,599 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<link rel="icon" type="image/png" href="../logo.png">
+<title>BAND-MAID Unofficial · YT Metrics</title>
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#0a0a0a;--bg2:#141414;--bg3:#1c1c1c;
+  --border:#2a2a2a;--border2:#3a3a3a;
+  --text:#f0f0f0;--text2:#b8c8d8;--text3:#7a8a9a;
+  --accent:#c8a96e;--accent-dim:rgba(200,169,110,0.12);--accent-border:rgba(200,169,110,0.3);
+  --red:#ef4444;--green:#22c55e;--blue:#60a5fa;--purple:#a78bfa;--pink:#f472b6;
+  --radius:8px;--font:'Segoe UI',system-ui,sans-serif;
+  --header-h:52px;--toolbar-h:48px;
+}
+html,body{height:100%;overflow:hidden;background:var(--bg);color:var(--text);font-family:var(--font);font-size:14px}
+
+/* ── HEADER ── */
+.app-header{
+  position:fixed;top:0;left:0;right:0;height:var(--header-h);z-index:300;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:10px;padding:0 14px;
+}
+.app-logo{width:32px;height:32px;background:#111;border:1px solid var(--accent);border-radius:6px;display:flex;align-items:center;justify-content:center;flex-shrink:0}
+.app-logo img{width:20px;height:20px;object-fit:contain}
+.app-title{font-size:14px;font-weight:700;letter-spacing:0.03em}
+.header-spacer{flex:1}
+.stat-pill{font-size:11px;color:var(--text3);background:var(--bg3);border:1px solid var(--border);border-radius:20px;padding:3px 10px;white-space:nowrap}
+
+/* ── TOOLBAR ── */
+.toolbar{
+  position:fixed;top:var(--header-h);left:0;right:0;height:var(--toolbar-h);z-index:200;
+  background:var(--bg2);border-bottom:1px solid var(--border);
+  display:flex;align-items:center;gap:8px;padding:0 14px;overflow-x:auto;
+}
+.toolbar::-webkit-scrollbar{display:none}
+.search-wrap{position:relative;flex:1;min-width:100px;max-width:220px}
+.search-input{
+  width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text);padding:6px 26px 6px 30px;font-size:12px;font-family:var(--font);outline:none;
+  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='13' height='13' viewBox='0 0 24 24' fill='none' stroke='%237a8a9a' stroke-width='2'%3E%3Ccircle cx='11' cy='11' r='8'/%3E%3Cpath d='M21 21l-4.35-4.35'/%3E%3C/svg%3E");
+  background-repeat:no-repeat;background-position:9px center;
+}
+.search-input:focus{border-color:var(--accent)}
+.search-input::placeholder{color:var(--text3)}
+.search-clear{
+  position:absolute;right:7px;top:50%;transform:translateY(-50%);
+  display:none;align-items:center;justify-content:center;
+  width:15px;height:15px;border-radius:50%;
+  background:var(--text3);color:var(--bg);font-size:9px;font-weight:700;
+  cursor:pointer;border:none;font-family:var(--font);
+}
+.search-clear:hover{background:var(--text2)}
+.search-clear.visible{display:flex}
+.tb-select{
+  background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);
+  color:var(--text2);padding:5px 8px;font-size:11px;font-family:var(--font);outline:none;
+  white-space:nowrap;flex-shrink:0;
+}
+.tb-select:focus{border-color:var(--accent)}
+.tb-select option{background:var(--bg3)}
+.tb-label{font-size:11px;color:var(--text3);white-space:nowrap;flex-shrink:0}
+.tb-divider{width:1px;height:24px;background:var(--border);flex-shrink:0}
+
+/* ── MAIN ── */
+.main{
+  position:fixed;top:calc(var(--header-h) + var(--toolbar-h));left:0;right:0;bottom:0;
+  display:flex;overflow:hidden;
+}
+
+/* ── TABLE PANEL ── */
+.table-panel{
+  flex:1;overflow:auto;min-width:0;
+}
+
+/* Summary strip */
+.summary-strip{
+  display:grid;grid-template-columns:repeat(6,1fr);gap:1px;
+  background:var(--border);border-bottom:1px solid var(--border);
+  flex-shrink:0;position:sticky;top:0;z-index:15;
+}
+.summary-card{
+  background:var(--bg2);padding:10px 12px;text-align:center;
+}
+.summary-label{font-size:9px;font-weight:700;letter-spacing:0.09em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.summary-val{font-size:14px;font-weight:700;color:var(--text)}
+.summary-val.v{color:var(--red)}
+.summary-val.l{color:var(--green)}
+.summary-val.c{color:var(--blue)}
+.summary-val.lv{color:var(--accent)}
+.summary-val.cv{color:var(--purple)}
+
+/* Table */
+.metrics-table{width:100%;border-collapse:collapse;font-size:12px;min-width:900px}
+.metrics-table thead{position:sticky;top:112px;z-index:10;background:var(--bg2)}
+.metrics-table th{
+  padding:8px 10px;text-align:left;font-size:10px;font-weight:700;
+  letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);
+  border-bottom:2px solid var(--border);white-space:nowrap;cursor:pointer;
+  user-select:none;transition:color 0.15s;
+}
+.metrics-table th:hover{color:var(--text2)}
+.metrics-table th.sorted{color:var(--accent)}
+.metrics-table th .sort-arrow{margin-left:4px;opacity:0.6}
+.metrics-table td{
+  padding:7px 10px;border-bottom:1px solid var(--border);
+  vertical-align:middle;white-space:nowrap;
+}
+.metrics-table tr:hover td{background:var(--bg3)}
+.metrics-table tr.active-row td{background:var(--accent-dim)}
+.metrics-table tr.active-row td.rank-cell{color:var(--accent)}
+
+/* Column value colors */
+td.rank-cell{font-weight:700;color:var(--text3);text-align:right;min-width:32px}
+td.rank-cell.gold{color:#f59e0b}
+td.rank-cell.silver{color:#9ca3af}
+td.rank-cell.bronze{color:#b45309}
+td.title-cell{max-width:260px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);cursor:pointer}
+td.title-cell:hover{color:var(--accent)}
+td.num-cell{text-align:right;color:var(--text2)}
+td.num-cell.sort-col{color:var(--text);font-weight:600}
+td.type-cell{color:var(--text3);font-size:10px}
+td.bar-cell{min-width:80px}
+
+/* Mini bar */
+.mini-bar-bg{height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.mini-bar-fill{height:100%;border-radius:3px;transition:width 0.3s}
+
+/* ── DETAIL PANEL ── */
+.detail-panel{
+  width:340px;flex-shrink:0;background:var(--bg2);border-left:1px solid var(--border);
+  display:flex;flex-direction:column;overflow:hidden;
+  transform:translateX(100%);transition:transform 0.25s ease;
+}
+.detail-panel.open{transform:translateX(0)}
+.detail-close{
+  position:absolute;top:10px;right:10px;width:26px;height:26px;border-radius:50%;
+  background:var(--bg3);border:1px solid var(--border);color:var(--text3);
+  font-size:12px;cursor:pointer;z-index:5;display:flex;align-items:center;justify-content:center;
+  transition:all 0.15s;
+}
+.detail-close:hover{border-color:var(--accent);color:var(--accent)}
+.detail-scroll{flex:1;overflow-y:auto;padding:14px}
+.detail-thumb-wrap{position:relative;aspect-ratio:16/9;overflow:hidden;background:#000;border-radius:6px;margin-bottom:12px;cursor:pointer}
+.detail-thumb{width:100%;height:100%;object-fit:cover;display:block}
+.detail-play-overlay{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;background:rgba(0,0,0,0.3)}
+.detail-play-circle{width:42px;height:42px;border-radius:50%;background:rgba(0,0,0,0.7);border:2px solid rgba(255,255,255,0.8);display:flex;align-items:center;justify-content:center;font-size:16px;color:#fff;transition:transform 0.15s,background 0.15s}
+.detail-thumb-wrap:hover .detail-play-circle{transform:scale(1.1);background:var(--red)}
+.detail-thumb-wrap iframe{width:100%;height:100%;border:none;position:absolute;inset:0}
+.detail-title{font-size:13px;font-weight:700;color:var(--text);line-height:1.4;margin-bottom:8px}
+.detail-type{font-size:10px;color:var(--text3);margin-bottom:12px}
+
+/* Metric cards in detail */
+.metric-cards{display:grid;grid-template-columns:1fr 1fr;gap:6px;margin-bottom:12px}
+.metric-card{background:var(--bg3);border:1px solid var(--border);border-radius:6px;padding:8px 10px}
+.metric-card.full{grid-column:1/-1}
+.metric-card-label{font-size:9px;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--text3);margin-bottom:3px}
+.metric-card-val{font-size:15px;font-weight:700}
+.mc-v{color:var(--red)}
+.mc-vd{color:var(--green)}
+.mc-l{color:var(--green)}
+.mc-c{color:var(--blue)}
+.mc-lv{color:var(--accent)}
+.mc-cv{color:var(--purple)}
+.metric-card-rank{font-size:10px;color:var(--text3);margin-top:2px}
+
+/* Detail links */
+.detail-links{display:flex;gap:6px;flex-wrap:wrap}
+.detail-link{
+  flex:1;display:inline-flex;align-items:center;justify-content:center;gap:5px;
+  padding:7px 10px;border-radius:var(--radius);font-size:11px;font-weight:600;
+  text-decoration:none;border:1px solid var(--border2);background:var(--bg3);
+  color:var(--text2);transition:all 0.15s;
+}
+.detail-link:hover{border-color:var(--accent);color:var(--accent)}
+.detail-link.yt{background:var(--red);color:#fff;border-color:var(--red)}
+.detail-link.yt:hover{opacity:0.85}
+.detail-link svg{width:12px;height:12px;flex-shrink:0}
+
+/* Loading / empty */
+.state-overlay{
+  position:fixed;inset:0;top:var(--header-h);background:var(--bg);z-index:500;
+  display:flex;align-items:center;justify-content:center;flex-direction:column;gap:14px;
+  color:var(--text3);font-size:13px;
+}
+.spinner{width:28px;height:28px;border:2px solid var(--border2);border-top-color:var(--accent);border-radius:50%;animation:spin 0.7s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+.retry-btn{background:var(--bg3);border:1px solid var(--border2);color:var(--text);padding:8px 18px;border-radius:var(--radius);font-size:13px;cursor:pointer;font-family:var(--font)}
+.retry-btn:hover{border-color:var(--accent);color:var(--accent)}
+</style>
+</head>
+<body>
+
+<div class="app-header">
+  <div class="app-logo"><img src="../logo.png" alt="" onerror="this.parentNode.textContent='📊'"></div>
+  <div class="app-title">YT Metrics</div>
+  <div class="header-spacer"></div>
+  <div class="stat-pill" id="statPill">Loading…</div>
+</div>
+
+<div class="toolbar">
+  <div class="search-wrap">
+    <input type="text" class="search-input" id="searchInput"
+      placeholder="Search videos…" oninput="onSearch()">
+    <button class="search-clear" id="searchClear" onclick="clearSearch()">✕</button>
+  </div>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Type:</span>
+  <select class="tb-select" id="typeFilter" onchange="render()">
+    <option value="">All types</option>
+  </select>
+  <div class="tb-divider"></div>
+  <span class="tb-label">Sort:</span>
+  <select class="tb-select" id="sortSelect" onchange="onSortChange()">
+    <option value="views">Views</option>
+    <option value="vpd">Views / Day</option>
+    <option value="lpd">Likes / Day</option>
+    <option value="cpd">Comments / Day</option>
+    <option value="lpv">Likes / View</option>
+    <option value="cpv">Comments / View</option>
+    <option value="likes">Likes</option>
+    <option value="comments">Comments</option>
+    <option value="date_desc">Date (newest)</option>
+    <option value="date_asc">Date (oldest)</option>
+  </select>
+</div>
+
+<div class="state-overlay" id="stateOverlay">
+  <div class="spinner"></div>
+  <span>Loading metrics…</span>
+</div>
+
+<div class="main" id="main">
+  <div class="table-panel" id="tablePanel"></div>
+  <div class="detail-panel" id="detailPanel">
+    <button class="detail-close" onclick="closeDetail()">✕</button>
+    <div class="detail-scroll" id="detailScroll"></div>
+  </div>
+</div>
+
+<script>
+const YT_JSON = 'https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json';
+
+let allVideos = [];
+let filtered  = [];
+let sortKey   = 'views';
+let activeId  = null;
+let searchTimer = null;
+
+// ── BOOT ─────────────────────────────────────────────────────────────────────
+async function boot() {
+  try {
+    const res = await fetch(YT_JSON);
+    if (!res.ok) throw new Error('HTTP ' + res.status);
+    allVideos = await res.json();
+    if (!Array.isArray(allVideos)) allVideos = [allVideos];
+
+    const now = Date.now();
+    allVideos.forEach(v => {
+      const published = v.Date ? new Date(v.Date).getTime() : now;
+      const ageDays   = Math.max(1, (now - published) / 86400000);
+      v._ageDays = ageDays;
+      v._vpd  = (v.Views    || 0) / ageDays;
+      v._lpd  = (v.Likes    || 0) / ageDays;
+      v._cpd  = (v.Comments || 0) / ageDays;
+      v._lpv  = v.Views > 0 ? (v.Likes    || 0) / v.Views : 0;
+      v._cpv  = v.Views > 0 ? (v.Comments || 0) / v.Views : 0;
+    });
+
+    // Populate type filter
+    const types = [...new Set(allVideos.map(v => v.Type).filter(Boolean))].sort();
+    const sel   = document.getElementById('typeFilter');
+    types.forEach(t => {
+      const o = document.createElement('option');
+      o.value = t; o.textContent = t;
+      sel.appendChild(o);
+    });
+
+    document.getElementById('stateOverlay').style.display = 'none';
+    filtered = [...allVideos];
+    render();
+  } catch(e) {
+    document.getElementById('stateOverlay').innerHTML = `
+      <div>⚠️ Could not load metrics</div>
+      <div style="font-size:12px">${esc(e.message)}</div>
+      <button class="retry-btn" onclick="boot()">Retry</button>`;
+  }
+}
+
+// ── COMPUTE SORTED + RANKED ───────────────────────────────────────────────────
+function sortedFiltered() {
+  return [...filtered].sort(sorter(sortKey));
+}
+
+function sorter(key) {
+  return (a, b) => {
+    if (key === 'views')     return (b.Views||0) - (a.Views||0);
+    if (key === 'vpd')       return b._vpd - a._vpd;
+    if (key === 'lpd')       return b._lpd - a._lpd;
+    if (key === 'cpd')       return b._cpd - a._cpd;
+    if (key === 'lpv')       return b._lpv - a._lpv;
+    if (key === 'cpv')       return b._cpv - a._cpv;
+    if (key === 'likes')     return (b.Likes||0) - (a.Likes||0);
+    if (key === 'comments')  return (b.Comments||0) - (a.Comments||0);
+    if (key === 'date_desc') return new Date(b.Date||0) - new Date(a.Date||0);
+    if (key === 'date_asc')  return new Date(a.Date||0) - new Date(b.Date||0);
+    return 0;
+  };
+}
+
+// ── RENDER ────────────────────────────────────────────────────────────────────
+function render() {
+  const sorted = sortedFiltered();
+
+  // Summary strip — totals/averages of filtered set
+  const totViews    = filtered.reduce((s,v) => s + (v.Views||0), 0);
+  const totLikes    = filtered.reduce((s,v) => s + (v.Likes||0), 0);
+  const totComments = filtered.reduce((s,v) => s + (v.Comments||0), 0);
+  const avgVpd      = filtered.length ? filtered.reduce((s,v) => s + v._vpd, 0) / filtered.length : 0;
+  const avgLpv      = filtered.length ? filtered.reduce((s,v) => s + v._lpv, 0) / filtered.length : 0;
+  const avgCpv      = filtered.length ? filtered.reduce((s,v) => s + v._cpv, 0) / filtered.length : 0;
+
+  document.getElementById('statPill').textContent =
+    `${filtered.length} videos · ${fmtK(totViews)} views`;
+
+  // Max values for bar scaling
+  const maxVpd = Math.max(...filtered.map(v => v._vpd), 1);
+  const maxLpd = Math.max(...filtered.map(v => v._lpd), 1);
+  const maxCpd = Math.max(...filtered.map(v => v._cpd), 1);
+  const maxLpv = Math.max(...filtered.map(v => v._lpv), 1);
+  const maxCpv = Math.max(...filtered.map(v => v._cpv), 1);
+
+  const panel = document.getElementById('tablePanel');
+  const sc    = sortKey;
+
+  let html = `
+  <div class="summary-strip">
+    <div class="summary-card">
+      <div class="summary-label">Total Views</div>
+      <div class="summary-val v">${fmtK(totViews)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Total Likes</div>
+      <div class="summary-val l">${fmtK(totLikes)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Total Comments</div>
+      <div class="summary-val c">${fmtK(totComments)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Avg Views/Day</div>
+      <div class="summary-val v">${fmtD(avgVpd)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Avg Likes/View</div>
+      <div class="summary-val lv">${pct(avgLpv)}</div>
+    </div>
+    <div class="summary-card">
+      <div class="summary-label">Avg Cmt/View</div>
+      <div class="summary-val cv">${pct(avgCpv)}</div>
+    </div>
+  </div>
+  <table class="metrics-table">
+    <thead>
+      <tr>
+        <th onclick="setSort('${sc}')">#</th>
+        <th onclick="setSort('date_desc')">Title ${arrow('date_desc')}</th>
+        <th onclick="setSort('views')" class="${sc==='views'?'sorted':''}">Views ${arrow('views')}</th>
+        <th onclick="setSort('vpd')" class="${sc==='vpd'?'sorted':''}">Views/Day ${arrow('vpd')}</th>
+        <th onclick="setSort('likes')" class="${sc==='likes'?'sorted':''}">Likes ${arrow('likes')}</th>
+        <th onclick="setSort('lpd')" class="${sc==='lpd'?'sorted':''}">Likes/Day ${arrow('lpd')}</th>
+        <th onclick="setSort('comments')" class="${sc==='comments'?'sorted':''}">Cmts ${arrow('comments')}</th>
+        <th onclick="setSort('cpd')" class="${sc==='cpd'?'sorted':''}">Cmts/Day ${arrow('cpd')}</th>
+        <th onclick="setSort('lpv')" class="${sc==='lpv'?'sorted':''}">L/View ${arrow('lpv')}</th>
+        <th onclick="setSort('cpv')" class="${sc==='cpv'?'sorted':''}">C/View ${arrow('cpv')}</th>
+      </tr>
+    </thead>
+    <tbody>`;
+
+  sorted.forEach((v, i) => {
+    const rank    = i + 1;
+    const rankCls = rank===1 ? 'gold' : rank===2 ? 'silver' : rank===3 ? 'bronze' : '';
+    const active  = v.VideoId === activeId;
+    const vpd = v._vpd; const lpd = v._lpd; const cpd = v._cpd;
+    const lpv = v._lpv; const cpv = v._cpv;
+
+    const barVpd = bar(vpd, maxVpd, 'var(--red)');
+    const barLpd = bar(lpd, maxLpd, 'var(--green)');
+    const barCpd = bar(cpd, maxCpd, 'var(--blue)');
+
+    html += `
+      <tr class="${active ? 'active-row' : ''}" onclick="openDetail('${v.VideoId}')">
+        <td class="rank-cell ${rankCls}">${rank}</td>
+        <td class="title-cell" title="${esc(v.Title)}">${esc(v.Title)}</td>
+        <td class="num-cell ${sc==='views'?'sort-col':''}">${fmt(v.Views)}</td>
+        <td class="bar-cell">
+          <div style="color:var(--red);font-size:11px;font-weight:600;margin-bottom:2px">${fmtD(vpd)}</div>
+          ${barVpd}
+        </td>
+        <td class="num-cell ${sc==='likes'?'sort-col':''}">${fmt(v.Likes)}</td>
+        <td class="bar-cell">
+          <div style="color:var(--green);font-size:11px;font-weight:600;margin-bottom:2px">${fmtD(lpd)}</div>
+          ${barLpd}
+        </td>
+        <td class="num-cell ${sc==='comments'?'sort-col':''}">${fmt(v.Comments)}</td>
+        <td class="bar-cell">
+          <div style="color:var(--blue);font-size:11px;font-weight:600;margin-bottom:2px">${fmtD(cpd)}</div>
+          ${barCpd}
+        </td>
+        <td class="num-cell ${sc==='lpv'?'sort-col':''}" style="color:var(--accent)">${pct(lpv)}</td>
+        <td class="num-cell ${sc==='cpv'?'sort-col':''}" style="color:var(--purple)">${pct(cpv)}</td>
+      </tr>`;
+  });
+
+  html += `</tbody></table>`;
+  panel.innerHTML = html;
+}
+
+function arrow(key) {
+  return sortKey === key ? '<span class="sort-arrow">▼</span>' : '';
+}
+
+function bar(val, max, color) {
+  const pctW = max > 0 ? Math.round(val / max * 100) : 0;
+  return `<div class="mini-bar-bg"><div class="mini-bar-fill" style="width:${pctW}%;background:${color}"></div></div>`;
+}
+
+// ── DETAIL ────────────────────────────────────────────────────────────────────
+function openDetail(videoId) {
+  const v = allVideos.find(x => x.VideoId === videoId);
+  if (!v) return;
+  activeId = videoId;
+  render(); // re-render to update active-row highlight
+
+  const scroll = document.getElementById('detailScroll');
+  scroll.innerHTML = '';
+
+  // Compute ranks for this video across the full filtered set
+  const makeRank = (key) => {
+    const sorted = [...filtered].sort(sorter(key));
+    return sorted.findIndex(x => x.VideoId === videoId) + 1;
+  };
+
+  // Thumbnail / player
+  const thumbWrap = document.createElement('div');
+  thumbWrap.className = 'detail-thumb-wrap';
+  thumbWrap.innerHTML = `
+    <img class="detail-thumb"
+      src="${esc(v.Image || `https://img.youtube.com/vi/${v.VideoId}/sddefault.jpg`)}"
+      alt="" onerror="this.src='https://img.youtube.com/vi/${v.VideoId}/hqdefault.jpg'">
+    <div class="detail-play-overlay">
+      <div class="detail-play-circle">▶</div>
+    </div>`;
+  thumbWrap.onclick = () => {
+    thumbWrap.innerHTML = `<iframe
+      src="https://www.youtube.com/embed/${v.VideoId}?autoplay=1&rel=0&modestbranding=1"
+      allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+      allowfullscreen></iframe>`;
+  };
+  scroll.appendChild(thumbWrap);
+
+  // Title
+  const titleEl = document.createElement('div');
+  titleEl.className = 'detail-title';
+  titleEl.textContent = v.Title;
+  scroll.appendChild(titleEl);
+
+  const typeEl = document.createElement('div');
+  typeEl.className = 'detail-type';
+  typeEl.textContent = `${v.Type || ''}  ·  ${v.Duration || ''}  ·  ${v.Date ? new Date(v.Date).toLocaleDateString(undefined,{year:'numeric',month:'short',day:'numeric'}) : ''}`;
+  scroll.appendChild(typeEl);
+
+  // Metric cards
+  const cards = document.createElement('div');
+  cards.className = 'metric-cards';
+
+  const metrics = [
+    { label:'Views',          val:fmt(v.Views),     cls:'mc-v',  rank:makeRank('views')    },
+    { label:'Views / Day',    val:fmtD(v._vpd),     cls:'mc-vd', rank:makeRank('vpd')      },
+    { label:'Likes',          val:fmt(v.Likes),     cls:'mc-l',  rank:makeRank('likes')    },
+    { label:'Likes / Day',    val:fmtD(v._lpd),     cls:'mc-l',  rank:makeRank('lpd')      },
+    { label:'Comments',       val:fmt(v.Comments),  cls:'mc-c',  rank:makeRank('comments') },
+    { label:'Comments / Day', val:fmtD(v._cpd),     cls:'mc-c',  rank:makeRank('cpd')      },
+    { label:'Likes / View',   val:pct(v._lpv),      cls:'mc-lv', rank:makeRank('lpv')      },
+    { label:'Cmts / View',    val:pct(v._cpv),      cls:'mc-cv', rank:makeRank('cpv')      },
+    { label:'Age (days)',     val:Math.round(v._ageDays).toLocaleString(), cls:'', rank:null },
+    { label:'Views Yesterday',val:fmt(v.ViewsDelta), cls:'mc-vd', rank:null },
+  ];
+
+  metrics.forEach(m => {
+    const card = document.createElement('div');
+    card.className = 'metric-card';
+    card.innerHTML = `
+      <div class="metric-card-label">${esc(m.label)}</div>
+      <div class="metric-card-val ${m.cls}">${esc(m.val)}</div>
+      ${m.rank ? `<div class="metric-card-rank">Rank #${m.rank} of ${filtered.length}</div>` : ''}`;
+    cards.appendChild(card);
+  });
+  scroll.appendChild(cards);
+
+  // Song tag if present
+  if (v.Song) {
+    const songEl = document.createElement('div');
+    songEl.style.cssText = 'font-size:11px;color:var(--text3);margin-bottom:10px';
+    songEl.textContent = `🎵 ${v.Song}`;
+    scroll.appendChild(songEl);
+  }
+
+  // Links
+  const links = document.createElement('div');
+  links.className = 'detail-links';
+  links.innerHTML = `
+    <a class="detail-link yt" href="${esc(v.URL)}" target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <path d="M18 13v6a2 2 0 01-2 2H5a2 2 0 01-2-2V8a2 2 0 012-2h6"/>
+        <polyline points="15 3 21 3 21 9"/><line x1="10" y1="14" x2="21" y2="3"/>
+      </svg>
+      YouTube
+    </a>
+    <a class="detail-link" href="https://img.youtube.com/vi/${esc(v.VideoId)}/maxresdefault.jpg"
+       target="_blank" rel="noopener">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+        <rect x="3" y="3" width="18" height="18" rx="2"/><circle cx="8.5" cy="8.5" r="1.5"/>
+        <polyline points="21 15 16 10 5 21"/>
+      </svg>
+      Thumbnail
+    </a>`;
+  scroll.appendChild(links);
+
+  document.getElementById('detailPanel').classList.add('open');
+}
+
+function closeDetail() {
+  activeId = null;
+  document.getElementById('detailPanel').classList.remove('open');
+  // Kill any playing iframe
+  const thumb = document.querySelector('.detail-thumb-wrap');
+  if (thumb) thumb.innerHTML = '';
+  render();
+}
+
+// ── SEARCH / FILTER ───────────────────────────────────────────────────────────
+function onSearch() {
+  const q = document.getElementById('searchInput').value;
+  document.getElementById('searchClear').classList.toggle('visible', q.length > 0);
+  clearTimeout(searchTimer);
+  searchTimer = setTimeout(applyFilters, 200);
+}
+
+function clearSearch() {
+  document.getElementById('searchInput').value = '';
+  document.getElementById('searchClear').classList.remove('visible');
+  applyFilters();
+  document.getElementById('searchInput').focus();
+}
+
+function applyFilters() {
+  const q    = document.getElementById('searchInput').value.toLowerCase().trim();
+  const type = document.getElementById('typeFilter').value;
+  filtered = allVideos.filter(v => {
+    if (type && v.Type !== type) return false;
+    if (q && !(v.Title||'').toLowerCase().includes(q) &&
+             !(v.Song||'').toLowerCase().includes(q))  return false;
+    return true;
+  });
+  render();
+}
+
+function onSortChange() {
+  sortKey = document.getElementById('sortSelect').value;
+  render();
+}
+
+function setSort(key) {
+  sortKey = key;
+  document.getElementById('sortSelect').value = key;
+  render();
+}
+
+// ── UTILS ─────────────────────────────────────────────────────────────────────
+function fmt(n)   { return Number(n||0).toLocaleString(); }
+function fmtK(n)  {
+  if (n >= 1e9) return (n/1e9).toFixed(2) + 'B';
+  if (n >= 1e6) return (n/1e6).toFixed(2) + 'M';
+  if (n >= 1e3) return (n/1e3).toFixed(1) + 'K';
+  return String(Math.round(n||0));
+}
+function fmtD(n)  { return n >= 1000 ? fmtK(n) : n.toFixed(n >= 10 ? 1 : 2); }
+function pct(n)   { return (n * 100).toFixed(3) + '%'; }
+function esc(s)   { return String(s??'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }
+
+document.addEventListener('keydown', e => { if (e.key === 'Escape') closeDetail(); });
+boot();
+</script>
+</body>
+</html>
