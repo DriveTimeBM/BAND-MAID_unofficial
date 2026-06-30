@@ -13,8 +13,9 @@
   "whatsNew": [
         {
       "date": "/Date(1780272000000)/",
-      "label": "May 2026",
+      "label": "June 2026",
       "items": [
+        "Added new YouTube Metrics for views, likes, comments, views/day, likes/day, comments/day, likes/view",
         "Added new Wikipedia view to view pageview stats across languages.",
         "Added new YouTube Locations view with rolling 7 and 28-day periods."
       ]
@@ -305,6 +306,19 @@
         "Newly discovered videos appear automatically — no manual curation needed"
       ],
       "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/youtube.gif",
+      "videoId": null
+    },
+    {
+      "id": "metrics",
+      "section": "data",
+      "updateFrequency": "Daily",
+      "dataUrl": "https://drivetimebm.github.io/BAND-MAID_gpt/youtube/youtube.json",
+      "description": "Views metrics for all official BAND-MAID YouTube videos, updated daily. Includes views, likes, comments, and calculated metrics like views/day, likes/day, comments/day, and likes/view.",
+      "tips": [
+        "Filter by Type to focus on a specific type of content",
+        "Sort by any metric by clicking the column header"
+      ],
+      "gifUrl": "https://drivetimebm.github.io/BAND-MAID_unofficial/guide/gifs/ytmetrics.gif",
       "videoId": null
     },
     {
