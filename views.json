@@ -195,6 +195,13 @@
     "icon": "🔟"
   },
   {
+    "id": "metrics",
+    "name": "YouTube Metrics *new*",
+    "file": "views/ytmetrics.html",
+    "nav": "menu",
+    "icon": "📊"
+  },
+  {
     "id": "followers",
     "name": "Followers",
     "file": "views/followers.html",
