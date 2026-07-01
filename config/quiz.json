@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "The Dragon Cries — Spotify: 819,994 | Played Live: 12\nFORWARD — Spotify: 809,593 | Played Live: 63\nazure — Spotify: 792,308 | Played Live: 9",
+                          "image":  "https://img.youtube.com/vi/1kv3cfGlMQQ/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "Sense (TV Size Ver.) — Views: 201,225 | Yesterday: 42\nShake That!! — Views: 76,321 | Yesterday: 38\nChoose me — Views: 53,627 | Yesterday: 37",
                           "choices":  [
                                           {
-                                              "text":  "FORWARD"
+                                              "text":  "Choose me"
                                           },
                                           {
-                                              "text":  "The Dragon Cries",
+                                              "text":  "Sense (TV Size Ver.)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "azure"
+                                              "text":  "Shake That!!"
                                           }
                                       ]
                       }
