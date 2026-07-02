@@ -196,7 +196,7 @@
   },
   {
     "id": "metrics",
-    "name": "YouTube Metrics *new*",
+    "name": "YouTube Metrics",
     "file": "views/ytmetrics.html",
     "nav": "menu",
     "icon": "📊"
