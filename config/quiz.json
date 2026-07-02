@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/1kv3cfGlMQQ/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "Sense (TV Size Ver.) — Views: 201,225 | Yesterday: 42\nShake That!! — Views: 76,321 | Yesterday: 38\nChoose me — Views: 53,627 | Yesterday: 37",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Alive-or-Dead — Spotify: 945,454 | Played Live: 13\nDon\u0027t be long — Spotify: 892,967 | Played Live: 17\nHONKAI (本懐) — Spotify: 860,191 | Played Live: 11",
                           "choices":  [
                                           {
-                                              "text":  "Choose me"
-                                          },
-                                          {
-                                              "text":  "Sense (TV Size Ver.)",
+                                              "text":  "Alive-or-Dead",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Shake That!!"
+                                              "text":  "Don\u0027t be long"
+                                          },
+                                          {
+                                              "text":  "HONKAI (本懐)"
                                           }
                                       ]
                       }
