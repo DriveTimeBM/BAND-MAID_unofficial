@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/-i3N-WbZnJM/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Unleash!!!!! (Official Live Video) — Views: 514,528 | Yesterday: 188\nBAND-MAID / NO GOD (Official Live Video) — Views: 640,022 | Yesterday: 152\nBAND-MAID / Sense (Official Live Video) — Views: 387,700 | Yesterday: 74",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Why Why Why — Spotify: 814,708 | Played Live: 12\nCatharsis (カタルシス) — Spotify: 790,931 | Played Live: 18\nBalance — Spotify: 790,757 | Played Live: 10",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Sense (Official Live Video)"
+                                              "text":  "Balance"
                                           },
                                           {
-                                              "text":  "BAND-MAID / NO GOD (Official Live Video)"
+                                              "text":  "Catharsis (カタルシス)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Unleash!!!!! (Official Live Video)",
+                                              "text":  "Why Why Why",
                                               "correct":  true
                                           }
                                       ]
