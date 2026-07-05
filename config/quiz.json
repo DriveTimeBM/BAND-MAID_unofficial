@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Why Why Why — Spotify: 814,708 | Played Live: 12\nCatharsis (カタルシス) — Spotify: 790,931 | Played Live: 18\nBalance — Spotify: 790,757 | Played Live: 10",
+                          "image":  "https://img.youtube.com/vi/X4IQwPJN7E0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) KANAMI — Views: 31,654 | Yesterday: 3\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MIKU KOBATO — Views: 46,005 | Yesterday: 3\nBAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video) — Views: 26,572 | Yesterday: 2",
                           "choices":  [
                                           {
-                                              "text":  "Balance"
+                                              "text":  "BAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video)"
                                           },
                                           {
-                                              "text":  "Catharsis (カタルシス)"
-                                          },
-                                          {
-                                              "text":  "Why Why Why",
+                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video) KANAMI",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MIKU KOBATO"
                                           }
                                       ]
                       }
