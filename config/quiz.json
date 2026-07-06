@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/X4IQwPJN7E0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) KANAMI — Views: 31,654 | Yesterday: 3\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MIKU KOBATO — Views: 46,005 | Yesterday: 3\nBAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video) — Views: 26,572 | Yesterday: 2",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Shambles — Spotify: 2,447,559 | Played Live: 62\nTake me higher!! — Spotify: 1,120,422 | Played Live: 59\nAfter Life — Spotify: 3,224,125 | Played Live: 56",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video) KANAMI",
+                                              "text":  "Shambles",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MIKU KOBATO"
+                                              "text":  "Take me higher!!"
+                                          },
+                                          {
+                                              "text":  "After Life"
                                           }
                                       ]
                       }
