@@ -4,18 +4,18 @@
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/1Vuca7V-5Ec/sddefault.jpg",
+                          "image":  "https://img.youtube.com/vi/RcoQoHORdek/sddefault.jpg",
                           "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / secret My lips (Official Music Video) — Views: 3,553,829 | Yesterday: 0\nBAND-MAID / Ready to Rock (Official Music Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 5,013,000 | Yesterday: 0\nBAND-MAID / Different (Official Music Video) — Views: 4,705,976 | Yesterday: 0",
+                          "explanation":  "BAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 48,840 | Yesterday: 1\nBAND-MAID / Ready to Rock (Official Teaser Video KANAMI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 86,760 | Yesterday: 1\nBAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 48,369 | Yesterday: 1",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Music Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Different (Official Music Video)"
+                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video KANAMI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
                                           },
                                           {
-                                              "text":  "BAND-MAID / secret My lips (Official Music Video)",
+                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
                                               "correct":  true
                                           }
                                       ]
