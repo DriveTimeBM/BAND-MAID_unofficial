@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Shambles — Spotify: 2,447,559 | Played Live: 62\nTake me higher!! — Spotify: 1,120,422 | Played Live: 59\nAfter Life — Spotify: 3,224,125 | Played Live: 56",
+                          "image":  "https://img.youtube.com/vi/1Vuca7V-5Ec/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / secret My lips (Official Music Video) — Views: 3,553,829 | Yesterday: 0\nBAND-MAID / Ready to Rock (Official Music Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 5,013,000 | Yesterday: 0\nBAND-MAID / Different (Official Music Video) — Views: 4,705,976 | Yesterday: 0",
                           "choices":  [
                                           {
-                                              "text":  "Shambles",
+                                              "text":  "BAND-MAID / Ready to Rock (Official Music Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Different (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / secret My lips (Official Music Video)",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Take me higher!!"
-                                          },
-                                          {
-                                              "text":  "After Life"
                                           }
                                       ]
                       }
