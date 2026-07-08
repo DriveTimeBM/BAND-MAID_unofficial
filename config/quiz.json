@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/RcoQoHORdek/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 48,840 | Yesterday: 1\nBAND-MAID / Ready to Rock (Official Teaser Video KANAMI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 86,760 | Yesterday: 1\nBAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 48,369 | Yesterday: 1",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Letters to you — Spotify: 358,963 | Played Live: 12\nThe Dragon Cries — Spotify: 820,838 | Played Live: 12\nShow Them — Spotify: 2,821,022 | Played Live: 11",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video KANAMI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "Letters to you",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Show Them"
+                                          },
+                                          {
+                                              "text":  "The Dragon Cries"
                                           }
                                       ]
                       }
