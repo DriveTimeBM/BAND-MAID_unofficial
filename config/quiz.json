@@ -6,17 +6,17 @@
                           "id":  1,
                           "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
                           "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Letters to you — Spotify: 358,963 | Played Live: 12\nThe Dragon Cries — Spotify: 820,838 | Played Live: 12\nShow Them — Spotify: 2,821,022 | Played Live: 11",
+                          "explanation":  "Don\u0027t apply the brake — Spotify: 665,338 | Played Live: 61\nTake me higher!! — Spotify: 1,120,422 | Played Live: 59\nMemorable — Spotify: 753,297 | Played Live: 52",
                           "choices":  [
                                           {
-                                              "text":  "Letters to you",
+                                              "text":  "Take me higher!!"
+                                          },
+                                          {
+                                              "text":  "Memorable"
+                                          },
+                                          {
+                                              "text":  "Don\u0027t apply the brake",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Show Them"
-                                          },
-                                          {
-                                              "text":  "The Dragon Cries"
                                           }
                                       ]
                       }
