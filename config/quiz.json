@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/FHpuEqMAcDg/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / FREEDOM (Official Live Video) — Views: 4,064,514 | Yesterday: 608\nBAND-MAID / Choose me (Official Live Video) — Views: 1,755,836 | Yesterday: 274\nBAND-MAID / Manners, BLACK HOLE (Official Live Video) for J-LOD LIVE2 — Views: 1,586,725 | Yesterday: 143",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "SION — Spotify: 239,816 | Played Live: 5\nAt the drop of a hat — Spotify: 600,529 | Played Live: 3\nflying high — Spotify: 638,318 | Played Live: 1",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Choose me (Official Live Video)"
+                                              "text":  "flying high"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Manners, BLACK HOLE (Official Live Video) for J-LOD LIVE2"
+                                              "text":  "At the drop of a hat"
                                           },
                                           {
-                                              "text":  "BAND-MAID / FREEDOM (Official Live Video)",
+                                              "text":  "SION",
                                               "correct":  true
                                           }
                                       ]
