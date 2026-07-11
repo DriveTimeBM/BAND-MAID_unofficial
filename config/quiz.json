@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "SION — Spotify: 239,816 | Played Live: 5\nAt the drop of a hat — Spotify: 600,529 | Played Live: 3\nflying high — Spotify: 638,318 | Played Live: 1",
+                          "image":  "https://img.youtube.com/vi/xmxEuQXTHUU/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / DOMINATION (Official Music Video) — Views: 4,919,067 | Yesterday: 384\nBAND-MAIKO / secret MAIKO lips (Official Music Video) — Views: 4,753,564 | Yesterday: 349\nBAND-MAID / secret My lips (Official Music Video) — Views: 3,555,693 | Yesterday: 420",
                           "choices":  [
                                           {
-                                              "text":  "flying high"
+                                              "text":  "BAND-MAIKO / secret MAIKO lips (Official Music Video)"
                                           },
                                           {
-                                              "text":  "At the drop of a hat"
-                                          },
-                                          {
-                                              "text":  "SION",
+                                              "text":  "BAND-MAID / DOMINATION (Official Music Video)",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / secret My lips (Official Music Video)"
                                           }
                                       ]
                       }
