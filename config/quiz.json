@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/xmxEuQXTHUU/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / DOMINATION (Official Music Video) — Views: 4,919,067 | Yesterday: 384\nBAND-MAIKO / secret MAIKO lips (Official Music Video) — Views: 4,753,564 | Yesterday: 349\nBAND-MAID / secret My lips (Official Music Video) — Views: 3,555,693 | Yesterday: 420",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Different — Spotify: 7,352,106 | Played Live: 38\nBeauty and the beast — Spotify: 1,045,258 | Played Live: 36\nSpirit!! — Spotify: 1,272,262 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAIKO / secret MAIKO lips (Official Music Video)"
+                                              "text":  "Spirit!!"
                                           },
                                           {
-                                              "text":  "BAND-MAID / DOMINATION (Official Music Video)",
+                                              "text":  "Different",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / secret My lips (Official Music Video)"
+                                              "text":  "Beauty and the beast"
                                           }
                                       ]
                       }
