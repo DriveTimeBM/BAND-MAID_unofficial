@@ -175,7 +175,8 @@
                 },
                 { "field": "title", "type": "regex", "patterns": [
                     "podcast",
-                    "\\blive\\s*chat\\b"
+                    "\\blive\\s*chat\\b",
+                    "\\bTOP3\\s*Ep\\b"
                 ]}
             ]
         },
