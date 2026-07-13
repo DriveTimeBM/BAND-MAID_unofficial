@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Different — Spotify: 7,352,106 | Played Live: 38\nBeauty and the beast — Spotify: 1,045,258 | Played Live: 36\nSpirit!! — Spotify: 1,272,262 | Played Live: 36",
+                          "image":  "https://img.youtube.com/vi/p5Lo7t9Yzxw/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Sense (Official Live Video) — Views: 388,277 | Yesterday: 56\nBAND-MAID / Magie (Official Live Video) — Views: 372,465 | Yesterday: 102\nBAND-MAID / without holding back (Official Live Video) — Views: 250,142 | Yesterday: 379",
                           "choices":  [
                                           {
-                                              "text":  "Spirit!!"
-                                          },
-                                          {
-                                              "text":  "Different",
+                                              "text":  "BAND-MAID / Sense (Official Live Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Beauty and the beast"
+                                              "text":  "BAND-MAID / Magie (Official Live Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / without holding back (Official Live Video)"
                                           }
                                       ]
                       }
