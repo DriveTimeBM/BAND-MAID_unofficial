@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/p5Lo7t9Yzxw/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Sense (Official Live Video) — Views: 388,277 | Yesterday: 56\nBAND-MAID / Magie (Official Live Video) — Views: 372,465 | Yesterday: 102\nBAND-MAID / without holding back (Official Live Video) — Views: 250,142 | Yesterday: 379",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Play — Spotify: 4,002,416 | Played Live: 174\nReady to Rock — Spotify: 3,758,833 | Played Live: 42\nUnleash!!!!! — Spotify: 3,576,672 | Played Live: 104",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Sense (Official Live Video)",
+                                              "text":  "Unleash!!!!!"
+                                          },
+                                          {
+                                              "text":  "Play",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Magie (Official Live Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / without holding back (Official Live Video)"
+                                              "text":  "Ready to Rock"
                                           }
                                       ]
                       }
