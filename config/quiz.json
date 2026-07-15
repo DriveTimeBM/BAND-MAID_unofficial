@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Play — Spotify: 4,002,416 | Played Live: 174\nReady to Rock — Spotify: 3,758,833 | Played Live: 42\nUnleash!!!!! — Spotify: 3,576,672 | Played Live: 104",
+                          "image":  "https://img.youtube.com/vi/W6odZxUQ84s/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "CROSS — Views: 363,543 | Yesterday: 305\nSION — Views: 318,165 | Yesterday: 293\nMagie — Views: 259,227 | Yesterday: 272",
                           "choices":  [
                                           {
-                                              "text":  "Unleash!!!!!"
+                                              "text":  "SION"
                                           },
                                           {
-                                              "text":  "Play",
+                                              "text":  "Magie"
+                                          },
+                                          {
+                                              "text":  "CROSS",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Ready to Rock"
                                           }
                                       ]
                       }
