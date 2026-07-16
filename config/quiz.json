@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/W6odZxUQ84s/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "CROSS — Views: 363,543 | Yesterday: 305\nSION — Views: 318,165 | Yesterday: 293\nMagie — Views: 259,227 | Yesterday: 272",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "about Us — Spotify: 1,588,280 | Played Live: 10\nGion-Cho (祇園町) — Spotify: 1,521,647 | Played Live: 2\nBe OK — Spotify: 1,361,583 | Played Live: 73",
                           "choices":  [
                                           {
-                                              "text":  "SION"
-                                          },
-                                          {
-                                              "text":  "Magie"
-                                          },
-                                          {
-                                              "text":  "CROSS",
+                                              "text":  "about Us",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Gion-Cho (祇園町)"
+                                          },
+                                          {
+                                              "text":  "Be OK"
                                           }
                                       ]
                       }
