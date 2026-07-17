@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "about Us — Spotify: 1,588,280 | Played Live: 10\nGion-Cho (祇園町) — Spotify: 1,521,647 | Played Live: 2\nBe OK — Spotify: 1,361,583 | Played Live: 73",
+                          "image":  "https://img.youtube.com/vi/umSt7oMUMcs/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video) — Views: 2,202,404 | Yesterday: 197\nBAND-MAID / Present Perfect (Official Music Video) — Views: 1,922,020 | Yesterday: 570\nBAND-MAID / Forbidden tale (Official Music Video) — Views: 1,294,249 | Yesterday: 402",
                           "choices":  [
                                           {
-                                              "text":  "about Us",
+                                              "text":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Gion-Cho (祇園町)"
+                                              "text":  "BAND-MAID / Forbidden tale (Official Music Video)"
                                           },
                                           {
-                                              "text":  "Be OK"
+                                              "text":  "BAND-MAID / Present Perfect (Official Music Video)"
                                           }
                                       ]
                       }
