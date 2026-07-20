@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/s9xuG5xq0jo/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video MIKU KOBATO) — Views: 49,636 | Yesterday: 8\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MISA vs Ale — Views: 49,576 | Yesterday: 7\nBAND-MAID / Present Perfect (Official Teaser Video 2) — Views: 48,497 | Yesterday: 3",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Brightest Star — Spotify: 586,717 | Played Live: 47\nManners — Spotify: 1,713,694 | Played Live: 44\nBlooming — Spotify: 4,222,913 | Played Live: 44",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video 2)"
+                                              "text":  "Manners"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  MISA vs Ale"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video MIKU KOBATO)",
+                                              "text":  "Brightest Star",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Blooming"
                                           }
                                       ]
                       }
