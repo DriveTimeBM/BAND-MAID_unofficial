@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Brightest Star — Spotify: 586,717 | Played Live: 47\nManners — Spotify: 1,713,694 | Played Live: 44\nBlooming — Spotify: 4,222,913 | Played Live: 44",
+                          "image":  "https://img.youtube.com/vi/UHZDVE5Ea6c/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 71,605 | Yesterday: 11\nBAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid — Views: 38,418 | Yesterday: 4\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 28,394 | Yesterday: 6",
                           "choices":  [
                                           {
-                                              "text":  "Manners"
+                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
                                           },
                                           {
-                                              "text":  "Brightest Star",
+                                              "text":  "BAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Blooming"
                                           }
                                       ]
                       }
