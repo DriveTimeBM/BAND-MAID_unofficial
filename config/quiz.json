@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/UHZDVE5Ea6c/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 71,605 | Yesterday: 11\nBAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid — Views: 38,418 | Yesterday: 4\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 28,394 | Yesterday: 6",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "alone — Spotify: 2,376,772 | Played Live: 233\nDOMINATION — Spotify: 8,500,992 | Played Live: 227\nthe non-fiction days — Spotify: 2,319,883 | Played Live: 166",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
+                                              "text":  "DOMINATION"
                                           },
                                           {
-                                              "text":  "BAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌",
+                                              "text":  "alone",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "the non-fiction days"
                                           }
                                       ]
                       }
