@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "alone — Spotify: 2,376,772 | Played Live: 233\nDOMINATION — Spotify: 8,500,992 | Played Live: 227\nthe non-fiction days — Spotify: 2,319,883 | Played Live: 166",
+                          "image":  "https://img.youtube.com/vi/EuTmlA2DHis/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "I can\u0027t live without you — Views: 280,622 | Yesterday: 6\nハニー — Views: 109,780 | Yesterday: 4\nsecret MAIKO lips — Views: 5,688 | Yesterday: 2",
                           "choices":  [
                                           {
-                                              "text":  "DOMINATION"
+                                              "text":  "ハニー"
                                           },
                                           {
-                                              "text":  "alone",
+                                              "text":  "I can\u0027t live without you",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "the non-fiction days"
+                                              "text":  "secret MAIKO lips"
                                           }
                                       ]
                       }
