@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/EuTmlA2DHis/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "I can\u0027t live without you — Views: 280,622 | Yesterday: 6\nハニー — Views: 109,780 | Yesterday: 4\nsecret MAIKO lips — Views: 5,688 | Yesterday: 2",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Forbidden tale — Spotify: 530,641 | Played Live: 33\nMagie — Spotify: 348,635 | Played Live: 29\nWhat is justice? — Spotify: 2,026,516 | Played Live: 27",
                           "choices":  [
                                           {
-                                              "text":  "ハニー"
+                                              "text":  "Magie"
                                           },
                                           {
-                                              "text":  "I can\u0027t live without you",
+                                              "text":  "Forbidden tale",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "secret MAIKO lips"
+                                              "text":  "What is justice?"
                                           }
                                       ]
                       }
