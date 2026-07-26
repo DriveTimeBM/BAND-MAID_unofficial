@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/NNHGABwme50/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAIKO / secret MAIKO lips (Official Music Video) — Views: 4,758,550 | Yesterday: 347\nBAND-MAID / Unleash!!!!! (Official Music Video) — Views: 4,123,147 | Yesterday: 854\nBAND-MAID / Blooming (Official Music Video) — Views: 3,794,415 | Yesterday: 643",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Protect You — Spotify: 1,349,004 | Played Live: 36\nORDER — Spotify: 837,711 | Played Live: 35\nForbidden tale — Spotify: 530,641 | Played Live: 33",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAIKO / secret MAIKO lips (Official Music Video)",
+                                              "text":  "Forbidden tale"
+                                          },
+                                          {
+                                              "text":  "ORDER"
+                                          },
+                                          {
+                                              "text":  "Protect You",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Unleash!!!!! (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Blooming (Official Music Video)"
                                           }
                                       ]
                       }
