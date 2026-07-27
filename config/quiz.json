@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Protect You — Spotify: 1,349,004 | Played Live: 36\nORDER — Spotify: 837,711 | Played Live: 35\nForbidden tale — Spotify: 530,641 | Played Live: 33",
+                          "image":  "https://img.youtube.com/vi/_KVaSaQmb0k/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "Brand-New Road — Views: 84,677 | Yesterday: 68\nShake That!! — Views: 77,169 | Yesterday: 33\nPuzzle — Views: 69,911 | Yesterday: 30",
                           "choices":  [
                                           {
-                                              "text":  "Forbidden tale"
+                                              "text":  "Puzzle"
                                           },
                                           {
-                                              "text":  "ORDER"
+                                              "text":  "Shake That!!"
                                           },
                                           {
-                                              "text":  "Protect You",
+                                              "text":  "Brand-New Road",
                                               "correct":  true
                                           }
                                       ]
