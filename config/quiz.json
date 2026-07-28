@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/_KVaSaQmb0k/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "Brand-New Road — Views: 84,677 | Yesterday: 68\nShake That!! — Views: 77,169 | Yesterday: 33\nPuzzle — Views: 69,911 | Yesterday: 30",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "alone — Spotify: 2,381,081 | Played Live: 233\nZen — Spotify: 2,321,566 | Played Live: 27\nsecret MAIKO lips — Spotify: 2,191,810 | Played Live: 2",
                           "choices":  [
                                           {
-                                              "text":  "Puzzle"
-                                          },
-                                          {
-                                              "text":  "Shake That!!"
-                                          },
-                                          {
-                                              "text":  "Brand-New Road",
+                                              "text":  "alone",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "secret MAIKO lips"
+                                          },
+                                          {
+                                              "text":  "Zen"
                                           }
                                       ]
                       }
