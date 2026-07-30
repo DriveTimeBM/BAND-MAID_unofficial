@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/QWKfL5C7oRg/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Live #Shorts 2) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 150,633 | Yesterday: 13\nBAND-MAID / Present Perfect (Official Live Teaser 2) — Views: 52,837 | Yesterday: 7\nBAND-MAID / without holding back (Official Live Teaser 1) — Views: 73,431 | Yesterday: 5",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "alone — Spotify: 2,381,081 | Played Live: 233\nZen — Spotify: 2,321,566 | Played Live: 27\nsecret MAIKO lips — Spotify: 2,194,413 | Played Live: 2",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live #Shorts 2) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "alone",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 1)"
+                                              "text":  "secret MAIKO lips"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 2)"
+                                              "text":  "Zen"
                                           }
                                       ]
                       }
