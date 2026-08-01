@@ -4,19 +4,19 @@
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/sGzAQigaL14/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / サヨナキドリ \"Sayonakidori\"  Acoustic Ver.  (Official Live Video) — Views: 945,033 | Yesterday: 292\nBAND-MAID / Warning! (Official Live Video) — Views: 827,170 | Yesterday: 262\nBAND-MAID / endless Story (Official Live Video) — Views: 821,186 | Yesterday: 228",
+                          "image":  "https://img.youtube.com/vi/x7G0VEpWd_A/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "FREEZER — Views: 294,649 | Yesterday: 329\nHATE? — Views: 483,551 | Yesterday: 322\nyou. — Views: 340,184 | Yesterday: 281",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / endless Story (Official Live Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Warning! (Official Live Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / サヨナキドリ \"Sayonakidori\"  Acoustic Ver.  (Official Live Video)",
+                                              "text":  "FREEZER",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "HATE?"
+                                          },
+                                          {
+                                              "text":  "you."
                                           }
                                       ]
                       }
