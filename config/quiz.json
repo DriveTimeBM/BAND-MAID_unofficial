@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/x7G0VEpWd_A/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "FREEZER — Views: 294,649 | Yesterday: 329\nHATE? — Views: 483,551 | Yesterday: 322\nyou. — Views: 340,184 | Yesterday: 281",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "glory — Spotify: 3,914,653 | Played Live: 117\nReady to Rock — Spotify: 3,845,001 | Played Live: 45\nWarning! — Spotify: 3,371,390 | Played Live: 39",
                           "choices":  [
                                           {
-                                              "text":  "FREEZER",
+                                              "text":  "Warning!"
+                                          },
+                                          {
+                                              "text":  "glory",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "HATE?"
-                                          },
-                                          {
-                                              "text":  "you."
+                                              "text":  "Ready to Rock"
                                           }
                                       ]
                       }
