@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/AAKchqKXUUo/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / ENERGETIC (Official Teaser Video SAIKI ver.) — Views: 24,328 | Yesterday: 216\nBAND-MAID / ENERGETIC (Official Teaser Video MIKU KOBATO ver.) — Views: 20,692 | Yesterday: 66\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) SAIKI vs Dany  part 2 — Views: 11,886 | Yesterday: 4",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Shake That!! — Spotify: 774,488 | Played Live: 58\nMemorable — Spotify: 758,333 | Played Live: 52\nTIME — Spotify: 738,420 | Played Live: 50",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video MIKU KOBATO ver.)"
+                                              "text":  "Memorable"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) SAIKI vs Dany  part 2"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video SAIKI ver.)",
+                                              "text":  "Shake That!!",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "TIME"
                                           }
                                       ]
                       }
