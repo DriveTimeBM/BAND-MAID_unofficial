@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Shake That!! — Spotify: 774,488 | Played Live: 58\nMemorable — Spotify: 758,333 | Played Live: 52\nTIME — Spotify: 738,420 | Played Live: 50",
+                          "image":  "https://img.youtube.com/vi/MmhcEkgr_kY/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "endless Story — Views: 10,521 | Yesterday: 2\nFATE — Views: 190,941 | Yesterday: 1\nAlive-or-Dead — Views: 107,040 | Yesterday: 0",
                           "choices":  [
                                           {
-                                              "text":  "Memorable"
+                                              "text":  "Alive-or-Dead"
                                           },
                                           {
-                                              "text":  "Shake That!!",
+                                              "text":  "FATE"
+                                          },
+                                          {
+                                              "text":  "endless Story",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "TIME"
                                           }
                                       ]
                       }
