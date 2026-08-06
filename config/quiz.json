@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/MmhcEkgr_kY/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "endless Story — Views: 10,521 | Yesterday: 2\nFATE — Views: 190,941 | Yesterday: 1\nAlive-or-Dead — Views: 107,040 | Yesterday: 0",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "HATE? — Spotify: 2,008,284 | Played Live: 82\nCROSS — Spotify: 1,939,722 | Played Live: 55\nScreaming — Spotify: 1,902,149 | Played Live: 92",
                           "choices":  [
                                           {
-                                              "text":  "Alive-or-Dead"
+                                              "text":  "Screaming"
                                           },
                                           {
-                                              "text":  "FATE"
+                                              "text":  "CROSS"
                                           },
                                           {
-                                              "text":  "endless Story",
+                                              "text":  "HATE?",
                                               "correct":  true
                                           }
                                       ]
