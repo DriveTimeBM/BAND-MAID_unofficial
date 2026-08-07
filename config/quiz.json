@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "HATE? — Spotify: 2,008,284 | Played Live: 82\nCROSS — Spotify: 1,939,722 | Played Live: 55\nScreaming — Spotify: 1,902,149 | Played Live: 92",
+                          "image":  "https://img.youtube.com/vi/JBgNx7OXtao/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "Screaming — Views: 241,615 | Yesterday: 170\nカタルシス — Views: 216,907 | Yesterday: 167\nsecret My lips — Views: 316,855 | Yesterday: 164",
                           "choices":  [
                                           {
-                                              "text":  "Screaming"
+                                              "text":  "secret My lips"
                                           },
                                           {
-                                              "text":  "CROSS"
-                                          },
-                                          {
-                                              "text":  "HATE?",
+                                              "text":  "Screaming",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "カタルシス"
                                           }
                                       ]
                       }
