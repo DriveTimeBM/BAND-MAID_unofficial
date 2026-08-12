@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/mVrN-j_Uc0U/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / onset (Official Live Video) — Views: 3,938,505 | Yesterday: 845\nBAND-MAID / FREEDOM (Official Live Video) — Views: 4,087,617 | Yesterday: 822\nBAND-MAID / Ready to Rock (Official Live Video) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 798,838 | Yesterday: 765",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "flying high — Spotify: 642,902 | Played Live: 1\nLOOK AT ME — Spotify: 641,592 | Played Live: 49\nAt the drop of a hat — Spotify: 604,247 | Played Live: 3",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "LOOK AT ME"
                                           },
                                           {
-                                              "text":  "BAND-MAID / onset (Official Live Video)",
+                                              "text":  "At the drop of a hat"
+                                          },
+                                          {
+                                              "text":  "flying high",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / FREEDOM (Official Live Video)"
                                           }
                                       ]
                       }
