@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/3kMIh0_Wkpk/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 3,390,798 | Yesterday: 1,701\nBAND-MAID / Zen (Official Music Video)　MAPPAアニメ「全修。」オープニングテーマソング — Views: 2,695,981 | Yesterday: 1,012\nBAND-MAID / REAL EXISTENCE (Official Music Video) — Views: 16,360,405 | Yesterday: 822",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Price of Pride — Spotify: 704,522 | Played Live: 15\nDilemma — Spotify: 760,093 | Played Live: 13\nTurn me on — Spotify: 2,005,038 | Played Live: 13",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Zen (Official Music Video)　MAPPAアニメ「全修。」オープニングテーマソング"
+                                              "text":  "Turn me on"
                                           },
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌",
+                                              "text":  "Dilemma"
+                                          },
+                                          {
+                                              "text":  "Price of Pride",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / REAL EXISTENCE (Official Music Video)"
                                           }
                                       ]
                       }
