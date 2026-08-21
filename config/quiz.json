@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "One and only — Spotify: 1,529,564 | Played Live: 27\nTAMAYA! — Spotify: 224,185 | Played Live: 25\nSUPER SUNSHINE — Spotify: 326,492 | Played Live: 24",
+                          "image":  "https://img.youtube.com/vi/_UgN3Tb8Chc/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "Shambles — Views: 500,251 | Yesterday: 63\nSHOW THEM — Views: 351,874 | Yesterday: 63\nAt the drop of a hat — Views: 160,485 | Yesterday: 63",
                           "choices":  [
                                           {
-                                              "text":  "SUPER SUNSHINE"
+                                              "text":  "At the drop of a hat"
                                           },
                                           {
-                                              "text":  "One and only",
+                                              "text":  "SHOW THEM"
+                                          },
+                                          {
+                                              "text":  "Shambles",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "TAMAYA!"
                                           }
                                       ]
                       }
