@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/_UgN3Tb8Chc/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "Shambles — Views: 500,251 | Yesterday: 63\nSHOW THEM — Views: 351,874 | Yesterday: 63\nAt the drop of a hat — Views: 160,485 | Yesterday: 63",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Play — Spotify: 4,043,071 | Played Live: 174\nReady to Rock — Spotify: 3,929,762 | Played Live: 47\nWarning! — Spotify: 3,388,987 | Played Live: 39",
                           "choices":  [
                                           {
-                                              "text":  "At the drop of a hat"
+                                              "text":  "Ready to Rock"
                                           },
                                           {
-                                              "text":  "SHOW THEM"
+                                              "text":  "Warning!"
                                           },
                                           {
-                                              "text":  "Shambles",
+                                              "text":  "Play",
                                               "correct":  true
                                           }
                                       ]
