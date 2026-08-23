@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Play — Spotify: 4,043,071 | Played Live: 174\nReady to Rock — Spotify: 3,929,762 | Played Live: 47\nWarning! — Spotify: 3,388,987 | Played Live: 39",
+                          "image":  "https://img.youtube.com/vi/xOqnN00feSc/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "LOOK AT ME — Views: 104,046 | Yesterday: 87\nDon\u0027t be long — Views: 89,765 | Yesterday: 63\nBrand-New Road — Views: 86,467 | Yesterday: 73",
                           "choices":  [
                                           {
-                                              "text":  "Ready to Rock"
+                                              "text":  "Brand-New Road"
                                           },
                                           {
-                                              "text":  "Warning!"
+                                              "text":  "Don\u0027t be long"
                                           },
                                           {
-                                              "text":  "Play",
+                                              "text":  "LOOK AT ME",
                                               "correct":  true
                                           }
                                       ]
