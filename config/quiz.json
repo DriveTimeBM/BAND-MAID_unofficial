@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/xOqnN00feSc/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "LOOK AT ME — Views: 104,046 | Yesterday: 87\nDon\u0027t be long — Views: 89,765 | Yesterday: 63\nBrand-New Road — Views: 86,467 | Yesterday: 73",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "SAYONAKIDORI (サヨナキドリ) — Spotify: 1,523,956 | Played Live: 48\nBe OK — Spotify: 1,366,833 | Played Live: 73\nstart over — Spotify: 1,355,061 | Played Live: 32",
                           "choices":  [
                                           {
-                                              "text":  "Brand-New Road"
-                                          },
-                                          {
-                                              "text":  "Don\u0027t be long"
-                                          },
-                                          {
-                                              "text":  "LOOK AT ME",
+                                              "text":  "SAYONAKIDORI (サヨナキドリ)",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "start over"
+                                          },
+                                          {
+                                              "text":  "Be OK"
                                           }
                                       ]
                       }
