@@ -1,7 +1,7 @@
 ﻿{
     "id":  "1404984552161673448",
     "name":  "BAND-MAID Dashboard",
-    "instant_invite":  "https://discord.com/invite/wMfnuRtP",
+    "instant_invite":  "https://discord.com/invite/9EVEZRhU",
     "channels":  [
 
                  ],
@@ -36,18 +36,15 @@
                         "discriminator":  "0000",
                         "avatar":  null,
                         "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/mm4OPmyN-xQsWeSO__RMBxP1rnnlTiAEQtySNyoCf30/dxkywCay9aCmGI-YElBdx3aFeEWh_p0AkEm1adfA06qbj7_qGw2axBg39_ife-08aw5FqSpKc4W3OwxNYPHtlApk-12ZgiuTLkY9A-Uji0w45_Xnx_jxAtGCj2s5kJJCXCe34EId81mVJQ",
-                        "game":  {
-                                     "name":  "Yatsu Reader"
-                                 }
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/mm4OPmyN-xQsWeSO__RMBxP1rnnlTiAEQtySNyoCf30/dxkywCay9aCmGI-YElBdx3aFeEWh_p0AkEm1adfA06qbj7_qGw2axBg39_ife-08aw5FqSpKc4W3OwxNYPHtlApk-12ZgiuTLkY9A-Uji0w45_Xnx_jxAtGCj2s5kJJCXCe34EId81mVJQ"
                     },
                     {
                         "id":  "4",
-                        "username":  "Falagar",
+                        "username":  "DriveTime",
                         "discriminator":  "0000",
                         "avatar":  null,
                         "status":  "online",
-                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/79xHmF7kRB-ScCSa0PwKNvnYYjNt2g75vjQ6GuENs7g/er9w3eZmKiyrzb5smDucwBrsvfFWiEO6Up3p6lk_DPHkcFNXYqkvuyZJbHYpLHjUhaOTveCxaDSsC9W6cztXi3HD1PnHhpMXw9ySJpq9QEeGS1PZPPb428Dfuh6vf9Fmb8tlymM2jGUJfw"
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/iRWYUExgExFxqAzxBBFOxErda_xxFPQFgw0-bDfMozg/DUtrzZNSGrkl7XP-IuvbpnEQQ1-ZOnZW4CuKCPd6ASQm_9H-DLYbHIGtKjUHX8Axz1lB0yxEe1hrghLr7R0nNVDG0Y2Wi-DTLV8NND1qG4-xEiMzqse2URpWQ5NRBCWrOIO7qXB1EWJImg"
                     },
                     {
                         "id":  "5",
@@ -70,7 +67,7 @@
                         "username":  "Marshall \"The Bald\" LAU",
                         "discriminator":  "0000",
                         "avatar":  null,
-                        "status":  "online",
+                        "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/bb5qJmwhNGIV25iHTYgs84Z2Qs0G_2OfLuQiY0OZstQ/cvn8FB4X_iMoOrZeu0BAxTxRUJlKP3nuhMfYxcgSXXn6Jmeo0f94QvnAllsp8FEzU6GvZ9uzDIcYU2jTlZosxbiLykx-u0abRwK9r8CGdcqeit8VdyWlwcvZcqjrwP6N1ss0O3pjjj-rlA"
                     },
                     {
@@ -104,7 +101,15 @@
                         "avatar":  null,
                         "status":  "idle",
                         "avatar_url":  "https://cdn.discordapp.com/widget-avatars/1w6Ef4Z9W199GaJvDlE5SRxoKHbgeHaPIuA2FzPjsgI/JmBwwA_vDcBvVMEVRxlSCfWCo0q8zb_onVQEdT8MtUUj0bFXBLSv3wXBOJ5W8VGFn0XtinvVKAgoxIAUfWfruIMEth3uPs5oVDCjnOw7VoNkM84oHCIY5BKKsWtng1FfbA-Jwoo_Md17ag"
+                    },
+                    {
+                        "id":  "12",
+                        "username":  "Tenchi Masaki",
+                        "discriminator":  "0000",
+                        "avatar":  null,
+                        "status":  "idle",
+                        "avatar_url":  "https://cdn.discordapp.com/widget-avatars/xKG8_jZGzW2TyUDfmRGwJzkiMGm6he5qXHSkh2Nu_Vo/AHMuSJQzZQCsn3P7XG0SGXMJo-So_8xvZphJwj6HdL4_Ziavz0q7EZSootT6yKSRHK5bUhBbl_MbNPA1-VREdDoYZnMlRC36N2Fmxh4dIebwhD233CHpHjYGbvGJ850EX3Pme6asYulX02w"
                     }
                 ],
-    "presence_count":  12
+    "presence_count":  13
 }
