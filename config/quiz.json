@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/S5QhaOJtyEc/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / ENERGETIC (Official Teaser Video 3) — Views: 30,201 | Yesterday: 29\nBAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video) — Views: 26,679 | Yesterday: 1\nBAND-MAID / Forbidden tale (Official Teaser Video) MISA — Views: 26,041 | Yesterday: 2",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Manners — Spotify: 1,728,671 | Played Live: 44\nabout Us — Spotify: 1,595,344 | Played Live: 10\nSAYONAKIDORI (サヨナキドリ) — Spotify: 1,523,956 | Played Live: 48",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video)"
+                                              "text":  "about Us"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video) MISA"
+                                              "text":  "SAYONAKIDORI (サヨナキドリ)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video 3)",
+                                              "text":  "Manners",
                                               "correct":  true
                                           }
                                       ]
