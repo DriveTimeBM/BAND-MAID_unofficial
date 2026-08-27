@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Manners — Spotify: 1,728,671 | Played Live: 44\nabout Us — Spotify: 1,595,344 | Played Live: 10\nSAYONAKIDORI (サヨナキドリ) — Spotify: 1,523,956 | Played Live: 48",
+                          "image":  "https://img.youtube.com/vi/S2kocC6yMik/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "I\u0027ll — Views: 432,752 | Yesterday: 268\nDon\u0027t you tell ME — Views: 543,613 | Yesterday: 268\nFREEZER — Views: 301,285 | Yesterday: 245",
                           "choices":  [
                                           {
-                                              "text":  "about Us"
+                                              "text":  "Don\u0027t you tell ME"
                                           },
                                           {
-                                              "text":  "SAYONAKIDORI (サヨナキドリ)"
-                                          },
-                                          {
-                                              "text":  "Manners",
+                                              "text":  "I\u0027ll",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "FREEZER"
                                           }
                                       ]
                       }
