@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "CHEMICAL REACTION — Spotify: 879,794 | Played Live: 2\nsecret MAIKO lips — Spotify: 2,205,723 | Played Live: 2\nHoney (ハニー) — Spotify: 1,025,680 | Played Live: 1",
+                          "image":  "https://img.youtube.com/vi/axYjQAMEZrs/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "Manners — Views: 437,268 | Yesterday: 141\nShambles — Views: 403,572 | Yesterday: 748\nCROSS — Views: 377,426 | Yesterday: 350",
                           "choices":  [
                                           {
-                                              "text":  "CHEMICAL REACTION",
+                                              "text":  "CROSS"
+                                          },
+                                          {
+                                              "text":  "Manners",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Honey (ハニー)"
-                                          },
-                                          {
-                                              "text":  "secret MAIKO lips"
+                                              "text":  "Shambles"
                                           }
                                       ]
                       }
