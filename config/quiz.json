@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/axYjQAMEZrs/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "Manners — Views: 437,268 | Yesterday: 141\nShambles — Views: 403,572 | Yesterday: 748\nCROSS — Views: 377,426 | Yesterday: 350",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Dilly-Dally — Spotify: 288,920 | Played Live: 28\nZen — Spotify: 2,382,039 | Played Live: 27\nSUPER SUNSHINE — Spotify: 333,185 | Played Live: 25",
                           "choices":  [
                                           {
-                                              "text":  "CROSS"
-                                          },
-                                          {
-                                              "text":  "Manners",
+                                              "text":  "Dilly-Dally",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Shambles"
+                                              "text":  "Zen"
+                                          },
+                                          {
+                                              "text":  "SUPER SUNSHINE"
                                           }
                                       ]
                       }
