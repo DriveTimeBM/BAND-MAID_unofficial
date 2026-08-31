@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Dilly-Dally — Spotify: 288,920 | Played Live: 28\nZen — Spotify: 2,382,039 | Played Live: 27\nSUPER SUNSHINE — Spotify: 333,185 | Played Live: 25",
+                          "image":  "https://img.youtube.com/vi/-ohh7rOS-Z0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / ENERGETIC (Official Teaser Video SAIKI ver. 2) — Views: 27,602 | Yesterday: 100\nBAND-MAID / ENERGETIC (Official Teaser Video KANAMI ver. 2) — Views: 24,322 | Yesterday: 47\nBAND-MAID / ENERGETIC (Official Teaser Video) — Views: 52,514 | Yesterday: 39",
                           "choices":  [
                                           {
-                                              "text":  "Dilly-Dally",
+                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video SAIKI ver. 2)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Zen"
-                                          },
-                                          {
-                                              "text":  "SUPER SUNSHINE"
+                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video KANAMI ver. 2)"
                                           }
                                       ]
                       }
