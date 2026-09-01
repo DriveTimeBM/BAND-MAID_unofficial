@@ -4,19 +4,19 @@
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/-ohh7rOS-Z0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / ENERGETIC (Official Teaser Video SAIKI ver. 2) — Views: 27,602 | Yesterday: 100\nBAND-MAID / ENERGETIC (Official Teaser Video KANAMI ver. 2) — Views: 24,322 | Yesterday: 47\nBAND-MAID / ENERGETIC (Official Teaser Video) — Views: 52,514 | Yesterday: 39",
+                          "image":  "https://img.youtube.com/vi/QbyQCJn6rYg/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / DOMINATION  (Official Live Video) — Views: 5,086,470 | Yesterday: 1,065\nBAND-MAID / onset (Official Live Video) — Views: 3,956,970 | Yesterday: 1,157\nBAND-MAID / Play (Official Live Video) — Views: 2,312,297 | Yesterday: 320",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video SAIKI ver. 2)",
+                                              "text":  "BAND-MAID / DOMINATION  (Official Live Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video KANAMI ver. 2)"
+                                              "text":  "BAND-MAID / onset (Official Live Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Play (Official Live Video)"
                                           }
                                       ]
                       }
