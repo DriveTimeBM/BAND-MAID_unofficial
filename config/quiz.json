@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/QbyQCJn6rYg/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / DOMINATION  (Official Live Video) — Views: 5,086,470 | Yesterday: 1,065\nBAND-MAID / onset (Official Live Video) — Views: 3,956,970 | Yesterday: 1,157\nBAND-MAID / Play (Official Live Video) — Views: 2,312,297 | Yesterday: 320",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "EverGreen — Spotify: 850,128 | Played Live: 17\nBestie — Spotify: 714,195 | Played Live: 17\nDays — Spotify: 97,449 | Played Live: 14",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / DOMINATION  (Official Live Video)",
+                                              "text":  "Days"
+                                          },
+                                          {
+                                              "text":  "EverGreen",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / onset (Official Live Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Play (Official Live Video)"
+                                              "text":  "Bestie"
                                           }
                                       ]
                       }
