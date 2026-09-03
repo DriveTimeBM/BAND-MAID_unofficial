@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "EverGreen — Spotify: 850,128 | Played Live: 17\nBestie — Spotify: 714,195 | Played Live: 17\nDays — Spotify: 97,449 | Played Live: 14",
+                          "image":  "https://img.youtube.com/vi/9yD3IqrLtPk/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Warning! (Official Music Video) — Views: 2,727,583 | Yesterday: 456\nBAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,643,813 | Yesterday: 1,570\nBAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video) — Views: 2,211,479 | Yesterday: 236",
                           "choices":  [
                                           {
-                                              "text":  "Days"
-                                          },
-                                          {
-                                              "text":  "EverGreen",
+                                              "text":  "BAND-MAID / Warning! (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Bestie"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAIKO / 祇園町 \"Gion-cho\" (Official Music Video)"
                                           }
                                       ]
                       }
