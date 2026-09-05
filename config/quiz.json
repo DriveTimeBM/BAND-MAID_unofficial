@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Ai to Jonetsu no Matador (愛と情熱のマタドール) — Spotify: 1,248,086 | Played Live: 36\nForbidden tale — Spotify: 545,666 | Played Live: 33\nMagie — Spotify: 362,962 | Played Live: 29",
+                          "image":  "https://img.youtube.com/vi/rG8cfEJeNMw/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 79,010 | Yesterday: 2\nBAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 72,027 | Yesterday: 6\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 28,603 | Yesterday: 0",
                           "choices":  [
                                           {
-                                              "text":  "Forbidden tale"
+                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌"
                                           },
                                           {
-                                              "text":  "Ai to Jonetsu no Matador (愛と情熱のマタドール)",
+                                              "text":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Magie"
+                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
                                           }
                                       ]
                       }
