@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/rG8cfEJeNMw/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 79,010 | Yesterday: 2\nBAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 72,027 | Yesterday: 6\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 28,603 | Yesterday: 0",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "anemone — Spotify: 1,562,123 | Played Live: 43\nOne and only — Spotify: 1,535,398 | Played Live: 27\nstart over — Spotify: 1,359,458 | Played Live: 32",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Live Video 2 #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌",
+                                              "text":  "anemone",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
+                                              "text":  "One and only"
+                                          },
+                                          {
+                                              "text":  "start over"
                                           }
                                       ]
                       }
