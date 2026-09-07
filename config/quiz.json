@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "anemone — Spotify: 1,562,123 | Played Live: 43\nOne and only — Spotify: 1,535,398 | Played Live: 27\nstart over — Spotify: 1,359,458 | Played Live: 32",
+                          "image":  "https://img.youtube.com/vi/o_NTQ7T7HA0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Present Perfect (Official Live Teaser 1) — Views: 549,526 | Yesterday: 13\nBAND-MAID / Don\u0027t you tell ME (Live at TREASURE05X 2024) — Views: 405,810 | Yesterday: 382\nBAND-MAID / Dilly-Dally (Official Live Teaser 1) — Views: 109,104 | Yesterday: 48",
                           "choices":  [
                                           {
-                                              "text":  "anemone",
+                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Live at TREASURE05X 2024)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 1)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "One and only"
-                                          },
-                                          {
-                                              "text":  "start over"
+                                              "text":  "BAND-MAID / Dilly-Dally (Official Live Teaser 1)"
                                           }
                                       ]
                       }
