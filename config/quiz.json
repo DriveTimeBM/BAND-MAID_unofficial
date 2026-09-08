@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/o_NTQ7T7HA0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Present Perfect (Official Live Teaser 1) — Views: 549,526 | Yesterday: 13\nBAND-MAID / Don\u0027t you tell ME (Live at TREASURE05X 2024) — Views: 405,810 | Yesterday: 382\nBAND-MAID / Dilly-Dally (Official Live Teaser 1) — Views: 109,104 | Yesterday: 48",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Forbidden tale — Spotify: 545,666 | Played Live: 33\nAkasimahen — Spotify: 420,512 | Played Live: 1\nSUPER SUNSHINE — Spotify: 337,733 | Played Live: 26",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Live at TREASURE05X 2024)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Present Perfect (Official Live Teaser 1)",
+                                              "text":  "Forbidden tale",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Dilly-Dally (Official Live Teaser 1)"
+                                              "text":  "Akasimahen"
+                                          },
+                                          {
+                                              "text":  "SUPER SUNSHINE"
                                           }
                                       ]
                       }
