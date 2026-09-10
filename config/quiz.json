@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/uUt_JBMocKM/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Blooming (Official Music Video) — Views: 3,826,310 | Yesterday: 853\nBAND-MAID / alone (Official Music Video) — Views: 7,819,083 | Yesterday: 702\nBAND-MAID / the non-fiction days (Official Music Video) — Views: 7,792,079 | Yesterday: 702",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Show Them — Spotify: 2,962,265 | Played Live: 12\nHONKAI (本懐) — Spotify: 875,626 | Played Live: 11\nBig Dad — Spotify: 742,430 | Played Live: 10",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / the non-fiction days (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / alone (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Blooming (Official Music Video)",
+                                              "text":  "Show Them",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "HONKAI (本懐)"
+                                          },
+                                          {
+                                              "text":  "Big Dad"
                                           }
                                       ]
                       }
