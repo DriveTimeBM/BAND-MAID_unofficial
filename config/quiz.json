@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Show Them — Spotify: 2,962,265 | Played Live: 12\nHONKAI (本懐) — Spotify: 875,626 | Played Live: 11\nBig Dad — Spotify: 742,430 | Played Live: 10",
+                          "image":  "https://img.youtube.com/vi/vHOBRzjHLMo/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "you. — Views: 351,900 | Yesterday: 349\nCROSS — Views: 381,885 | Yesterday: 342\nPuzzle — Views: 512,537 | Yesterday: 335",
                           "choices":  [
                                           {
-                                              "text":  "Show Them",
+                                              "text":  "Puzzle"
+                                          },
+                                          {
+                                              "text":  "you.",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "HONKAI (本懐)"
-                                          },
-                                          {
-                                              "text":  "Big Dad"
+                                              "text":  "CROSS"
                                           }
                                       ]
                       }
