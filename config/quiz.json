@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/vHOBRzjHLMo/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "you. — Views: 351,900 | Yesterday: 349\nCROSS — Views: 381,885 | Yesterday: 342\nPuzzle — Views: 512,537 | Yesterday: 335",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "anemone — Spotify: 1,564,935 | Played Live: 43\nYoake Mae (夜明け前) — Spotify: 857,919 | Played Live: 40\nFREEZER — Spotify: 1,548,738 | Played Live: 39",
                           "choices":  [
                                           {
-                                              "text":  "Puzzle"
+                                              "text":  "Yoake Mae (夜明け前)"
                                           },
                                           {
-                                              "text":  "you.",
+                                              "text":  "FREEZER"
+                                          },
+                                          {
+                                              "text":  "anemone",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "CROSS"
                                           }
                                       ]
                       }
