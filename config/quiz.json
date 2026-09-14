@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/NpZjslVGhbE/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / ENERGETIC (Official Music Video) — Views: 1,984,251 | Yesterday: 3,287\nBAND-MAID / Protect You (Official Music Video) — Views: 1,890,509 | Yesterday: 463\nBAND-MAID / Forbidden tale (Official Music Video) — Views: 1,316,063 | Yesterday: 513",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "One and only — Spotify: 1,540,777 | Played Live: 27\nSUPER SUNSHINE — Spotify: 342,149 | Played Live: 27\nCorallium — Spotify: 1,649,114 | Played Live: 18",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Protect You (Official Music Video)"
+                                              "text":  "Corallium"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Music Video)"
+                                              "text":  "SUPER SUNSHINE"
                                           },
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Music Video)",
+                                              "text":  "One and only",
                                               "correct":  true
                                           }
                                       ]
