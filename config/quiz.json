@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/3ZvAceQG1Zw/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video MISA) — Views: 34,521 | Yesterday: 1\nBAND-MAID / What is justice? (Official Teaser Video 3) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 34,067 | Yesterday: 1\nBAND-MAID / Zen (Official Teaser Video)　MAPPAアニメ「全修。」オープニングテーマソング — Views: 32,859 | Yesterday: 0",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Before Yesterday — Spotify: 1,079,737 | Played Live: 38\nBeauty and the beast — Spotify: 1,053,481 | Played Live: 36\nORDER — Spotify: 843,011 | Played Live: 35",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Teaser Video 3) TVアニメ「桃源暗鬼」エンディング主題歌"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)　MAPPAアニメ「全修。」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video MISA)",
+                                              "text":  "Before Yesterday",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "ORDER"
+                                          },
+                                          {
+                                              "text":  "Beauty and the beast"
                                           }
                                       ]
                       }
