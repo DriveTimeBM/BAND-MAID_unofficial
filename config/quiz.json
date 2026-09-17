@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Before Yesterday — Spotify: 1,079,737 | Played Live: 38\nBeauty and the beast — Spotify: 1,053,481 | Played Live: 36\nORDER — Spotify: 843,011 | Played Live: 35",
+                          "image":  "https://img.youtube.com/vi/tGXzhxXVimY/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Don\u0027t you tell ME (Official Music Video) — Views: 5,530,553 | Yesterday: 428\nBAND-MAID / Forbidden tale (Official Music Video) — Views: 1,317,685 | Yesterday: 384\nBAND-MAID / Don’t let me down (Official Music Video) — Views: 5,184,122 | Yesterday: 313",
                           "choices":  [
                                           {
-                                              "text":  "Before Yesterday",
+                                              "text":  "BAND-MAID / Forbidden tale (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "ORDER"
-                                          },
-                                          {
-                                              "text":  "Beauty and the beast"
+                                              "text":  "BAND-MAID / Don’t let me down (Official Music Video)"
                                           }
                                       ]
                       }
