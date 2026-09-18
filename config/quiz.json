@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/tGXzhxXVimY/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Don\u0027t you tell ME (Official Music Video) — Views: 5,530,553 | Yesterday: 428\nBAND-MAID / Forbidden tale (Official Music Video) — Views: 1,317,685 | Yesterday: 384\nBAND-MAID / Don’t let me down (Official Music Video) — Views: 5,184,122 | Yesterday: 313",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Knockin\u0027 on your heart — Spotify: 709,556 | Played Live: 55\nSo,What? — Spotify: 706,157 | Played Live: 0\nOOPARTS — Spotify: 703,571 | Played Live: 0",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Official Music Video)",
+                                              "text":  "Knockin\u0027 on your heart",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Don’t let me down (Official Music Video)"
+                                              "text":  "OOPARTS"
+                                          },
+                                          {
+                                              "text":  "So,What?"
                                           }
                                       ]
                       }
