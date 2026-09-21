@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Forbidden tale — Spotify: 551,043 | Played Live: 33\nAkasimahen — Spotify: 421,688 | Played Live: 1\nMagie — Spotify: 367,742 | Played Live: 29",
+                          "image":  "https://img.youtube.com/vi/XDu4B75zz18/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) AKANE vs Pau part 2 — Views: 16,828 | Yesterday: 2\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) MISA — Views: 15,755 | Yesterday: 1\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI vs Dany  part 2 — Views: 15,642 | Yesterday: 4",
                           "choices":  [
                                           {
-                                              "text":  "Akasimahen"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) MISA"
                                           },
                                           {
-                                              "text":  "Forbidden tale",
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) AKANE vs Pau part 2",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Magie"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI vs Dany  part 2"
                                           }
                                       ]
                       }
