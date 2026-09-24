@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/-qQnKILR5u0/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / REAL EXISTENCE (Official Live Video) — Views: 1,862,663 | Yesterday: 371\nBAND-MAID / Play (Official Live Video) — Views: 2,319,927 | Yesterday: 358\nBAND-MAID / endless Story (Official Live Video) — Views: 834,366 | Yesterday: 315",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Present Perfect — Spotify: 482,957 | Played Live: 32\nAkasimahen — Spotify: 421,688 | Played Live: 1\nSUPER SUNSHINE — Spotify: 352,420 | Played Live: 28",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / REAL EXISTENCE (Official Live Video)",
+                                              "text":  "Present Perfect",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / endless Story (Official Live Video)"
+                                              "text":  "Akasimahen"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Play (Official Live Video)"
+                                              "text":  "SUPER SUNSHINE"
                                           }
                                       ]
                       }
