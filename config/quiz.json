@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/_jb5rtSUEik/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 347,891 | Yesterday: 15\nBAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 119,182 | Yesterday: 60\nBAND-MAID / Ready to Rock (Official Teaser Video KANAMI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 87,458 | Yesterday: 24",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Puzzle — Spotify: 2,691,482 | Played Live: 40\nRinne (輪廻, Reincarnation) — Spotify: 2,614,163 | Played Live: 48\nalone — Spotify: 2,418,479 | Played Live: 233",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "Puzzle",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video KANAMI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "Rinne (輪廻, Reincarnation)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  MIKU KOBATO Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
+                                              "text":  "alone"
                                           }
                                       ]
                       }
