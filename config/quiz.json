@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Puzzle — Spotify: 2,691,482 | Played Live: 40\nRinne (輪廻, Reincarnation) — Spotify: 2,614,163 | Played Live: 48\nalone — Spotify: 2,418,479 | Played Live: 233",
+                          "image":  "https://img.youtube.com/vi/N5zqCsBjfTU/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "カタルシス — Views: 224,521 | Yesterday: 155\nMirage — Views: 218,086 | Yesterday: 153\nWonderland — Views: 244,821 | Yesterday: 147",
                           "choices":  [
                                           {
-                                              "text":  "Puzzle",
+                                              "text":  "Wonderland"
+                                          },
+                                          {
+                                              "text":  "Mirage"
+                                          },
+                                          {
+                                              "text":  "カタルシス",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Rinne (輪廻, Reincarnation)"
-                                          },
-                                          {
-                                              "text":  "alone"
                                           }
                                       ]
                       }
