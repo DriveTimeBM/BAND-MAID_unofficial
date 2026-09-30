@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/N5zqCsBjfTU/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "カタルシス — Views: 224,521 | Yesterday: 155\nMirage — Views: 218,086 | Yesterday: 153\nWonderland — Views: 244,821 | Yesterday: 147",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "I can\u0027t live without you. — Spotify: 3,454,967 | Played Live: 33\nPresent Perfect — Spotify: 488,000 | Played Live: 32\nMagie — Spotify: 372,744 | Played Live: 29",
                           "choices":  [
                                           {
-                                              "text":  "Wonderland"
+                                              "text":  "Magie"
                                           },
                                           {
-                                              "text":  "Mirage"
-                                          },
-                                          {
-                                              "text":  "カタルシス",
+                                              "text":  "I can\u0027t live without you.",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Present Perfect"
                                           }
                                       ]
                       }
