@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "I can\u0027t live without you. — Spotify: 3,454,967 | Played Live: 33\nPresent Perfect — Spotify: 488,000 | Played Live: 32\nMagie — Spotify: 372,744 | Played Live: 29",
+                          "image":  "https://img.youtube.com/vi/fwKbV3B7pg4/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) AKANE — Views: 31,749 | Yesterday: 1\nBAND-MAID / ENERGETIC (Official Teaser Video 3) — Views: 30,936 | Yesterday: 7\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI — Views: 30,624 | Yesterday: 5",
                           "choices":  [
                                           {
-                                              "text":  "Magie"
+                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video 3)"
                                           },
                                           {
-                                              "text":  "I can\u0027t live without you.",
+                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video) AKANE",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Present Perfect"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI"
                                           }
                                       ]
                       }
