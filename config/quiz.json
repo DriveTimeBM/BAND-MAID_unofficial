@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/fwKbV3B7pg4/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Forbidden tale (Official Teaser Video) AKANE — Views: 31,749 | Yesterday: 1\nBAND-MAID / ENERGETIC (Official Teaser Video 3) — Views: 30,936 | Yesterday: 7\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI — Views: 30,624 | Yesterday: 5",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Summer Drive — Spotify: 667,338 | Played Live: 40\nToi et moi — Spotify: 245,034 | Played Live: 39\nFREEZER — Spotify: 1,551,488 | Played Live: 39",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video 3)"
+                                              "text":  "FREEZER"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Forbidden tale (Official Teaser Video) AKANE",
+                                              "text":  "Summer Drive",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) KANAMI"
+                                              "text":  "Toi et moi"
                                           }
                                       ]
                       }
