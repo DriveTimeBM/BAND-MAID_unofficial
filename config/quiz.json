@@ -1,18 +1,18 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "secret My lips — Spotify: 1,856,879 | Played Live: 85\nfrom now on — Spotify: 1,458,838 | Played Live: 73\nShambles — Spotify: 2,546,152 | Played Live: 65",
+                          "image":  "https://img.youtube.com/vi/aK9KruOd_Bw/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "Corallium — Views: 750,802 | Yesterday: 361\nBlooming — Views: 652,070 | Yesterday: 556\nfrom now on — Views: 623,484 | Yesterday: 403",
                           "choices":  [
                                           {
-                                              "text":  "Shambles"
+                                              "text":  "Blooming"
                                           },
                                           {
-                                              "text":  "secret My lips",
+                                              "text":  "Corallium",
                                               "correct":  true
                                           },
                                           {
