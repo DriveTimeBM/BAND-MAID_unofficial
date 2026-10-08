@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/aK9KruOd_Bw/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "Corallium — Views: 750,802 | Yesterday: 361\nBlooming — Views: 652,070 | Yesterday: 556\nfrom now on — Views: 623,484 | Yesterday: 403",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Memorable — Spotify: 769,209 | Played Live: 55\nTIME — Spotify: 745,698 | Played Live: 50\nBig Dad — Spotify: 744,637 | Played Live: 10",
                           "choices":  [
                                           {
-                                              "text":  "Blooming"
+                                              "text":  "TIME"
                                           },
                                           {
-                                              "text":  "Corallium",
+                                              "text":  "Big Dad"
+                                          },
+                                          {
+                                              "text":  "Memorable",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "from now on"
                                           }
                                       ]
                       }
