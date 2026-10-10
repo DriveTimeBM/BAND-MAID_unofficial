@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/QWKfL5C7oRg/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Live #Shorts 2) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 151,438 | Yesterday: 14\nBAND-MAID / Ready to Rock (Official Live Video ver. 3 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 126,110 | Yesterday: 4\nBAND-MAID / without holding back (Official Live Teaser 1) — Views: 74,150 | Yesterday: 0",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Gion-Cho (祇園町) — Spotify: 1,549,525 | Played Live: 2\nRock in me — Spotify: 1,458,954 | Played Live: 62\nSpirit!! — Spotify: 1,292,194 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 1)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live #Shorts 2) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "Gion-Cho (祇園町)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video ver. 3 #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "Rock in me"
+                                          },
+                                          {
+                                              "text":  "Spirit!!"
                                           }
                                       ]
                       }
