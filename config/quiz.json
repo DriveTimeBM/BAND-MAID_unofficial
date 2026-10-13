@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Wonderland — Spotify: 1,136,449 | Played Live: 37\nhide-and-seek — Spotify: 1,095,867 | Played Live: 22\nArcadia Girl — Spotify: 985,780 | Played Live: 38",
+                          "image":  "https://img.youtube.com/vi/rG8cfEJeNMw/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 79,297 | Yesterday: 9\nBAND-MAID / SUPER SUNSHINE (Official Live Teaser 1) — Views: 45,871 | Yesterday: 17\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 28,719 | Yesterday: 1",
                           "choices":  [
                                           {
-                                              "text":  "hide-and-seek"
-                                          },
-                                          {
-                                              "text":  "Wonderland",
+                                              "text":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Arcadia Girl"
+                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 1)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
                                           }
                                       ]
                       }
