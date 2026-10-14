@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/rG8cfEJeNMw/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 79,297 | Yesterday: 9\nBAND-MAID / SUPER SUNSHINE (Official Live Teaser 1) — Views: 45,871 | Yesterday: 17\nBAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス — Views: 28,719 | Yesterday: 1",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "anemone — Spotify: 1,581,574 | Played Live: 43\nOne and only — Spotify: 1,553,982 | Played Live: 27\nfrom now on — Spotify: 1,462,478 | Played Live: 73",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Live Video #shorts )  TVアニメ「桃源暗鬼」エンディング主題歌",
+                                              "text":  "from now on"
+                                          },
+                                          {
+                                              "text":  "anemone",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 1)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Magie  #ジャイガ #bandmaid #夏フェス"
+                                              "text":  "One and only"
                                           }
                                       ]
                       }
