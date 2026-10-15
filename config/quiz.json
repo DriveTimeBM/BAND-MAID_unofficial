@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "anemone — Spotify: 1,581,574 | Played Live: 43\nOne and only — Spotify: 1,553,982 | Played Live: 27\nfrom now on — Spotify: 1,462,478 | Played Live: 73",
+                          "image":  "https://img.youtube.com/vi/Uds7g3M-4lQ/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Thrill (スリル)  (Official Music Video) — Views: 23,896,462 | Yesterday: 3,643\nBAND-MAID / Choose me  (Official Music Video) — Views: 16,370,972 | Yesterday: 2,996\nBAND-MAID / alone (Official Music Video) — Views: 7,848,414 | Yesterday: 737",
                           "choices":  [
                                           {
-                                              "text":  "from now on"
+                                              "text":  "BAND-MAID / Choose me  (Official Music Video)"
                                           },
                                           {
-                                              "text":  "anemone",
+                                              "text":  "BAND-MAID / Thrill (スリル)  (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "One and only"
+                                              "text":  "BAND-MAID / alone (Official Music Video)"
                                           }
                                       ]
                       }
