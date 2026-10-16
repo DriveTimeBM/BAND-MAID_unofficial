@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/Uds7g3M-4lQ/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Thrill (スリル)  (Official Music Video) — Views: 23,896,462 | Yesterday: 3,643\nBAND-MAID / Choose me  (Official Music Video) — Views: 16,370,972 | Yesterday: 2,996\nBAND-MAID / alone (Official Music Video) — Views: 7,848,414 | Yesterday: 737",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Manners — Spotify: 1,754,152 | Played Live: 44\nCLANG — Spotify: 1,254,114 | Played Live: 43\nYoake Mae (夜明け前) — Spotify: 861,164 | Played Live: 40",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Choose me  (Official Music Video)"
+                                              "text":  "Yoake Mae (夜明け前)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Thrill (スリル)  (Official Music Video)",
+                                              "text":  "Manners",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / alone (Official Music Video)"
+                                              "text":  "CLANG"
                                           }
                                       ]
                       }
