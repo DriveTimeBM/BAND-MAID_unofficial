@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Manners — Spotify: 1,754,152 | Played Live: 44\nCLANG — Spotify: 1,254,114 | Played Live: 43\nYoake Mae (夜明け前) — Spotify: 861,164 | Played Live: 40",
+                          "image":  "https://img.youtube.com/vi/y_P3bYEjsbE/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE) — Views: 59,462 | Yesterday: 17\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany — Views: 53,274 | Yesterday: 3\nBAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 50,477 | Yesterday: 3",
                           "choices":  [
                                           {
-                                              "text":  "Yoake Mae (夜明け前)"
-                                          },
-                                          {
-                                              "text":  "Manners",
+                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "CLANG"
+                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany"
                                           }
                                       ]
                       }
