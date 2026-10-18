@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/y_P3bYEjsbE/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE) — Views: 59,462 | Yesterday: 17\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany — Views: 53,274 | Yesterday: 3\nBAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 50,477 | Yesterday: 3",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "I still seek revenge. — Spotify: 905,447 | Played Live: 12\nYURAGU — Spotify: 589,165 | Played Live: 10\nBalance — Spotify: 810,484 | Played Live: 10",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video AKANE)",
+                                              "text":  "I still seek revenge.",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video SAIKI ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "YURAGU"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video)  KANAMI vs Dany"
+                                              "text":  "Balance"
                                           }
                                       ]
                       }
