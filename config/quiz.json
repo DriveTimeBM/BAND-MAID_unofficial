@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/sAt4wANOaqA/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / without holding back (Official Live Teaser 1) — Views: 74,252 | Yesterday: 8\nBAND-MAID / without holding back (Official Live Teaser 2) — Views: 67,543 | Yesterday: 16\nBAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid — Views: 38,737 | Yesterday: 3",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Take me higher!! — Spotify: 1,136,869 | Played Live: 59\nhide-and-seek — Spotify: 1,097,396 | Played Live: 22\nSmile — Spotify: 1,082,791 | Played Live: 7",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 1)",
+                                              "text":  "Take me higher!!",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 2)"
+                                              "text":  "hide-and-seek"
+                                          },
+                                          {
+                                              "text":  "Smile"
                                           }
                                       ]
                       }
