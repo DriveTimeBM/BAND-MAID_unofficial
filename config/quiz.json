@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/MZIJ2vFxu9Y/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Choose me  (Official Music Video) — Views: 16,388,450 | Yesterday: 2,797\nBAND-MAID / Daydreaming (Official Music Video) — Views: 5,444,692 | Yesterday: 693\nBAND-MAID / Ready to Rock (Official Music Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 5,303,327 | Yesterday: 3,298",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Gion-Cho (祇園町) — Spotify: 1,553,870 | Played Live: 2\nProtect You — Spotify: 1,403,709 | Played Live: 37\nLiberal — Spotify: 1,255,398 | Played Live: 17",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Choose me  (Official Music Video)",
+                                              "text":  "Gion-Cho (祇園町)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Daydreaming (Official Music Video)"
+                                              "text":  "Liberal"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Music Video)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
+                                              "text":  "Protect You"
                                           }
                                       ]
                       }
