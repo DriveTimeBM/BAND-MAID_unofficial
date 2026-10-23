@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "Gion-Cho (祇園町) — Spotify: 1,553,870 | Played Live: 2\nProtect You — Spotify: 1,403,709 | Played Live: 37\nLiberal — Spotify: 1,255,398 | Played Live: 17",
+                          "image":  "https://img.youtube.com/vi/Uds7g3M-4lQ/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / Thrill (スリル)  (Official Music Video) — Views: 23,925,126 | Yesterday: 3,847\nBAND-MAID / ENERGETIC (Official Music Video) — Views: 2,100,177 | Yesterday: 2,714\nBAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,708,267 | Yesterday: 1,474",
                           "choices":  [
                                           {
-                                              "text":  "Gion-Cho (祇園町)",
+                                              "text":  "BAND-MAID / Thrill (スリル)  (Official Music Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "Liberal"
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)"
                                           },
                                           {
-                                              "text":  "Protect You"
+                                              "text":  "BAND-MAID / ENERGETIC (Official Music Video)"
                                           }
                                       ]
                       }
