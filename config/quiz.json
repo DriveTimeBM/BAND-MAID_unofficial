@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/Uds7g3M-4lQ/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Thrill (スリル)  (Official Music Video) — Views: 23,925,126 | Yesterday: 3,847\nBAND-MAID / ENERGETIC (Official Music Video) — Views: 2,100,177 | Yesterday: 2,714\nBAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,708,267 | Yesterday: 1,474",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Letters to you — Spotify: 398,089 | Played Live: 12\nHONKAI (本懐) — Spotify: 883,654 | Played Live: 11\nHibana (火花) — Spotify: 1,214,513 | Played Live: 10",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Thrill (スリル)  (Official Music Video)",
+                                              "text":  "Letters to you",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)"
+                                              "text":  "Hibana (火花)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Music Video)"
+                                              "text":  "HONKAI (本懐)"
                                           }
                                       ]
                       }
