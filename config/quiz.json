@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/MZIJ2vFxu9Y/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Choose me  (Official Music Video) — Views: 16,399,684 | Yesterday: 2,670\nBAND-MAID / Daydreaming (Official Music Video) — Views: 5,447,517 | Yesterday: 625\nBAND-MAIKO / secret MAIKO lips (Official Music Video) — Views: 4,800,780 | Yesterday: 444",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "ansan — Spotify: 490,577 | Played Live: 0\nSUPER SUNSHINE — Spotify: 374,034 | Played Live: 36\nToi et moi — Spotify: 253,239 | Played Live: 48",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAIKO / secret MAIKO lips (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Choose me  (Official Music Video)",
+                                              "text":  "ansan",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Daydreaming (Official Music Video)"
+                                              "text":  "SUPER SUNSHINE"
+                                          },
+                                          {
+                                              "text":  "Toi et moi"
                                           }
                                       ]
                       }
