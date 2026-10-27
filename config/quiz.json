@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "ansan — Spotify: 490,577 | Played Live: 0\nSUPER SUNSHINE — Spotify: 374,034 | Played Live: 36\nToi et moi — Spotify: 253,239 | Played Live: 48",
+                          "image":  "https://img.youtube.com/vi/-qQnKILR5u0/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / REAL EXISTENCE (Official Live Video) — Views: 1,873,632 | Yesterday: 292\nBAND-MAID / Choose me (Official Live Video) — Views: 1,800,921 | Yesterday: 409\nBAND-MAID / Puzzle (Official Live Video) — Views: 1,290,358 | Yesterday: 408",
                           "choices":  [
                                           {
-                                              "text":  "ansan",
+                                              "text":  "BAND-MAID / REAL EXISTENCE (Official Live Video)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "SUPER SUNSHINE"
+                                              "text":  "BAND-MAID / Puzzle (Official Live Video)"
                                           },
                                           {
-                                              "text":  "Toi et moi"
+                                              "text":  "BAND-MAID / Choose me (Official Live Video)"
                                           }
                                       ]
                       }
