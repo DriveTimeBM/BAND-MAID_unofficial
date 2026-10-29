@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "Choose me — Spotify: 16,225,773 | Played Live: 265\nFREEDOM — Spotify: 1,847,116 | Played Live: 261\nDOMINATION — Spotify: 8,730,330 | Played Live: 241",
+                          "image":  "https://img.youtube.com/vi/bQDrcpN6B-U/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Ready to Rock (Official Live Video #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 384,096 | Yesterday: 22\nBAND-MAID / Ready to Rock (Official Live #Shorts 2) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 151,684 | Yesterday: 7\nBAND-MAID / Dilly-Dally (Official Live Teaser 1) — Views: 111,352 | Yesterday: 37",
                           "choices":  [
                                           {
-                                              "text":  "DOMINATION"
+                                              "text":  "BAND-MAID / Ready to Rock (Official Live #Shorts 2) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
                                           },
                                           {
-                                              "text":  "FREEDOM"
+                                              "text":  "BAND-MAID / Dilly-Dally (Official Live Teaser 1)"
                                           },
                                           {
-                                              "text":  "Choose me",
+                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video #shorts )  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
                                               "correct":  true
                                           }
                                       ]
