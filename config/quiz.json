@@ -4,19 +4,19 @@
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/h9t2zJe-JIY/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Teaser Video MISA ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 49,012 | Yesterday: 3\nBAND-MAID / ENERGETIC (Official Teaser Video 2) — Views: 43,852 | Yesterday: 24\nBAND-MAID / Zen (Official Teaser Video)  SAIKI Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 38,081 | Yesterday: 10",
+                          "image":  "https://img.youtube.com/vi/uZJNer5jBm8/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "glory — Views: 75,397 | Yesterday: 26\nthe non-fiction days — Views: 36,839 | Yesterday: 25\nstart over — Views: 35,226 | Yesterday: 24",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Teaser Video 2)"
+                                              "text":  "the non-fiction days"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Teaser Video MISA ver.)  TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "start over"
+                                          },
+                                          {
+                                              "text":  "glory",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  SAIKI Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
                                           }
                                       ]
                       }
