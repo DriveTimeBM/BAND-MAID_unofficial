@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/uZJNer5jBm8/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "glory — Views: 75,397 | Yesterday: 26\nthe non-fiction days — Views: 36,839 | Yesterday: 25\nstart over — Views: 35,226 | Yesterday: 24",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Rock in me — Spotify: 1,465,511 | Played Live: 62\nMemorable — Spotify: 775,746 | Played Live: 60\nShake That!! — Spotify: 789,459 | Played Live: 58",
                           "choices":  [
                                           {
-                                              "text":  "the non-fiction days"
-                                          },
-                                          {
-                                              "text":  "start over"
-                                          },
-                                          {
-                                              "text":  "glory",
+                                              "text":  "Rock in me",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Shake That!!"
+                                          },
+                                          {
+                                              "text":  "Memorable"
                                           }
                                       ]
                       }
