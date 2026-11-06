@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/5I6VV4HYnW8/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Ready to Rock (Official Live Video) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 872,918 | Yesterday: 843\nBAND-MAID / Thrill (スリル)  (Official Live Video) — Views: 982,335 | Yesterday: 491\nBAND-MAID / without holding back (Official Live Video) — Views: 293,713 | Yesterday: 359",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Arcadia Girl — Spotify: 989,195 | Played Live: 38\nBeauty and the beast — Spotify: 1,060,320 | Played Live: 36\nForbidden tale — Spotify: 571,608 | Played Live: 34",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Thrill (スリル)  (Official Live Video)"
+                                              "text":  "Beauty and the beast"
                                           },
                                           {
-                                              "text":  "BAND-MAID / without holding back (Official Live Video)"
+                                              "text":  "Forbidden tale"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live Video) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング",
+                                              "text":  "Arcadia Girl",
                                               "correct":  true
                                           }
                                       ]
