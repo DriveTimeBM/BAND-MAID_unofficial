@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/VhVA-w1y694/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "ENERGETIC — Views: 201,666 | Yesterday: 646\nHATE? — Views: 519,362 | Yesterday: 641\nPresent Perfect — Views: 320,943 | Yesterday: 481",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Before Yesterday — Spotify: 1,087,113 | Played Live: 38\nWonderland — Spotify: 1,140,758 | Played Live: 37\nBeauty and the beast — Spotify: 1,060,320 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "HATE?"
+                                              "text":  "Beauty and the beast"
                                           },
                                           {
-                                              "text":  "Present Perfect"
-                                          },
-                                          {
-                                              "text":  "ENERGETIC",
+                                              "text":  "Before Yesterday",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Wonderland"
                                           }
                                       ]
                       }
