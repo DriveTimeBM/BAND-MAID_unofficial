@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/nAdWnIRjGak/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / NO GOD (Official Live Video) — Views: 945,682 | Yesterday: 136\nBAND-MAID / endless Story (Official Live Video) — Views: 847,145 | Yesterday: 376\nBAND-MAID / Don\u0027t you tell ME (Official Live Video) — Views: 842,377 | Yesterday: 422",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "CAGE — Spotify: 137,047 | Played Live: 17\nPrice of Pride — Spotify: 713,234 | Played Live: 15\nTurn me on — Spotify: 2,027,552 | Played Live: 13",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / endless Story (Official Live Video)"
+                                              "text":  "Price of Pride"
                                           },
                                           {
-                                              "text":  "BAND-MAID / NO GOD (Official Live Video)",
+                                              "text":  "CAGE",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Official Live Video)"
+                                              "text":  "Turn me on"
                                           }
                                       ]
                       }
