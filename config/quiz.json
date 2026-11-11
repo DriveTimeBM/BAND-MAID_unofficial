@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "CAGE — Spotify: 137,047 | Played Live: 17\nPrice of Pride — Spotify: 713,234 | Played Live: 15\nTurn me on — Spotify: 2,027,552 | Played Live: 13",
+                          "image":  "https://img.youtube.com/vi/LVl0mcEu1r8/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,730,427 | Yesterday: 1,188\nBAND-MAID / Unleash!!!!! (Official Music Video) — Views: 4,222,429 | Yesterday: 938\nBAND-MAID / Blooming (Official Music Video) — Views: 3,877,314 | Yesterday: 685",
                           "choices":  [
                                           {
-                                              "text":  "Price of Pride"
+                                              "text":  "BAND-MAID / Unleash!!!!! (Official Music Video)"
                                           },
                                           {
-                                              "text":  "CAGE",
+                                              "text":  "BAND-MAID / Blooming (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "Turn me on"
                                           }
                                       ]
                       }
