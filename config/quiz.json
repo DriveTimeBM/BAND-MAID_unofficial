@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/LVl0mcEu1r8/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,730,427 | Yesterday: 1,188\nBAND-MAID / Unleash!!!!! (Official Music Video) — Views: 4,222,429 | Yesterday: 938\nBAND-MAID / Blooming (Official Music Video) — Views: 3,877,314 | Yesterday: 685",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Thrill (スリル) — Spotify: 7,728,892 | Played Live: 133\nDon\u0027t let me down — Spotify: 1,881,952 | Played Live: 122\nMoratorium (モラトリアム) — Spotify: 1,978,542 | Played Live: 115",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Unleash!!!!! (Official Music Video)"
+                                              "text":  "Moratorium (モラトリアム)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Blooming (Official Music Video)"
+                                              "text":  "Don\u0027t let me down"
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)",
+                                              "text":  "Thrill (スリル)",
                                               "correct":  true
                                           }
                                       ]
