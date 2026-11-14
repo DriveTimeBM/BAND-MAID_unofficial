@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/5H2X1aq94NI/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / without holding back (Official Live Teaser 2) — Views: 67,880 | Yesterday: 8\nBAND-MAID / Ready to Rock (Official Live #Shorts 3) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング — Views: 65,409 | Yesterday: 4\nBAND-MAID / SUPER SUNSHINE (Official Live Teaser 1) — Views: 46,562 | Yesterday: 8",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Beauty and the beast — Spotify: 1,061,191 | Played Live: 36\nAlive-or-Dead — Spotify: 966,247 | Played Live: 13\nTora and Tora (虎and虎) — Spotify: 932,597 | Played Live: 1",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / without holding back (Official Live Teaser 2)",
+                                              "text":  "Alive-or-Dead"
+                                          },
+                                          {
+                                              "text":  "Beauty and the beast",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID / Ready to Rock (Official Live #Shorts 3) TVアニメ「ロックは淑女の嗜みでして」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Teaser 1)"
+                                              "text":  "Tora and Tora (虎and虎)"
                                           }
                                       ]
                       }
