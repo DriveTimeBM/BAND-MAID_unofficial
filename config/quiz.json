@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/MZIJ2vFxu9Y/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Choose me  (Official Music Video) — Views: 16,457,680 | Yesterday: 2,798\nBAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 3,600,966 | Yesterday: 2,139\nBAND-MAID with The Warning / SHOW THEM (Official Music Video) — Views: 2,734,926 | Yesterday: 1,039",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "Hibana (火花) — Spotify: 1,217,792 | Played Live: 10\nazure — Spotify: 833,436 | Played Live: 9\nENTROPY — Spotify: 31,907 | Played Live: 4",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌"
+                                              "text":  "ENTROPY"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Choose me  (Official Music Video)",
+                                              "text":  "Hibana (火花)",
                                               "correct":  true
                                           },
                                           {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Music Video)"
+                                              "text":  "azure"
                                           }
                                       ]
                       }
