@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/8ofX0GW1mHc/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid — Views: 38,800 | Yesterday: 2\nBAND-MAID / DOMINATION (Official Live #shorts ) from \"BAND-MAID TOUR 2025 TOYOSU PIT\" — Views: 25,535 | Yesterday: 167\nBAND-MAID / Medley (Official Live #shorts ) from \"BAND-MAID TOUR 2025 TOYOSU PIT\" — Views: 20,493 | Yesterday: 103",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Manners — Spotify: 1,766,327 | Played Live: 46\nSAYONAKIDORI (サヨナキドリ) — Spotify: 1,571,783 | Played Live: 50\nOne and only — Spotify: 1,568,483 | Played Live: 27",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / DOMINATION (Official Live #shorts ) from \"BAND-MAID TOUR 2025 TOYOSU PIT\""
+                                              "text":  "SAYONAKIDORI (サヨナキドリ)"
                                           },
                                           {
-                                              "text":  "BAND-MAID / Medley (Official Live #shorts ) from \"BAND-MAID TOUR 2025 TOYOSU PIT\""
+                                              "text":  "One and only"
                                           },
                                           {
-                                              "text":  "BAND-MAID in SUMMER SONIC 2024 #サマソニ #SUMMERSONIC #bandmaid",
+                                              "text":  "Manners",
                                               "correct":  true
                                           }
                                       ]
