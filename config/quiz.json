@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/uPVrm20h8GY/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / SPIN (Official Teaser Video ver. 4) — Views: 23,133 | Yesterday: 65\nBAND-MAID / SPIN (Official Teaser Video AKANE ver.) — Views: 22,554 | Yesterday: 182\nBAND-MAID with The Warning / SHOW THEM (Official Teaser Video) MISA vs Ale part 2 — Views: 20,773 | Yesterday: 1",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "start over — Spotify: 1,383,357 | Played Live: 32\nSpirit!! — Spotify: 1,299,968 | Played Live: 36\nAi to Jonetsu no Matador (愛と情熱のマタドール) — Spotify: 1,256,067 | Played Live: 36",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / SPIN (Official Teaser Video ver. 4)",
+                                              "text":  "Ai to Jonetsu no Matador (愛と情熱のマタドール)"
+                                          },
+                                          {
+                                              "text":  "Spirit!!"
+                                          },
+                                          {
+                                              "text":  "start over",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / SPIN (Official Teaser Video AKANE ver.)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID with The Warning / SHOW THEM (Official Teaser Video) MISA vs Ale part 2"
                                           }
                                       ]
                       }
