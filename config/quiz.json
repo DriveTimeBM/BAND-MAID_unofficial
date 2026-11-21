@@ -1,21 +1,21 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
-                          "explanation":  "start over — Spotify: 1,383,357 | Played Live: 32\nSpirit!! — Spotify: 1,299,968 | Played Live: 36\nAi to Jonetsu no Matador (愛と情熱のマタドール) — Spotify: 1,256,067 | Played Live: 36",
+                          "image":  "https://img.youtube.com/vi/x4hxLeHbqZo/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
+                          "explanation":  "BAND-MAID / Wonderland  (Official Live Video) — Views: 971,350 | Yesterday: 136\nBAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング — Views: 890,201 | Yesterday: 1,030\nBAND-MAID / Don\u0027t you tell ME (Official Live Video) — Views: 847,995 | Yesterday: 412",
                           "choices":  [
                                           {
-                                              "text":  "Ai to Jonetsu no Matador (愛と情熱のマタドール)"
+                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Official Live Video)"
                                           },
                                           {
-                                              "text":  "Spirit!!"
+                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング"
                                           },
                                           {
-                                              "text":  "start over",
+                                              "text":  "BAND-MAID / Wonderland  (Official Live Video)",
                                               "correct":  true
                                           }
                                       ]
