@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/x4hxLeHbqZo/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos has the most total views on YouTube?",
-                          "explanation":  "BAND-MAID / Wonderland  (Official Live Video) — Views: 971,350 | Yesterday: 136\nBAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング — Views: 890,201 | Yesterday: 1,030\nBAND-MAID / Don\u0027t you tell ME (Official Live Video) — Views: 847,995 | Yesterday: 412",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "Liberal — Spotify: 1,260,541 | Played Live: 17\nCarry on living — Spotify: 1,229,548 | Played Live: 69\nWonderland — Spotify: 1,144,403 | Played Live: 37",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / Don\u0027t you tell ME (Official Live Video)"
+                                              "text":  "Wonderland"
                                           },
                                           {
-                                              "text":  "BAND-MAID / SUPER SUNSHINE (Official Live Video)　高橋酒造株式会社「白岳しろ」CMソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Wonderland  (Official Live Video)",
+                                              "text":  "Liberal",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "Carry on living"
                                           }
                                       ]
                       }
