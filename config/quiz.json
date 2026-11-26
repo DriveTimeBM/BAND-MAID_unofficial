@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/LApK4w7OpJ8/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / Present Perfect (Official Teaser Video SAIKI) — Views: 36,763 | Yesterday: 3\nBAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video) — Views: 46,263 | Yesterday: 2\nBAND-MAID / Zen (Official Teaser Video)  SAIKI Ver.  MAPPAアニメ「全修。」オープニングテーマソング — Views: 38,241 | Yesterday: 2",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
+                          "explanation":  "azure — Spotify: 835,851 | Played Live: 9\nENTROPY — Spotify: 48,795 | Played Live: 4\nAt the drop of a hat — Spotify: 615,865 | Played Live: 3",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / New Album \"Epic Narratives\" (Official Teaser Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Zen (Official Teaser Video)  SAIKI Ver.  MAPPAアニメ「全修。」オープニングテーマソング"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / Present Perfect (Official Teaser Video SAIKI)",
+                                              "text":  "azure",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "At the drop of a hat"
+                                          },
+                                          {
+                                              "text":  "ENTROPY"
                                           }
                                       ]
                       }
