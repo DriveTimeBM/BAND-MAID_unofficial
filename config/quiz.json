@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID Song Quiz",
-    "description":  "Test your knowledge of BAND-MAID songs.",
+    "title":  "BAND-MAID YouTube Quiz",
+    "description":  "Test your knowledge of BAND-MAID on YouTube.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
-                          "question":  "Which of these BAND-MAID songs has been played live the most times?",
-                          "explanation":  "azure — Spotify: 835,851 | Played Live: 9\nENTROPY — Spotify: 48,795 | Played Live: 4\nAt the drop of a hat — Spotify: 615,865 | Played Live: 3",
+                          "image":  "https://img.youtube.com/vi/Z7I13kDOoQk/sddefault.jpg",
+                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
+                          "explanation":  "BAND-MAID / SPIN (Official Music Video)  Anime \"BEYBLADE X\" Ending Theme Song — Views: 1,924,029 | Yesterday: 61,818\nBAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 3,627,649 | Yesterday: 2,158\nBAND-MAID / ENERGETIC (Official Music Video) — Views: 2,180,509 | Yesterday: 1,782",
                           "choices":  [
                                           {
-                                              "text":  "azure",
+                                              "text":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / ENERGETIC (Official Music Video)"
+                                          },
+                                          {
+                                              "text":  "BAND-MAID / SPIN (Official Music Video)  Anime \"BEYBLADE X\" Ending Theme Song",
                                               "correct":  true
-                                          },
-                                          {
-                                              "text":  "At the drop of a hat"
-                                          },
-                                          {
-                                              "text":  "ENTROPY"
                                           }
                                       ]
                       }
