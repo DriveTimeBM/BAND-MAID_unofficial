@@ -1,22 +1,22 @@
 ﻿{
-    "title":  "BAND-MAID YouTube Quiz",
-    "description":  "Test your knowledge of BAND-MAID on YouTube.",
+    "title":  "BAND-MAID Song Quiz",
+    "description":  "Test your knowledge of BAND-MAID songs.",
     "questions":  [
                       {
                           "id":  1,
-                          "image":  "https://img.youtube.com/vi/Z7I13kDOoQk/sddefault.jpg",
-                          "question":  "Which of these BAND-MAID videos had the most views yesterday on YouTube?",
-                          "explanation":  "BAND-MAID / SPIN (Official Music Video)  Anime \"BEYBLADE X\" Ending Theme Song — Views: 1,924,029 | Yesterday: 61,818\nBAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌 — Views: 3,627,649 | Yesterday: 2,158\nBAND-MAID / ENERGETIC (Official Music Video) — Views: 2,180,509 | Yesterday: 1,782",
+                          "image":  "https://drivetimebm.github.io/BAND-MAID_gpt/photos/quiz.png",
+                          "question":  "Which of these BAND-MAID songs has the most streams on Spotify?",
+                          "explanation":  "REAL EXISTENCE — Spotify: 2,721,883 | Played Live: 242\nRinne (輪廻, Reincarnation) — Spotify: 2,645,643 | Played Live: 48\nWhat is justice? — Spotify: 2,439,544 | Played Live: 30",
                           "choices":  [
                                           {
-                                              "text":  "BAND-MAID / What is justice? (Official Music Video) TVアニメ「桃源暗鬼」エンディング主題歌"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / ENERGETIC (Official Music Video)"
-                                          },
-                                          {
-                                              "text":  "BAND-MAID / SPIN (Official Music Video)  Anime \"BEYBLADE X\" Ending Theme Song",
+                                              "text":  "REAL EXISTENCE",
                                               "correct":  true
+                                          },
+                                          {
+                                              "text":  "What is justice?"
+                                          },
+                                          {
+                                              "text":  "Rinne (輪廻, Reincarnation)"
                                           }
                                       ]
                       }
